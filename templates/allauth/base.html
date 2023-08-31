@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block meta %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% endblock %}
+    {% block extra_meta %}
+    {% endblock %}
+
+    {% block core_css %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    {% endblock %}
+    {% block extra_css %}
+    {% endblock %}
+
+    {% block core_js %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    {% endblock %}
+    {% block extra_js %}
+    {% endblock %}
+
+    {% block title %}
+        <title>IPUHAEL EPOS 
+            {% block extra title %}
+            {% endblock %}
+        </title>
+    {% endblock %}
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Hello World</h1>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <h4>Footer Goes Here</h4>
+    </footer>
+
+    {% block post_load_js %}
+        <script src="{% static 'js/main.js' %}"></script>
+    {% endblock %}
+    
+</body>
+</html>
