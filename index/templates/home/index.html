@@ -2,5 +2,85 @@
 {% load static %}
 
 {% block content %}
-    <h1 class="display-4 text-success">It Works</h1>
+    <div class="row">
+        <div class="col-7">
+            <div class="row">
+                {% for draught in draughts %}
+                    <div class="col-2">
+                        <button class="btn {{draught.category}}" data-price_03="{{draught.price_03}}" data-price_04="{{draught.price_04}}" data-price_pint="{{draught.price_pint}}">
+                            {{draught.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                <!-- {% for halfandhalf in halfandhalfs %}
+                    <div class="col-2">
+                        <button class="btn {{halfandhalf.category}}" data-price_03="{{halfandhalf.price_03}}" data-price_04="{{halfandhalf.price_04}}" data-price_pint="{{halfandhalf.price_pint}}">
+                            {{halfandhalf.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for shandy in shandys %}
+                    <div class="col-2">
+                        <button class="btn {{shandy.category}}" data-price_03="{{shandy.price_03}}" data-price_04="{{shandy.price_04}}" data-price_pint="{{shandy.price_pint}}">
+                            {{shandy.name}}
+                        </button>
+                    </div>
+                {% endfor %} -->
+                {% for canandbottle in canandbottles %}
+                    <div class="col-2">
+                        <button class="btn {{canandbottle.category}}" data-price_03="{{canandbottle.price_330}}" data-price_04="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
+                            {{canandbottle.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for spirit in spirits %}
+                    <div class="col-2">
+                        <button class="btn {{spirit.category}} {{spirit.name}}" data-price_single="{{spirit.price_single}}" data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
+                            {{spirit.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for softdrink in softdrinks %}
+                    <div class="col-2">
+                        <button class="btn {{softdrink.category}} {{spirit.name}}" data-price_dash="{{spirit.price_dash}}" data-price_03="{{spirit.price_03}}" data-price_04="{{spirit.price_04}}" data-price_pint="{{spirit.price_pint}}" data-price_bottle="{{spirit.price_bottle}}">
+                            {{softdrink.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-5">
+            <p>Thursday 25/6/2023, 13:45. Logged in as: Cathal</p>
+            <div class="row">
+                <div class="col">
+                    <button class="btn pfand_button">
+                        1
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="btn pfand_button">
+                        2
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="btn pfand_button">
+                        3
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="btn pfand_button">
+                        4
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="btn pfand_button">
+                        5
+                    </button>
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
