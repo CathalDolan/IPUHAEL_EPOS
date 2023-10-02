@@ -25,7 +25,7 @@
 
     {% block title %}
         <title>IPUHAEL EPOS 
-            {% block extra title %}
+            {% block extra_title %}
             {% endblock %}
         </title>
     {% endblock %}
@@ -34,9 +34,15 @@
 <body>
     <header>
         <nav>
-            <h1>Hello World</h1>
+            <h1>Hello Worlds Allauth</h1>
         </nav>
     </header>
+
+    {% if messages %}
+        <div class="message-container">
+            
+        </div>
+    {% endif %}
 
     <main>
         {% block content %}
