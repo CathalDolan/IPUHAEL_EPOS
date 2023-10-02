@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '8000-cathaldolan-ipuhaelepos-sisgk4sdxe4.ws-eu104.gitpod.io',
+    '8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu105.gitpod.io',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
