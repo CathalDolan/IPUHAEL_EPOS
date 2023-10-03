@@ -157,7 +157,7 @@
         </div>
         <div class="col-5">
             <p>Thursday 25/6/2023, 13:45. Logged in as: Cathal</p>
-            <div class="row">
+            <div class="row pfand_button_row">
                 <div class="col">
                     <button class="btn pfand_button">
                         1
@@ -188,7 +188,83 @@
                 </div>
             </div>
             <div class="basket_div">
-                
+                <div class="row product_lines_row">
+
+                </div>
+                <hr>
+                <div class="row totals_row">
+                    <div class="col-6">
+                        <p>Drinks Total:</p>
+                        <p>Pfand Total:</p>
+                        <p>Total Due:</p>
+                        <p>Tendered Amount:</p>
+                        <p>Change Due:</p>
+                    </div>
+                    <div class="col-6">
+                        <p>€</p>
+                        <p>€</p>
+                        <p>€</p>
+                        <input type="number">
+                        <p>€</p>
+                    </div>
+                </div>
+                <div class="row €_notes_row">
+                    <div class="col-3">
+                        <button class="btn €_notes_button">
+                            <img src="{% static 'images/credit_card_icon.png' %}">
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn €_notes_button" data-€5="5">
+                            <img src="{% static 'images/€5_note.png' %}">
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn €_notes_button" data-€10="10">
+                            <img src="{% static 'images/€10_note.png' %}">
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn €_notes_button" data-€20="20">
+                            <img src="{% static 'images/€20_note.png' %}">
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn €_notes_button" data-€50="50">
+                            <img src="{% static 'images/€50_note.png' %}">
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn €_notes_button" data-€100="100">
+                            <img src="{% static 'images/€100_note.png' %}">
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn €_notes_button" data-€200="200">
+                            <img src="{% static 'images/€200_note.png' %}">
+                        </button>
+                    </div>
+                    <div class="col-3 €_notes_button">
+                        <button class="btn unpaid_button">
+                            Unpaid
+                        </button>
+                    </div>
+                    <div class="col-3 €_notes_button">
+                        <button class="btn specials_button">
+                            Specials
+                        </button>
+                    </div>
+                    <div class="col-3 €_notes_button">
+                        <button class="btn finish_button">
+                            Finish
+                        </button>
+                    </div>
+                    <div class="col-3 €_notes_button">
+                        <button class="btn cancel_button">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

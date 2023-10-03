@@ -45,3 +45,5 @@ def takings(request):
 def reports(request):
     """ A view to return the past orders page """
     return render(request, 'home/reports.html')
+
+
