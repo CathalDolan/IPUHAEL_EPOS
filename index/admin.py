@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Draught, HalfAndHalf, Shandy, CanAndBottle, Spirit, SoftDrink
+from .models import Draught, HalfAndHalf, Shandy, CanAndBottle, Spirit, SoftDrink, HotNonAlcoholic, HotAlcoholic, HotToddy, Shot, Food
 
 
 class DraughtAdmin(admin.ModelAdmin):
@@ -82,9 +82,70 @@ class SoftDrinkAdmin(admin.ModelAdmin):
     )
 
 
+class HotNonAlcoholicAdmin(admin.ModelAdmin):
+    list_display = (
+        'category',
+        'name',
+        'price_regular',
+    )
+    ordering = (
+        'id',
+    )
+
+
+class HotAlcoholicAdmin(admin.ModelAdmin):
+    list_display = (
+        'category',
+        'name',
+        'price_regular',
+    )
+    ordering = (
+        'id',
+    )
+
+
+class HotToddyAdmin(admin.ModelAdmin):
+    list_display = (
+        'category',
+        'name',
+        'price_regular',
+    )
+    ordering = (
+        'id',
+    )
+
+
+class ShotAdmin(admin.ModelAdmin):
+    list_display = (
+        'category',
+        'name',
+        'price_regular',
+    )
+    ordering = (
+        'id',
+    )
+
+
+class FoodAdmin(admin.ModelAdmin):
+    list_display = (
+        'category',
+        'name',
+        'price_small',
+        'price_regular',
+    )
+    ordering = (
+        'id',
+    )
+
+
 admin.site.register(Draught, DraughtAdmin)
 admin.site.register(HalfAndHalf, HalfAndHalfAdmin)
 admin.site.register(Shandy, ShandyAdmin)
 admin.site.register(CanAndBottle, CanAndBottleAdmin)
 admin.site.register(Spirit, SpiritAdmin)
 admin.site.register(SoftDrink, SoftDrinkAdmin)
+admin.site.register(HotNonAlcoholic, HotNonAlcoholicAdmin)
+admin.site.register(HotAlcoholic, HotAlcoholicAdmin)
+admin.site.register(HotToddy, HotToddyAdmin)
+admin.site.register(Shot, ShotAdmin)
+admin.site.register(Food, FoodAdmin)

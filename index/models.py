@@ -109,3 +109,53 @@ class SoftDrink(models.Model):
                                        blank=True,
                                        decimal_places=2,
                                        max_digits=5)
+
+
+class HotNonAlcoholic(models.Model):
+    category = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    price_regular = models.DecimalField(null=True,
+                                        blank=True,
+                                        decimal_places=2,
+                                        max_digits=5)
+
+
+class HotAlcoholic(models.Model):
+    """ Covers coffees and hot chocolates """
+    category = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    price_regular = models.DecimalField(null=True,
+                                        blank=True,
+                                        decimal_places=2,
+                                        max_digits=5)
+
+
+class HotToddy(models.Model):
+    category = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    price_regular = models.DecimalField(null=True,
+                                        blank=True,
+                                        decimal_places=2,
+                                        max_digits=5)
+
+
+class Shot(models.Model):
+    category = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    price_regular = models.DecimalField(null=True,
+                                        blank=True,
+                                        decimal_places=2,
+                                        max_digits=5)
+
+
+class Food(models.Model):
+    category = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    price_small = models.DecimalField(null=True,
+                                      blank=True,
+                                      decimal_places=2,
+                                      max_digits=5)
+    price_regular = models.DecimalField(null=True,
+                                        blank=True,
+                                        decimal_places=2,
+                                        max_digits=5)

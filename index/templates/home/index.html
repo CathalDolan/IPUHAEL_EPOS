@@ -28,7 +28,7 @@
                 {% endfor %} -->
                 {% for canandbottle in canandbottles %}
                     <div class="col-2">
-                        <button class="btn {{canandbottle.category}}" data-price_03="{{canandbottle.price_330}}" data-price_04="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
+                        <button class="btn {{canandbottle.category}}" data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
                             {{canandbottle.name}}
                         </button>
                     </div>
@@ -42,11 +42,117 @@
                 {% endfor %}
                 {% for softdrink in softdrinks %}
                     <div class="col-2">
-                        <button class="btn {{softdrink.category}} {{spirit.name}}" data-price_dash="{{spirit.price_dash}}" data-price_03="{{spirit.price_03}}" data-price_04="{{spirit.price_04}}" data-price_pint="{{spirit.price_pint}}" data-price_bottle="{{spirit.price_bottle}}">
+                        <button class="btn {{softdrink.category}}" data-price_dash="{{softdrink.price_dash}}" data-price_03="{{softdrink.price_03}}" data-price_04="{{softdrink.price_04}}" data-price_pint="{{softdrink.price_pint}}" data-price_bottle="{{softdrink.price_bottle}}">
                             {{softdrink.name}}
                         </button>
                     </div>
                 {% endfor %}
+                {% for hotnonalcoholic in hotnonalcoholics %}
+                    <div class="col-2">
+                        <button class="btn {{hotnonalcoholic.category}}" data-price_regular="{{hotnonalcoholic.price_regular}}">
+                            {{hotnonalcoholic.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for hotalcoholic in hotalcoholics %}
+                    <div class="col-2">
+                        <button class="btn {{hotalcoholic.category}}" data-price_regular="{{hotalcoholic.price_regular}}">
+                            {{hotalcoholic.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for hottoddy in hottoddys %}
+                    <div class="col-2">
+                        <button class="btn {{hottoddy.category}}" data-price_regular="{{hotoddy.price_regular}}">
+                            {{hottoddy.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for shot in shots %}
+                    <div class="col-2">
+                        <button class="btn {{shot.category}}" data-price_regular="{{shot.price_regular}}">
+                            {{shot.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                <div class="col-2">
+                    <button class="btn open_drink">
+                        Open Drink
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Double
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Dash
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        0.3
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        0.4
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Pint
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Bottle
+                    </button>
+                </div>
+            </div>
+            <div class="row food_row">
+                {% for food in foods %}
+                    <div class="col-2">
+                        <button class="btn {{food.category}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}">
+                            {{food.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Small
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Regular
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn gifts_button">
+                        Gifts
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn admin_button">
+                        Admin
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn previous_orders_button">
+                        Previous Orders
+                    </button>
+                </div>
             </div>
         </div>
         <div class="col-5">
@@ -80,6 +186,9 @@
                 <div>
                     
                 </div>
+            </div>
+            <div class="basket_div">
+                
             </div>
         </div>
     </div>

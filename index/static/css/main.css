@@ -3,10 +3,20 @@
     padding: 2px;
 }
 
+.row {
+    margin: 0;
+}
+
+.col-7 {
+    padding: 0;
+}
+
 .btn {
     width: 100%;
-    height: 62px;
+    height: 100%;
+    min-height: 61px;
     color: white;
+    border-color: black;
 }
 
 .draught {
@@ -30,8 +40,57 @@
     background-color: rgb(255, 145, 0);
 }
 
+.hot_nonalcoholics,
+.admin_button,
+.previous_orders_button {
+    background-color: black;
+}
+
+.hot_alcoholics {
+    background-color: brown;
+}
+
+.hot_toddys {
+    background-color: rgb(88, 88, 228);
+}
+
+.shots {
+    background-color: rgb(87, 10, 138);
+}
+
+.open_drink,
+.gifts_button {
+    background-color: aqua;
+}
+
+.measure_button {
+    background-color: white;
+    border-color: black;
+}
+
+.foods {
+    background-color: rgb(243, 202, 19);
+}
+
+.open_drink,
+.gifts_button,
+.foods,
+.measure_button {
+    color: black;
+}
+
+.food_row {
+    margin-top: 15px;
+}
+
 .pfand_button {
     border-radius: 50%;
     background-color: black;
     width: 62px;
+}
+
+.basket_div {
+    background-color: grey;
+    width: 100%;
+    height: 100%
 }

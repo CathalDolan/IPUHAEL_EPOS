@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from . models import Draught, HalfAndHalf, Shandy, CanAndBottle, Spirit, SoftDrink
+from . models import Draught, HalfAndHalf, Shandy, CanAndBottle, Spirit, SoftDrink, HotNonAlcoholic, HotAlcoholic, HotToddy, Shot, Food
 
 
 def index(request):
@@ -10,6 +10,11 @@ def index(request):
     canandbottles = CanAndBottle.objects.all()
     spirits = Spirit.objects.all()
     softdrinks = SoftDrink.objects.all()
+    hotnonalcoholics = HotNonAlcoholic.objects.all()
+    hotalcoholics = HotAlcoholic.objects.all()
+    hottoddys = HotToddy.objects.all()
+    shots = Shot.objects.all()
+    foods = Food.objects.all()
     context = {
         'draughts': draughts,
         'halfandhalfs': halfandhalfs,
@@ -17,6 +22,11 @@ def index(request):
         'canandbottles': canandbottles,
         'spirits': spirits,
         'softdrinks': softdrinks,
+        'hotnonalcoholics': hotnonalcoholics,
+        'hotalcoholics': hotalcoholics,
+        'hottoddys': hottoddys,
+        'shots': shots,
+        'foods': foods,
     }
     template = 'home/index.html'
     return render(request, template, context)
