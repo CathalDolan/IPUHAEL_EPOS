@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . models import Draught, HalfAndHalf, Shandy, CanAndBottle, Spirit, SoftDrink, HotNonAlcoholic, HotAlcoholic, HotToddy, Shot, Food
 
 
@@ -28,22 +28,35 @@ def index(request):
         'shots': shots,
         'foods': foods,
     }
-    template = 'home/index.html'
+    template = 'index/index.html'
     return render(request, template, context)
+
+
+# def add_to_basket(request, item_id):
+
+#     quantity = int(request.POST.get('quantity'))
+#     basket = request.session.get('basket', {})
+
+#     if item_id in list(basket.keys()):
+#         basket[item_id] += quantity
+#     else:
+#         basket[item_id] = quantity
+
+#     request.session['basket'] = basket
 
 
 def past_orders(request):
     """ A view to return the past orders page """
-    return render(request, 'home/past_orders.html')
+    return render(request, 'index/past_orders.html')
 
 
 def takings(request):
     """ A view to return the past orders page """
-    return render(request, 'home/takings.html')
+    return render(request, 'index/takings.html')
 
 
 def reports(request):
     """ A view to return the past orders page """
-    return render(request, 'home/reports.html')
+    return render(request, 'index/reports.html')
 
 
