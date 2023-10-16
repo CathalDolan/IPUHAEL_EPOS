@@ -5,150 +5,147 @@
     <div class="row">
         <!--  Left Side of till with product buttons  -->
         <div class="col-7">
-            <form class="form" action="{% url 'add_to_basket' draught.id %}" method="POST">
-                {% csrf_token %}
-                <!--  Drinks Sizes Buttons -->
-                <div class="row" id="measurement_row">
-                    <div class="col-2">
-                        <button class="btn measure_button">
-                            Double
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn measure_button">
-                            Dash
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn measure_button">
-                            0.3
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn measure_button">
-                            0.4
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn measure_button">
-                            Pint
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn measure_button">
-                            Bottle
-                        </button>
-                    </div>
+            <!--  Drinks Sizes Buttons -->
+            <div class="row" id="measurement_row">
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Double
+                    </button>
                 </div>
-                <!--  Drink Products Buttons  -->
-                <div class="row">
-                    {% for draught in draughts %}
-                        <div class="col-2">
-                            <button type="submit" value="1" class="btn {{draught.category}} product_button" data-item_id="{{draught.id}}" item_id="id_qty_{{ draught.id }}" data-price_03="{{draught.price_03}}" data-price_04="{{draught.price_04}}" data-price_pint="{{draught.price_pint}}">
-                                {{draught.name}}
-                            </button>
-                        </div>
-                    {% endfor %}
-                    {% for canandbottle in canandbottles %}
-                        <div class="col-2">
-                            <button class="btn {{canandbottle.category}} product_button" data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
-                                {{canandbottle.name}}
-                            </button>
-                        </div>
-                    {% endfor %}
-                    {% for spirit in spirits %}
-                        <div class="col-2">
-                            <button class="btn {{spirit.category}} {{spirit.name}} product_button" data-price_single="{{spirit.price_single}}" data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
-                                {{spirit.name}}
-                            </button>
-                        </div>
-                    {% endfor %}
-                    {% for softdrink in softdrinks %}
-                        <div class="col-2">
-                            <button class="btn {{softdrink.category}} product_button" data-price_dash="{{softdrink.price_dash}}" data-price_03="{{softdrink.price_03}}" data-price_04="{{softdrink.price_04}}" data-price_pint="{{softdrink.price_pint}}" data-price_bottle="{{softdrink.price_bottle}}">
-                                {{softdrink.name}}
-                            </button>
-                        </div>
-                    {% endfor %}
-                    {% for hotnonalcoholic in hotnonalcoholics %}
-                        <div class="col-2">
-                            <button class="btn {{hotnonalcoholic.category}} product_button" data-price_regular="{{hotnonalcoholic.price_regular}}">
-                                {{hotnonalcoholic.name}}
-                            </button>
-                        </div>
-                    {% endfor %}
-                    {% for hotalcoholic in hotalcoholics %}
-                        <div class="col-2">
-                            <button class="btn {{hotalcoholic.category}} product_button" data-price_regular="{{hotalcoholic.price_regular}}">
-                                {{hotalcoholic.name}}
-                            </button>
-                        </div>
-                    {% endfor %}
-                    {% for hottoddy in hottoddys %}
-                        <div class="col-2">
-                            <button class="btn {{hottoddy.category}} product_button" data-price_regular="{{hotoddy.price_regular}}">
-                                {{hottoddy.name}}
-                            </button>
-                        </div>
-                    {% endfor %}
-                    {% for shot in shots %}
-                        <div class="col-2">
-                            <button class="btn {{shot.category}} product_button" data-price_regular="{{shot.price_regular}}">
-                                {{shot.name}}
-                            </button>
-                        </div>
-                    {% endfor %}
-                    <div class="col-2">
-                        <button class="btn open_drink">
-                            Open Drink
-                        </button>
-                    </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Dash
+                    </button>
                 </div>
-                <!--  Food Products Buttons  -->
-                <div class="row food_row">
-                    {% for food in foods %}
-                        <div class="col-2">
-                            <button class="btn {{food.category}} product_button" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}">
-                                {{food.name}}
-                            </button>
-                        </div>
-                    {% endfor %}
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        0.3
+                    </button>
                 </div>
-                <!--  Food Sizes, Gifts, Admin & Previous Drinks Buttons  -->
-                <div class="row">
-                    <div class="col-2">
-                        <button class="btn measure_button">
-                            Small
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn measure_button">
-                            Regular
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn measure_button">
-                            
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn gifts_button">
-                            Gifts
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn admin_button">
-                            Admin
-                        </button>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn previous_orders_button">
-                            Previous Orders
-                        </button>
-                    </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        0.4
+                    </button>
                 </div>
-                <input type="hidden" name="redirect_url" value="{{ request.path}}">
-            </form>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Pint
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Bottle
+                    </button>
+                </div>
+            </div>
+            <!--  Drink Products Buttons  -->
+            <div class="row">
+                {% for draught in draughts %}
+                    <div class="col-2">
+                        <button class="btn {{draught.category}} product_button" id="{{draught.id}}" name="{{draught.name}}" data-price_03="{{draught.price_03}}" data-price_04="{{draught.price_04}}" data-price_pint="{{draught.price_pint}}">
+                            {{draught.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for canandbottle in canandbottles %}
+                    <div class="col-2">
+                        <button class="btn {{canandbottle.category}} product_button" data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
+                            {{canandbottle.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for spirit in spirits %}
+                    <div class="col-2">
+                        <button class="btn {{spirit.category}} {{spirit.name}} product_button" data-price_single="{{spirit.price_single}}" data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
+                            {{spirit.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for softdrink in softdrinks %}
+                    <div class="col-2">
+                        <button class="btn {{softdrink.category}} product_button" data-price_dash="{{softdrink.price_dash}}" data-price_03="{{softdrink.price_03}}" data-price_04="{{softdrink.price_04}}" data-price_pint="{{softdrink.price_pint}}" data-price_bottle="{{softdrink.price_bottle}}">
+                            {{softdrink.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for hotnonalcoholic in hotnonalcoholics %}
+                    <div class="col-2">
+                        <button class="btn {{hotnonalcoholic.category}} product_button" data-price_regular="{{hotnonalcoholic.price_regular}}">
+                            {{hotnonalcoholic.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for hotalcoholic in hotalcoholics %}
+                    <div class="col-2">
+                        <button class="btn {{hotalcoholic.category}} product_button" data-price_regular="{{hotalcoholic.price_regular}}">
+                            {{hotalcoholic.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for hottoddy in hottoddys %}
+                    <div class="col-2">
+                        <button class="btn {{hottoddy.category}} product_button" data-price_regular="{{hotoddy.price_regular}}">
+                            {{hottoddy.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for shot in shots %}
+                    <div class="col-2">
+                        <button class="btn {{shot.category}} product_button" data-price_regular="{{shot.price_regular}}">
+                            {{shot.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+                <div class="col-2">
+                    <button class="btn open_drink">
+                        Open Drink
+                    </button>
+                </div>
+            </div>
+            <!--  Food Products Buttons  -->
+            <div class="row food_row">
+                {% for food in foods %}
+                    <div class="col-2">
+                        <button class="btn {{food.category}} product_button" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}">
+                            {{food.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+            <!--  Food Sizes, Gifts, Admin & Previous Drinks Buttons  -->
+            <div class="row">
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Small
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        Regular
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn measure_button">
+                        
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn gifts_button">
+                        Gifts
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn admin_button">
+                        Admin
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button class="btn previous_orders_button">
+                        Previous Orders
+                    </button>
+                </div>
+            </div>
+            <input type="hidden" name="redirect_url" value="{{ request.path}}">
         </div>
         <!--  Right Side of till with totals  -->
         <div class="col-5">
@@ -186,13 +183,27 @@
                 </div>
             </div>
             <div class="basket_div">
-                <div class="row product_lines_row">
+                <div class="row basket_rows_div" id="basket_rows_div">
+                    <div class="col-4" id="product_row_div">
+                        <h6>Product</h6>
+                    </div>
+                    <div class="col-1" id="qty_row_div">
+                        <h6>Qty</h6>
+                    </div>
+                    <div class="col" id="per_unit_row_div">
+                        <h6>€ Unit</h6>
+                    </div>
                     <div class="col">
-                        {% if basket_items %}
-                            <div class="table-responsive rounded"></div>
-                        {% else %}
-                            <p class="lead">No Items Added Yet</p>
-                        {% endif %}
+                        <h6>€ Total</h6>
+                    </div>
+                    <div class="col-1">
+                        <h6>Add</h6>
+                    </div>
+                    <div class="col-1">
+                        <h6>Sub</h6>
+                    </div>
+                    <div class="col-1">
+                        <h6>Del</h6>
                     </div>
                 </div>
                 <hr>
