@@ -175,7 +175,6 @@ if (filterMe) {
    }
 }
 
-
 // Fn to calculate grand totals in basket
 function basketGrandTotals(){
     console.log("Grand Total Fn fires");
@@ -185,7 +184,6 @@ function basketGrandTotals(){
     let products_qty = 0;
     for (let i = 0; i < qtys.length; i++) {
         products_qty += parseInt(qtys[i].innerHTML);
-        console.log("Total", products_qty);
 
         // Injects the total number of products on order
         let total_number_of_products = document.getElementById('total_number_of_products');
@@ -197,22 +195,50 @@ function basketGrandTotals(){
     let products_grand_total = 0;
     for (let i = 0; i < qtys.length; i++) {
         products_grand_total += parseFloat(line_totals[i].innerHTML, 2);
-        var rounded = products_grand_total.toFixed(2);
-        console.log("Total Value", rounded);
+        var products_grand_total_rounded = products_grand_total.toFixed(2);
 
         // Injects the total value of all products on order
         let products_total = document.getElementById('products_total');
-        products_total.innerHTML = "€" + rounded;
+        products_total.innerHTML = "€" + products_grand_total_rounded;
     }
 
     // Calculates total value of pfand to be paid. Uses qtys
     let pfand_calc = products_qty * 2;
-    console.log("Total Products Pfand", pfand_calc);
-
-    // Injects the total number of products on order
+    // Injects the pfand total
     let pfand_total = document.getElementById('pfand_total');
     pfand_total.innerHTML = "€" + pfand_calc.toFixed(2);
+
+    // Calculates total amount due
+    let total_due_calc = pfand_calc + Number(products_grand_total_rounded);
+    // Injects the pfand total
+    let total_amount_due = document.getElementById('total_due');
+    total_amount_due.setAttribute('value', total_due_calc.toFixed(2));
+    total_amount_due.innerHTML = "€" + total_due_calc.toFixed(2);
+
+    // Calculates the default tendered amount
+    document.getElementById("amount_tendered").value = total_due_calc.toFixed(2);
     
+    // Calculates amount of change due to the customer
+    let amount_tendered = document.getElementById('amount_tendered').value;
+    let total_change_calc = amount_tendered - total_due_calc.toFixed(2);
+    // Injects the pfand total
+    let total_change_due = document.getElementById('change_due');
+    total_change_due.innerHTML = "€" + total_change_calc.toFixed(2);
 }
 
-// https://www.youtube.com/watch?v=PoTGs38DR9E&t=56s
+// Fn to recalculate change due when a user manually enters a tendered amount
+document.getElementById("amount_tendered").addEventListener("keyup", myFunction);
+
+function myFunction() {
+    let amount_tendered = document.getElementById("amount_tendered").value;
+    let total_due = document.getElementById("total_due").value;
+    let total_due_number = Number(total_due);
+    console.log("total_due_number Type", typeof(total_due_number));
+    console.log("total_due_number ", total_due_number);
+    let total_change_calc = (amount_tendered - total_due_number);
+    console.log("total_change_calc ", total_change_calc);
+    
+    // // Injects the pfand total
+    // let total_change_due = document.getElementById('change_due');
+    // total_change_due.innerHTML = "€" + total_change_calc.toFixed(2);
+}
