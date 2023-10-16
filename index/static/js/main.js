@@ -92,7 +92,7 @@ $('.product_button').each( function(){
         if(product_names.includes(product_name)){
             console.log(product_name + " is there");
 
-            // Updates the product quantity each time the order button is clicked
+            // Updates the product quantity each time the product button is clicked
             let new_qty = document.getElementById(product_name + "_qty");
             new_qty.innerHTML = product_qty;
 
@@ -127,6 +127,30 @@ $('.product_button').each( function(){
 
             // Call the Fn to calculate line total
             lineTotalCalculation(price_03, counter);
+
+            // Injects the Add symbol onto a product line
+            let add_row = document.createElement('p');
+            add_row.classList.add('add_row');
+            add_row.setAttribute('id', product_name + "_unit");
+            add_row.innerHTML = '<i class="fa-solid fa-plus"></i>';
+            let add_row_div = document.getElementById("add_row_div");
+            add_row_div.appendChild(add_row);
+
+            // Injects the minus symbol onto a product line
+            let subtract_row = document.createElement('p');
+            subtract_row.classList.add('subtract_row');
+            subtract_row.setAttribute('id', product_name + "_unit");
+            subtract_row.innerHTML = '<i class="fa-solid fa-minus"></i>';
+            let subtract_row_div = document.getElementById("subtract_row_div");
+            subtract_row_div.appendChild(subtract_row);
+
+            // Injects the delete symbol onto a product line
+            let delete_row = document.createElement('p');
+            delete_row.classList.add('delete_row');
+            delete_row.setAttribute('id', product_name + "_unit");
+            delete_row.innerHTML = '<i class="fa-solid fa-trash"></i>';
+            let delete_row_div = document.getElementById("delete_row_div");
+            delete_row_div.appendChild(delete_row);
         }
 
         // Fn to calculate the line total for a product and inject that amount into the column
@@ -135,17 +159,16 @@ $('.product_button').each( function(){
             let line_total = initital_line_total.toFixed(2);
             console.log("Total Line Price", line_total);
 
-            let num = 5.56789;
-            let n = num.toFixed(2);
-
             // Fn to see if a name is already in the Product Names array
             if(product_names.includes(product_name)){
 
-                // Updates the product quantity each time the order button is clicked
+                // Updates the line total each time the product button is clicked
                 let new_total = document.getElementById(product_name + "_line_total");
                 new_total.innerHTML = line_total;
 
             } else {
+
+                // Injects initial line total for new product into basket
                 let line_total_row = document.createElement('p');
                 line_total_row.classList.add('line_total_row');
                 line_total_row.setAttribute('id', product_name + "_line_total");

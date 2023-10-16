@@ -163,6 +163,19 @@ form {
 .product_row,
 .qty_row,
 .per_unit_row,
-.line_total_row {
+.line_total_row,
+.add_row,
+.subtract_row,
+.delete_row {
     margin: 0;
+}
+
+.add_row,
+.subtract_row,
+.delete_row {
+    font-size: 1rem;
+}
+
+.delete_row {
+    color: red;
 }
