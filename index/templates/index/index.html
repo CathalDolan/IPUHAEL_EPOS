@@ -8,32 +8,32 @@
             <!--  Drinks Sizes Buttons -->
             <div class="row" id="measurement_row">
                 <div class="col-2">
-                    <button class="btn measure_button">
+                    <button class="btn measure_button" id="double_button">
                         Double
                     </button>
                 </div>
                 <div class="col-2">
-                    <button class="btn measure_button">
+                    <button class="btn measure_button" id="dash_button">
                         Dash
                     </button>
                 </div>
                 <div class="col-2">
-                    <button class="btn measure_button">
+                    <button class="btn measure_button" id="03_button">
                         0.3
                     </button>
                 </div>
                 <div class="col-2">
-                    <button class="btn measure_button">
+                    <button class="btn measure_button" id="04_button" onclick="updateSize('0.4', 'data-price_04')">
                         0.4
                     </button>
                 </div>
                 <div class="col-2">
-                    <button class="btn measure_button">
+                    <button class="btn measure_button" id="pint_button">
                         Pint
                     </button>
                 </div>
                 <div class="col-2">
-                    <button class="btn measure_button">
+                    <button class="btn measure_button" id="bottle_button">
                         Bottle
                     </button>
                 </div>
@@ -293,6 +293,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="test_div">
+            
         </div>
     </div>
 {% endblock %}

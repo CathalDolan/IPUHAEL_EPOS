@@ -12,7 +12,7 @@ $('.product_button').each( function(){
 
         // Extracting data from the product
         product_details.product_name = $(this).attr('name');
-        let product_name = product_details.product_name
+        let product_name = product_details.product_name;
         product_details.id = $(this).attr('id');
         let id = product_details.id;
         product_details.price_03 = $(this).attr('data-price_03');
@@ -43,7 +43,7 @@ $('.product_button').each( function(){
         product_details.qty = counter;
         let product_qty = product_details.qty;
 
-        // Fn to see if a name is already in the Product Names array
+        // Fn to see if a name is already in the Product Names dictionary
         if(product_names.includes(product_name)){
             console.log(product_name + " is there");
 
@@ -91,12 +91,32 @@ $('.product_button').each( function(){
             let add_row = document.createElement('button');
             add_row.classList.add('add_button', 'basket_edit_button');
             add_row.setAttribute('id', product_name + "_add");
-            // add_row.setAttribute('onclick', 'totalClick(1)');
+            // add_row.setAttribute('onclick', 'totalClick()');
             add_row.innerHTML = '<i class="fa-solid fa-plus"></i>';
             let add_row_div = document.getElementById("add_row_div");
             add_row_div.appendChild(add_row);
+            $('.test_div').append(
+                `<div class="row">
+                    <div class="col">   
+                        <p class="product_row">${product_name}</p>
+                    </div>
+                    <div class="col">   
+                        <p class="product_row">${qty_row}</p>
+                    </div>
+                    <div class="col">   
+                        <p class="product_row">${per_unit_row}</p>
+                    </div>
+                    <div class="col">
+                        <button class="add_button basket_edit_button">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                <button class="subtract_button basket_edit_button">
+                    <i class="fa-solid fa-minus"></i>
+                </button>`
+            )
 
-            // Injects the minus symbol onto a product line
+            // Injects the Minus symbol onto a product line
             let subtract_row = document.createElement('button');
             subtract_row.classList.add('subtract_button', 'basket_edit_button');
             subtract_row.setAttribute('id', product_name + "_subtract");
@@ -104,7 +124,7 @@ $('.product_button').each( function(){
             let subtract_row_div = document.getElementById("subtract_row_div");
             subtract_row_div.appendChild(subtract_row);
 
-            // Injects the delete symbol onto a product line
+            // Injects the Delete symbol onto a product line
             let delete_row = document.createElement('button');
             delete_row.classList.add('delete_button', 'basket_edit_button');
             delete_row.setAttribute('id', product_name + "_delete");
@@ -147,15 +167,30 @@ $('.product_button').each( function(){
     });
 });
 
-// Fn to increment or decrement the line product quantities
-// function totalClick(click){
-//     const add_button = document.querySelectorAll('.add_button');
-//     console.log("add button", add_button);
+// Fn to choose product size and corresponding name and price
+function updateSize(size, price_code){
+    console.log("size, price", size, price_code);
+}
+
+//FN to increment
+$('.add_button').on('click', function(){
+    console.log("Stuff");
+})
+
+$('.test_div').click(function(){
+    console.log("Test Div", this);
+
+})
+
+// function totalClick(){
+//     let add_button = document.querySelectorAll('.add_button');
+//     console.log($(this));
 // }
 
 // const divs = document.querySelectorAll('.add_button');
 // divs.forEach(el => el.addEventListener('click', event => {
 //   console.log(event.target.getAttribute("class"));
+//   console.log("Print me");
 // }));
 
 // const add_button = document.querySelectorAll('.add_button');
@@ -166,14 +201,14 @@ $('.product_button').each( function(){
 //   });
 // });
 
-let filterMe = document.querySelectorAll(".add_button");
-if (filterMe) {
-   for(const x of filterMe) {
-      x.addEventListener('click', function() {
-        console.log('something', this);
-      });
-   }
-}
+// let filterMe = document.querySelectorAll(".add_button");
+// if (filterMe) {
+//    for(const x of filterMe) {
+//       x.addEventListener('click', function() {
+//         console.log('something', this);
+//       });
+//    }
+// }
 
 // Fn to calculate grand totals in basket
 function basketGrandTotals(){
@@ -228,7 +263,6 @@ function basketGrandTotals(){
 
 // Fn to recalculate change due when a user manually enters a tendered amount
 document.getElementById("amount_tendered").addEventListener("keyup", myFunction);
-
 function myFunction() {
     let amount_tendered = document.getElementById("amount_tendered").value;
     let total_due = document.getElementById("total_due").value;
