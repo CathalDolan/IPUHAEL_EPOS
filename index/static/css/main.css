@@ -99,7 +99,8 @@ body {
     width: 62px;
 }
 
-.basket_div {
+.basket_div,
+.basket_edit_button {
     background-color: rgb(209, 205, 205);
     width: 100%;
 }
@@ -176,6 +177,10 @@ form {
     font-size: 1rem;
 }
 
-.delete_row {
+.delete_button {
     color: red;
+}
+
+.basket_edit_button {
+    border: none;
 }

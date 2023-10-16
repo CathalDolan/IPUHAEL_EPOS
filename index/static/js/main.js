@@ -5,65 +5,6 @@ let products = "";
 let product_names = [];
 let product_details = {};
 
-// Fn to put product name once only into the basket
-// and to add the unit price to the basket
-// for (let i=0; i < buttons.length; i++) {
-//     buttons[i].addEventListener('click', (element) => {
-        
-//         products = buttons[i].innerHTML;
-//         // var price = products
-//         console.log((element));
-
-//         // Allows a product name to be displayed only once.
-//         if(product_names.includes(products)){
-//             console.log("Product and price is already in basket");
-//         }else{
-//             const product_row = document.createElement('p');
-//                 product_row.classList.add('product_row');
-//                 product_row.innerHTML = products;
-
-//                 let product_row_div = document.getElementById("product_row_div");
-//                 product_row_div.appendChild(product_row);
-
-//             // Puts the product unit price into basket
-//             const per_unit_row = document.createElement('p');
-//             per_unit_row.classList.add('per_unit_row');
-//             per_unit_row.setAttribute('id', products + 'per_unit_row');
-//             per_unit_row.innerHTML = "Hello"; // Needs to be unit price
-//             let per_unit_row_div = document.getElementById("per_unit_row_div");
-//             per_unit_row_div.appendChild(per_unit_row);
-//         }
-//         product_names.push(products);
-//     })
-// }
-
-// var counter = 0;
-// $('.product_button').click( function(){
-
-//     product_names.product_name = $(this).attr('name');
-//     product_name = product_names.product_name
-//     product_names.id = $(this).attr('id');
-//     id1 = product_names.id;
-//     product_names.price_03 = $(this).attr('data-price_03');
-//     product_names.price_04 = $(this).attr('data-price_04');
-//     product_names.price_pint = $(this).attr('data-price_pint');
-//     product_names.price_330 = $(this).attr('data-price_330');
-//     product_names.qty = 0;
-
-//     counter++;
-//     console.log("counter", counter);
-//     product_names.qty = counter;
-
-//     window.localStorage.setItem(product_name, JSON.stringify(product_names));
-//     var meta1 = JSON.parse(window.localStorage.getItem(product_name));
-//     console.log("meta1 Product Name", meta1.product_name);
-//     console.log("meta1 Product Qty", meta1.qty);
-
-//     console.log("Product Details", product_names);
-//     }
-// )
-
-// Counts the number of times each button is clicked.
 $('.product_button').each( function(){
 
     var counter = 0;
@@ -82,6 +23,20 @@ $('.product_button').each( function(){
         let price_pint = product_details.price_pint
         product_details.price_330 = $(this).attr('data-price_330');
         let price_330 = product_details.price_330
+        product_details.price_440 = $(this).attr('data-price_440');
+        let price_440 = product_details.price_440
+        product_details.price_single = $(this).attr('data-price_single');
+        let price_single = product_details.price_single
+        product_details.price_double = $(this).attr('data-price_double');
+        let price_double = product_details.price_double
+        product_details.price_bottle = $(this).attr('data-price_bottle');
+        let price_bottle = product_details.price_bottle
+        product_details.price_dash = $(this).attr('data-price_dash');
+        let price_dash = product_details.price_dash
+        product_details.price_regular = $(this).attr('data-price_regular');
+        let price_regular = product_details.price_regular
+        product_details.price_small = $(this).attr('data-price_small');
+        let price_small = product_details.price_small
 
         // Creates a variable that increments with each click
         counter++;
@@ -99,6 +54,9 @@ $('.product_button').each( function(){
             // Call the Fn to calculate line total
             lineTotalCalculation(price_03, product_qty);
 
+            // Call the Fn to calculate grand totals
+            basketGrandTotals();
+
         } else {
             console.log (product_name + " is not there");
 
@@ -113,6 +71,7 @@ $('.product_button').each( function(){
             let qty_row = document.createElement('p');
             qty_row.classList.add('qty_row');
             qty_row.setAttribute('id', product_name + "_qty");
+            qty_row.setAttribute('value', counter);
             qty_row.innerHTML = counter;
             let qty_row_div = document.getElementById("qty_row_div");
             qty_row_div.appendChild(qty_row);
@@ -121,7 +80,7 @@ $('.product_button').each( function(){
             let per_unit_row = document.createElement('p');
             per_unit_row.classList.add('per_unit_row');
             per_unit_row.setAttribute('id', product_name + "_unit");
-            per_unit_row.innerHTML = price_03;
+            per_unit_row.innerHTML = "€" + price_03;
             let per_unit_row_div = document.getElementById("per_unit_row_div");
             per_unit_row_div.appendChild(per_unit_row);
 
@@ -129,28 +88,32 @@ $('.product_button').each( function(){
             lineTotalCalculation(price_03, counter);
 
             // Injects the Add symbol onto a product line
-            let add_row = document.createElement('p');
-            add_row.classList.add('add_row');
-            add_row.setAttribute('id', product_name + "_unit");
+            let add_row = document.createElement('button');
+            add_row.classList.add('add_button', 'basket_edit_button');
+            add_row.setAttribute('id', product_name + "_add");
+            // add_row.setAttribute('onclick', 'totalClick(1)');
             add_row.innerHTML = '<i class="fa-solid fa-plus"></i>';
             let add_row_div = document.getElementById("add_row_div");
             add_row_div.appendChild(add_row);
 
             // Injects the minus symbol onto a product line
-            let subtract_row = document.createElement('p');
-            subtract_row.classList.add('subtract_row');
-            subtract_row.setAttribute('id', product_name + "_unit");
+            let subtract_row = document.createElement('button');
+            subtract_row.classList.add('subtract_button', 'basket_edit_button');
+            subtract_row.setAttribute('id', product_name + "_subtract");
             subtract_row.innerHTML = '<i class="fa-solid fa-minus"></i>';
             let subtract_row_div = document.getElementById("subtract_row_div");
             subtract_row_div.appendChild(subtract_row);
 
             // Injects the delete symbol onto a product line
-            let delete_row = document.createElement('p');
-            delete_row.classList.add('delete_row');
-            delete_row.setAttribute('id', product_name + "_unit");
+            let delete_row = document.createElement('button');
+            delete_row.classList.add('delete_button', 'basket_edit_button');
+            delete_row.setAttribute('id', product_name + "_delete");
             delete_row.innerHTML = '<i class="fa-solid fa-trash"></i>';
             let delete_row_div = document.getElementById("delete_row_div");
             delete_row_div.appendChild(delete_row);
+
+            // Call the Fn to calculate grand totals
+            basketGrandTotals();
         }
 
         // Fn to calculate the line total for a product and inject that amount into the column
@@ -184,5 +147,72 @@ $('.product_button').each( function(){
     });
 });
 
+// Fn to increment or decrement the line product quantities
+// function totalClick(click){
+//     const add_button = document.querySelectorAll('.add_button');
+//     console.log("add button", add_button);
+// }
+
+// const divs = document.querySelectorAll('.add_button');
+// divs.forEach(el => el.addEventListener('click', event => {
+//   console.log(event.target.getAttribute("class"));
+// }));
+
+// const add_button = document.querySelectorAll('.add_button');
+// add_button.forEach(box => {
+//   box.addEventListener('click', function handleClick(event) {
+//     console.log('box clicked', event);
+//     box.setAttribute('style', 'background-color: yellow;');
+//   });
+// });
+
+let filterMe = document.querySelectorAll(".add_button");
+if (filterMe) {
+   for(const x of filterMe) {
+      x.addEventListener('click', function() {
+        console.log('something', this);
+      });
+   }
+}
+
+
+// Fn to calculate grand totals in basket
+function basketGrandTotals(){
+    console.log("Grand Total Fn fires");
+
+    // Calculates total number of products in basket
+    let qtys = document.getElementsByClassName("qty_row");
+    let products_qty = 0;
+    for (let i = 0; i < qtys.length; i++) {
+        products_qty += parseInt(qtys[i].innerHTML);
+        console.log("Total", products_qty);
+
+        // Injects the total number of products on order
+        let total_number_of_products = document.getElementById('total_number_of_products');
+        total_number_of_products.innerHTML = products_qty;
+    }
+
+    // Calculates total value of all products in basket
+    let line_totals = document.getElementsByClassName("line_total_row");
+    let products_grand_total = 0;
+    for (let i = 0; i < qtys.length; i++) {
+        products_grand_total += parseFloat(line_totals[i].innerHTML, 2);
+        var rounded = products_grand_total.toFixed(2);
+        console.log("Total Value", rounded);
+
+        // Injects the total value of all products on order
+        let products_total = document.getElementById('products_total');
+        products_total.innerHTML = "€" + rounded;
+    }
+
+    // Calculates total value of pfand to be paid. Uses qtys
+    let pfand_calc = products_qty * 2;
+    console.log("Total Products Pfand", pfand_calc);
+
+    // Injects the total number of products on order
+    let pfand_total = document.getElementById('pfand_total');
+    pfand_total.innerHTML = "€" + pfand_calc.toFixed(2);
+    
+}
 
 // https://www.youtube.com/watch?v=PoTGs38DR9E&t=56s
