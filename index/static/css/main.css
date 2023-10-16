@@ -162,6 +162,7 @@ form {
 
 .product_row,
 .qty_row,
-.per_unit_row {
+.per_unit_row,
+.line_total_row {
     margin: 0;
 }
