@@ -176,3 +176,32 @@ $('.product_button').each( function(){
        
     });
 });
+
+
+// function totalClick(){
+//     let add_button = document.querySelectorAll('.add_button');
+//     console.log($(this));
+// }
+
+// const divs = document.querySelectorAll('.add_button');
+// divs.forEach(el => el.addEventListener('click', event => {
+//   console.log(event.target.getAttribute("class"));
+//   console.log("Print me");
+// }));
+
+// const add_button = document.querySelectorAll('.add_button');
+// add_button.forEach(box => {
+//   box.addEventListener('click', function handleClick(event) {
+//     console.log('box clicked', event);
+//     box.setAttribute('style', 'background-color: yellow;');
+//   });
+// });
+
+// let filterMe = document.querySelectorAll(".add_button");
+// if (filterMe) {
+//    for(const x of filterMe) {
+//       x.addEventListener('click', function() {
+//         console.log('something', this);
+//       });
+//    }
+// }

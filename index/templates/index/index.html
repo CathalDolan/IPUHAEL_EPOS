@@ -42,56 +42,56 @@
             <div class="row">
                 {% for draught in draughts %}
                     <div class="col-2">
-                        <button class="btn {{draught.category}} product_button" id="{{draught.id}}" name="{{draught.name}}" data-price_03="{{draught.price_03}}" data-price_04="{{draught.price_04}}" data-price_pint="{{draught.price_pint}}">
+                        <button class="btn {{draught.category}} product_button" id="{{draught.id}}" data-name="{{draught.name}}" data-price_03="{{draught.price_03}}" data-price_04="{{draught.price_04}}" data-price_pint="{{draught.price_pint}}">
                             {{draught.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for canandbottle in canandbottles %}
                     <div class="col-2">
-                        <button class="btn {{canandbottle.category}} product_button" id="{{canandbottle.id}}" name="{{canandbottle.name}}" data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
+                        <button class="btn {{canandbottle.category}} product_button" id="{{canandbottle.id}}" data-name="{{canandbottle.name}}" data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
                             {{canandbottle.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for spirit in spirits %}
                     <div class="col-2">
-                        <button class="btn {{spirit.category}} {{spirit.name}} product_button" id="{{spirit.id}}" name="{{spirit.name}}" data-price_single="{{spirit.price_single}}" data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
+                        <button class="btn {{spirit.category}} {{spirit.name}} product_button" id="{{spirit.id}}" data-name="{{spirit.name}}" data-price_single="{{spirit.price_single}}" data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
                             {{spirit.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for softdrink in softdrinks %}
                     <div class="col-2">
-                        <button class="btn {{softdrink.category}} product_button" id="{{softdrink.id}}" name="{{softdrink.name}}" data-price_dash="{{softdrink.price_dash}}" data-price_03="{{softdrink.price_03}}" data-price_04="{{softdrink.price_04}}" data-price_pint="{{softdrink.price_pint}}" data-price_bottle="{{softdrink.price_bottle}}">
+                        <button class="btn {{softdrink.category}} product_button" id="{{softdrink.id}}" data-name="{{softdrink.name}}" data-price_dash="{{softdrink.price_dash}}" data-price_03="{{softdrink.price_03}}" data-price_04="{{softdrink.price_04}}" data-price_pint="{{softdrink.price_pint}}" data-price_bottle="{{softdrink.price_bottle}}">
                             {{softdrink.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for hotnonalcoholic in hotnonalcoholics %}
                     <div class="col-2">
-                        <button class="btn {{hotnonalcoholic.category}} product_button" id="{{hotnonalcoholic.id}}" name="{{hotnonalcoholic.name}}" data-price_regular="{{hotnonalcoholic.price_regular}}">
+                        <button class="btn {{hotnonalcoholic.category}} product_button" id="{{hotnonalcoholic.id}}" data-name="{{hotnonalcoholic.name}}" data-price_regular="{{hotnonalcoholic.price_regular}}">
                             {{hotnonalcoholic.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for hotalcoholic in hotalcoholics %}
                     <div class="col-2">
-                        <button class="btn {{hotalcoholic.category}} product_button" id="{{hotalcoholic.id}}" name="{{hotalcoholic.name}}" data-price_regular="{{hotalcoholic.price_regular}}">
+                        <button class="btn {{hotalcoholic.category}} product_button" id="{{hotalcoholic.id}}" data-name="{{hotalcoholic.name}}" data-price_regular="{{hotalcoholic.price_regular}}">
                             {{hotalcoholic.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for hottoddy in hottoddys %}
                     <div class="col-2">
-                        <button class="btn {{hottoddy.category}} product_button" id="{{hottoddy.id}}" name="{{hottoddy.name}}" data-price_regular="{{hotoddy.price_regular}}">
+                        <button class="btn {{hottoddy.category}} product_button" id="{{hottoddy.id}}" data-name="{{hottoddy.name}}" data-price_regular="{{hotoddy.price_regular}}">
                             {{hottoddy.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for shot in shots %}
                     <div class="col-2">
-                        <button class="btn {{shot.category}} product_button" id="{{shot.id}}" name="{{shot.name}}" data-price_regular="{{shot.price_regular}}">
+                        <button class="btn {{shot.category}} product_button" id="{{shot.id}}" data-name="{{shot.name}}" data-price_regular="{{shot.price_regular}}">
                             {{shot.name}}
                         </button>
                     </div>
@@ -185,30 +185,30 @@
             </div>
             <!-- Basket Div -->
             <div class="basket_div">
-                <div class="products_rows_div">
-                    <div class="row product_row" id="product_headings_row">
-                        <div class="col-4" id="product_row_div">
-                            <h6>Product</h6>
-                        </div>
-                        <div class="col-1" id="qty_row_div">
-                            <h6>Qty</h6>
-                        </div>
-                        <div class="col" id="per_unit_row_div">
-                            <h6>€ Unit</h6>
-                        </div>
-                        <div class="col" id="line_total_row_div">
-                            <h6>€ Total</h6>
-                        </div>
-                        <div class="col-1" id="add_row_div">
-                            <h6>Add</h6>
-                        </div>
-                        <div class="col-1" id="subtract_row_div">
-                            <h6>Sub</h6>
-                        </div>
-                        <div class="col-1" id="delete_row_div">
-                            <h6>Del</h6>
-                        </div>
+                <div class="row product_row" id="product_headings_row">
+                    <div class="col-4" id="product_row_div">
+                        <h6>Product</h6>
                     </div>
+                    <div class="col-1" id="qty_row_div">
+                        <h6>Qty</h6>
+                    </div>
+                    <div class="col" id="per_unit_row_div">
+                        <h6>€ Unit</h6>
+                    </div>
+                    <div class="col" id="line_total_row_div">
+                        <h6>€ Total</h6>
+                    </div>
+                    <div class="col-1" id="add_row_div">
+                        <h6>Add</h6>
+                    </div>
+                    <div class="col-1" id="subtract_row_div">
+                        <h6>Sub</h6>
+                    </div>
+                    <div class="col-1" id="delete_row_div">
+                        <h6>Del</h6>
+                    </div>
+                </div>
+                <div class="products_rows_div">
                 </div>
                 <hr>
                 <!-- Totals Rows -->

@@ -3,106 +3,77 @@ console.log("JS is Working")
 let buttons = document.querySelectorAll('.product_button');
 let products = "";
 let product_names = [];
+let all_products = []; //{"name": "Guinness"}
 let product_details = {};
+    
+$('.product_button').click( function(){
 
-$('.product_button').each( function(){
+    let product_name = $(this).attr('data-name');
+    let product_price = $(this).attr('data-price_04');
+    console.log("Product Name", product_name);
+    let product = all_products.filter(item => item.name == product_name);
+    let product_index = all_products.findIndex(item => item.name == product_name);
+    console.log("Product Name 2", product);
 
-    var counter = 0;
-    $( this ).click( function(){
+    if(product.length > 0){ //.length > 0
+        console.log("Yes");
 
-        // Extracting data from the product
-        product_details.product_name = $(this).attr('name');
-        let product_name = product_details.product_name;
-        product_details.id = $(this).attr('id');
-        let id = product_details.id;
-        product_details.price_03 = $(this).attr('data-price_03');
-        let price_03 = product_details.price_03
-        product_details.price_04 = $(this).attr('data-price_04');
-        let price_04 = product_details.price_04
-        product_details.price_pint = $(this).attr('data-price_pint');
-        let price_pint = product_details.price_pint
-        product_details.price_330 = $(this).attr('data-price_330');
-        let price_330 = product_details.price_330
-        product_details.price_440 = $(this).attr('data-price_440');
-        let price_440 = product_details.price_440
-        product_details.price_single = $(this).attr('data-price_single');
-        let price_single = product_details.price_single
-        product_details.price_double = $(this).attr('data-price_double');
-        let price_double = product_details.price_double
-        product_details.price_bottle = $(this).attr('data-price_bottle');
-        let price_bottle = product_details.price_bottle
-        product_details.price_dash = $(this).attr('data-price_dash');
-        let price_dash = product_details.price_dash
-        product_details.price_regular = $(this).attr('data-price_regular');
-        let price_regular = product_details.price_regular
-        product_details.price_small = $(this).attr('data-price_small');
-        let price_small = product_details.price_small
+        all_products[product_index].qty +=1;
+        all_products[product_index].line_total = Number(all_products[product_index].price * all_products[product_index].qty).toFixed(2);
+        
+        console.log("All Products If Yes", all_products);
 
-        // Creates a variable that increments with each click
-        counter++;
-        product_details.qty = counter;
-        let product_qty = product_details.qty;
+    } else {
+        console.log("No");
 
-        // Fn to see if a name is already in the Product Names dictionary
-        if(product_names.includes(product_name)){
-            console.log(product_name + " is there");
-
-            // Updates the product quantity each time the product button is clicked
-            let new_qty = document.getElementById(product_name + "_qty");
-            new_qty.innerHTML = product_qty;
-
-            // Updates the product line total each time the product button is clicked
-            let new_line_total = (product_qty * price_03);
-            product_details.product_line_total = new_line_total;
-            let line_total = document.getElementById(product_name + "_line_total");
-            line_total.innerHTML = "€" + new_line_total.toFixed(2);
-
-            // Call the Fn to calculate grand totals
-            basketGrandTotals();
-
-            console.log("Product Details ", product_details);
-
-        } else {
-            console.log (product_name + " is not there");
-
-            $('.products_rows_div').append(
-                `<div class="row product_row" id="product_headings_row">
-                    <div class="col-4" id="product_row_div">
-                        <p class="product_row">${product_name}</p>
-                    </div>
-                    <div class="col-1" id="qty_row_div">
-                        <p class="product_row" id="${product_name}_qty">${product_qty}</p>
-                    </div>
-                    <div class="col" id="per_unit_row_div">
-                        <p class="product_row">€${price_03}</p>
-                    </div>
-                    <div class="col" id="line_total_row_div">
-                        <p class="product_row" id="${product_name}_line_total">€${price_03}</p>
-                    </div>
-                    <div class="col-1" id="add_row_div">
-                        <button class="add_button basket_edit_button">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                    </div>
-                    <div class="col-1" id="subtract_row_div">
-                        <button class="subtract_button basket_edit_button">
-                            <i class="fa-solid fa-minus"></i>
-                        </button>
-                    </div>
-                    <div class="col-1" id="delete_row_div">
-                        <button class="delete_button basket_edit_button">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                </div>`
-            )
-
-            basketGrandTotals();
+        product = {
+            "name": product_name,
+            "qty": 1,
+            "price": product_price,
+            "line_total": product_price
         }
 
-        product_names.push(product_name);
-        console.log("Product Names ", product_names);
-       
+        all_products.push(product);
+        console.log("All Products if No", all_products);
+
+    }
+
+    $('.products_rows_div').empty();
+    console.log("LOOP START");
+    $.each(all_products, function(){
+        console.log("All Products", this);
+
+        $('.products_rows_div').append(
+            `<div class="row product_row" id="product_headings_row">
+                <div class="col-4" id="product_row_div">
+                    <p class="product_row">${this.name}</p>
+                </div>
+                <div class="col-1" id="qty_row_div">
+                    <p class="product_row">${this.qty}</p>
+                </div>
+                <div class="col" id="per_unit_row_div">
+                    <p class="product_row">€${this.price}</p>
+                </div>
+                <div class="col" id="line_total_row_div">
+                    <p class="product_row">€${this.line_total}</p>
+                </div>
+                <div class="col-1" id="add_row_div">
+                    <button class="add_button basket_edit_button">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+                <div class="col-1" id="subtract_row_div">
+                    <button class="subtract_button basket_edit_button">
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
+                </div>
+                <div class="col-1" id="delete_row_div">
+                    <button class="delete_button basket_edit_button">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>`
+        );
     });
 });
 
@@ -112,46 +83,19 @@ function updateSize(size, price_code){
 }
 
 //FN to increment
-$('.add_button').on('click', function(){
-    console.log("Stuff");
+$('.add_button').click( function(){
+    console.log("Stuff", this);
 })
-
-$('.test_div').click(function(){
-    console.log("Test Div", this);
-
-})
-
-// function totalClick(){
-//     let add_button = document.querySelectorAll('.add_button');
-//     console.log($(this));
-// }
-
-// const divs = document.querySelectorAll('.add_button');
-// divs.forEach(el => el.addEventListener('click', event => {
-//   console.log(event.target.getAttribute("class"));
-//   console.log("Print me");
-// }));
-
-// const add_button = document.querySelectorAll('.add_button');
-// add_button.forEach(box => {
-//   box.addEventListener('click', function handleClick(event) {
-//     console.log('box clicked', event);
-//     box.setAttribute('style', 'background-color: yellow;');
-//   });
-// });
-
-// let filterMe = document.querySelectorAll(".add_button");
-// if (filterMe) {
-//    for(const x of filterMe) {
-//       x.addEventListener('click', function() {
-//         console.log('something', this);
-//       });
-//    }
-// }
 
 // Fn to calculate grand totals in basket
 function basketGrandTotals(){
     console.log("Grand Total Fn fires");
+
+    for (let k in product_details) {
+        console.log(k + ' is ' + product_details[k])
+        console.log("Totals", k);
+    }
+    // console.log("Total lines", total_product_value);
 
     // Calculates total number of products in basket
     let qtys = document.getElementsByClassName("qty_row");
