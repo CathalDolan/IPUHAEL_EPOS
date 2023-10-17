@@ -3,17 +3,42 @@ console.log("JS is Working")
 let buttons = document.querySelectorAll('.product_button');
 let all_products = [];
 let product_details = {};
-    
+let product_size = "";
+let total_prodcts_qty;
+let line_totals_total;
+let pfand_total;
+let total_due;
+
+$('.measure_button').click( function(){
+
+    product_size = $(this).attr("data-price");
+    console.log("product_size fn1", product_size);
+    // Extracts the sizes for each product when button is clicked
+    let size = $(this).attr("data-price");
+    console.log("Sizes", size);
+    console.log("type of Sizes", typeof(size));
+
+    let product_buttons = $('.product_buttons_div').find(`[data-${size}]`).addClass('highlight');
+    console.log("Product Buttons", product_buttons);
+
+
+});
+
 $('.product_button').click( function(){
 
+    console.log("product_size Fn2", product_size);
+    let abbrv_size = product_size.split("_");
     let product_name = $(this).attr('data-name');
-    let product_price = $(this).attr('data-price_04');
+    let product_price = $(this).attr('data-' + product_size);
+    if (product_price == undefined){
+        console.log("undefined");
+    }
     // console.log("Product Name", product_name);
-    let product = all_products.filter(item => item.name == product_name);
-    let product_index = all_products.findIndex(item => item.name == product_name);
-    // console.log("Product Name 2", product);
+    let product = all_products.filter(item => item.name == `${product_name} ${abbrv_size[1]}`);
+    let product_index = all_products.findIndex(item => item.name == `${product_name} ${abbrv_size[1]}`);
+    console.log("Product Name 2", product);
 
-    if(product.length > 0){ //.length > 0
+    if(product.length > 0){
         console.log("Yes");
 
         all_products[product_index].qty +=1;
@@ -25,7 +50,7 @@ $('.product_button').click( function(){
         console.log("No");
 
         product = {
-            "name": product_name,
+            "name": product_name + " " + abbrv_size[1],
             "qty": 1,
             "price": product_price,
             "line_total": product_price
@@ -39,11 +64,6 @@ $('.product_button').click( function(){
     update_basket();
     
 });
-
-// Fn to choose product size and corresponding name and price
-function updateSize(size, price_code){
-    console.log("size, price", size, price_code);
-}
 
 //FN to Increment a product line in the basket
 $(document).on('click', '.add_button', function(){
@@ -96,11 +116,10 @@ $(document).on('click', '.delete_button', function(){
     update_basket();
 })
 
-
+// FN to update the cart each time something is added or removed
 function update_basket(){ 
 
     $('.products_rows_div').empty();
-    console.log("LOOP START");
 
     $.each(all_products, function(){
         console.log("All Products", typeof(this.name));
@@ -137,63 +156,47 @@ function update_basket(){
             </div>`
         ); // onclick="totalClick(${this.name})
     });
+
+    basketGrandTotals();
 }
 
 // Fn to calculate grand totals in basket
 function basketGrandTotals(){
     console.log("Grand Total Fn fires");
+    console.log("All Products", all_products);
 
-    for (let k in product_details) {
-        console.log(k + ' is ' + product_details[k])
-        console.log("Totals", k);
-    }
-    // console.log("Total lines", total_product_value);
-
-    // Calculates total number of products in basket
-    let qtys = document.getElementsByClassName("qty_row");
-    let products_qty = 0;
-    for (let i = 0; i < qtys.length; i++) {
-        products_qty += parseInt(qtys[i].innerHTML);
-
-        // Injects the total number of products on order
-        let total_number_of_products = document.getElementById('total_number_of_products');
-        total_number_of_products.innerHTML = products_qty;
-    }
-
-    // Calculates total value of all products in basket
-    let line_totals = document.getElementsByClassName("line_total_row");
-    let products_grand_total = 0;
-    for (let i = 0; i < qtys.length; i++) {
-        products_grand_total += parseFloat(line_totals[i].innerHTML, 2);
-        var products_grand_total_rounded = products_grand_total.toFixed(2);
-
-        // Injects the total value of all products on order
-        let products_total = document.getElementById('products_total');
-        products_total.innerHTML = "€" + products_grand_total_rounded;
-    }
-
-    // Calculates total value of pfand to be paid. Uses qtys
-    let pfand_calc = products_qty * 2;
-    // Injects the pfand total
-    let pfand_total = document.getElementById('pfand_total');
-    pfand_total.innerHTML = "€" + pfand_calc.toFixed(2);
-
-    // Calculates total amount due
-    let total_due_calc = pfand_calc + Number(products_grand_total_rounded);
-    // Injects the pfand total
-    let total_amount_due = document.getElementById('total_due');
-    total_amount_due.setAttribute('value', total_due_calc.toFixed(2));
-    total_amount_due.innerHTML = "€" + total_due_calc.toFixed(2);
-
-    // Calculates the default tendered amount
-    document.getElementById("amount_tendered").value = total_due_calc.toFixed(2);
     
-    // Calculates amount of change due to the customer
-    let amount_tendered = document.getElementById('amount_tendered').value;
-    let total_change_calc = amount_tendered - total_due_calc.toFixed(2);
-    // Injects the pfand total
-    let total_change_due = document.getElementById('change_due');
-    total_change_due.innerHTML = "€" + total_change_calc.toFixed(2);
+    total_prodcts_qty = 0;
+    line_totals_total = 0;
+    $(all_products).each(function(){
+
+        // Calculates total number of products in the basket
+        let xyz = this.qty;
+        total_prodcts_qty += parseInt(xyz);
+        $('#total_number_of_products').text(total_prodcts_qty);
+
+        // Calculates total value of all products in basket
+        let zyx = parseFloat(this.line_total);
+        line_totals_total += zyx;
+        $('#products_total').text("€" + line_totals_total.toFixed(2));
+
+        // Calculates total value of pfand to be paid
+        pfand_total = total_prodcts_qty * 2;
+        $('#pfand_total').text("€" + pfand_total.toFixed(2));
+
+        // Calculates total amount due
+        total_due = pfand_total + line_totals_total;
+        $('#total_due').text("€" + total_due.toFixed(2));
+
+        // Amount Tendered
+        $('#amount_tendered').val(total_due.toFixed(2));
+
+        // Change Due
+        let amount_tendered = document.getElementById('amount_tendered').value;
+        let total_change_calc = amount_tendered - total_due.toFixed(2);
+        $('#change_due').text("€" + total_change_calc.toFixed(2));
+
+    });
 }
 
 // Fn to recalculate change due when a user manually enters a tendered amount

@@ -25,7 +25,7 @@ body {
     font-weight: 500;
 }
 
-.draught {
+.draught:not(#measurement_row .measure_button) {
     background-color: darkgreen;
 }
 
@@ -87,6 +87,11 @@ body {
 .foods,
 .measure_button {
     color: black;
+}
+
+.highlight {
+    color: palevioletred;
+    border: 1px solid pink;
 }
 
 .food_row {

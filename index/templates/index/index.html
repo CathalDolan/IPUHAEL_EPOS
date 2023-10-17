@@ -8,38 +8,38 @@
             <!--  Drinks Sizes Buttons -->
             <div class="row" id="measurement_row">
                 <div class="col-2">
-                    <button class="btn measure_button" id="double_button">
+                    <button class="btn measure_button draught price_double" id="double_button" data-price="price_double">
                         Double
                     </button>
                 </div>
                 <div class="col-2">
-                    <button class="btn measure_button" id="dash_button">
+                    <button class="btn measure_button price_dash" id="dash_button" data-price="price_dash">
                         Dash
                     </button>
                 </div>
                 <div class="col-2">
-                    <button class="btn measure_button" id="03_button">
+                    <button class="btn measure_button price_03" id="03_button" data-price="price_03">
                         0.3
                     </button>
                 </div>
                 <div class="col-2">
-                    <button class="btn measure_button" id="04_button" onclick="updateSize('0.4', 'data-price_04')">
+                    <button class="btn measure_button price_04" id="04_button" data-price="price_04">
                         0.4
                     </button>
                 </div>
                 <div class="col-2">
-                    <button class="btn measure_button" id="pint_button">
+                    <button class="btn measure_button price_pint" id="pint_button" data-price="price_pint">
                         Pint
                     </button>
                 </div>
                 <div class="col-2">
-                    <button class="btn measure_button" id="bottle_button">
+                    <button class="btn measure_button price_bottle" id="bottle_button" data-price="price_bottle">
                         Bottle
                     </button>
                 </div>
             </div>
             <!--  Drink Products Buttons  -->
-            <div class="row">
+            <div class="row product_buttons_div">
                 {% for draught in draughts %}
                     <div class="col-2">
                         <button class="btn {{draught.category}} product_button" id="{{draught.id}}" data-name="{{draught.name}}" data-price_03="{{draught.price_03}}" data-price_04="{{draught.price_04}}" data-price_pint="{{draught.price_pint}}">
@@ -147,6 +147,7 @@
             </div>
             <input type="hidden" name="redirect_url" value="{{ request.path}}">
         </div>
+
         <!--  Right Side of till with totals  -->
         <div class="col-5">
             <p>Thursday 25/6/2023, 13:45. Logged in as: Cathal</p>
@@ -211,7 +212,7 @@
                 <div class="products_rows_div">
                 </div>
                 <hr>
-                <!-- Totals Rows -->
+                <!-- Grand Totals Rows -->
                 <div class="row totals_row">
                     <div class="col-6">
                         <p>Number of Products:</p>
@@ -232,6 +233,7 @@
                         <p id="change_due">€</p>
                     </div>
                 </div>
+                <!-- € Notes Row -->
                 <div class="row €_notes_row">
                     <div class="col-3">
                         <button class="btn €_notes_button" data-€5="5">
