@@ -204,13 +204,21 @@ function basketGrandTotals(){
 }
 
 // Fn to recalculate change due when a user manually enters a tendered amount
-$('#amount_tendered').on('keyup', function (){
+// $('#amount_tendered').on('keyup', function (){
 
+//     amount_tendered = document.getElementById('amount_tendered').value;
+//     change_due = (amount_tendered - total_due);
+//     $('#change_due').text("€" + change_due.toFixed(2));
+
+// })
+
+const element = document.getElementById("amount_tendered");
+element.addEventListener("keyup", recalculate_change_due);
+function recalculate_change_due(){
     amount_tendered = document.getElementById('amount_tendered').value;
     change_due = (amount_tendered - total_due);
     $('#change_due').text("€" + change_due.toFixed(2));
-
-})
+}
 
 // Fn to put € note values into the AMount Tender input once clicked
 $('.€_notes_button').click( function(){
@@ -220,6 +228,6 @@ $('.€_notes_button').click( function(){
     $('#amount_tendered').val(note_value);
 
     // Call recalculate change due function
-
+    recalculate_change_due()
 
 });
