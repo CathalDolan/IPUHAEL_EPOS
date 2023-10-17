@@ -152,7 +152,7 @@ form {
     padding: 0;
 }
 
-#basket_rows_div {
+.products_rows_div {
     text-overflow: ellipsis;
     min-height: 100px;
     max-height: 200px;
