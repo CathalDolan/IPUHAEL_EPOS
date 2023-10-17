@@ -4,6 +4,8 @@ let buttons = document.querySelectorAll('.product_button');
 let all_products = [];
 let product_details = {};
 let product_size = "";
+
+// All are used in teh Grand Totals section
 let total_prodcts_qty;
 let line_totals_total;
 let pfand_total;
@@ -202,13 +204,22 @@ function basketGrandTotals(){
 }
 
 // Fn to recalculate change due when a user manually enters a tendered amount
-$(document).on('keyup', '#amount_tendered', function(){
+$('#amount_tendered').on('keyup', function (){
 
     amount_tendered = document.getElementById('amount_tendered').value;
-    console.log("amount_tendered", amount_tendered);
     change_due = (amount_tendered - total_due);
-    console.log("change_due ", change_due);
     $('#change_due').text("€" + change_due.toFixed(2));
 
 })
 
+// Fn to put € note values into the AMount Tender input once clicked
+$('.€_notes_button').click( function(){
+
+    note_value = $(this).attr("data-value");
+    console.log("note_value fn1", note_value);
+    $('#amount_tendered').val(note_value);
+
+    // Call recalculate change due function
+
+
+});
