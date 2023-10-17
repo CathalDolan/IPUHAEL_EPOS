@@ -1,19 +1,17 @@
 console.log("JS is Working")
 
 let buttons = document.querySelectorAll('.product_button');
-let products = "";
-let product_names = [];
-let all_products = []; //{"name": "Guinness"}
+let all_products = [];
 let product_details = {};
     
 $('.product_button').click( function(){
 
     let product_name = $(this).attr('data-name');
     let product_price = $(this).attr('data-price_04');
-    console.log("Product Name", product_name);
+    // console.log("Product Name", product_name);
     let product = all_products.filter(item => item.name == product_name);
     let product_index = all_products.findIndex(item => item.name == product_name);
-    console.log("Product Name 2", product);
+    // console.log("Product Name 2", product);
 
     if(product.length > 0){ //.length > 0
         console.log("Yes");
@@ -38,10 +36,74 @@ $('.product_button').click( function(){
 
     }
 
+    update_basket();
+    
+});
+
+// Fn to choose product size and corresponding name and price
+function updateSize(size, price_code){
+    console.log("size, price", size, price_code);
+}
+
+//FN to Increment a product line in the basket
+$(document).on('click', '.add_button', function(){
+
+    let product_name = $(this).parent().siblings(':first').children().text();
+    let product = all_products.filter(item => item.name == product_name);
+    let product_index = all_products.findIndex(item => item.name == product_name);
+
+    if(product.length > 0){
+
+        all_products[product_index].qty +=1;
+        all_products[product_index].line_total = Number(all_products[product_index].price * all_products[product_index].qty).toFixed(2);
+    
+    }
+    update_basket();
+})
+
+//FN to Decrement a product line in the basket
+$(document).on('click', '.subtract_button', function(){
+
+    let product_name = $(this).parent().siblings(':first').children().text();
+    let product = all_products.filter(item => item.name == product_name);
+    let product_index = all_products.findIndex(item => item.name == product_name);
+    
+    // Initial If Statement used to prevent decrementor going below 0
+    if(all_products[product_index].qty < 2){
+
+        console.log("Nothing ever happens");
+    
+    } else {
+
+        if(product.length > 0){
+            all_products[product_index].qty -=1;
+            all_products[product_index].line_total = Number(all_products[product_index].price * all_products[product_index].qty).toFixed(2);
+        
+        }
+    }
+    update_basket();
+})
+
+// FN to Delete a product line from the basket
+$(document).on('click', '.delete_button', function(){
+    console.log("Delete Function Fires");
+
+    let product_name = $(this).parent().siblings(':first').children().text();
+    let product_index = all_products.findIndex(item => item.name == product_name);
+    console.log("product_index", product_index);
+    all_products.splice(product_index, 1);
+
+    update_basket();
+})
+
+
+function update_basket(){ 
+
     $('.products_rows_div').empty();
     console.log("LOOP START");
+
     $.each(all_products, function(){
-        console.log("All Products", this);
+        console.log("All Products", typeof(this.name));
 
         $('.products_rows_div').append(
             `<div class="row product_row" id="product_headings_row">
@@ -58,9 +120,9 @@ $('.product_button').click( function(){
                     <p class="product_row">€${this.line_total}</p>
                 </div>
                 <div class="col-1" id="add_row_div">
-                    <button class="add_button basket_edit_button">
+                    <div class="add_button basket_edit_button">
                         <i class="fa-solid fa-plus"></i>
-                    </button>
+                    </div>
                 </div>
                 <div class="col-1" id="subtract_row_div">
                     <button class="subtract_button basket_edit_button">
@@ -73,19 +135,9 @@ $('.product_button').click( function(){
                     </button>
                 </div>
             </div>`
-        );
+        ); // onclick="totalClick(${this.name})
     });
-});
-
-// Fn to choose product size and corresponding name and price
-function updateSize(size, price_code){
-    console.log("size, price", size, price_code);
 }
-
-//FN to increment
-$('.add_button').click( function(){
-    console.log("Stuff", this);
-})
 
 // Fn to calculate grand totals in basket
 function basketGrandTotals(){
