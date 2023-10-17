@@ -7,7 +7,9 @@ let product_size = "";
 let total_prodcts_qty;
 let line_totals_total;
 let pfand_total;
+let amount_tendered;
 let total_due;
+let change_due;
 
 $('.measure_button').click( function(){
 
@@ -165,7 +167,6 @@ function basketGrandTotals(){
     console.log("Grand Total Fn fires");
     console.log("All Products", all_products);
 
-    
     total_prodcts_qty = 0;
     line_totals_total = 0;
     $(all_products).each(function(){
@@ -189,28 +190,25 @@ function basketGrandTotals(){
         $('#total_due').text("€" + total_due.toFixed(2));
 
         // Amount Tendered
+        amount_tendered = total_due;
         $('#amount_tendered').val(total_due.toFixed(2));
 
         // Change Due
-        let amount_tendered = document.getElementById('amount_tendered').value;
-        let total_change_calc = amount_tendered - total_due.toFixed(2);
-        $('#change_due').text("€" + total_change_calc.toFixed(2));
+        amount_tendered = document.getElementById('amount_tendered').value;
+        change_due = amount_tendered - total_due.toFixed(2);
+        $('#change_due').text("€" + change_due.toFixed(2));
 
     });
 }
 
 // Fn to recalculate change due when a user manually enters a tendered amount
-document.getElementById("amount_tendered").addEventListener("keyup", myFunction);
-function myFunction() {
-    let amount_tendered = document.getElementById("amount_tendered").value;
-    let total_due = document.getElementById("total_due").value;
-    let total_due_number = Number(total_due);
-    console.log("total_due_number Type", typeof(total_due_number));
-    console.log("total_due_number ", total_due_number);
-    let total_change_calc = (amount_tendered - total_due_number);
-    console.log("total_change_calc ", total_change_calc);
-    
-    // // Injects the pfand total
-    // let total_change_due = document.getElementById('change_due');
-    // total_change_due.innerHTML = "€" + total_change_calc.toFixed(2);
-}
+$(document).on('keyup', '#amount_tendered', function(){
+
+    amount_tendered = document.getElementById('amount_tendered').value;
+    console.log("amount_tendered", amount_tendered);
+    change_due = (amount_tendered - total_due);
+    console.log("change_due ", change_due);
+    $('#change_due').text("€" + change_due.toFixed(2));
+
+})
+
