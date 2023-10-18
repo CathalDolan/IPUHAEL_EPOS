@@ -160,11 +160,10 @@ form {
 
 .products_rows_div {
     text-overflow: ellipsis;
-    min-height: 100px;
+    min-height: 25px;
     max-height: 200px;
     height:auto;
     overflow-y:auto;
-    margin-top:20px;
 }
 
 .product_row,
@@ -200,7 +199,13 @@ form {
 }
 input {
     height: 30px;
+    width: 75px;
 }
 #change_due_label {
     margin-top: 18px;
+}
+
+/*-- Pfand Modea --*/
+.pfand__modal_button {
+    margin-bottom: 10px;
 }

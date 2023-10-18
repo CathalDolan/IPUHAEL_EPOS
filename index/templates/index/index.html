@@ -49,7 +49,7 @@
                 {% endfor %}
                 {% for canandbottle in canandbottles %}
                     <div class="col-2">
-                        <button class="btn {{canandbottle.category}} product_button" id="{{canandbottle.id}}" data-name="{{canandbottle.name}}" data-price_default="{{canandbottle.price_pint}} data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
+                        <button class="btn {{canandbottle.category}} product_button" id="{{canandbottle.id}}" data-name="{{canandbottle.name}}" data-price_default="{{canandbottle.price_pint}}" data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
                             {{canandbottle.name}}
                         </button>
                     </div>
@@ -149,8 +149,11 @@
         </div>
 
         <!--  Right Side of till with totals  -->
-        <div class="col-5">
-            <p>Thursday 25/6/2023, 13:45. Logged in as: Cathal</p>
+        <div class="col-5 text-end">
+            <p>
+                <span id="time_and_date"></span>
+                <span>Logged in as: Cathal</span>
+            </p>
             <!--  Pfand Buttons  -->
             <div class="row pfand_button_row">
                 <div class="col">
@@ -174,18 +177,105 @@
                     </button>
                 </div>
                 <div class="col">
-                    <button class="btn pfand_button" data-value="5">
-                        5
+                    <button class="btn pfand_button"data-bs-toggle="modal" data-bs-target="#pfand_modal" data-value="0">
+                        5+
                     </button>
                 </div>
+                <!-- Pfand Modal -->
+                <div class="modal" id="pfand_modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                    
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Number of Items Returned</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                    
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="5">
+                                    5
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="6">
+                                    6
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="7">
+                                    7
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="8">
+                                    8
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="9">
+                                    9
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="10">
+                                    10
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="11">
+                                    11
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="12">
+                                    12
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="13">
+                                    13
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="14">
+                                    14
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="15">
+                                    15
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="16">
+                                    16
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="17">
+                                    17
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="18">
+                                    18
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="19">
+                                    19
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="20">
+                                    20
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="21">
+                                    21
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="22">
+                                    22
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="23">
+                                    23
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="24">
+                                    24
+                                </button>
+                                <button class="btn pfand_button pfand__modal_button" data-bs-dismiss="modal" data-value="25">
+                                    25
+                                </button>
+                            </div>
+                    
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+                    
+                        </div>
+                    </div>
+                </div>
                 <div class="col">
-                    <button class="btn pfand_button">
-                        6+
+                    <button class="btn pfand_button" data-value="0">
+                        Reset
                     </button>
                 </div>
             </div>
             <!-- Basket Div -->
             <div class="basket_div">
+                <!-- Line Items -->
                 <div class="row product_row" id="product_headings_row">
                     <div class="col-4" id="product_row_div">
                         <h6>Product</h6>
@@ -213,7 +303,7 @@
                 </div>
                 <hr>
                 <!-- Grand Totals Rows -->
-                <div class="row totals_row">
+                <div class="row totals_row" id="grand_totals_row_div">
                     <div class="col-6">
                         <p class="grand_totals_row grand_totals_row_label">Number of Products:</p>
                         <p class="grand_totals_row grand_totals_row_label">Drinks / Food Total:</p>
@@ -223,14 +313,14 @@
                         <p class="grand_totals_row grand_totals_row_label" id="change_due_label">Change Due:</p>
                     </div>
                     <div class="col-6">
-                        <p class="grand_totals_row" id="total_number_of_products"># Products</p>
-                        <p class="grand_totals_row" id="products_total">€</p>
-                        <p class="grand_totals_row" id="pfand_total">€</p>
-                        <p class="grand_totals_row" id="total_due">€</p>
-                        <span class="euro_symbol">€
-                            <input type="number" class="grand_totals_row" id="amount_tendered">
+                        <p class="grand_totals_row grand_totals_figure" id="total_number_of_products"># Products</p>
+                        <p class="grand_totals_row grand_totals_figure" id="products_total">€</p>
+                        <p class="grand_totals_row grand_totals_figure" id="pfand_total">€</p>
+                        <p class="grand_totals_row grand_totals_figure" id="total_due">€</p>
+                        <span class="euro_symbol" id="amount_tendered_span">€
+                            <input type="number" class="grand_totals_row grand_totals_figure" id="amount_tendered">
                         </span>
-                        <p class="grand_totals_row" id="change_due">€</p>
+                        <p class="grand_totals_row grand_totals_figure" id="change_due">€</p>
                     </div>
                 </div>
                 <!-- € Notes Row -->
@@ -270,27 +360,54 @@
                             <img src="{% static 'images/€200_note.png' %}">
                         </button>
                     </div>
-                    <div class="col-3 €_notes_button">
-                        <button class="btn specials_button">
+                    <div class="col-3">
+                        <button class="btn specials_button" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
                             Specials
                         </button>
                     </div>
-                    <div class="col-3 €_notes_button">
+                    <!-- The Specials Modal -->
+                    <div class="modal" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Specials</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                        
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <button class="btn btn-primary">2 for 1</button>
+                                    <button class="btn btn-primary"></buttonclass>50% Off</button>
+                                    <button class="btn btn-primary"></buttonclass>Buy 10 Get 11th Free</button>
+                                    <button class="btn btn-primary"></buttonclass>6 Shot Special</button> <!-- This better done in calculations -->
+                                </div>
+                        
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+                        
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
                         <button class="btn unpaid_button">
                             Unpaid
                         </button>
                     </div>
-                    <div class="col-3 €_notes_button">
+                    <div class="col-3">
                         <button class="btn finish_button">
                             Finish
                         </button>
                     </div>
-                    <div class="col-3 €_notes_button">
+                    <div class="col-3">
                         <button class="btn cancel_button">
                             Cancel
                         </button>
                     </div>
-                    <div class="col-3 €_notes_button">
+                    <div class="col-3">
                         <button class="btn waste_button">
                             Waste
                         </button>
@@ -298,13 +415,15 @@
                 </div>
             </div>
         </div>
+
         <!-- For Test TOP BE REMOVED -->
-        <div class="test_div">
+        <!-- <div class="test_div">
             <div class="col-1" id="add_row_div">
                 <div class="add_button basket_edit_button">
                     <i class="fa-solid fa-plus"></i>
                 </div>
             </div>
-        </div>
+        </div> -->
+
     </div>
 {% endblock %}

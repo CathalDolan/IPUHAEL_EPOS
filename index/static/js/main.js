@@ -1,5 +1,33 @@
 console.log("JS is Working")
 
+//Fn to set time
+window.onload = function() {
+    setInterval(function(){
+        let date = new Date();
+        let day = date.getDay();
+        let displayDate = date.toLocaleDateString();
+        let displayTime = date.toLocaleTimeString();
+
+        if(day == 1){
+            day = "Monday";
+        } else if (day == 2){
+            day = "Tuesday";
+        } else if (day == 3){
+            day = "Wednesday";
+        } else if (day == 4){
+            day = "Thursday";
+        } else if (day == 5){
+            day = "Friday";
+        } else if (day == 6){
+            day = "Saturday";
+        } else if (day == 7){
+            day = "Sunday";
+        }
+
+        document.getElementById('time_and_date').innerHTML = day + " " + displayDate + " " + displayTime;
+    }, 1000); // 1000 milliseconds = 1 second
+}
+
 let buttons = document.querySelectorAll('.product_button');
 let all_products = [];
 let product_details = {};
@@ -186,23 +214,27 @@ function basketGrandTotals(){
         $('#products_total').text("€" + line_totals_total.toFixed(2));
 
         // Calculates total value of pfand to be paid
-        console.log("Pfand Total", pfand_total);
-        console.log("pfand_buttons_total", pfand_buttons_total);
         pfand_total = total_products_qty * 2;
-
+        let new_pfand_total;
         if(pfand_buttons_total == 0){
-            console.log("No Pfand Buttons Pressed");
+            // Calculates pfand due due
             $('#pfand_total').text("€" + pfand_total.toFixed(2));
+
+            // Calculates total amount due
+            total_due = pfand_total + line_totals_total;
+            $('#total_due').text("€" + total_due.toFixed(2));
         } else {
-            console.log("pfand Button has been pressed");
-            let new_pfand_total = pfand_total - pfand_buttons_total;
-            console.log("new_pfand_total", new_pfand_total);
+            // Calculates pfand due due
+            new_pfand_total = pfand_total - pfand_buttons_total;
             $('#pfand_total').text("€" + new_pfand_total.toFixed(2));
+
+            // Calculates total amount due
+            total_due = new_pfand_total + line_totals_total;
+            $('#total_due').text("€" + total_due.toFixed(2));
         }
         
         // Calculates total amount due
-        total_due = pfand_total + line_totals_total;
-        $('#total_due').text("€" + total_due.toFixed(2));
+        
 
         // Amount Tendered
         amount_tendered = total_due;
@@ -259,10 +291,24 @@ $('.pfand_button').click( function(){
         $('#pfand_total').text("€" + minus_return_value);
     } else {
         let recalc_pfand_amount = (pfand_total - plus_return_value).toFixed(2);
-        console.log("recalc_pfand_amount", recalc_pfand_amount);
         $('#pfand_total').text("€" + recalc_pfand_amount);
 
         // Call recalculate change due function
         basketGrandTotals();
     }
+});
+
+// Fn to empty basket once Cancel button is clicked at bottom of Grand Total section
+
+$('.cancel_button').click( function(){
+    console.log("Cancel button fires");
+    all_products = [];
+    $('.products_rows_div').empty();
+    console.log("all_products", all_products);
+    $('#total_number_of_products').text("# Products");
+    $('#products_total').text("€");
+    $('#pfand_total').text("€");
+    $('#total_due').text("€");
+    $('#amount_tendered').val(0);
+    $('#change_due').text("€");
 });
