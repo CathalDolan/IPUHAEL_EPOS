@@ -6,7 +6,8 @@ let product_details = {};
 let product_size = "";
 
 // All are used in teh Grand Totals section
-let total_prodcts_qty;
+let pfand_buttons_total = 0;
+let total_products_qty;
 let line_totals_total;
 let pfand_total;
 let amount_tendered;
@@ -31,15 +32,16 @@ $('.measure_button').click( function(){
 $('.product_button').click( function(){
 
     console.log("product_size Fn2", product_size);
-    let abbrv_size = product_size.split("_");
+    let abbrv_size = product_size.split("_"); // Required when allocating variable sizs to products
     let product_name = $(this).attr('data-name');
+    console.log("product_name", product_name);
     let product_price = $(this).attr('data-price_default');
     if (product_price == undefined){
         console.log("undefined");
     }
     // console.log("Product Name", product_name);
-    let product = all_products.filter(item => item.name == `${product_name} ${abbrv_size[1]}`);
-    let product_index = all_products.findIndex(item => item.name == `${product_name} ${abbrv_size[1]}`);
+    let product = all_products.filter(item => item.name == `${product_name}`); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products
+    let product_index = all_products.findIndex(item => item.name == `${product_name}`); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products
     console.log("Product Name 2", product);
 
     if(product.length > 0){
@@ -169,14 +171,14 @@ function basketGrandTotals(){
     console.log("Grand Total Fn fires");
     console.log("All Products", all_products);
 
-    total_prodcts_qty = 0;
+    total_products_qty = 0;
     line_totals_total = 0;
     $(all_products).each(function(){
 
         // Calculates total number of products in the basket
         let xyz = this.qty;
-        total_prodcts_qty += parseInt(xyz);
-        $('#total_number_of_products').text(total_prodcts_qty);
+        total_products_qty += parseInt(xyz);
+        $('#total_number_of_products').text(total_products_qty);
 
         // Calculates total value of all products in basket
         let zyx = parseFloat(this.line_total);
@@ -184,9 +186,20 @@ function basketGrandTotals(){
         $('#products_total').text("€" + line_totals_total.toFixed(2));
 
         // Calculates total value of pfand to be paid
-        pfand_total = total_prodcts_qty * 2;
-        $('#pfand_total').text("€" + pfand_total.toFixed(2));
+        console.log("Pfand Total", pfand_total);
+        console.log("pfand_buttons_total", pfand_buttons_total);
+        pfand_total = total_products_qty * 2;
 
+        if(pfand_buttons_total == 0){
+            console.log("No Pfand Buttons Pressed");
+            $('#pfand_total').text("€" + pfand_total.toFixed(2));
+        } else {
+            console.log("pfand Button has been pressed");
+            let new_pfand_total = pfand_total - pfand_buttons_total;
+            console.log("new_pfand_total", new_pfand_total);
+            $('#pfand_total').text("€" + new_pfand_total.toFixed(2));
+        }
+        
         // Calculates total amount due
         total_due = pfand_total + line_totals_total;
         $('#total_due').text("€" + total_due.toFixed(2));
@@ -231,4 +244,25 @@ $('.€_notes_button').click( function(){
     // Call recalculate change due function
     recalculate_change_due()
 
+});
+
+// Fn to all Users input the number of Pfand items returned
+$('.pfand_button').click( function(){
+
+    let pfand_return_value = $(this).attr("data-value");
+    let minus_return_value = (pfand_return_value*-2).toFixed(2);
+    let plus_return_value = (pfand_return_value*2).toFixed(2);
+
+    pfand_buttons_total = pfand_return_value*2;
+
+    if(pfand_total == undefined){
+        $('#pfand_total').text("€" + minus_return_value);
+    } else {
+        let recalc_pfand_amount = (pfand_total - plus_return_value).toFixed(2);
+        console.log("recalc_pfand_amount", recalc_pfand_amount);
+        $('#pfand_total').text("€" + recalc_pfand_amount);
+
+        // Call recalculate change due function
+        basketGrandTotals();
+    }
 });

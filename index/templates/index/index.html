@@ -106,7 +106,7 @@
             <div class="row food_row">
                 {% for food in foods %}
                     <div class="col-2">
-                        <button class="btn {{food.category}} product_button" data-price_default="{{food.price_regular}} data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}">
+                        <button class="btn {{food.category}} product_button" id="{{food.id}}" data-name="{{food.name}}" data-price_default="{{food.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}">
                             {{food.name}}
                         </button>
                     </div>
@@ -154,27 +154,27 @@
             <!--  Pfand Buttons  -->
             <div class="row pfand_button_row">
                 <div class="col">
-                    <button class="btn pfand_button">
+                    <button class="btn pfand_button" data-value="1">
                         1
                     </button>
                 </div>
                 <div class="col">
-                    <button class="btn pfand_button">
+                    <button class="btn pfand_button" data-value="2">
                         2
                     </button>
                 </div>
                 <div class="col">
-                    <button class="btn pfand_button">
+                    <button class="btn pfand_button" data-value="3">
                         3
                     </button>
                 </div>
                 <div class="col">
-                    <button class="btn pfand_button">
+                    <button class="btn pfand_button" data-value="4">
                         4
                     </button>
                 </div>
                 <div class="col">
-                    <button class="btn pfand_button">
+                    <button class="btn pfand_button" data-value="5">
                         5
                     </button>
                 </div>
