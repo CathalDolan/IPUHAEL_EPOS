@@ -25,6 +25,10 @@ body {
     font-weight: 500;
 }
 
+.logged_in_as {
+    color: blue;
+}
+
 .draught:not(#measurement_row .measure_button) {
     background-color: darkgreen;
 }
@@ -141,7 +145,7 @@ hr {
     padding: 2px;
 } */
 
-.€_notes_button {
+.pay_method_button {
     /* padding: 0; */
     border: none;
     margin-top: 5px;

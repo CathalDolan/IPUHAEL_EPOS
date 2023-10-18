@@ -149,10 +149,10 @@
         </div>
 
         <!--  Right Side of till with totals  -->
-        <div class="col-5 text-end">
-            <p>
+        <div class="col-5">
+            <p class="text-end">
                 <span id="time_and_date"></span>
-                <span>Logged in as: Cathal</span>
+                <span class="logged_in_as">Logged in as: Cathal</span>
             </p>
             <!--  Pfand Buttons  -->
             <div class="row pfand_button_row">
@@ -326,37 +326,37 @@
                 <!-- € Notes Row -->
                 <div class="row €_notes_row">
                     <div class="col-3">
-                        <button class="btn €_notes_button" data-value="5">
+                        <button class="btn €_notes_button pay_method_button" data-value="5">
                             <img src="{% static 'images/€5_note.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn €_notes_button" data-value="10">
+                        <button class="btn €_notes_button pay_method_button" data-value="10">
                             <img src="{% static 'images/€10_note.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn €_notes_button" data-value="20">
+                        <button class="btn €_notes_button pay_method_button" data-value="20">
                             <img src="{% static 'images/€20_note.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn €_notes_button">
+                        <button class="btn pay_method_button" id="credit_card_button">
                             <img src="{% static 'images/credit_card_icon.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn €_notes_button" data-value="50">
+                        <button class="btn €_notes_button pay_method_button" data-value="50">
                             <img src="{% static 'images/€50_note.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn €_notes_button" data-value="100">
+                        <button class="btn €_notes_button pay_method_button" data-value="100">
                             <img src="{% static 'images/€100_note.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn €_notes_button" data-value="200">
+                        <button class="btn €_notes_button pay_method_button" data-value="200">
                             <img src="{% static 'images/€200_note.png' %}">
                         </button>
                     </div>

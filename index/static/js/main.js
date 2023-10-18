@@ -1,6 +1,6 @@
 console.log("JS is Working")
 
-//Fn to set time
+//Fn to set time and date
 window.onload = function() {
     setInterval(function(){
         let date = new Date();
@@ -233,12 +233,9 @@ function basketGrandTotals(){
             $('#total_due').text("€" + total_due.toFixed(2));
         }
         
-        // Calculates total amount due
-        
-
         // Amount Tendered
         amount_tendered = total_due;
-        $('#amount_tendered').val(total_due.toFixed(2));
+        // $('#amount_tendered').val(total_due.toFixed(2));
 
         // Change Due
         amount_tendered = document.getElementById('amount_tendered').value;
@@ -277,6 +274,16 @@ $('.€_notes_button').click( function(){
     recalculate_change_due()
 
 });
+
+// Fn to populate tendered amount when Credit Card button pressed
+const card_button = document.getElementById("credit_card_button");
+card_button.addEventListener("click", card_tendered);
+function card_tendered(){
+    console.log("card_tendered Fires");
+    // Amount Tendered
+    amount_tendered = total_due;
+    $('#amount_tendered').val(total_due.toFixed(2));
+}
 
 // Fn to all Users input the number of Pfand items returned
 $('.pfand_button').click( function(){
