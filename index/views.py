@@ -1,20 +1,22 @@
 from django.shortcuts import render, redirect
-from . models import Draught, HalfAndHalf, Shandy, CanAndBottle, Spirit, SoftDrink, HotNonAlcoholic, HotAlcoholic, HotToddy, Shot, Food
+from . models import Product, GrandTotal, LineItem
 
 
 def index(request):
     """ A view to return the index page """
-    draughts = Draught.objects.all()
-    halfandhalfs = HalfAndHalf.objects.all()
-    shandys = Shandy.objects.all()
-    canandbottles = CanAndBottle.objects.all()
-    spirits = Spirit.objects.all()
-    softdrinks = SoftDrink.objects.all()
-    hotnonalcoholics = HotNonAlcoholic.objects.all()
-    hotalcoholics = HotAlcoholic.objects.all()
-    hottoddys = HotToddy.objects.all()
-    shots = Shot.objects.all()
-    foods = Food.objects.all()
+    draughts = Product.objects.all().filter(category="draught")
+    for draught in draughts:
+        print(draught)
+    halfandhalfs = Product.objects.all().filter(category="halfandhalfs")
+    shandys = Product.objects.all().filter(category="shandys")
+    canandbottles = Product.objects.all().filter(category="cans_and_bottles")
+    spirits = Product.objects.all().filter(category="spirits_and_liquers")
+    softdrinks = Product.objects.all().filter(category="softdrinks")
+    hotnonalcoholics = Product.objects.all().filter(category="hot_nonalcoholics")
+    hotalcoholics = Product.objects.all().filter(category="hot_alcoholics")
+    hottoddys = Product.objects.all().filter(category="hot_toddys")
+    shots = Product.objects.all().filter(category="shots")
+    foods = Product.objects.all().filter(category="food")
     context = {
         'draughts': draughts,
         'halfandhalfs': halfandhalfs,

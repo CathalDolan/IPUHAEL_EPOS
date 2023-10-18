@@ -8,7 +8,7 @@
             <!--  Drinks Sizes Buttons -->
             <div class="row" id="measurement_row">
                 <div class="col-2">
-                    <button class="btn measure_button draught price_double" id="double_button" data-price="price_double">
+                    <button class="btn measure_button price_double" id="double_button" data-price="price_double">
                         Double
                     </button>
                 </div>
@@ -56,7 +56,7 @@
                 {% endfor %}
                 {% for spirit in spirits %}
                     <div class="col-2">
-                        <button class="btn {{spirit.category}} {{spirit.name}} product_button" id="{{spirit.id}}" data-name="{{spirit.name}}" data-price_default="{{spirit.price_single}}" data-price_single="{{spirit.price_single}}" data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
+                        <button class="btn {{spirit.category}} {{spirit.name}} product_button" id="{{spirit.id}}" data-name="{{spirit.name}}" data-price_default="{{spirit.price_default}}" data-price_single="{{spirit.price_default}}" data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
                             {{spirit.name}}
                         </button>
                     </div>

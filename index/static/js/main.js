@@ -59,15 +59,12 @@ $('.measure_button').click( function(){
 
 $('.product_button').click( function(){
 
-    console.log("product_size Fn2", product_size);
     let abbrv_size = product_size.split("_"); // Required when allocating variable sizs to products
     let product_name = $(this).attr('data-name');
     console.log("product_name", product_name);
     let product_price = $(this).attr('data-price_default');
-    if (product_price == undefined){
-        console.log("undefined");
-    }
-    // console.log("Product Name", product_name);
+    console.log("product_price", product_price);
+
     let product = all_products.filter(item => item.name == `${product_name}`); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products
     let product_index = all_products.findIndex(item => item.name == `${product_name}`); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products
     console.log("Product Name 2", product);
@@ -246,14 +243,6 @@ function basketGrandTotals(){
 }
 
 // Fn to recalculate change due when a user manually enters a tendered amount
-// $('#amount_tendered').on('keyup', function (){
-
-//     amount_tendered = document.getElementById('amount_tendered').value;
-//     change_due = (amount_tendered - total_due);
-//     $('#change_due').text("€" + change_due.toFixed(2));
-
-// })
-
 const element = document.getElementById("amount_tendered");
 element.addEventListener("keyup", recalculate_change_due);
 function recalculate_change_due(){
@@ -283,9 +272,10 @@ function card_tendered(){
     // Amount Tendered
     amount_tendered = total_due;
     $('#amount_tendered').val(total_due.toFixed(2));
+    recalculate_change_due();
 }
 
-// Fn to all Users input the number of Pfand items returned
+// Fn to allow Users input the number of Pfand items returned
 $('.pfand_button').click( function(){
 
     let pfand_return_value = $(this).attr("data-value");
@@ -306,7 +296,6 @@ $('.pfand_button').click( function(){
 });
 
 // Fn to empty basket once Cancel button is clicked at bottom of Grand Total section
-
 $('.cancel_button').click( function(){
     console.log("Cancel button fires");
     all_products = [];
