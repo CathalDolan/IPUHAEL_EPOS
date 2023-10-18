@@ -33,7 +33,7 @@ $('.product_button').click( function(){
     console.log("product_size Fn2", product_size);
     let abbrv_size = product_size.split("_");
     let product_name = $(this).attr('data-name');
-    let product_price = $(this).attr('data-' + product_size);
+    let product_price = $(this).attr('data-price_default');
     if (product_price == undefined){
         console.log("undefined");
     }
@@ -54,7 +54,7 @@ $('.product_button').click( function(){
         console.log("No");
 
         product = {
-            "name": product_name + " " + abbrv_size[1],
+            "name": product_name,
             "qty": 1,
             "price": product_price,
             "line_total": product_price
@@ -216,11 +216,12 @@ const element = document.getElementById("amount_tendered");
 element.addEventListener("keyup", recalculate_change_due);
 function recalculate_change_due(){
     amount_tendered = document.getElementById('amount_tendered').value;
+    // amount_tendered.select(); // Supposed to highlight all text in the input when it's clicked. Or clear input
     change_due = (amount_tendered - total_due);
     $('#change_due').text("€" + change_due.toFixed(2));
 }
 
-// Fn to put € note values into the AMount Tender input once clicked
+// Fn to put € note values into the Amount Tender input once clicked
 $('.€_notes_button').click( function(){
 
     note_value = $(this).attr("data-value");

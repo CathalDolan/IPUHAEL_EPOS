@@ -90,8 +90,9 @@ body {
 }
 
 .highlight {
-    color: palevioletred;
-    border: 1px solid pink;
+    /* color: palevioletred; */
+    border: 4px solid black;
+    font-weight: 700;
 }
 
 .food_row {
@@ -188,4 +189,18 @@ form {
 
 .basket_edit_button {
     border: none;
+}
+
+/*-- Grand Totals Section --*/
+.grand_totals_row_label {
+    font-weight: 500;
+}
+.grand_totals_row {
+    margin-bottom: 10px;
+}
+input {
+    height: 30px;
+}
+#change_due_label {
+    margin-top: 18px;
 }
