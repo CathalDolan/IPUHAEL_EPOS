@@ -217,3 +217,7 @@ input {
 .pfand__modal_button {
     margin-bottom: 10px;
 }
+
+.error {
+    border: 2px solid red;
+}

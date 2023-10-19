@@ -42,56 +42,56 @@
             <div class="row product_buttons_div">
                 {% for draught in draughts %}
                     <div class="col-2">
-                        <button class="btn {{draught.category}} product_button" id="{{draught.id}}" data-name="{{draught.name}}" data-price_default="{{draught.price_03}}" data-price_03="{{draught.price_03}}" data-price_04="{{draught.price_04}}" data-price_pint="{{draught.price_pint}}">
+                        <button class="btn {{draught.category}} product_button" id="{{draught.id}}" data-category="{{draught.category}}" data-name="{{draught.name}}" data-price_default="{{draught.price_03}}" data-price_03="{{draught.price_03}}" data-price_04="{{draught.price_04}}" data-price_pint="{{draught.price_pint}}">
                             {{draught.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for canandbottle in canandbottles %}
                     <div class="col-2">
-                        <button class="btn {{canandbottle.category}} product_button" id="{{canandbottle.id}}" data-name="{{canandbottle.name}}" data-price_default="{{canandbottle.price_pint}}" data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
+                        <button class="btn {{canandbottle.category}} product_button" id="{{canandbottle.id}}" data-category="{{canandbottle.category}}" data-name="{{canandbottle.name}}" data-price_default="{{canandbottle.price_pint}}" data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
                             {{canandbottle.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for spirit in spirits %}
                     <div class="col-2">
-                        <button class="btn {{spirit.category}} {{spirit.name}} product_button" id="{{spirit.id}}" data-name="{{spirit.name}}" data-price_default="{{spirit.price_default}}" data-price_single="{{spirit.price_default}}" data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
+                        <button class="btn {{spirit.category}} {{spirit.name}} product_button" id="{{spirit.id}}" data-category="{{spirit.category}}" data-name="{{spirit.name}}" data-price_default="{{spirit.price_default}}" data-price_single="{{spirit.price_default}}" data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
                             {{spirit.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for softdrink in softdrinks %}
                     <div class="col-2">
-                        <button class="btn {{softdrink.category}} product_button" id="{{softdrink.id}}" data-name="{{softdrink.name}}" data-price_default="{{softdrink.price_03}}" data-price_dash="{{softdrink.price_dash}}" data-price_03="{{softdrink.price_03}}" data-price_04="{{softdrink.price_04}}" data-price_pint="{{softdrink.price_pint}}" data-price_bottle="{{softdrink.price_bottle}}">
+                        <button class="btn {{softdrink.category}} product_button" id="{{softdrink.id}}" data-category="{{softdrink.category}}" data-name="{{softdrink.name}}" data-price_default="{{softdrink.price_03}}" data-price_dash="{{softdrink.price_dash}}" data-price_03="{{softdrink.price_03}}" data-price_04="{{softdrink.price_04}}" data-price_pint="{{softdrink.price_pint}}" data-price_bottle="{{softdrink.price_bottle}}">
                             {{softdrink.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for hotnonalcoholic in hotnonalcoholics %}
                     <div class="col-2">
-                        <button class="btn {{hotnonalcoholic.category}} product_button" id="{{hotnonalcoholic.id}}" data-name="{{hotnonalcoholic.name}}" data-price_default="{{hotnonalcoholic.price_default}}">
+                        <button class="btn {{hotnonalcoholic.category}} product_button" id="{{hotnonalcoholic.id}}" data-category="{{hotnonalcoholic.category}}" data-name="{{hotnonalcoholic.name}}" data-price_default="{{hotnonalcoholic.price_default}}">
                             {{hotnonalcoholic.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for hotalcoholic in hotalcoholics %}
                     <div class="col-2">
-                        <button class="btn {{hotalcoholic.category}} product_button" id="{{hotalcoholic.id}}" data-name="{{hotalcoholic.name}}" data-price_default="{{hotalcoholic.price_default}}">
+                        <button class="btn {{hotalcoholic.category}} product_button" id="{{hotalcoholic.id}}" data-category="{{hotalcoholic.category}}" data-name="{{hotalcoholic.name}}" data-price_default="{{hotalcoholic.price_default}}">
                             {{hotalcoholic.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for hottoddy in hottoddys %}
                     <div class="col-2">
-                        <button class="btn {{hottoddy.category}} product_button" id="{{hottoddy.id}}" data-name="{{hottoddy.name}}" data-price_default="{{hottoddy.price_default}}">
+                        <button class="btn {{hottoddy.category}} product_button" id="{{hottoddy.id}}" data-category="{{hottoddy.category}}" data-name="{{hottoddy.name}}" data-price_default="{{hottoddy.price_default}}">
                             {{hottoddy.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for shot in shots %}
                     <div class="col-2">
-                        <button class="btn {{shot.category}} product_button" id="{{shot.id}}" data-name="{{shot.name}}" data-price_default="{{shot.price_default}}">
+                        <button class="btn {{shot.category}} product_button" id="{{shot.id}}" data-category="{{shot.category}}" data-name="{{shot.name}}" data-price_default="{{shot.price_default}}">
                             {{shot.name}}
                         </button>
                     </div>
@@ -106,7 +106,7 @@
             <div class="row food_row">
                 {% for food in foods %}
                     <div class="col-2">
-                        <button class="btn {{food.category}} product_button" id="{{food.id}}" data-name="{{food.name}}" data-price_default="{{food.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}">
+                        <button class="btn {{food.category}} product_button" id="{{food.id}}" data-category="{{food.category}}" data-name="{{food.name}}" data-price_default="{{food.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}">
                             {{food.name}}
                         </button>
                     </div>
@@ -114,31 +114,67 @@
             </div>
             <!--  Food Sizes, Gifts, Admin & Previous Drinks Buttons  -->
             <div class="row">
+                <!-- Small Size Button -->
                 <div class="col-2">
                     <button class="btn measure_button">
                         Small
                     </button>
                 </div>
+                <!-- Regular Size Button -->
                 <div class="col-2">
                     <button class="btn measure_button">
                         Regular
                     </button>
                 </div>
+                <!-- Empty Button -->
                 <div class="col-2">
                     <button class="btn measure_button">
-                        
+                        <!-- Empty Button just to fill space -->
                     </button>
                 </div>
+
+                <!-- Gifts Button -->
                 <div class="col-2">
-                    <button class="btn gifts_button">
+                    <button class="btn gifts_button" data-bs-toggle="modal" data-bs-target="#gifts_modal">
                         Gifts
                     </button>
                 </div>
+                <!-- The Gifts Modal -->
+                <div class="modal" id="gifts_modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                    
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Gifts Selection</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                    
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                {% for gift in gifts %}
+                                    <button class="btn {{gift.category}} product_button" id="{{gift.id}}" data-category="{{gift.category}}" data-name="{{gift.name}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                        {{gift.name}}
+                                    </button>
+                                {% endfor %}
+                            </div>
+                    
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+                    
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Button -->
                 <div class="col-2">
                     <button class="btn admin_button">
                         Admin
                     </button>
                 </div>
+                <!-- Previous Orders Button -->
                 <div class="col-2">
                     <button class="btn previous_orders_button">
                         Previous Orders
@@ -326,47 +362,48 @@
                 <!-- € Notes Row -->
                 <div class="row €_notes_row">
                     <div class="col-3">
-                        <button class="btn €_notes_button pay_method_button" data-value="5">
+                        <button class="btn €_notes_button pay_method_button" data-value="5" data-payment_method="cash">
                             <img src="{% static 'images/€5_note.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn €_notes_button pay_method_button" data-value="10">
+                        <button class="btn €_notes_button pay_method_button" data-value="10" data-payment_method="cash">
                             <img src="{% static 'images/€10_note.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn €_notes_button pay_method_button" data-value="20">
+                        <button class="btn €_notes_button pay_method_button" data-value="20" data-payment_method="cash">
                             <img src="{% static 'images/€20_note.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn pay_method_button" id="credit_card_button">
+                        <button class="btn pay_method_button" id="credit_card_button" data-payment_method="credit_card">
                             <img src="{% static 'images/credit_card_icon.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn €_notes_button pay_method_button" data-value="50">
+                        <button class="btn €_notes_button pay_method_button" data-value="50" data-payment_method="Cash">
                             <img src="{% static 'images/€50_note.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn €_notes_button pay_method_button" data-value="100">
+                        <button class="btn €_notes_button pay_method_button" data-value="100" data-payment_method="Cash">
                             <img src="{% static 'images/€100_note.png' %}">
                         </button>
                     </div>
                     <div class="col-3">
-                        <button class="btn €_notes_button pay_method_button" data-value="200">
+                        <button class="btn €_notes_button pay_method_button" data-value="200" data-payment_method="Cash">
                             <img src="{% static 'images/€200_note.png' %}">
                         </button>
                     </div>
+                    <!-- The Specials Button -->
                     <div class="col-3">
-                        <button class="btn specials_button" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <button class="btn specials_button" type="button" data-bs-toggle="modal" data-bs-target="#specialsModal">
                             Specials
                         </button>
                     </div>
                     <!-- The Specials Modal -->
-                    <div class="modal" id="myModal">
+                    <div class="modal" id="specialsModal">
                         <div class="modal-dialog">
                             <div class="modal-content">
                         
@@ -392,10 +429,41 @@
                             </div>
                         </div>
                     </div>
+                    <!-- The Unpaid Button -->
                     <div class="col-3">
-                        <button class="btn unpaid_button">
+                        <button class="btn unpaid_button" data-bs-toggle="modal" data-bs-target="#unpaidModal">
                             Unpaid
                         </button>
+                    </div>
+                    <!-- The Unpaid Modal -->
+                    <div class="modal" id="unpaidModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Unpaid Reason</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                        
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Manager_Authorised">Comp Manager Authorised</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Cutomer_Replacement"></buttonclass>Comp Cutomer Replacement</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Cathal_Authorised"></buttonclass>Comp Cathal Authorised</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_India"></buttonclass>Comp India</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Neighbouring_Stand">Comp Neighbouring Stand</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Other"></buttonclass>Comp Other</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Staff_Drink"></buttonclass>Staff Drink</button>
+                                </div>
+                        
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+                        
+                            </div>
+                        </div>
                     </div>
                     <div class="col-3">
                         <button class="btn finish_button">
@@ -407,10 +475,42 @@
                             Cancel
                         </button>
                     </div>
+                    <!-- The Waste Button -->
                     <div class="col-3">
-                        <button class="btn waste_button">
+                        <button class="btn waste_button" data-bs-toggle="modal" data-bs-target="#wasteModal">
                             Waste
                         </button>
+                    </div>
+                    <!-- The Waste Modal -->
+                    <div class="modal" id="wasteModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Waste Reason</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                        
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Waste_Spilled">Waste Spilled</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Waste_Set-Up_Line Cleaning"></buttonclass>Waste Set-Up / Line Cleaning</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Waste_Other"></buttonclass>Waste Other</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Warm"></buttonclass>Customer Return - Warm</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Cutomer_Return_Cold">Cutomer Return - Cold</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Taste"></buttonclass>Customer Return - Taste</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Glass_Issue"></buttonclass>Customer Return - Glass Issue</button>
+                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Other"></buttonclass>Customer Return - Other</button>
+                                </div>
+                        
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+                        
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

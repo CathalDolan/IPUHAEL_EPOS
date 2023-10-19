@@ -1,12 +1,57 @@
 from django.shortcuts import render, redirect
 from . models import Product, GrandTotal, LineItem
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 
 
 def index(request):
     """ A view to return the index page """
+    """https://testdriven.io/blog/django-ajax-xhr/"""
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            data = json.load(request)
+            # print("Data", data[1])
+            for v in data[1].values():
+                # print("Item", v["pfand_buttons_total"])
+                # print("Products Qty", v["total_products_qty"])
+                new_grand_total = GrandTotal(
+                    number_of_products=int(v["total_products_qty"]),
+                    drinks_food_total=float(v["line_totals_total"]),
+                    pfand_total=float(v["pfand_total"]),
+                    total_due=float(v["total_due"]),
+                    tendered_amount=float(v["amount_tendered"]),
+                    change_due=float(v["change_due"]),
+                    payment_method=v["payment_method"],
+                    payment_reason=v["payment_reason"],
+                )
+                new_grand_total.save()
+
+            print("Data 0", data[0])
+            for k, v in data[0].items():
+                print("K", k, "V", v)
+                for x in v:
+                    print("X", x["name"])
+                    product = Product.objects.get(name=x["name"])
+                    print("product", product)
+                    new_line_items = LineItem(
+                        grand_totals=new_grand_total,
+                        category=x["category"],
+                        name=product,
+                        quantity=int(x["qty"]),
+                        # size=int(x[""]),
+                        price_unit=float(x["price"]),
+                        price_line_total=float(x["line_total"]),
+                    )
+                    new_line_items.save()
+
+            return JsonResponse({'status': 'Checkout Complete'}, status=200)
+        return JsonResponse({'status': 'Checkout Failed'}, status=400)
+    # else:
+    #     return HttpResponseBadRequest('Invalid request')
+
     draughts = Product.objects.all().filter(category="draught")
-    for draught in draughts:
-        print(draught)
     halfandhalfs = Product.objects.all().filter(category="halfandhalfs")
     shandys = Product.objects.all().filter(category="shandys")
     canandbottles = Product.objects.all().filter(category="cans_and_bottles")
@@ -31,6 +76,7 @@ def index(request):
         'foods': foods,
     }
     template = 'index/index.html'
+    # print("Index View print")
     return render(request, template, context)
 
 
@@ -63,5 +109,3 @@ def takings(request):
 def reports(request):
     """ A view to return the past orders page """
     return render(request, 'index/reports.html')
-
-

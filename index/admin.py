@@ -25,6 +25,8 @@ class ProductAdmin(admin.ModelAdmin):
 
 class GrandTotalAdmin(admin.ModelAdmin):
     list_display = (
+        'pk',
+        'order_date',
         'number_of_products',
         'drinks_food_total',
         'pfand_total',
@@ -32,6 +34,7 @@ class GrandTotalAdmin(admin.ModelAdmin):
         'tendered_amount',
         'change_due',
         'payment_method',
+        'payment_reason',
     )
     ordering = (
         'id',

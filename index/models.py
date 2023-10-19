@@ -52,7 +52,7 @@ class Product(models.Model):
 
 class GrandTotal(models.Model):
     order_date = models.DateTimeField(null=True,
-                                      blank=False,
+                                      blank=True,
                                       auto_now_add=True)
     number_of_products = models.IntegerField(null=True,
                                              blank=True)
@@ -76,7 +76,12 @@ class GrandTotal(models.Model):
                                      blank=True,
                                      decimal_places=2,
                                      max_digits=5)
-    payment_method = models.CharField(max_length=100)
+    payment_method = models.CharField(null=True,
+                                      blank=True,
+                                      max_length=100)
+    payment_reason = models.CharField(null=True,
+                                        blank=True,
+                                        max_length=100)
 
 
 class LineItem(models.Model):

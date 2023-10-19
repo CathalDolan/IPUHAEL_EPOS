@@ -33,7 +33,8 @@ let all_products = [];
 let product_details = {};
 let product_size = "";
 
-// All are used in teh Grand Totals section
+// All are used in the Grand Totals section
+let grand_total = {};
 let pfand_buttons_total = 0;
 let total_products_qty;
 let line_totals_total;
@@ -41,7 +42,9 @@ let pfand_total;
 let amount_tendered;
 let total_due;
 let change_due;
+let payment_method;
 
+// Select product size - Needed in Phase 2
 $('.measure_button').click( function(){
 
     product_size = $(this).attr("data-price");
@@ -54,9 +57,9 @@ $('.measure_button').click( function(){
     let product_buttons = $('.product_buttons_div').find(`[data-${size}]`).addClass('highlight');
     console.log("Product Buttons", product_buttons);
 
-
 });
 
+// Product Button
 $('.product_button').click( function(){
 
     let abbrv_size = product_size.split("_"); // Required when allocating variable sizs to products
@@ -64,6 +67,7 @@ $('.product_button').click( function(){
     console.log("product_name", product_name);
     let product_price = $(this).attr('data-price_default');
     console.log("product_price", product_price);
+    let product_category = $(this).attr('data-category');
 
     let product = all_products.filter(item => item.name == `${product_name}`); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products
     let product_index = all_products.findIndex(item => item.name == `${product_name}`); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products
@@ -81,6 +85,7 @@ $('.product_button').click( function(){
         console.log("No");
 
         product = {
+            "category": product_category,
             "name": product_name,
             "qty": 1,
             "price": product_price,
@@ -93,10 +98,9 @@ $('.product_button').click( function(){
     }
 
     update_basket();
-    
 });
 
-//FN to Increment a product line in the basket
+// Increment a product line in the basket
 $(document).on('click', '.add_button', function(){
 
     let product_name = $(this).parent().siblings(':first').children().text();
@@ -112,7 +116,7 @@ $(document).on('click', '.add_button', function(){
     update_basket();
 })
 
-//FN to Decrement a product line in the basket
+// Decrement a product line in the basket
 $(document).on('click', '.subtract_button', function(){
 
     let product_name = $(this).parent().siblings(':first').children().text();
@@ -135,7 +139,7 @@ $(document).on('click', '.subtract_button', function(){
     update_basket();
 })
 
-// FN to Delete a product line from the basket
+// Delete a product line from the basket
 $(document).on('click', '.delete_button', function(){
     console.log("Delete Function Fires");
 
@@ -147,7 +151,7 @@ $(document).on('click', '.delete_button', function(){
     update_basket();
 })
 
-// FN to update the cart each time something is added or removed
+// Update the cart each time something is added or removed
 function update_basket(){ 
 
     $('.products_rows_div').empty();
@@ -191,7 +195,7 @@ function update_basket(){
     basketGrandTotals();
 }
 
-// Fn to calculate grand totals in basket
+// Calculate grand totals in basket
 function basketGrandTotals(){
     console.log("Grand Total Fn fires");
     console.log("All Products", all_products);
@@ -242,7 +246,7 @@ function basketGrandTotals(){
     });
 }
 
-// Fn to recalculate change due when a user manually enters a tendered amount
+// Recalculate change due when a user manually enters a tendered amount
 const element = document.getElementById("amount_tendered");
 element.addEventListener("keyup", recalculate_change_due);
 function recalculate_change_due(){
@@ -252,19 +256,21 @@ function recalculate_change_due(){
     $('#change_due').text("€" + change_due.toFixed(2));
 }
 
-// Fn to put € note values into the Amount Tender input once clicked
+// Put € note values into the Amount Tender input once clicked
 $('.€_notes_button').click( function(){
 
     note_value = $(this).attr("data-value");
     console.log("note_value fn1", note_value);
     $('#amount_tendered').val(note_value);
 
+    payment_method = $(this).attr("data-payment_method");
+
     // Call recalculate change due function
     recalculate_change_due()
 
 });
 
-// Fn to populate tendered amount when Credit Card button pressed
+// Populate tendered amount when Credit Card button pressed
 const card_button = document.getElementById("credit_card_button");
 card_button.addEventListener("click", card_tendered);
 function card_tendered(){
@@ -273,9 +279,11 @@ function card_tendered(){
     amount_tendered = total_due;
     $('#amount_tendered').val(total_due.toFixed(2));
     recalculate_change_due();
+
+    payment_method = $(this).attr("data-payment_method");
 }
 
-// Fn to allow Users input the number of Pfand items returned
+// Allow Users input the number of Pfand items returned
 $('.pfand_button').click( function(){
 
     let pfand_return_value = $(this).attr("data-value");
@@ -295,7 +303,7 @@ $('.pfand_button').click( function(){
     }
 });
 
-// Fn to empty basket once Cancel button is clicked at bottom of Grand Total section
+// Empty basket once Cancel button is clicked at bottom of Grand Total section
 $('.cancel_button').click( function(){
     console.log("Cancel button fires");
     all_products = [];
@@ -308,3 +316,117 @@ $('.cancel_button').click( function(){
     $('#amount_tendered').val(0);
     $('#change_due').text("€");
 });
+
+// Fn to submit order to DB when click Finish button
+// https://testdriven.io/blog/django-ajax-xhr/
+
+$('.payment_button').click( function(){
+    console.log($('#amount_tendered').val())
+    console.log("Grand Total Dict In", grand_total);
+
+    let payment_method_alternative = $(this).attr("data-payment_method_alternative")
+    let payment_reason = $(this).attr("data-payment_reason")
+    console.log("Payment Method", payment_method_alternative);
+    console.log("Payment Reason", payment_reason);
+    if(payment_method_alternative == "complimentary" || payment_method_alternative == "waste"){
+        console.log("payment_method_alternative");
+        pfand_buttons_total = 0;
+        line_totals_total = 0;
+        pfand_total = 0;
+        amount_tendered = 0;
+        total_due = 0;
+        change_due = 0;
+        payment_method = payment_method_alternative;
+    } else {
+        if($('#amount_tendered').val() == ""){
+            console.log("YEEEES");
+
+            $('#amount_tendered').addClass('error')
+            alert("Please put in a Tendered Amount")
+
+            return
+        }
+    }
+
+    console.log("Grand Total Dict Out", grand_total);
+    let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu105.gitpod.io/";
+    grand_total.pfand_buttons_total = pfand_buttons_total;
+    grand_total.total_products_qty = total_products_qty;
+    grand_total.line_totals_total = line_totals_total;
+    grand_total.pfand_total = pfand_total;
+    grand_total.amount_tendered = amount_tendered;
+    grand_total.total_due = total_due;
+    grand_total.change_due = change_due;
+    grand_total.payment_method = payment_method;
+    console.log("Grand Total", grand_total);
+    grand_total.payment_reason = payment_reason;
+    fetch(url, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify([{all_products},{grand_total}])
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.status);
+        if(data.status == "Checkout Complete"){
+            location.reload();
+        }
+    });
+        
+    // if($('#amount_tendered').val() == ""){
+    //     console.log("YEEEES");
+
+    //     $('#amount_tendered').addClass('error')
+    //     alert("Please put in a Tendered Amount")
+    // } else {
+
+    //     let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu105.gitpod.io/";
+    //     grand_total.pfand_buttons_total = pfand_buttons_total;
+    //     grand_total.total_products_qty = total_products_qty;
+    //     grand_total.line_totals_total = line_totals_total;
+    //     grand_total.pfand_total = pfand_total;
+    //     grand_total.amount_tendered = amount_tendered;
+    //     grand_total.total_due = total_due;
+    //     grand_total.change_due = change_due;
+    //     grand_total.payment_method = payment_method;
+    //     console.log("Grand Total", grand_total);
+    //     fetch(url, {
+    //         method: "POST",
+    //         credentials: "same-origin",
+    //         headers: {
+    //         "X-Requested-With": "XMLHttpRequest",
+    //         "X-CSRFToken": getCookie("csrftoken"),
+    //         },
+    //         body: JSON.stringify([{all_products},{grand_total}])
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log(data.status);
+    //         if(data.status == "Checkout Complete"){
+    //             location.reload();
+    //         }
+    //     });
+    // }
+
+    //if statement required for payment method to have a default for when user doesn't provide one.
+
+});
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + "=")) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+            }
+        }
+    }
+    return cookieValue;
+}
