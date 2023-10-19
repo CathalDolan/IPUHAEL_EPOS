@@ -26,7 +26,10 @@ window.onload = function() {
 
         document.getElementById('time_and_date').innerHTML = day + " " + displayDate + " " + displayTime;
     }, 1000); // 1000 milliseconds = 1 second
+
+    $('.toast').toast('show');
 }
+
 
 let buttons = document.querySelectorAll('.product_button');
 let all_products = [];
@@ -317,16 +320,18 @@ $('.cancel_button').click( function(){
     $('#change_due').text("€");
 });
 
-// Fn to submit order to DB when click Finish button
+// Fn to submit order to DB when clicking Finish, Unpaid or Waste buttons
 // https://testdriven.io/blog/django-ajax-xhr/
-
 $('.payment_button').click( function(){
     console.log($('#amount_tendered').val())
-    console.log("Grand Total Dict In", grand_total);
+    console.log("Payment Method", payment_method);
 
     let payment_method_alternative = $(this).attr("data-payment_method_alternative")
     let payment_reason = $(this).attr("data-payment_reason")
-    console.log("Payment Method", payment_method_alternative);
+    if(payment_reason == undefined){
+        payment_reason = null;
+    }
+    console.log("Payment Method Alternative", payment_method_alternative);
     console.log("Payment Reason", payment_reason);
     if(payment_method_alternative == "complimentary" || payment_method_alternative == "waste"){
         console.log("payment_method_alternative");
@@ -341,10 +346,10 @@ $('.payment_button').click( function(){
         if($('#amount_tendered').val() == ""){
             console.log("YEEEES");
 
-            $('#amount_tendered').addClass('error')
-            alert("Please put in a Tendered Amount")
+            $('#amount_tendered').addClass('error');
+            alert("Please put in a Tendered Amount");
 
-            return
+            return 
         }
     }
 
@@ -376,44 +381,6 @@ $('.payment_button').click( function(){
             location.reload();
         }
     });
-        
-    // if($('#amount_tendered').val() == ""){
-    //     console.log("YEEEES");
-
-    //     $('#amount_tendered').addClass('error')
-    //     alert("Please put in a Tendered Amount")
-    // } else {
-
-    //     let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu105.gitpod.io/";
-    //     grand_total.pfand_buttons_total = pfand_buttons_total;
-    //     grand_total.total_products_qty = total_products_qty;
-    //     grand_total.line_totals_total = line_totals_total;
-    //     grand_total.pfand_total = pfand_total;
-    //     grand_total.amount_tendered = amount_tendered;
-    //     grand_total.total_due = total_due;
-    //     grand_total.change_due = change_due;
-    //     grand_total.payment_method = payment_method;
-    //     console.log("Grand Total", grand_total);
-    //     fetch(url, {
-    //         method: "POST",
-    //         credentials: "same-origin",
-    //         headers: {
-    //         "X-Requested-With": "XMLHttpRequest",
-    //         "X-CSRFToken": getCookie("csrftoken"),
-    //         },
-    //         body: JSON.stringify([{all_products},{grand_total}])
-    //     })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log(data.status);
-    //         if(data.status == "Checkout Complete"){
-    //             location.reload();
-    //         }
-    //     });
-    // }
-
-    //if statement required for payment method to have a default for when user doesn't provide one.
-
 });
 function getCookie(name) {
     let cookieValue = null;

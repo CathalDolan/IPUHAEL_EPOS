@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from . models import Product, GrandTotal, LineItem
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.contrib import messages
 import json
 
 
@@ -12,10 +13,7 @@ def index(request):
     if is_ajax:
         if request.method == 'POST':
             data = json.load(request)
-            # print("Data", data[1])
             for v in data[1].values():
-                # print("Item", v["pfand_buttons_total"])
-                # print("Products Qty", v["total_products_qty"])
                 new_grand_total = GrandTotal(
                     number_of_products=int(v["total_products_qty"]),
                     drinks_food_total=float(v["line_totals_total"]),
@@ -45,8 +43,9 @@ def index(request):
                         price_line_total=float(x["line_total"]),
                     )
                     new_line_items.save()
-
+            messages.success(request, "Transaction Complete!")
             return JsonResponse({'status': 'Checkout Complete'}, status=200)
+        messages.error(request, "Problem. Try Again!")
         return JsonResponse({'status': 'Checkout Failed'}, status=400)
     # else:
     #     return HttpResponseBadRequest('Invalid request')
@@ -62,6 +61,7 @@ def index(request):
     hottoddys = Product.objects.all().filter(category="hot_toddys")
     shots = Product.objects.all().filter(category="shots")
     foods = Product.objects.all().filter(category="food")
+    
     context = {
         'draughts': draughts,
         'halfandhalfs': halfandhalfs,
