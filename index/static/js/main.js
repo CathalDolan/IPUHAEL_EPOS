@@ -27,6 +27,7 @@ window.onload = function() {
         document.getElementById('time_and_date').innerHTML = day + " " + displayDate + " " + displayTime;
     }, 1000); // 1000 milliseconds = 1 second
 
+    // Calls message toasts
     $('.toast').toast('show');
 }
 
@@ -64,29 +65,17 @@ $('.measure_button').click( function(){
 
 // Product Button
 $('.product_button').click( function(){
-
-    let abbrv_size = product_size.split("_"); // Required when allocating variable sizs to products
+    let abbrv_size = product_size.split("_"); // Required when allocating variable sizs to products - Phase 2
     let product_name = $(this).attr('data-name');
-    console.log("product_name", product_name);
     let product_price = $(this).attr('data-price_default');
-    console.log("product_price", product_price);
     let product_category = $(this).attr('data-category');
-
-    let product = all_products.filter(item => item.name == `${product_name}`); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products
-    let product_index = all_products.findIndex(item => item.name == `${product_name}`); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products
-    console.log("Product Name 2", product);
+    let product = all_products.filter(item => item.name == `${product_name}`); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
+    let product_index = all_products.findIndex(item => item.name == `${product_name}`); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
 
     if(product.length > 0){
-        console.log("Yes");
-
         all_products[product_index].qty +=1;
         all_products[product_index].line_total = Number(all_products[product_index].price * all_products[product_index].qty).toFixed(2);
-        
-        console.log("All Products If Yes", all_products);
-
     } else {
-        console.log("No");
-
         product = {
             "category": product_category,
             "name": product_name,
@@ -94,12 +83,8 @@ $('.product_button').click( function(){
             "price": product_price,
             "line_total": product_price
         }
-
         all_products.push(product);
-        console.log("All Products if No", all_products);
-
     }
-
     update_basket();
 });
 
@@ -154,14 +139,29 @@ $(document).on('click', '.delete_button', function(){
     update_basket();
 })
 
-// Update the cart each time something is added or removed
+// Update the basket each time something is added or removed
 function update_basket(){ 
+    if(total_products_qty > 10){
+        console.log("More than 10");
+
+        let cheapest_price = 100;
+        let index_of_cheapest_price;
+        $.each(all_products, function(index, item){
+            console.log("Cheapest Price", typeof(item["price"]));
+            if((item["price"]) < cheapest_price){
+                cheapest_price = item["price"];
+            }
+        });
+        console.log("Cheapest Price", cheapest_price);
+        line_totals_total -= cheapest_price
+        console.log("line_totals_total", line_totals_total);
+
+        // Message remind to tell customker theuy got special
+    }
 
     $('.products_rows_div').empty();
 
     $.each(all_products, function(){
-        console.log("All Products", typeof(this.name));
-
         $('.products_rows_div').append(
             `<div class="row product_row" id="product_headings_row">
                 <div class="col-4" id="product_row_div">
@@ -200,8 +200,6 @@ function update_basket(){
 
 // Calculate grand totals in basket
 function basketGrandTotals(){
-    console.log("Grand Total Fn fires");
-    console.log("All Products", all_products);
 
     total_products_qty = 0;
     line_totals_total = 0;
@@ -263,7 +261,6 @@ function recalculate_change_due(){
 $('.€_notes_button').click( function(){
 
     note_value = $(this).attr("data-value");
-    console.log("note_value fn1", note_value);
     $('#amount_tendered').val(note_value);
 
     payment_method = $(this).attr("data-payment_method");
@@ -277,7 +274,6 @@ $('.€_notes_button').click( function(){
 const card_button = document.getElementById("credit_card_button");
 card_button.addEventListener("click", card_tendered);
 function card_tendered(){
-    console.log("card_tendered Fires");
     // Amount Tendered
     amount_tendered = total_due;
     $('#amount_tendered').val(total_due.toFixed(2));
@@ -308,10 +304,8 @@ $('.pfand_button').click( function(){
 
 // Empty basket once Cancel button is clicked at bottom of Grand Total section
 $('.cancel_button').click( function(){
-    console.log("Cancel button fires");
     all_products = [];
     $('.products_rows_div').empty();
-    console.log("all_products", all_products);
     $('#total_number_of_products').text("# Products");
     $('#products_total').text("€");
     $('#pfand_total').text("€");
@@ -323,18 +317,14 @@ $('.cancel_button').click( function(){
 // Fn to submit order to DB when clicking Finish, Unpaid or Waste buttons
 // https://testdriven.io/blog/django-ajax-xhr/
 $('.payment_button').click( function(){
-    console.log($('#amount_tendered').val())
-    console.log("Payment Method", payment_method);
 
     let payment_method_alternative = $(this).attr("data-payment_method_alternative")
     let payment_reason = $(this).attr("data-payment_reason")
     if(payment_reason == undefined){
         payment_reason = null;
     }
-    console.log("Payment Method Alternative", payment_method_alternative);
-    console.log("Payment Reason", payment_reason);
+   
     if(payment_method_alternative == "complimentary" || payment_method_alternative == "waste"){
-        console.log("payment_method_alternative");
         pfand_buttons_total = 0;
         line_totals_total = 0;
         pfand_total = 0;
@@ -344,16 +334,12 @@ $('.payment_button').click( function(){
         payment_method = payment_method_alternative;
     } else {
         if($('#amount_tendered').val() == ""){
-            console.log("YEEEES");
-
             $('#amount_tendered').addClass('error');
             alert("Please put in a Tendered Amount");
-
             return 
         }
     }
 
-    console.log("Grand Total Dict Out", grand_total);
     let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu105.gitpod.io/";
     grand_total.pfand_buttons_total = pfand_buttons_total;
     grand_total.total_products_qty = total_products_qty;
@@ -363,7 +349,6 @@ $('.payment_button').click( function(){
     grand_total.total_due = total_due;
     grand_total.change_due = change_due;
     grand_total.payment_method = payment_method;
-    console.log("Grand Total", grand_total);
     grand_total.payment_reason = payment_reason;
     fetch(url, {
         method: "POST",
@@ -376,7 +361,6 @@ $('.payment_button').click( function(){
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data.status);
         if(data.status == "Checkout Complete"){
             location.reload();
         }
