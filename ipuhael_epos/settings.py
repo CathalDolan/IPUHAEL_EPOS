@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu106.gitpod.io',
+    'ipuhael-epos-8b5f0c382be3.herokuapp.com',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
