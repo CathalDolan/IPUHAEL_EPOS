@@ -142,21 +142,16 @@ $(document).on('click', '.delete_button', function(){
 // Update the basket each time something is added or removed
 function update_basket(){ 
     if(total_products_qty > 10){
-        console.log("More than 10");
-
         let cheapest_price = 100;
         let index_of_cheapest_price;
         $.each(all_products, function(index, item){
-            console.log("Cheapest Price", typeof(item["price"]));
             if((item["price"]) < cheapest_price){
                 cheapest_price = item["price"];
             }
         });
-        console.log("Cheapest Price", cheapest_price);
         line_totals_total -= cheapest_price
-        console.log("line_totals_total", line_totals_total);
 
-        // Message remind to tell customker theuy got special
+        // Message remind to tell customker they got special
     }
 
     $('.products_rows_div').empty();
