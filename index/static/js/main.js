@@ -1,6 +1,6 @@
 console.log("JS is Working")
 
-//Fn to set time and date
+//Fn to set time and date.
 window.onload = function() {
     setInterval(function(){
         let date = new Date();
