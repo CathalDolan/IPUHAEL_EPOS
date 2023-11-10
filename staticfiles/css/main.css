@@ -1,0 +1,282 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.col-2,
+.col {
+    padding: 2px;
+}
+
+.row {
+    margin: 0;
+}
+
+.col-7 {
+    padding: 0;
+}
+
+.btn {
+    width: 100%;
+    height: 61px;
+    color: white;
+    border-color: black;
+    font-weight: 500;
+}
+
+.logged_in_as {
+    color: blue;
+}
+
+.measure_button {
+    background-color: white;
+    border-color: black;
+}
+
+/* .draught:not(#measurement_row .measure_button) {
+    background-color: darkgreen;
+} */
+
+.draught {
+    background-color: darkgreen;
+}
+
+.cans_and_bottles,
+.waste_button {
+    background-color: rgb(72, 202, 202);
+}
+
+.spirits_and_liquers,
+.cancel_button {
+    background-color: red;
+}
+
+.Chaser,
+.finish_button {
+    background-color: rgb(93, 148, 11);
+    color: white;
+}
+
+.softdrinks,
+.unpaid_button {
+    background-color: rgb(255, 145, 0);
+}
+
+.hot_nonalcoholics,
+.admin_button,
+.previous_orders_button {
+    background-color: black;
+}
+
+.hot_alcoholics {
+    background-color: brown;
+}
+
+.hot_toddys {
+    background-color: rgb(88, 88, 228);
+}
+
+.shots,
+.gifts_button,
+.specials_button {
+    background-color: rgb(87, 10, 138);
+}
+
+.open_drink {
+    background-color: aqua;
+}
+
+.food {
+    background-color: rgb(243, 202, 19);
+    color: black;
+}
+
+.open_drink,
+.foods,
+.measure_button {
+    color: black;
+}
+
+.highlight {
+    /* color: palevioletred; */
+    border: 4px solid black;
+    font-weight: 700;
+}
+
+.food_row {
+    margin-top: 10px;
+}
+
+.pfand_button {
+    border-radius: 50%;
+    background-color: black;
+    width: 62px;
+}
+
+.basket_div,
+.basket_edit_button {
+    background-color: rgb(209, 205, 205);
+    width: 100%;
+}
+
+/*--- Centres Pfand Buttons in tyheir div ---*/
+.col {
+    text-align: center;
+}
+
+.pfand_button_row {
+    margin-bottom: 15px;
+}
+
+.product_lines_row {
+    height: 4em;
+}
+
+hr {
+    width: 75%;
+    margin: auto;
+}
+
+.totals_row {
+    margin-top: 15px;
+}
+
+.€_notes_row {
+    padding-bottom: 15px;
+}
+
+/* .col-3 {
+    padding: 2px;
+} */
+
+.pay_method_button {
+    /* padding: 0; */
+    border: none;
+    margin-top: 5px;
+    height: 61px;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+.products_rows_div {
+    text-overflow: ellipsis;
+    min-height: 25px;
+    max-height: 200px;
+    height:auto;
+    overflow-y:auto;
+}
+
+.product_row,
+.qty_row,
+.per_unit_row,
+.line_total_row,
+.add_row,
+.subtract_row,
+.delete_row {
+    margin: 0;
+}
+
+.add_row,
+.subtract_row,
+.delete_row {
+    font-size: 1rem;
+}
+
+.delete_button {
+    color: red;
+}
+
+.basket_edit_button {
+    border: none;
+}
+
+/*-- Grand Totals Section --*/
+.grand_totals_row_label {
+    font-weight: 500;
+}
+.grand_totals_row {
+    margin-bottom: 10px;
+}
+input {
+    height: 30px;
+    width: 75px;
+}
+#change_due_label {
+    margin-top: 18px;
+}
+
+/*-- Pfand Modal --*/
+.pfand__modal_button {
+    margin-bottom: 10px;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+/*-- Toasts & Messages --*/
+.message-container {
+    position: fixed;
+    top: 572px;
+    left: 866px;
+    z-index: 99999999999;
+}
+
+.custom-toast {
+    overflow: visible;
+    border: none;
+    border-radius: 1rem;
+    margin-bottom: 3px;
+}
+
+.toast-header {
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+}
+
+.toast-body {
+    padding: .25rem;
+    background-color: #c0c0c0;
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+
+.toast-body .row {
+    padding: .25rem;
+    margin-bottom: 5px;
+}
+.toast-body .row:nth-of-type(even) {
+    background-color: #e1f5fe;
+}
+
+.toast-body .row:nth-of-type(odd) {
+    background-color: #cde0e9;
+}
+
+.toast-body img {
+    /* margin: .25rem; */
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    /* border: 1px solid #fff; */
+    border-radius: .25rem;
+}
+
+.toast-body p {
+    color:#000;
+    margin: 0;
+    text-align: center;
+    font-size: .85rem;
+}
+
+.toast-capper {
+    height: 2px;
+}

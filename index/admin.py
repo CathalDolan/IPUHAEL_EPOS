@@ -1,8 +1,9 @@
 from django.contrib import admin
 from .models import Product, GrandTotal, LineItem
+from import_export.admin import ExportActionMixin
 
 
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = (
         'category',
         'name',
@@ -23,7 +24,7 @@ class ProductAdmin(admin.ModelAdmin):
     )
 
 
-class GrandTotalAdmin(admin.ModelAdmin):
+class GrandTotalAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = (
         'pk',
         'order_date',
@@ -41,7 +42,7 @@ class GrandTotalAdmin(admin.ModelAdmin):
     )
 
 
-class LineItemAdmin(admin.ModelAdmin):
+class LineItemAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = (
         'grand_totals',
         'category',
