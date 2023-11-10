@@ -317,7 +317,7 @@ $('.cancel_button').click( function(){
 // Fn to submit order to DB when clicking Finish, Unpaid or Waste buttons
 // https://testdriven.io/blog/django-ajax-xhr/
 $('.payment_button').click( function(){
-
+    console.log("FN Fires");
     let payment_method_alternative = $(this).attr("data-payment_method_alternative")
     let payment_reason = $(this).attr("data-payment_reason")
     if(payment_reason == undefined){
