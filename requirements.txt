@@ -1,10 +1,11 @@
 asgiref==3.7.2
-backports.zoneinfo==0.2.1
+backports.zoneinfo==0.2.1;python_version<"3.8"
 diff-match-patch==20230430
 Django==4.2.4
 django-allauth==0.55.2
 django-import-export==3.3.2
 et-xmlfile==1.1.0
+gunicorn==21.2.0
 MarkupPy==1.14
 oauthlib==3.2.2
 odfpy==1.4.1
