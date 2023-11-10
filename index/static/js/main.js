@@ -340,7 +340,7 @@ $('.payment_button').click( function(){
         }
     }
 
-    let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu105.gitpod.io/";
+    let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu106.gitpod.io/";
     grand_total.pfand_buttons_total = pfand_buttons_total;
     grand_total.total_products_qty = total_products_qty;
     grand_total.line_totals_total = line_totals_total;
@@ -350,6 +350,7 @@ $('.payment_button').click( function(){
     grand_total.change_due = change_due;
     grand_total.payment_method = payment_method;
     grand_total.payment_reason = payment_reason;
+    // getCookie("csrftoken");
     fetch(url, {
         method: "POST",
         credentials: "same-origin",
@@ -374,8 +375,8 @@ function getCookie(name) {
             const cookie = cookies[i].trim();
             // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + "=")) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
             }
         }
     }

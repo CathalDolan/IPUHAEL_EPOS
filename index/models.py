@@ -48,6 +48,8 @@ class Product(models.Model):
                                         blank=True,
                                         decimal_places=2,
                                         max_digits=5)
+    def __str__(self):
+        return self.name
 
 
 class GrandTotal(models.Model):
@@ -80,8 +82,8 @@ class GrandTotal(models.Model):
                                       blank=True,
                                       max_length=100)
     payment_reason = models.CharField(null=True,
-                                        blank=True,
-                                        max_length=100)
+                                      blank=True,
+                                      max_length=100)
 
 
 class LineItem(models.Model):

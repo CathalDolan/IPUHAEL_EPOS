@@ -153,10 +153,25 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                 {% for gift in gifts %}
-                                    <button class="btn {{gift.category}} product_button" id="{{gift.id}}" data-category="{{gift.category}}" data-name="{{gift.name}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                    <button class="btn {{gift.category}} product_button" id="{{gift.id}}" data-category="{{gift.category}}" data-name="{{gift.name}}" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                         {{gift.name}}
                                     </button>
                                 {% endfor %}
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Fridge_Magnet.category" data-name="Fridge_Magnet.name" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                    Fridge Magnet
+                                </button>
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Tree_Decoration.category" data-name="Tree_Decoration.name" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                    Tree Decoration
+                                </button>
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Picture_Frame.category" data-name="Picture_Frame.name" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                    Picture Frame
+                                </button>
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="T-Shirt.category" data-name="T-Shirt.name" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                    T-Shirt
+                                </button>
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Polo_Shirt.category" data-name="Polo_Shirt.name" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                    Polo Shirt
+                                </button>
                             </div>
                     
                             <!-- Modal footer -->
@@ -359,7 +374,7 @@
                         <p class="grand_totals_row grand_totals_figure" id="change_due">€</p>
                     </div>
                 </div>
-                <!-- € Notes Row -->
+                <!-- € Notes and Finish Buttons Row -->
                 <div class="row €_notes_row">
                     <div class="col-3">
                         <button class="btn €_notes_button pay_method_button" data-value="5" data-payment_method="cash">
@@ -415,10 +430,10 @@
                         
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <button class="btn btn-primary">2 for 1</button>
-                                    <button class="btn btn-primary"></buttonclass>50% Off</button>
-                                    <button class="btn btn-primary"></buttonclass>Buy 10 Get 11th Free</button>
-                                    <button class="btn btn-primary"></buttonclass>6 Shot Special</button> <!-- This better done in calculations -->
+                                    <button class="btn specials_button">2 for 1</button>
+                                    <button class="btn specials_button"></buttonclass>50% Off</button>
+                                    <button class="btn specials_button"></buttonclass>Buy 10 Get 11th Free</button>
+                                    <button class="btn specials_button"></buttonclass>6 Shot Special</button> <!-- This better done in calculations -->
                                 </div>
                         
                                 <!-- Modal footer -->
@@ -448,13 +463,13 @@
                         
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Manager_Authorised">Comp Manager Authorised</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Cutomer_Replacement"></buttonclass>Comp Cutomer Replacement</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Cathal_Authorised"></buttonclass>Comp Cathal Authorised</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_India"></buttonclass>Comp India</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Neighbouring_Stand">Comp Neighbouring Stand</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Other"></buttonclass>Comp Other</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="complimentary" data-payment_reason="Staff_Drink"></buttonclass>Staff Drink</button>
+                                    <button class="btn btn-primary unpaid_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Manager_Authorised">Comp Manager Authorised</button>
+                                    <button class="btn btn-primary unpaid_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Cutomer_Replacement"></buttonclass>Comp Cutomer Replacement</button>
+                                    <button class="btn btn-primary unpaid_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Cathal_Authorised"></buttonclass>Comp Cathal Authorised</button>
+                                    <button class="btn btn-primary unpaid_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_India"></buttonclass>Comp India</button>
+                                    <button class="btn btn-primary unpaid_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Neighbouring_Stand">Comp Neighbouring Stand</button>
+                                    <button class="btn btn-primary unpaid_button" data-payment_method_alternative="complimentary" data-payment_reason="Comp_Other"></buttonclass>Comp Other</button>
+                                    <button class="btn btn-primary unpaid_button" data-payment_method_alternative="complimentary" data-payment_reason="Staff_Drink"></buttonclass>Staff Drink</button>
                                 </div>
                         
                                 <!-- Modal footer -->
@@ -495,14 +510,14 @@
                         
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Waste_Spilled">Waste Spilled</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Waste_Set-Up_Line Cleaning"></buttonclass>Waste Set-Up / Line Cleaning</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Waste_Other"></buttonclass>Waste Other</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Warm"></buttonclass>Customer Return - Warm</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Cutomer_Return_Cold">Cutomer Return - Cold</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Taste"></buttonclass>Customer Return - Taste</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Glass_Issue"></buttonclass>Customer Return - Glass Issue</button>
-                                    <button class="btn btn-primary payment_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Other"></buttonclass>Customer Return - Other</button>
+                                    <button class="btn btn-primary waste_button" data-payment_method_alternative="waste" data-payment_reason="Waste_Spilled">Waste Spilled</button>
+                                    <button class="btn btn-primary waste_button" data-payment_method_alternative="waste" data-payment_reason="Waste_Set-Up_Line Cleaning"></buttonclass>Waste Set-Up / Line Cleaning</button>
+                                    <button class="btn btn-primary waste_button" data-payment_method_alternative="waste" data-payment_reason="Waste_Other"></buttonclass>Waste Other</button>
+                                    <button class="btn btn-primary waste_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Warm"></buttonclass>Customer Return - Warm</button>
+                                    <button class="btn btn-primary waste_button" data-payment_method_alternative="waste" data-payment_reason="Cutomer_Return_Cold">Cutomer Return - Cold</button>
+                                    <button class="btn btn-primary waste_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Taste"></buttonclass>Customer Return - Taste</button>
+                                    <button class="btn btn-primary waste_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Glass_Issue"></buttonclass>Customer Return - Glass Issue</button>
+                                    <button class="btn btn-primary waste_button" data-payment_method_alternative="waste" data-payment_reason="Customer_Return_Other"></buttonclass>Customer Return - Other</button>
                                 </div>
                         
                                 <!-- Modal footer -->
