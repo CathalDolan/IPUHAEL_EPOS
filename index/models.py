@@ -87,6 +87,9 @@ class GrandTotal(models.Model):
 
 
 class LineItem(models.Model):
+    order_date = models.DateTimeField(null=True,
+                                      blank=True,
+                                      auto_now_add=True)
     grand_totals = models.ForeignKey(GrandTotal,
                                      null=False,
                                      on_delete=models.CASCADE)

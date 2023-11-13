@@ -44,6 +44,7 @@ class GrandTotalAdmin(ExportActionMixin, admin.ModelAdmin):
 
 class LineItemAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = (
+        'order_date',
         'grand_totals',
         'category',
         'name',
