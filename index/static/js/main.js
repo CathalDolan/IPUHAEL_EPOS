@@ -1,5 +1,8 @@
 console.log("JS is Working")
 
+// let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
+let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu106.gitpod.io/";
+
 //Fn to set time and date.
 window.onload = function() {
     setInterval(function(){
@@ -335,8 +338,6 @@ $('.payment_button').click( function(){
         }
     }
 
-    let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-    // let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu106.gitpod.io/";
     grand_total.pfand_buttons_total = pfand_buttons_total;
     grand_total.total_products_qty = total_products_qty;
     grand_total.line_totals_total = line_totals_total;
