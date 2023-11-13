@@ -130,6 +130,7 @@
                 <div class="col-2">
                     <button class="btn measure_button">
                         <!-- Empty Button just to fill space -->
+                        <b>DO NOT PRESS!</b>
                     </button>
                 </div>
 
@@ -157,19 +158,19 @@
                                         {{gift.name}}
                                     </button>
                                 {% endfor %}
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Fridge_Magnet.category" data-name="Fridge_Magnet.name" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Fridge_Magnet.category" data-name="Fridge_Magnet" data-price_default="5.00" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Fridge Magnet
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Tree_Decoration.category" data-name="Tree_Decoration.name" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Tree_Decoration.category" data-name="Tree_Decoration" data-price_default="5.00" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Tree Decoration
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Picture_Frame.category" data-name="Picture_Frame.name" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Picture_Frame.category" data-name="Picture_Frame" data-price_default="19.99" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Picture Frame
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="T-Shirt.category" data-name="T-Shirt.name" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="T-Shirt.category" data-name="T-Shirt" data-price_default="15.00" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     T-Shirt
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Polo_Shirt.category" data-name="Polo_Shirt.name" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Polo_Shirt.category" data-name="Polo_Shirt" data-price_default="25.00" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Polo Shirt
                                 </button>
                             </div>
@@ -357,7 +358,9 @@
                 <div class="row totals_row" id="grand_totals_row_div">
                     <div class="col-6">
                         <p class="grand_totals_row grand_totals_row_label">Number of Products:</p>
-                        <p class="grand_totals_row grand_totals_row_label">Drinks / Food Total:</p>
+                        <p class="grand_totals_row grand_totals_row_label">Drinks / Food Sub-Total:</p>
+                        <p class="grand_totals_row grand_totals_row_label">Drinks / Food Discount:</p>
+                        <p class="grand_totals_row grand_totals_row_label">Drinks / Food Grand Total:</p>
                         <p class="grand_totals_row grand_totals_row_label">Pfand Total:</p>
                         <p class="grand_totals_row grand_totals_row_label">Total Due:</p>
                         <p class="grand_totals_row grand_totals_row_label">Tendered Amount:</p>
