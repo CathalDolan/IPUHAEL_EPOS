@@ -97,9 +97,35 @@
                     </div>
                 {% endfor %}
                 <div class="col-2">
-                    <button class="btn open_drink">
+                    <button class="btn open_drink" data-bs-toggle="modal" data-bs-target="#open_drink_modal" data-value="0">
                         Open Drink
                     </button>
+                </div>
+                <!-- The Open Drink Modal -->
+                <div class="modal" id="open_drink_modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                    
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Open Drink</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                    
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <input class="btn specials_button" type="number"></input>
+                                <input class="btn specials_button" type="text"></input>
+                                <button class="btn specials_button" type="text">Save</button>
+                            </div>
+                    
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+                    
+                        </div>
+                    </div>
                 </div>
             </div>
             <!--  Food Products Buttons  -->
@@ -377,6 +403,23 @@
                         <p class="grand_totals_row grand_totals_figure" id="change_due">€</p>
                     </div>
                 </div>
+                {% if messages %}
+                    <div class="message-container">
+                        {% for message in messages %}
+                            {% with message.level as level %}
+                                {% if level == 40 %}
+                                    {% include 'includes/toasts/toast_error.html' %}
+                                {% elif level == 30 %}
+                                    {% include 'includes/toasts/toast_warning.html' %}
+                                {% elif level == 25 %}
+                                    {% include 'includes/toasts/toast_success.html' %}
+                                {% else %}
+                                    {% include 'includes/toasts/toast_info.html' %}
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 <!-- € Notes and Finish Buttons Row -->
                 <div class="row €_notes_row">
                     <div class="col-3">
@@ -437,6 +480,7 @@
                                     <button class="btn specials_button"></buttonclass>50% Off</button>
                                     <button class="btn specials_button"></buttonclass>Buy 10 Get 11th Free</button>
                                     <button class="btn specials_button"></buttonclass>6 Shot Special</button> <!-- This better done in calculations -->
+                                    <button class="btn specials_button"></buttonclass>€5 City Voucher</button>
                                 </div>
                         
                                 <!-- Modal footer -->

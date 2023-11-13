@@ -65,7 +65,7 @@ $('.measure_button').click( function(){
 
 // Product Button
 $('.product_button').click( function(){
-    let abbrv_size = product_size.split("_"); // Required when allocating variable sizs to products - Phase 2
+    // let abbrv_size = product_size.split("_"); // Required when allocating variable sizs to products - Phase 2
     let product_name = $(this).attr('data-name');
     let product_price = $(this).attr('data-price_default');
     let product_category = $(this).attr('data-category');
@@ -335,8 +335,8 @@ $('.payment_button').click( function(){
         }
     }
 
-    let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-    // let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu106.gitpod.io/";
+    // let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
+    let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu106.gitpod.io/";
     grand_total.pfand_buttons_total = pfand_buttons_total;
     grand_total.total_products_qty = total_products_qty;
     grand_total.line_totals_total = line_totals_total;
