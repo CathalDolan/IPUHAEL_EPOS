@@ -55,7 +55,7 @@ def index(request):
     halfandhalfs = Product.objects.all().filter(category="halfandhalfs")
     shandys = Product.objects.all().filter(category="shandys")
     canandbottles = Product.objects.all().filter(category="cans_and_bottles")
-    spirits = Product.objects.all().filter(category="spirits_and_liquers")
+    spirits = Product.objects.all().filter(category="spirits_and_liquers").order_by("pk")
     softdrinks = Product.objects.all().filter(category="softdrinks")
     hotnonalcoholics = Product.objects.all().filter(category="hot_nonalcoholics")
     hotalcoholics = Product.objects.all().filter(category="hot_alcoholics")
