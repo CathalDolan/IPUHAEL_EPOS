@@ -34,6 +34,7 @@ window.onload = function() {
     $('.toast').toast('show');
 }
 
+// Pair of function to expand and collapse page to full screen
 var elem = document.documentElement;
 function openFullscreen() {
   if (elem.requestFullscreen) {
@@ -44,7 +45,6 @@ function openFullscreen() {
     elem.msRequestFullscreen();
   }
 }
-
 function closeFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();

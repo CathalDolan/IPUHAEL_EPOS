@@ -180,23 +180,23 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                 {% for gift in gifts %}
-                                    <button class="btn {{gift.category}} product_button" id="{{gift.id}}" data-category="{{gift.category}}" data-name="{{gift.name}}" data-price_default="{{food.price_default}}" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                    <button class="btn {{gift.category}} product_button" id="{{gift.id}}" data-category="{{gift.category}}" data-name="{{gift.name}}" data-price_default="{{food.price_default}}" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                         {{gift.name}}
                                     </button>
                                 {% endfor %}
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Fridge_Magnet.category" data-name="Fridge_Magnet" data-price_default="5.00" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Fridge_Magnet.category" data-name="Fridge_Magnet" data-price_default="5.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Fridge Magnet
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Tree_Decoration.category" data-name="Tree_Decoration" data-price_default="5.00" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Tree_Decoration.category" data-name="Tree_Decoration" data-price_default="5.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Tree Decoration
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Picture_Frame.category" data-name="Picture_Frame" data-price_default="19.99" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Picture_Frame.category" data-name="Picture_Frame" data-price_default="19.99" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Picture Frame
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="T-Shirt.category" data-name="T-Shirt" data-price_default="15.00" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="T-Shirt.category" data-name="T-Shirt" data-price_default="15.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     T-Shirt
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Polo_Shirt.category" data-name="Polo_Shirt" data-price_default="25.00" > <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Polo_Shirt.category" data-name="Polo_Shirt" data-price_default="25.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Polo Shirt
                                 </button>
                             </div>
