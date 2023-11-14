@@ -65,7 +65,7 @@ let grand_total = {};
 let pfand_buttons_total = 0;
 let total_products_qty;
 let line_totals_total;
-let pfand_total;
+let pfand_total = 0;
 let amount_tendered;
 let total_due;
 let change_due;
@@ -94,6 +94,17 @@ $('.product_button').click( function(){
     let product_category = $(this).attr('data-category');
     let product = all_products.filter(item => item.name == `${product_name}`); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
     let product_index = all_products.findIndex(item => item.name == `${product_name}`); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
+
+    // Dictates whether a pfand is payable or not and how much must be paid
+    pfand_payable = $(this).attr("data-pfand");
+    console.log("pfand_payable?", pfand_payable);
+    if(pfand_payable == "yes"){
+        console.log("This is a pfand product");
+        pfand_total += 2;
+        console.log("Pfand Total 1", pfand_total);
+    } else {
+        console.log("This is NOT a pfand product");
+    }
 
     if(product.length > 0){
         all_products[product_index].qty +=1;
@@ -234,13 +245,20 @@ function basketGrandTotals(){
         $('#products_total').text("€" + line_totals_total.toFixed(2));
 
         // Calculates total value of pfand to be paid
-        pfand_total = total_products_qty * 2;
+
+        // if($('.product_button').hasClass('pfand_product')){
+        //     console.log("This is a pfand product");
+        // } else {
+        //     console.log("This is NOT a pfand product");
+        // }
+
+        // pfand_total = total_products_qty * 2;
         let new_pfand_total;
         if(pfand_buttons_total == 0){
-            // Calculates pfand due due
+            // Calculates pfand due
             $('#pfand_total').text("€" + pfand_total.toFixed(2));
 
-            // Calculates total amount due
+            // Calculates total amount
             total_due = pfand_total + line_totals_total;
             $('#total_due').text("€" + total_due.toFixed(2));
         } else {
@@ -327,6 +345,7 @@ $('.cancel_button').click( function(){
     $('#total_number_of_products').text("# Products");
     $('#products_total').text("€");
     $('#pfand_total').text("€");
+    pfand_total = 0; // Makes Pfand amount 0
     $('#total_due').text("€");
     $('#amount_tendered').val(0);
     $('#change_due').text("€");
