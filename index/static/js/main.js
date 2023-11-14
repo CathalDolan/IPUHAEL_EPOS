@@ -347,6 +347,7 @@ $('.cancel_button').click( function(){
     $('#pfand_total').text("€");
     pfand_total = 0; // Makes Pfand amount 0
     $('#total_due').text("€");
+    total_due = 0;
     $('#amount_tendered').val(0);
     $('#change_due').text("€");
 });

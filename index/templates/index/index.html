@@ -97,7 +97,7 @@
                     </div>
                 {% endfor %}
                 <div class="col-2">
-                    <button class="btn open_drink pfand_product" data-bs-toggle="modal" data-bs-target="#open_drink_modal" data-value="0">
+                    <button class="btn open_drink pfand_product" data-pfand="yes" data-bs-toggle="modal" data-bs-target="#open_drink_modal" data-value="0">
                         Open Drink
                     </button>
                 </div>
@@ -479,11 +479,12 @@
                         
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <button class="btn specials_button">2 for 1</button>
-                                    <button class="btn specials_button"></buttonclass>50% Off</button>
-                                    <button class="btn specials_button"></buttonclass>Buy 10 Get 11th Free</button>
-                                    <button class="btn specials_button"></buttonclass>6 Shot Special</button> <!-- This better done in calculations -->
-                                    <button class="btn specials_button"></buttonclass>€5 City Voucher</button>
+                                    <button class="btn specials_button" data-bs-dismiss="modal">2 for 1</button>
+                                    <button class="btn specials_button" data-bs-dismiss="modal">50% Off</button>
+                                    <button class="btn specials_button" data-bs-dismiss="modal">Buy 10 Get 11th Free</button>
+                                    <button class="btn specials_button" data-bs-dismiss="modal">6 Shot Special</button> <!-- This better done in calculations -->
+                                    <button class="btn specials_button" data-bs-dismiss="modal">€5 City Voucher</button>
+                                    <!-- <button class="btn specials_button €_notes_button pay_method_button" data-value="5" data-payment_method="Cash" data-bs-dismiss="modal">€5 City Voucher</button> -->
                                 </div>
                         
                                 <!-- Modal footer -->
