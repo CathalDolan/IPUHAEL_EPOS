@@ -27,19 +27,15 @@ def index(request):
                 )
                 new_grand_total.save()
 
-            print("Data 0", data[0])
             for k, v in data[0].items():
-                print("K", k, "V", v)
                 for x in v:
-                    print("X", x["name"])
                     product = Product.objects.get(name=x["name"])
-                    print("product", product)
                     new_line_items = LineItem(
                         grand_totals=new_grand_total,
                         category=x["category"],
                         name=product,
                         quantity=int(x["qty"]),
-                        # size=int(x[""]),
+                        # size=int(x[""]), needed in phase 2
                         price_unit=float(x["price"]),
                         price_line_total=float(x["line_total"]),
                     )

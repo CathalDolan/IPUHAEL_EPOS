@@ -24,6 +24,10 @@ body {
     font-weight: 500;
 }
 
+i {
+    font-size: 30px;
+}
+
 .logged_in_as {
     color: blue;
 }
@@ -32,7 +36,6 @@ body {
     background-color: white;
     border-color: black;
 }
-
 /* .draught:not(#measurement_row .measure_button) {
     background-color: darkgreen;
 } */

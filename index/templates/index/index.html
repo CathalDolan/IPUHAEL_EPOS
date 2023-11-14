@@ -229,6 +229,8 @@
         <!--  Right Side of till with totals  -->
         <div class="col-5">
             <p class="text-end">
+                <i class="fa-solid fa-maximize" onclick="openFullscreen();"></i>
+                <i class="fa-solid fa-minimize" onclick="closeFullscreen();"></i>
                 <span id="time_and_date"></span>
                 <span class="logged_in_as">Logged in as: Cathal</span>
             </p>
@@ -403,8 +405,9 @@
                         <p class="grand_totals_row grand_totals_figure" id="change_due">€</p>
                     </div>
                 </div>
-                {% if messages %}
-                    <div class="message-container">
+                <!-- Message Container -->
+                <div class="message-container">
+                    {% if messages %}
                         {% for message in messages %}
                             {% with message.level as level %}
                                 {% if level == 40 %}
@@ -418,8 +421,8 @@
                                 {% endif %}
                             {% endwith %}
                         {% endfor %}
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
                 <!-- € Notes and Finish Buttons Row -->
                 <div class="row €_notes_row">
                     <div class="col-3">

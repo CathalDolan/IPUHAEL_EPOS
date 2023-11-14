@@ -34,6 +34,26 @@ window.onload = function() {
     $('.toast').toast('show');
 }
 
+var elem = document.documentElement;
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+}
 
 let buttons = document.querySelectorAll('.product_button');
 let all_products = [];
@@ -333,7 +353,18 @@ $('.payment_button').click( function(){
     } else {
         if($('#amount_tendered').val() == ""){
             $('#amount_tendered').addClass('error');
-            alert("Please put in a Tendered Amount");
+            var message_container = $(".message-container");
+            console.log("message_container", message_container);
+            $(message_container).append(`
+                <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="arrow-up arrow-warning"></div>
+                    <div class="toast-header bg-warning text-dark">
+                        <strong class="me-auto text-light">Oops!</strong>${ "Please put in a tendered amount" }
+                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>`)
+            $('.toast').toast('show');
+            // alert("Please put in a Tendered Amount");
             return 
         }
     }
@@ -347,23 +378,40 @@ $('.payment_button').click( function(){
     grand_total.change_due = change_due;
     grand_total.payment_method = payment_method;
     grand_total.payment_reason = payment_reason;
-    // getCookie("csrftoken");
-    fetch(url, {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-        "X-Requested-With": "XMLHttpRequest",
-        "X-CSRFToken": getCookie("csrftoken"),
-        },
-        body: JSON.stringify([{all_products},{grand_total}])
-    })
-    .then(response => response.json())
-    .then(data => {
-        if(data.status == "Checkout Complete"){
-            location.reload();
-        }
-    });
+
+    if(amount_tendered < total_due){
+        var message_container = $(".message-container");
+        console.log("message_container", message_container);
+        $(message_container).append(`
+            <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="arrow-up arrow-warning"></div>
+                <div class="toast-header bg-warning text-dark">
+                    <strong class="me-auto text-light">Oops</strong>${ "Not Enough Tendered" }
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>`)
+        $('.toast').toast('show');
+    } else {
+        fetch(url, {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify([{all_products},{grand_total}])
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status == "Checkout Complete"){
+                location.reload();
+            }
+        });
+    }
+
+    
 });
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== "") {
