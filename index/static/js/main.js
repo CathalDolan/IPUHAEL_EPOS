@@ -62,10 +62,9 @@ let product_size = "";
 
 // All are used in the Grand Totals section
 let grand_total = {};
-let pfand_buttons_total = 0;
+let pfand_buttons_total = 0; // This is the amount due as a credit against the order when a pfand button for number of glasses is selected.
 let total_products_qty;
 let line_totals_total;
-let pfand_total = 0;
 let amount_tendered;
 let total_due;
 let change_due;
@@ -224,32 +223,38 @@ function basketGrandTotals(){
 
     total_products_qty = 0;
     line_totals_total = 0;
-    let new_pfand_total = 0;
+    let fn_pfand_total = 0;
     $(all_products).each(function(){
 
         // Calculates total number of products in the basket
         let xyz = this.qty;
         total_products_qty += parseInt(xyz);
         
-
         // Calculates total value of all products in basket
         let zyx = parseFloat(this.line_total);
         line_totals_total += zyx;
-        
 
         // Calculates Pfand Amount Due
         if(this.pfand_payable == "true"){
             console.log("Yes pfand payable", this.pfand_payable);
-            new_pfand_total += (this.qty * 2);
-            console.log("new_pfand_total", new_pfand_total);
+            fn_pfand_total += (this.qty * 2);
+            console.log("pfand_total", fn_pfand_total);
         } else {
             console.log("NO pfand payable", this.pfand_payable);
         } 
 
+        pfand_total = fn_pfand_total;
+
     });
     $('#total_number_of_products').text(total_products_qty);
     $('#products_total').text("€" + line_totals_total.toFixed(2));
+
+    // Calculates the amount of pfand to be displayed using a combination of the if statement above and the Pfand butoon function
+    let new_pfand_total = 0;
+    new_pfand_total = pfand_total - pfand_buttons_total;
     $('#pfand_total').text("€" + new_pfand_total.toFixed(2));
+    pfand_buttons_total = 0; // Prevents the pfand amount for returned glasses from being retained when the Cancel button is used.
+
     total_due = new_pfand_total + line_totals_total;
     $('#total_due').text("€" + total_due.toFixed(2));
 
@@ -303,15 +308,16 @@ $('.pfand_button').click( function(){
 
     pfand_buttons_total = pfand_return_value*2;
 
-    if(pfand_total == undefined){
-        $('#pfand_total').text("€" + minus_return_value);
-    } else {
-        let recalc_pfand_amount = (pfand_total - plus_return_value).toFixed(2);
-        $('#pfand_total').text("€" + recalc_pfand_amount);
+    // if(new_pfand_total == undefined){
+    //     $('#pfand_total').text("€" + minus_return_value);
+    // } else {
+    //     let recalc_pfand_amount = (new_pfand_total - plus_return_value).toFixed(2);
+    //     $('#pfand_total').text("€" + recalc_pfand_amount);
 
-        // Call recalculate change due function
-        basketGrandTotals();
-    }
+    //     // Call recalculate change due function
+    //     basketGrandTotals();
+    // }
+    basketGrandTotals();
 });
 
 // Empty basket once Cancel button is clicked at bottom of Grand Total section

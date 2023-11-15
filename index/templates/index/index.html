@@ -49,42 +49,42 @@
                 {% endfor %}
                 {% for canandbottle in canandbottles %}
                     <div class="col-2">
-                        <button class="btn {{canandbottle.category}} product_button pfand_product" id="{{canandbottle.id}}" data-category="{{canandbottle.category}}" data-name="{{canandbottle.name}}" data-price_default="{{canandbottle.price_pint}}" data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
+                        <button class="btn {{canandbottle.category}} product_button pfand_product" id="{{canandbottle.id}}" data-pfand="true" data-category="{{canandbottle.category}}" data-name="{{canandbottle.name}}" data-price_default="{{canandbottle.price_pint}}" data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
                             {{canandbottle.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for spirit in spirits %}
                     <div class="col-2">
-                        <button class="btn {{spirit.category}} {{spirit.name}} product_button pfand_product" id="{{spirit.id}}" data-category="{{spirit.category}}" data-name="{{spirit.name}}" data-price_default="{{spirit.price_default}}" data-price_single="{{spirit.price_default}}" data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
+                        <button class="btn {{spirit.category}} {{spirit.name}} product_button pfand_product" id="{{spirit.id}}" data-pfand="true" data-category="{{spirit.category}}" data-name="{{spirit.name}}" data-price_default="{{spirit.price_default}}" data-price_single="{{spirit.price_default}}" data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
                             {{spirit.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for softdrink in softdrinks %}
                     <div class="col-2">
-                        <button class="btn {{softdrink.category}} product_button pfand_product" id="{{softdrink.id}}" data-category="{{softdrink.category}}" data-name="{{softdrink.name}}" data-price_default="{{softdrink.price_03}}" data-price_dash="{{softdrink.price_dash}}" data-price_03="{{softdrink.price_03}}" data-price_04="{{softdrink.price_04}}" data-price_pint="{{softdrink.price_pint}}" data-price_bottle="{{softdrink.price_bottle}}">
+                        <button class="btn {{softdrink.category}} product_button pfand_product" id="{{softdrink.id}}" data-pfand="true" data-category="{{softdrink.category}}" data-name="{{softdrink.name}}" data-price_default="{{softdrink.price_03}}" data-price_dash="{{softdrink.price_dash}}" data-price_03="{{softdrink.price_03}}" data-price_04="{{softdrink.price_04}}" data-price_pint="{{softdrink.price_pint}}" data-price_bottle="{{softdrink.price_bottle}}">
                             {{softdrink.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for hotnonalcoholic in hotnonalcoholics %}
                     <div class="col-2">
-                        <button class="btn {{hotnonalcoholic.category}} product_button" id="{{hotnonalcoholic.id}}" data-category="{{hotnonalcoholic.category}}" data-name="{{hotnonalcoholic.name}}" data-price_default="{{hotnonalcoholic.price_default}}">
+                        <button class="btn {{hotnonalcoholic.category}} product_button" id="{{hotnonalcoholic.id}}" data-pfand="true" data-category="{{hotnonalcoholic.category}}" data-name="{{hotnonalcoholic.name}}" data-price_default="{{hotnonalcoholic.price_default}}">
                             {{hotnonalcoholic.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for hotalcoholic in hotalcoholics %}
                     <div class="col-2">
-                        <button class="btn {{hotalcoholic.category}} product_button" id="{{hotalcoholic.id}}" data-category="{{hotalcoholic.category}}" data-name="{{hotalcoholic.name}}" data-price_default="{{hotalcoholic.price_default}}">
+                        <button class="btn {{hotalcoholic.category}} product_button" id="{{hotalcoholic.id}}" data-pfand="true" data-category="{{hotalcoholic.category}}" data-name="{{hotalcoholic.name}}" data-price_default="{{hotalcoholic.price_default}}">
                             {{hotalcoholic.name}}
                         </button>
                     </div>
                 {% endfor %}
                 {% for hottoddy in hottoddys %}
                     <div class="col-2">
-                        <button class="btn {{hottoddy.category}} product_button pfand_product" id="{{hottoddy.id}}" data-category="{{hottoddy.category}}" data-name="{{hottoddy.name}}" data-price_default="{{hottoddy.price_default}}">
+                        <button class="btn {{hottoddy.category}} product_button" id="{{hottoddy.id}}" data-pfand="true" data-category="{{hottoddy.category}}" data-name="{{hottoddy.name}}" data-price_default="{{hottoddy.price_default}}">
                             {{hottoddy.name}}
                         </button>
                     </div>
@@ -97,7 +97,7 @@
                     </div>
                 {% endfor %}
                 <div class="col-2">
-                    <button class="btn open_drink pfand_product" data-bs-toggle="modal" data-bs-target="#open_drink_modal" data-value="0">
+                    <button class="btn open_drink pfand_product" data-pfand="true" data-bs-toggle="modal" data-bs-target="#open_drink_modal" data-value="0">
                         Open Drink
                     </button>
                 </div>
@@ -132,7 +132,7 @@
             <div class="row food_row">
                 {% for food in foods %}
                     <div class="col-2">
-                        <button class="btn {{food.category}} product_button pfand_product" id="{{food.id}}" data-category="{{food.category}}" data-name="{{food.name}}" data-price_default="{{food.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}">
+                        <button class="btn {{food.category}} product_button" id="{{food.id}}" data-pfand="true" data-category="{{food.category}}" data-name="{{food.name}}" data-price_default="{{food.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}">
                             {{food.name}}
                         </button>
                     </div>
@@ -180,23 +180,23 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                 {% for gift in gifts %}
-                                    <button class="btn {{gift.category}} product_button" id="{{gift.id}}" data-category="{{gift.category}}" data-name="{{gift.name}}" data-price_default="{{food.price_default}}" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                    <button class="btn {{gift.category}} product_button" id="{{gift.id}}" data-pfand="false" data-category="{{gift.category}}" data-name="{{gift.name}}" data-price_default="{{food.price_default}}" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                         {{gift.name}}
                                     </button>
                                 {% endfor %}
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Fridge_Magnet" data-name="Fridge_Magnet" data-price_default="5.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false" data-category="Fridge_Magnet" data-name="Fridge_Magnet" data-price_default="5.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Fridge Magnet
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Tree_Decoration" data-name="Tree_Decoration" data-price_default="5.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false" data-category="Tree_Decoration" data-name="Tree_Decoration" data-price_default="5.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Tree Decoration
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Picture_Frame" data-name="Picture_Frame" data-price_default="19.99" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false" data-category="Picture_Frame" data-name="Picture_Frame" data-price_default="19.99" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Picture Frame
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="T-Shirt" data-name="T-Shirt" data-price_default="15.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false" data-category="T-Shirt" data-name="T-Shirt" data-price_default="15.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     T-Shirt
                                 </button>
-                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-category="Polo_Shirt" data-name="Polo_Shirt" data-price_default="25.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                                <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false" data-category="Polo_Shirt" data-name="Polo_Shirt" data-price_default="25.00" data-bs-dismiss="modal"> <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                     Polo Shirt
                                 </button>
                             </div>
