@@ -85,7 +85,7 @@ $('.measure_button').click( function(){
 
 });
 
-// Product Button
+// PRODUCT BUTTONS
 $('.product_button').click( function(){
     // let abbrv_size = product_size.split("_"); // Required when allocating variable sizs to products - Phase 2
     let product_name = $(this).attr('data-name');
@@ -163,7 +163,7 @@ $(document).on('click', '.delete_button', function(){
     update_basket();
 })
 
-// Update the basket each time something is added or removed
+// UPDATE BASKET: Update the basket each time something is added or removed
 function update_basket(){ 
     
     if(total_products_qty > 10){
@@ -178,6 +178,8 @@ function update_basket(){
 
         // Message remind to tell customker they got special
     }
+
+    console.log("Pfand Payable update basket fn", all_products);
 
     $('.products_rows_div').empty();
 
@@ -218,6 +220,8 @@ function update_basket(){
     basketGrandTotals();
 }
 
+let pfand_total;
+
 // Calculate grand totals in basket
 function basketGrandTotals(){
 
@@ -253,7 +257,7 @@ function basketGrandTotals(){
     let new_pfand_total = 0;
     new_pfand_total = pfand_total - pfand_buttons_total;
     $('#pfand_total').text("€" + new_pfand_total.toFixed(2));
-    pfand_buttons_total = 0; // Prevents the pfand amount for returned glasses from being retained when the Cancel button is used.
+    // pfand_buttons_total = 0; // Prevents the pfand amount for returned glasses from being retained when the Cancel button is used.
 
     total_due = new_pfand_total + line_totals_total;
     $('#total_due').text("€" + total_due.toFixed(2));
@@ -264,7 +268,7 @@ function basketGrandTotals(){
     $('#change_due').text("€" + change_due.toFixed(2));
 }
 
-// Recalculate change due when a user manually enters a tendered amount
+// CHANGE DUE: Recalculate change due when a user manually enters a tendered amount
 const element = document.getElementById("amount_tendered");
 element.addEventListener("keyup", recalculate_change_due);
 function recalculate_change_due(){
@@ -274,7 +278,7 @@ function recalculate_change_due(){
     $('#change_due').text("€" + change_due.toFixed(2));
 }
 
-// Put € note values into the Amount Tender input once clicked
+// NOTES BUTTONS: Put € note values into the Amount Tender input once a note image has been clicked
 $('.€_notes_button').click( function(){
 
     note_value = $(this).attr("data-value");
@@ -299,7 +303,7 @@ function card_tendered(){
     payment_method = $(this).attr("data-payment_method");
 }
 
-// Allow Users input the number of Pfand items returned
+// PFAND BUTTONS: Allow Users input the number of Pfand items returned
 $('.pfand_button').click( function(){
 
     let pfand_return_value = $(this).attr("data-value");
@@ -308,19 +312,21 @@ $('.pfand_button').click( function(){
 
     pfand_buttons_total = pfand_return_value*2;
 
-    // if(new_pfand_total == undefined){
-    //     $('#pfand_total').text("€" + minus_return_value);
-    // } else {
-    //     let recalc_pfand_amount = (new_pfand_total - plus_return_value).toFixed(2);
-    //     $('#pfand_total').text("€" + recalc_pfand_amount);
+    console.log("Pfand Payable pfand fn", pfand_total);
 
-    //     // Call recalculate change due function
-    //     basketGrandTotals();
-    // }
-    basketGrandTotals();
+    if(pfand_total == undefined){
+        $('#pfand_total').text("€" + minus_return_value);
+    } else {
+        let recalc_pfand_amount = (pfand_payable - plus_return_value).toFixed(2);
+        $('#pfand_total').text("€" + recalc_pfand_amount);
+
+        // Call recalculate change due function
+        basketGrandTotals();
+    }
+    // basketGrandTotals();
 });
 
-// Empty basket once Cancel button is clicked at bottom of Grand Total section
+// CANCEL BUTTON: Empty basket once Cancel button is clicked at bottom of Grand Total section
 $('.cancel_button').click( function(){
     all_products = [];
     $('.products_rows_div').empty();
@@ -328,6 +334,7 @@ $('.cancel_button').click( function(){
     $('#products_total').text("€");
     $('#pfand_total').text("€");
     pfand_total = 0; // Makes Pfand amount 0
+    pfand_buttons_total = 0;
     $('#total_due').text("€");
     total_due = 0;
     $('#amount_tendered').val(0);
@@ -337,7 +344,6 @@ $('.cancel_button').click( function(){
 // Fn to submit order to DB when clicking Finish, Unpaid or Waste buttons
 // https://testdriven.io/blog/django-ajax-xhr/
 $('.payment_button').click( function(){
-    console.log("FN Fires");
     let payment_method_alternative = $(this).attr("data-payment_method_alternative")
     let payment_reason = $(this).attr("data-payment_reason")
     if(payment_reason == undefined){
@@ -356,7 +362,6 @@ $('.payment_button').click( function(){
         if($('#amount_tendered').val() == ""){
             $('#amount_tendered').addClass('error');
             var message_container = $(".message-container");
-            console.log("message_container", message_container);
             $(message_container).append(`
                 <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="arrow-up arrow-warning"></div>
@@ -380,6 +385,10 @@ $('.payment_button').click( function(){
     grand_total.change_due = change_due;
     grand_total.payment_method = payment_method;
     grand_total.payment_reason = payment_reason;
+
+    // if((line_totals_total * -1) == pfand_total){
+    //     console.log("Pfand pays")
+    // }
 
     if(amount_tendered < total_due){
         var message_container = $(".message-container");
@@ -410,8 +419,6 @@ $('.payment_button').click( function(){
             }
         });
     }
-
-    
 });
 
 function getCookie(name) {
