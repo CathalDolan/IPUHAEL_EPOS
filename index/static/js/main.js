@@ -92,19 +92,9 @@ $('.product_button').click( function(){
     let product_name = $(this).attr('data-name');
     let product_price = $(this).attr('data-price_default');
     let product_category = $(this).attr('data-category');
+    let pfand_payable = $(this).attr('data-pfand');
     let product = all_products.filter(item => item.name == `${product_name}`); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
     let product_index = all_products.findIndex(item => item.name == `${product_name}`); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
-
-    // Dictates whether a pfand is payable or not and how much must be paid
-    pfand_payable = $(this).attr("data-pfand");
-    console.log("pfand_payable?", pfand_payable);
-    if(pfand_payable == "yes"){
-        console.log("This is a pfand product");
-        pfand_total += 2;
-        console.log("Pfand Total 1", pfand_total);
-    } else {
-        console.log("This is NOT a pfand product");
-    }
 
     if(product.length > 0){
         all_products[product_index].qty +=1;
@@ -115,7 +105,8 @@ $('.product_button').click( function(){
             "name": product_name,
             "qty": 1,
             "price": product_price,
-            "line_total": product_price
+            "line_total": product_price,
+            "pfand_payable": pfand_payable,
         }
         all_products.push(product);
     }
@@ -175,6 +166,7 @@ $(document).on('click', '.delete_button', function(){
 
 // Update the basket each time something is added or removed
 function update_basket(){ 
+    
     if(total_products_qty > 10){
         let cheapest_price = 100;
         let index_of_cheapest_price;
@@ -192,7 +184,7 @@ function update_basket(){
 
     $.each(all_products, function(){
         $('.products_rows_div').append(
-            `<div class="row product_row" id="product_headings_row">
+            `<div class="row product_row" id="product_headings_row"> 
                 <div class="col-4" id="product_row_div">
                     <p class="product_row">${this.name}</p>
                 </div>
@@ -221,7 +213,7 @@ function update_basket(){
                     </button>
                 </div>
             </div>`
-        ); // onclick="totalClick(${this.name})
+        );
     });
 
     basketGrandTotals();
@@ -232,55 +224,39 @@ function basketGrandTotals(){
 
     total_products_qty = 0;
     line_totals_total = 0;
+    let new_pfand_total = 0;
     $(all_products).each(function(){
 
         // Calculates total number of products in the basket
         let xyz = this.qty;
         total_products_qty += parseInt(xyz);
-        $('#total_number_of_products').text(total_products_qty);
+        
 
         // Calculates total value of all products in basket
         let zyx = parseFloat(this.line_total);
         line_totals_total += zyx;
-        $('#products_total').text("€" + line_totals_total.toFixed(2));
-
-        // Calculates total value of pfand to be paid
-
-        // if($('.product_button').hasClass('pfand_product')){
-        //     console.log("This is a pfand product");
-        // } else {
-        //     console.log("This is NOT a pfand product");
-        // }
-
-        // pfand_total = total_products_qty * 2;
-        let new_pfand_total;
-        if(pfand_buttons_total == 0){
-            // Calculates pfand due
-            $('#pfand_total').text("€" + pfand_total.toFixed(2));
-
-            // Calculates total amount
-            total_due = pfand_total + line_totals_total;
-            $('#total_due').text("€" + total_due.toFixed(2));
-        } else {
-            // Calculates pfand due due
-            new_pfand_total = pfand_total - pfand_buttons_total;
-            $('#pfand_total').text("€" + new_pfand_total.toFixed(2));
-
-            // Calculates total amount due
-            total_due = new_pfand_total + line_totals_total;
-            $('#total_due').text("€" + total_due.toFixed(2));
-        }
         
-        // Amount Tendered
-        amount_tendered = total_due;
-        // $('#amount_tendered').val(total_due.toFixed(2));
 
-        // Change Due
-        amount_tendered = document.getElementById('amount_tendered').value;
-        change_due = amount_tendered - total_due.toFixed(2);
-        $('#change_due').text("€" + change_due.toFixed(2));
+        // Calculates Pfand Amount Due
+        if(this.pfand_payable == "true"){
+            console.log("Yes pfand payable", this.pfand_payable);
+            new_pfand_total += (this.qty * 2);
+            console.log("new_pfand_total", new_pfand_total);
+        } else {
+            console.log("NO pfand payable", this.pfand_payable);
+        } 
 
     });
+    $('#total_number_of_products').text(total_products_qty);
+    $('#products_total').text("€" + line_totals_total.toFixed(2));
+    $('#pfand_total').text("€" + new_pfand_total.toFixed(2));
+    total_due = new_pfand_total + line_totals_total;
+    $('#total_due').text("€" + total_due.toFixed(2));
+
+    amount_tendered = total_due;
+    amount_tendered = document.getElementById('amount_tendered').value;
+    change_due = amount_tendered - total_due.toFixed(2);
+    $('#change_due').text("€" + change_due.toFixed(2));
 }
 
 // Recalculate change due when a user manually enters a tendered amount
@@ -379,7 +355,7 @@ $('.payment_button').click( function(){
                 <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="arrow-up arrow-warning"></div>
                     <div class="toast-header bg-warning text-dark">
-                        <strong class="me-auto text-light">Oops!</strong>${ "Please put in a tendered amount" }
+                        <strong class="me-auto text-light">Oops!</strong>${ "Please add a tendered amount" }
                         <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                 </div>`)
