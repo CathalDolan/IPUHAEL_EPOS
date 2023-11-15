@@ -179,8 +179,6 @@ function update_basket(){
         // Message remind to tell customker they got special
     }
 
-    console.log("Pfand Payable update basket fn", all_products);
-
     $('.products_rows_div').empty();
 
     $.each(all_products, function(){
@@ -240,11 +238,7 @@ function basketGrandTotals(){
 
         // Calculates Pfand Amount Due
         if(this.pfand_payable == "true"){
-            console.log("Yes pfand payable", this.pfand_payable);
             fn_pfand_total += (this.qty * 2);
-            console.log("pfand_total", fn_pfand_total);
-        } else {
-            console.log("NO pfand payable", this.pfand_payable);
         } 
 
         pfand_total = fn_pfand_total;
@@ -268,15 +262,16 @@ function basketGrandTotals(){
     $('#change_due').text("€" + change_due.toFixed(2));
 }
 
-// CHANGE DUE: Recalculate change due when a user manually enters a tendered amount
-const element = document.getElementById("amount_tendered");
-element.addEventListener("keyup", recalculate_change_due);
-function recalculate_change_due(){
+// AMOUNT TENDERED INPUT: Recalculate change due when a user manually enters a tendered amount
+// const element = document.getElementById("amount_tendered");
+// element.addEventListener("keyup", recalculate_change_due);
+// function recalculate_change_due(){
+$('#amount_tendered').on("keyup", function(){
     amount_tendered = document.getElementById('amount_tendered').value;
     // amount_tendered.select(); // Supposed to highlight all text in the input when it's clicked. Or clear input
     change_due = (amount_tendered - total_due);
     $('#change_due').text("€" + change_due.toFixed(2));
-}
+});
 
 // NOTES BUTTONS: Put € note values into the Amount Tender input once a note image has been clicked
 $('.€_notes_button').click( function(){
@@ -291,17 +286,18 @@ $('.€_notes_button').click( function(){
 
 });
 
-// Populate tendered amount when Credit Card button pressed
-const card_button = document.getElementById("credit_card_button");
-card_button.addEventListener("click", card_tendered);
-function card_tendered(){
+// CREDIT CARD BUTTON: Populate tendered amount when Credit Card button pressed
+// const card_button = document.getElementById("credit_card_button");
+// card_button.addEventListener("click", card_tendered);
+// function card_tendered(){
+$('#credit_card_button').click( function(){
     // Amount Tendered
     amount_tendered = total_due;
     $('#amount_tendered').val(total_due.toFixed(2));
     recalculate_change_due();
 
     payment_method = $(this).attr("data-payment_method");
-}
+});
 
 // PFAND BUTTONS: Allow Users input the number of Pfand items returned
 $('.pfand_button').click( function(){
@@ -317,8 +313,8 @@ $('.pfand_button').click( function(){
     if(pfand_total == undefined){
         $('#pfand_total').text("€" + minus_return_value);
     } else {
-        let recalc_pfand_amount = (pfand_payable - plus_return_value).toFixed(2);
-        $('#pfand_total').text("€" + recalc_pfand_amount);
+        // let recalc_pfand_amount = (pfand_payable - plus_return_value).toFixed(2);
+        // $('#pfand_total').text("€" + recalc_pfand_amount);
 
         // Call recalculate change due function
         basketGrandTotals();
@@ -371,7 +367,6 @@ $('.payment_button').click( function(){
                     </div>
                 </div>`)
             $('.toast').toast('show');
-            // alert("Please put in a Tendered Amount");
             return 
         }
     }
@@ -386,9 +381,9 @@ $('.payment_button').click( function(){
     grand_total.payment_method = payment_method;
     grand_total.payment_reason = payment_reason;
 
-    // if((line_totals_total * -1) == pfand_total){
-    //     console.log("Pfand pays")
-    // }
+    if((line_totals_total * -1) == pfand_total){
+        console.log("Pfand pays")
+    }
 
     if(amount_tendered < total_due){
         var message_container = $(".message-container");
