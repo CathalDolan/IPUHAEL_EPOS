@@ -14,15 +14,17 @@ def index(request):
     if is_ajax:
         if request.method == 'POST':
             data = json.load(request)
+            print("Data", data)
             for v in data[1].values():
                 new_grand_total = GrandTotal(
-                    number_of_products=int(v["total_products_qty"]),
-                    drinks_food_total=float(v["line_totals_total"]),
-                    pfand_total=float(v["pfand_total"]),
-                    total_due=float(v["total_due"]),
-                    tendered_amount=float(v["amount_tendered"]),
-                    change_due=float(v["change_due"]),
-                    payment_method=v["payment_method"],
+                    number_of_products=int(v["Total_Products_Qty"]),
+                    # pfand_buttons_total=float(v["pfand_buttons_total"]),
+                    drinks_food_total=float(v["Line_Totals_Total"]),
+                    pfand_total=float(v["Pfand_Total"]),
+                    total_due=float(v["Total_Due"]),
+                    tendered_amount=float(v["Amount_Tendered"]),
+                    change_due=float(v["Change_Due"]),
+                    payment_method=v["Payment_Method"],
                     payment_reason=v["payment_reason"],
                 )
                 new_grand_total.save()

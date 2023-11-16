@@ -30,6 +30,7 @@ class GrandTotalAdmin(ExportActionMixin, admin.ModelAdmin):
         'pk',
         'order_date',
         'number_of_products',
+        'pfand_buttons_total',
         'drinks_food_total',
         'pfand_total',
         'total_due',

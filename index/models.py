@@ -58,6 +58,10 @@ class GrandTotal(models.Model):
                                       auto_now_add=True)
     number_of_products = models.IntegerField(null=True,
                                              blank=True)
+    pfand_buttons_total = models.DecimalField(null=True,
+                                              blank=True,
+                                              decimal_places=2,
+                                              max_digits=5)
     drinks_food_total = models.DecimalField(null=True,
                                             blank=True,
                                             decimal_places=2,
