@@ -1,7 +1,7 @@
 console.log("JS is Working")
 
-// let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu106.gitpod.io/";
+let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
+// let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu106.gitpod.io/";
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function() {
@@ -368,7 +368,7 @@ $('.payment_button').click( function(){
     // e.g. where a customer buys 1 Pfand Shot Special, but returns a glass. One cancels the other so amount submitted and amount due is 0
     console.log("FINISH BTN Pfand_Total", Pfand_Total);
     console.log("FINISH BTN Line_Totals_Total", Line_Totals_Total);
-    if((Line_Totals_Total * -1) == Pfand_Total){
+    if((Line_Totals_Total * -1) >= Pfand_Total){
         Payment_Method = "Pfand Payment" // This applies where the pfand is sufficient to cover the payment.
         $('#amount_tendered').val(0);
     };
