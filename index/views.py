@@ -18,7 +18,7 @@ def index(request):
             for v in data[1].values():
                 new_grand_total = GrandTotal(
                     number_of_products=int(v["Total_Products_Qty"]),
-                    # pfand_buttons_total=float(v["pfand_buttons_total"]),
+                    pfand_buttons_total=float(v["Pfand_Buttons_Total"]),
                     drinks_food_total=float(v["Line_Totals_Total"]),
                     pfand_total=float(v["Pfand_Total"]),
                     total_due=float(v["Total_Due"]),

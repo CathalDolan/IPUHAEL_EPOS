@@ -63,12 +63,12 @@ let Product_Size = "";
 // All are used in the Grand Totals section
 let Grand_Total = {};
 let Pfand_Buttons_Total = 0; // This is the amount due as a credit against the order when a pfand button for number of glasses is selected.
-let Total_Products_Qty;
-let Line_Totals_Total;
-let Pfand_Total;
-let Amount_Tendered;
-let Total_Due;
-let Change_Due;
+let Total_Products_Qty = 0;
+let Line_Totals_Total = 0;
+let Pfand_Total = 0;
+let Amount_Tendered = 0.00;
+let Total_Due = 0;
+let Change_Due = 0;
 let Payment_Method;
 
 // Select product size - Needed in Phase 2
@@ -90,7 +90,7 @@ $('.measure_button').click( function(){
 $('.product_button').click( function(){
     // let abbrv_size = Product_Size.split("_"); // Required when allocating variable sizs to products - Phase 2
     let product_name = $(this).attr('data-name');
-    let product_price = $(this).attr('data-price_default');
+    let product_price = Number($(this).attr('data-price_default'));
     let product_category = $(this).attr('data-category');
     let pfand_payable = $(this).attr('data-pfand');
     let product = All_Products.filter(item => item.name == `${product_name}`); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
@@ -98,7 +98,7 @@ $('.product_button').click( function(){
 
     if(product.length > 0){
         All_Products[product_index].qty +=1;
-        All_Products[product_index].line_total = Number(All_Products[product_index].price * All_Products[product_index].qty).toFixed(2);
+        All_Products[product_index].line_total = All_Products[product_index].price * All_Products[product_index].qty;
     } else {
         product = {
             "category": product_category,
@@ -109,13 +109,14 @@ $('.product_button').click( function(){
             "pfand_payable": pfand_payable,
         }
         All_Products.push(product);
+
     }
     update_basket();
 });
 
 // INCREMENT a product line in the basket
 $(document).on('click', '.add_button', function(){
-
+    console.log("Increment FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text();
     let product = All_Products.filter(item => item.name == product_name);
     let product_index = All_Products.findIndex(item => item.name == product_name);
@@ -123,7 +124,7 @@ $(document).on('click', '.add_button', function(){
     if(product.length > 0){
 
         All_Products[product_index].qty +=1;
-        All_Products[product_index].line_total = Number(All_Products[product_index].price * All_Products[product_index].qty).toFixed(2);
+        All_Products[product_index].line_total = All_Products[product_index].price * All_Products[product_index].qty;
     
     }
     update_basket();
@@ -131,7 +132,7 @@ $(document).on('click', '.add_button', function(){
 
 // DECREMENT a product line in the basket
 $(document).on('click', '.subtract_button', function(){
-
+    console.log("Decrement FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text();
     let product = All_Products.filter(item => item.name == product_name);
     let product_index = All_Products.findIndex(item => item.name == product_name);
@@ -145,7 +146,7 @@ $(document).on('click', '.subtract_button', function(){
 
         if(product.length > 0){
             All_Products[product_index].qty -=1;
-            All_Products[product_index].line_total = Number(All_Products[product_index].price * All_Products[product_index].qty).toFixed(2);
+            All_Products[product_index].line_total = All_Products[product_index].price * All_Products[product_index].qty;
         
         }
     }
@@ -154,13 +155,14 @@ $(document).on('click', '.subtract_button', function(){
 
 // DELETE a product line from the basket
 $(document).on('click', '.delete_button', function(){
-    console.log("Delete Function Fires");
-
+    console.log("Delete FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text();
     let product_index = All_Products.findIndex(item => item.name == product_name);
     console.log("product_index", product_index);
-    All_Products.splice(product_index, 1);
-
+    var products_spliced = All_Products.splice(product_index, 1);
+    console.log("products_spliced", products_spliced);
+    console.log("All_Products", All_Products);
+    Pfand_Total = (Pfand_Total - (products_spliced[0].qty*2));
     update_basket();
 })
 
@@ -192,10 +194,10 @@ function update_basket(){
                     <p class="product_row">${this.qty}</p>
                 </div>
                 <div class="col" id="per_unit_row_div">
-                    <p class="product_row">€${this.price}</p>
+                    <p class="product_row">€${this.price.toFixed(2)}</p>
                 </div>
                 <div class="col" id="line_total_row_div">
-                    <p class="product_row">€${this.line_total}</p>
+                    <p class="product_row">€${this.line_total.toFixed(2)}</p>
                 </div>
                 <div class="col-1" id="add_row_div">
                     <div class="add_button basket_edit_button">
@@ -219,21 +221,25 @@ function update_basket(){
     basketGrandTotals();
 }
 
-// GRAND TOTALS CALULATION: Calculate grand totals in basket
+// GRAND TOTALS CALCULATION: Calculate grand totals in basket
 function basketGrandTotals(){
 
     Total_Products_Qty = 0;
     Line_Totals_Total = 0;
     let fn_pfand_total = 0;
+    console.log("All Products Basket Grand Totals FN", All_Products);
     $(All_Products).each(function(){
-
+        
         // Calculates total number of products in the basket
-        let xyz = this.qty;
-        Total_Products_Qty += parseInt(xyz);
+        let this_quantity = this.qty;
+        Total_Products_Qty += this_quantity;
+        console.log("Total_Products_Qty", Total_Products_Qty);
         
         // Calculates total value of all products in basket
-        let zyx = parseFloat(this.line_total);
-        Line_Totals_Total += zyx;
+        let this_line_total = this.line_total;
+        console.log("this_line_total", this_line_total);
+        Line_Totals_Total += this_line_total;
+        console.log("Line_Totals_Total pre fixed", Line_Totals_Total);
 
         // Calculates Pfand Amount Due
         if(this.pfand_payable == "true"){
@@ -254,24 +260,31 @@ function basketGrandTotals(){
     Pfand_Total = new_pfand_total; // This is here so that we can record when payment is made purely with a pfand as per the PAYMENT BUTTONS Fn
 
     Total_Due = new_pfand_total + Line_Totals_Total;
-    $('#total_due').text("€" + Total_Due.toFixed(2));
+    var new_total_due = Total_Due.toFixed(2);
+    Total_Due = parseFloat(new_total_due);
+    console.log("Total due to fixed", Total_Due);
+    $('#total_due').text("€" + Total_Due.toFixed(2)); 
 
     Amount_Tendered = Total_Due;
-    Amount_Tendered = document.getElementById('amount_tendered').value;
-    Change_Due = Amount_Tendered - Total_Due.toFixed(2);
+    console.log("TOTAL DUE", Total_Due);
+    Amount_Tendered = parseFloat($('#amount_tendered').val());
+    console.log("Amount_Tendered", Amount_Tendered);
+    Change_Due = Amount_Tendered - Total_Due;
     $('#change_due').text("€" + Change_Due.toFixed(2));
 }
 
-// AMOUNT TENDERED INPUT: Recalculate change due when a user manually enters a tendered amount
+// TENDERED AMOUNT INPUT & RECALCULATE CHANGE: Recalculate change due when a user manually enters a tendered amount
 const element = document.getElementById("amount_tendered");
 element.addEventListener("keyup", recalculate_change_due);
 function recalculate_change_due(){
-    Amount_Tendered = document.getElementById('amount_tendered').value;
+    Amount_Tendered = parseFloat($('#amount_tendered').val());
+    console.log("TENDERED AMOUNT", Amount_Tendered);
     // Amount_Tendered.select(); // Supposed to highlight all text in the input when it's clicked. Or clear input
     Change_Due = (Amount_Tendered - Total_Due);
-    console.log("Amount_Tendered", Amount_Tendered);
-    console.log("total_due", total_due);
-    console.log("CHange Due", Change_Due);
+
+    console.log("RECALCULATE CHANGE FN: Amount Tendered", Amount_Tendered);
+    console.log("RECALCULATE CHANGE FN: Total Due", Total_Due);
+    console.log("RECALCULATE CHANGE FN: Change Due", Change_Due);
 
     $('#change_due').text("€" + Change_Due.toFixed(2));
     Payment_Method = "Cash";
@@ -353,12 +366,11 @@ $('.payment_button').click( function(){
 
     // Functionality to allow a payment be submitted where the total due is 0 because the pfand covered the cost.
     // e.g. where a customer buys 1 Pfand Shot Special, but returns a glass. One cancels the other so amount submitted and amount due is 0
-    console.log("Pfand_Total", Pfand_Total);
-    console.log("Line_Totals_Total", (Line_Totals_Total * -1));
+    console.log("FINISH BTN Pfand_Total", Pfand_Total);
+    console.log("FINISH BTN Line_Totals_Total", Line_Totals_Total);
     if((Line_Totals_Total * -1) == Pfand_Total){
         Payment_Method = "Pfand Payment" // This applies where the pfand is sufficient to cover the payment.
         $('#amount_tendered').val(0);
-        console.log("pfand payment method fn fires");
     };
 
     if(payment_method_alternative == "Complimentary" || payment_method_alternative == "Waste"){
@@ -396,6 +408,11 @@ $('.payment_button').click( function(){
     Grand_Total.Payment_Method = Payment_Method;
     Grand_Total.payment_reason = payment_reason;
 
+    console.log("PAYMENT BUTTONS FN: Amount Tendered", Amount_Tendered);
+    console.log("PAYMENT BUTTONS FN: Total Due", Total_Due);
+    let sub_amount = Amount_Tendered - Total_Due;
+    console.log("PAYMENT BUTTONS FN: Sub Amount", sub_amount);
+
     if(Amount_Tendered < Total_Due){
         var message_container = $(".message-container");
         console.log("message_container", message_container);
@@ -403,12 +420,14 @@ $('.payment_button').click( function(){
             <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="arrow-up arrow-warning"></div>
                 <div class="toast-header bg-warning text-dark">
-                    <strong class="me-auto text-light">Oops</strong>${ "Not Enough Tendered" }
+                    <strong class="me-auto text-light">Oops</strong>${ "Not Enough Tendered!!!" }
                     <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>`)
         $('.toast').toast('show');
     } else {
+        console.log("All Products", All_Products);
+        console.log("Grand Total", Grand_Total);
         fetch(url, {
             method: "POST",
             credentials: "same-origin",
