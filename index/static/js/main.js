@@ -47,6 +47,8 @@ let amount_tendered;
 let total_due;
 let change_due;
 let payment_method;
+var specials_applied = [];
+var discount_product = {}
 
 // Select product size - Needed in Phase 2
 $('.measure_button').click( function(){
@@ -129,14 +131,108 @@ $(document).on('click', '.subtract_button', function(){
 
 // Delete a product line from the basket
 $(document).on('click', '.delete_button', function(){
-    console.log("Delete Function Fires");
+    console.log("Delete Function Fires", this);
+    if($(this).attr('data-special') == 'two_for_one') {
+        console.log("YES DATA SPECIAL");
+        let index = all_products.findIndex(obj => {
+            console.log("obj.name = ", obj.name)
+            return obj.name == discount_product['name'];
+        });
+        console.log(index); 
+        all_products[index].qty += 1; 
+        all_products[index].line_total = (all_products[index].qty * all_products[index].price).toFixed(2)
+        specials_applied = [];
+        discount_product = {};
+    }
 
-    let product_name = $(this).parent().siblings(':first').children().text();
-    let product_index = all_products.findIndex(item => item.name == product_name);
-    console.log("product_index", product_index);
-    all_products.splice(product_index, 1);
-
+    else {
+        let product_name = $(this).parent().siblings(':first').children().text();
+        let product_index = all_products.findIndex(item => item.name == product_name);
+        console.log("product_index", product_index);
+        if(all_products[product_index].name == discount_product.name) {
+            discount_product = {}
+            specials_applied = []
+        }
+        all_products.splice(product_index, 1);
+    }
     update_basket();
+})
+
+// Specials option selected from Specials Modal
+$(document).on('click', '.specials_option', function() {
+    var special = $(this).attr('data-special');
+    // TWO FOR ONE SPECIAL
+    if(special == 'two_for_one') {
+        console.log('two_for_one');
+        if(total_products_qty > 1) {
+            discount_product = {'price': 0};
+            for(i=0; i<all_products.length; i++) {
+                console.log("all_products[i] = ", all_products[i])
+                if(all_products[i]['qty'] > 1) {
+                    if((Number(all_products[i]['price']) > Number(discount_product['price']))) {
+                        // discount_product = all_products[i]
+                        discount_product = {
+                            'category': all_products[i]['category'],
+                            'name': all_products[i]['name'],
+                            'qty': 1,
+                            'price': 0,
+                            'line_total': 0
+                        }
+                    }
+                }
+            }
+            console.log('discount_product = ', discount_product);
+            let index = all_products.findIndex(obj => {
+                console.log("obj.name = ", obj.name)
+                return obj.name == discount_product['name'];
+            });
+            console.log(index); 
+            all_products[index].qty += -1; 
+            all_products[index].line_total = (all_products[index].price * all_products[index].qty).toFixed(2)
+            if(!specials_applied.includes('two_for_one')) {
+                specials_applied.push(special);
+            }
+            else {
+                console.log("already applied")
+            }
+            console.log("specials_applied = ", specials_applied)
+        }
+        else {
+            //Add message saying not enough items to apply discount
+        }
+    }
+    // FIFTY % OFF SPECIAL
+    if(special == 'fifty_off') {
+        if(specials_applied.length < 1) {
+            if(line_totals_total > 50) {
+                console.log("> 50")
+                $.each(all_products, function(index, item) {
+                    item.price = item.price/2;
+                    item.line_total = item.line_total/2
+                })
+                discount_product = {
+                    'name': special
+                }
+                specials_applied.push(special)
+            }
+        }
+        else {
+            console.log("Voucher in use already = ", specials_applied[0])
+            //Add message saying a voucher is already in use
+        }
+        console.log('fifty_off')
+    }
+
+    // TEN FOR ELEVEN SPECIAL
+    if(special == 'ten_for_eleven') {
+        console.log('ten_for_eleven')
+    }
+
+    // SIX SHOT SPECIAL
+    if(special == 'six_shot_special') {
+        console.log('six_shot_special')
+    }
+    update_basket()
 })
 
 // Update the basket each time something is added or removed
@@ -189,6 +285,36 @@ function update_basket(){
             </div>`
         ); // onclick="totalClick(${this.name})
     });
+    if(Object.keys(discount_product).length != 0) {
+        $('.products_rows_div').append(
+            `<div class="row product_row" id="product_headings_row">
+                <div class="col-4" id="product_row_div">
+                    <p class="product_row">${discount_product['name']}</p>
+                </div>
+                <div class="col-1" id="qty_row_div">
+                    <p class="product_row">${discount_product['qty']}</p>
+                </div>
+                <div class="col" id="per_unit_row_div">
+                    <p class="product_row">€0</p>
+                </div>
+                <div class="col" id="line_total_row_div">
+                    <p class="product_row">${specials_applied[0]}</p>
+                </div>
+                <div class="col-1" id="add_row_div">
+                    
+                </div>
+                <div class="col-1" id="subtract_row_div">
+                    
+                </div>
+                <div class="col-1" id="delete_row_div">
+                    <button class="delete_button basket_edit_button" data-special="${specials_applied[0]}">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>`
+        ); 
+    }
+    
 
     basketGrandTotals();
 }
@@ -300,6 +426,7 @@ $('.pfand_button').click( function(){
 // Empty basket once Cancel button is clicked at bottom of Grand Total section
 $('.cancel_button').click( function(){
     all_products = [];
+    discount_product = {};
     $('.products_rows_div').empty();
     $('#total_number_of_products').text("# Products");
     $('#products_total').text("€");
