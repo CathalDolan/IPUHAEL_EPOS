@@ -31,6 +31,7 @@ def index(request):
 
             for k, v in data[0].items():
                 for x in v:
+                    print("x = ", x)
                     product = Product.objects.get(name=x["name"])
                     new_line_items = LineItem(
                         grand_totals=new_grand_total,

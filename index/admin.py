@@ -40,7 +40,7 @@ class GrandTotalAdmin(ExportActionMixin, admin.ModelAdmin):
         'payment_reason',
     )
     ordering = (
-        'id',
+        '-id',
     )
 
 
@@ -57,7 +57,7 @@ class LineItemAdmin(ExportActionMixin, admin.ModelAdmin):
         'price_line_total',
     )
     ordering = (
-        'id',
+        '-id',
     )
 
 

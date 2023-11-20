@@ -1,7 +1,7 @@
 console.log("JS is Working")
 
-let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-// let url = "https://8000-cathaldolan-ipuhaelepos-3mipea1rgm3.ws-eu106.gitpod.io/";
+// let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
+let url = "https://8000-cathaldolan-ipuhaelepos-e452p7jqft4.ws-eu106.gitpod.io/";
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function() {
@@ -37,6 +37,7 @@ window.onload = function() {
 // FULL SCREEN MODE: Pair of function to expand and collapse page to full screen
 var elem = document.documentElement;
 function openFullscreen() {
+    // var elem = document.documentElement;
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
   } else if (elem.webkitRequestFullscreen) { /* Safari */
@@ -113,6 +114,7 @@ $('.product_button').click( function(){
         All_Products.push(product);
 
     }
+    // console.log("All_Products = ", All_Products)
     update_basket();
 });
 
@@ -158,19 +160,122 @@ $(document).on('click', '.subtract_button', function(){
 // DELETE a product line from the basket
 $(document).on('click', '.delete_button', function(){
     console.log("Delete Function Fires", this);
-    let product_name = $(this).parent().siblings(':first').children().text();
-    let product_index = All_Products.findIndex(item => item.name == product_name);
-    console.log("product_index", product_index);
-    var products_spliced = All_Products.splice(product_index, 1);
-    console.log("products_spliced", products_spliced);
-    console.log("All_Products", All_Products);
-    Pfand_Total = (Pfand_Total - (products_spliced[0].qty*2));
+    if($(this).attr('data-special') == 'two_for_one') {
+        console.log("YES DATA SPECIAL");
+        let index = All_Products.findIndex(obj => {
+            console.log("obj.name = ", obj.name)
+            return obj.name == discount_product['name'];
+        });
+        console.log(index); 
+        All_Products[index].qty += 1; 
+        All_Products[index].line_total = (All_Products[index].qty * All_Products[index].price)
+        specials_applied = [];
+        discount_product = {};
+    }
+
+    else {
+        let product_name = $(this).parent().siblings(':first').children().text();
+        let product_index = all_products.findIndex(item => item.name == product_name);
+        console.log("product_index", product_index);
+        if(All_Products[product_index].name == discount_product.name) {
+            discount_product = {}
+            specials_applied = []
+        }
+        All_Products.splice(product_index, 1);
+    }
     update_basket();
+})
+
+$(document).on('click', '.specials_option', function() {
+    var special = $(this).attr('data-special');
+    console.log('specials_option');
+    console.log('All_products', All_Products);
+    // TWO FOR ONE SPECIAL
+    if(special == 'two_for_one') {
+        console.log('two_for_one');
+        if(Total_Products_Qty > 1) {
+            discount_product = {'price': 0};
+            for(i=0; i<All_Products.length; i++) {
+                console.log("all_products[i] = ", All_Products[i])
+                if(All_Products[i]['qty'] > 1) {
+                    if((Number(All_Products[i]['price']) > Number(discount_product['price']))) {
+                        // discount_product = all_products[i]
+                        discount_product = {
+                            'category': All_Products[i]['category'],
+                            'name': All_Products[i]['name'],
+                            'pfand_payable': All_Products[i].pfand_payable,
+                            'qty': 1,
+                            'price': 0,
+                            'line_total': 0
+                        }
+                    }
+                } 
+            }
+            console.log('discount_product = ', discount_product);
+            let index = All_Products.findIndex(obj => {
+                console.log("obj.name = ", obj.name)
+                return obj.name == discount_product['name'];
+            });
+            console.log(index); 
+            if(index != -1) {
+                All_Products[index].qty += -1; 
+                All_Products[index].line_total = (All_Products[index].price * All_Products[index].qty)
+                if(!specials_applied.includes('two_for_one')) {
+                    specials_applied.push(special);
+                }
+                else {
+                    console.log("already applied")
+                }
+                console.log("specials_applied = ", specials_applied)
+            }
+            else {
+                console.log("Cannot apply 2 for 1 discount, there are no items of 2+")
+                discount_product = {}
+            }
+            
+        }
+        else {
+            //Add message saying not enough items to apply discount
+        }
+    }
+    // FIFTY % OFF SPECIAL
+    if(special == 'fifty_off') {
+        if(specials_applied.length < 1) {
+            if(Line_Totals_Total > 50) {
+                console.log("> 50")
+                $.each(All_Products, function(index, item) {
+                    item.price = item.price/2;
+                    item.line_total = item.line_total/2
+                })
+                discount_product = {
+                    'name': special
+                }
+                specials_applied.push(special)
+            }
+        }
+        else {
+            console.log("Voucher in use already = ", specials_applied[0])
+            //Add message saying a voucher is already in use
+        }
+        console.log('fifty_off')
+    }
+
+    // TEN FOR ELEVEN SPECIAL
+    if(special == 'ten_for_eleven') {
+        console.log('ten_for_eleven')
+    }
+
+    // SIX SHOT SPECIAL
+    if(special == 'six_shot_special') {
+        console.log('six_shot_special')
+    }
+    update_basket()
 })
 
 // UPDATE BASKET: Update the basket each time something is added or removed
 function update_basket(){ 
-    
+    console.log("update_basket = ")
+    console.log("All_Products = ", All_Products)
     if(Total_Products_Qty > 10){
         let cheapest_price = 100;
         let index_of_cheapest_price;
@@ -265,13 +370,13 @@ function basketGrandTotals(){
         // Calculates total number of products in the basket
         let this_quantity = this.qty;
         Total_Products_Qty += this_quantity;
-        console.log("Total_Products_Qty", Total_Products_Qty);
+        // console.log("Total_Products_Qty", Total_Products_Qty);
         
         // Calculates total value of all products in basket
         let this_line_total = this.line_total;
-        console.log("this_line_total", this_line_total);
+        // console.log("this_line_total", this_line_total);
         Line_Totals_Total += this_line_total;
-        console.log("Line_Totals_Total pre fixed", Line_Totals_Total);
+        // console.log("Line_Totals_Total pre fixed", Line_Totals_Total);
 
         // Calculates Pfand Amount Due
         if(this.pfand_payable == "true"){
@@ -281,8 +386,16 @@ function basketGrandTotals(){
         Pfand_Total = fn_pfand_total;
 
     });
+    // console.log("discount_product = ", discount_product)
+    $(discount_product).each(function() {
+        if(this.pfand_payable == "true"){
+            fn_pfand_total += (this.qty * 2);
+        } 
+
+        Pfand_Total = fn_pfand_total;
+    })
     $('#total_number_of_products').text(Total_Products_Qty);
-    $('#products_total').text("€" + Line_Totals_Total.toFixed(2));
+    $('#food_grand_total').text("€" + Line_Totals_Total.toFixed(2));
 
     // Calculates the amount of pfand to be displayed using a combination of the if statement above and the Pfand butoon function
     let new_pfand_total = 0;
@@ -294,13 +407,13 @@ function basketGrandTotals(){
     Total_Due = new_pfand_total + Line_Totals_Total;
     var new_total_due = Total_Due.toFixed(2);
     Total_Due = parseFloat(new_total_due);
-    console.log("Total due to fixed", Total_Due);
+    // console.log("Total due to fixed", Total_Due);
     $('#total_due').text("€" + Total_Due.toFixed(2)); 
 
     Amount_Tendered = Total_Due;
-    console.log("TOTAL DUE", Total_Due);
+    // console.log("TOTAL DUE", Total_Due);
     Amount_Tendered = parseFloat($('#amount_tendered').val());
-    console.log("Amount_Tendered", Amount_Tendered);
+    // console.log("Amount_Tendered", Amount_Tendered);
     Change_Due = Amount_Tendered - Total_Due;
     $('#change_due').text("€" + Change_Due.toFixed(2));
 }
@@ -310,13 +423,13 @@ const element = document.getElementById("amount_tendered");
 element.addEventListener("keyup", recalculate_change_due);
 function recalculate_change_due(){
     Amount_Tendered = parseFloat($('#amount_tendered').val());
-    console.log("TENDERED AMOUNT", Amount_Tendered);
+    // console.log("TENDERED AMOUNT", Amount_Tendered);
     // Amount_Tendered.select(); // Supposed to highlight all text in the input when it's clicked. Or clear input
     Change_Due = (Amount_Tendered - Total_Due);
 
-    console.log("RECALCULATE CHANGE FN: Amount Tendered", Amount_Tendered);
-    console.log("RECALCULATE CHANGE FN: Total Due", Total_Due);
-    console.log("RECALCULATE CHANGE FN: Change Due", Change_Due);
+    // console.log("RECALCULATE CHANGE FN: Amount Tendered", Amount_Tendered);
+    // console.log("RECALCULATE CHANGE FN: Total Due", Total_Due);
+    // console.log("RECALCULATE CHANGE FN: Change Due", Change_Due);
 
     $('#change_due').text("€" + Change_Due.toFixed(2));
     Payment_Method = "Cash";
@@ -357,7 +470,7 @@ $('.pfand_button').click( function(){
 
     Pfand_Buttons_Total = pfand_return_value*2;
 
-    console.log("Pfand Payable pfand fn", Pfand_Total);
+    // console.log("Pfand Payable pfand fn", Pfand_Total);
 
     if(Pfand_Total == undefined){
         $('#pfand_total').text("€" + minus_return_value);
@@ -395,12 +508,12 @@ $('.payment_button').click( function(){
     if(payment_reason == undefined){
         payment_reason = null;
     }
-    console.log("payment_method_alternative", payment_method_alternative);
+    // console.log("payment_method_alternative", payment_method_alternative);
 
     // Functionality to allow a payment be submitted where the total due is 0 because the pfand covered the cost.
     // e.g. where a customer buys 1 Pfand Shot Special, but returns a glass. One cancels the other so amount submitted and amount due is 0
-    console.log("FINISH BTN Pfand_Total", Pfand_Total);
-    console.log("FINISH BTN Line_Totals_Total", Line_Totals_Total);
+    // console.log("FINISH BTN Pfand_Total", Pfand_Total);
+    // console.log("FINISH BTN Line_Totals_Total", Line_Totals_Total);
     if((Line_Totals_Total * -1) >= Pfand_Total){
         Payment_Method = "Pfand Payment" // This applies where the pfand is sufficient to cover the payment.
         $('#amount_tendered').val(0);
@@ -441,14 +554,14 @@ $('.payment_button').click( function(){
     Grand_Total.Payment_Method = Payment_Method;
     Grand_Total.payment_reason = payment_reason;
 
-    console.log("PAYMENT BUTTONS FN: Amount Tendered", Amount_Tendered);
-    console.log("PAYMENT BUTTONS FN: Total Due", Total_Due);
+    // console.log("PAYMENT BUTTONS FN: Amount Tendered", Amount_Tendered);
+    // console.log("PAYMENT BUTTONS FN: Total Due", Total_Due);
     let sub_amount = Amount_Tendered - Total_Due;
-    console.log("PAYMENT BUTTONS FN: Sub Amount", sub_amount);
+    // console.log("PAYMENT BUTTONS FN: Sub Amount", sub_amount);
 
     if(Amount_Tendered < Total_Due){
         var message_container = $(".message-container");
-        console.log("message_container", message_container);
+        // console.log("message_container", message_container);
         $(message_container).append(`
             <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="arrow-up arrow-warning"></div>
@@ -459,8 +572,8 @@ $('.payment_button').click( function(){
             </div>`)
         $('.toast').toast('show');
     } else {
-        console.log("All Products", All_Products);
-        console.log("Grand Total", Grand_Total);
+        // console.log("All Products", All_Products);
+        // console.log("Grand Total", Grand_Total);
         fetch(url, {
             method: "POST",
             credentials: "same-origin",
