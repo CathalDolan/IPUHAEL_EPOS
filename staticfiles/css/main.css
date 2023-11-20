@@ -213,7 +213,7 @@ input {
     margin-top: 18px;
 }
 
-/*-- Pfand Modal --*/
+/*-- Pfand Modal Start --*/
 .pfand__modal_button {
     margin-bottom: 10px;
 }
@@ -222,7 +222,10 @@ input {
     border: 2px solid red;
 }
 
-/*-- Toasts & Messages --*/
+/*-- Pfand Modal End --*/
+
+/*-- Toasts & Messages Start --*/
+
 .message-container {
     position: fixed;
     top: 572px;
@@ -280,3 +283,5 @@ input {
 .toast-capper {
     height: 2px;
 }
+
+/*-- Toasts & Messages End --*/

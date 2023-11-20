@@ -5,6 +5,7 @@ from import_export.admin import ExportActionMixin
 
 class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = (
+        'pk',
         'category',
         'name',
         'price_default',
@@ -29,6 +30,7 @@ class GrandTotalAdmin(ExportActionMixin, admin.ModelAdmin):
         'pk',
         'order_date',
         'number_of_products',
+        'pfand_buttons_total',
         'drinks_food_total',
         'pfand_total',
         'total_due',
@@ -44,6 +46,8 @@ class GrandTotalAdmin(ExportActionMixin, admin.ModelAdmin):
 
 class LineItemAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = (
+        'pk',
+        'order_date_li',
         'grand_totals',
         'category',
         'name',

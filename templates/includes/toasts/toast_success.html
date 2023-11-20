@@ -7,28 +7,4 @@
         <strong class="me-auto text-light">Success!</strong>{{ message }}
         <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
-    <div class="toast-body">
-        {% for item in saved_matches %}
-            <div class="row g-0 align-items-center users-score" id="myToastEl" data-match="{{ item.match_number }}">
-                <div class="col-2">
-                    <img class="" src="{{ item.home_team.crest_url }}" alt="{{ item.home_team }} national flag">
-                </div>
-                <div class="col">
-                    <p>{{ item.home_team.name }}</p>
-                </div>
-                <div class="col-1">
-                    <p>{{ item.home_team_score }}</p>
-                </div>
-                <div class="col-1">
-                    <p>{{ item.away_team_score }}</p>
-                </div>
-                <div class="col">
-                    <p>{{ item.away_team.name }}</p>
-                </div>
-                <div class="col-2">
-                    <img class="" src="{{ item.away_team.crest_url }}" alt="{{ item.away_team }} national flag">
-                </div>
-            </div>
-        {% endfor %}
-    </div>
 </div>

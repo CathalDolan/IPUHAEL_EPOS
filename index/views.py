@@ -14,32 +14,30 @@ def index(request):
     if is_ajax:
         if request.method == 'POST':
             data = json.load(request)
+            print("Data", data)
             for v in data[1].values():
                 new_grand_total = GrandTotal(
-                    number_of_products=int(v["total_products_qty"]),
-                    drinks_food_total=float(v["line_totals_total"]),
-                    pfand_total=float(v["pfand_total"]),
-                    total_due=float(v["total_due"]),
-                    tendered_amount=float(v["amount_tendered"]),
-                    change_due=float(v["change_due"]),
-                    payment_method=v["payment_method"],
+                    number_of_products=int(v["Total_Products_Qty"]),
+                    pfand_buttons_total=float(v["Pfand_Buttons_Total"]),
+                    drinks_food_total=float(v["Line_Totals_Total"]),
+                    pfand_total=float(v["Pfand_Total"]),
+                    total_due=float(v["Total_Due"]),
+                    tendered_amount=float(v["Amount_Tendered"]),
+                    change_due=float(v["Change_Due"]),
+                    payment_method=v["Payment_Method"],
                     payment_reason=v["payment_reason"],
                 )
                 new_grand_total.save()
 
-            print("Data 0", data[0])
             for k, v in data[0].items():
-                print("K", k, "V", v)
                 for x in v:
-                    print("X", x["name"])
                     product = Product.objects.get(name=x["name"])
-                    print("product", product)
                     new_line_items = LineItem(
                         grand_totals=new_grand_total,
                         category=x["category"],
                         name=product,
                         quantity=int(x["qty"]),
-                        # size=int(x[""]),
+                        # size=int(x[""]), needed in phase 2
                         price_unit=float(x["price"]),
                         price_line_total=float(x["line_total"]),
                     )
@@ -55,7 +53,7 @@ def index(request):
     halfandhalfs = Product.objects.all().filter(category="halfandhalfs")
     shandys = Product.objects.all().filter(category="shandys")
     canandbottles = Product.objects.all().filter(category="cans_and_bottles")
-    spirits = Product.objects.all().filter(category="spirits_and_liquers")
+    spirits = Product.objects.all().filter(category="spirits_and_liquers").order_by("pk")
     softdrinks = Product.objects.all().filter(category="softdrinks")
     hotnonalcoholics = Product.objects.all().filter(category="hot_nonalcoholics")
     hotalcoholics = Product.objects.all().filter(category="hot_alcoholics")
