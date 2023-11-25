@@ -55,6 +55,7 @@ class LineItemAdmin(ExportActionMixin, admin.ModelAdmin):
         'size',
         'price_unit',
         'price_line_total',
+        'discount',
     )
     ordering = (
         '-id',

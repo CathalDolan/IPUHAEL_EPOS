@@ -1,7 +1,7 @@
 console.log("JS is Working")
 
-// let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-let url = "https://8000-cathaldolan-ipuhaelepos-e452p7jqft4.ws-eu106.gitpod.io/";
+let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
+// let url = "https://8000-cathaldolan-ipuhaelepos-e452p7jqft4.ws-eu106.gitpod.io/";
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function() {
@@ -71,8 +71,8 @@ let Amount_Tendered = 0.00;
 let Total_Due = 0;
 let Change_Due = 0;
 let Payment_Method;
-var specials_applied = [];
-var discount_product = {}
+var Specials_Applied = [];
+var Discount_Product = {};
 
 // Select product size - Needed in Phase 2
 $('.measure_button').click( function(){
@@ -110,12 +110,20 @@ $('.product_button').click( function(){
             "price": product_price,
             "line_total": product_price,
             "pfand_payable": pfand_payable,
+            'discount_applied': ''
         }
         All_Products.push(product);
 
     }
     // console.log("All_Products = ", All_Products)
-    update_basket();
+    if(Specials_Applied.length > 0) {
+        console.log("go to apply_specials")
+        apply_specials();
+    }
+    else {
+        update_basket();
+    }
+    
 });
 
 // INCREMENT a product line in the basket
@@ -131,6 +139,7 @@ $(document).on('click', '.add_button', function(){
         All_Products[product_index].line_total = All_Products[product_index].price * All_Products[product_index].qty;
     
     }
+    apply_specials();
     update_basket();
 })
 
@@ -160,104 +169,200 @@ $(document).on('click', '.subtract_button', function(){
 // DELETE a product line from the basket
 $(document).on('click', '.delete_button', function(){
     console.log("Delete Function Fires", this);
+    console.log("DATA-SPECIAL = ", $(this).attr('data-special'));
+    console.log("Discount_Product = ", Discount_Product)
+    console.log("Specials_Applied = ", Specials_Applied)
     if($(this).attr('data-special') == 'two_for_one') {
-        console.log("YES DATA SPECIAL");
         let index = All_Products.findIndex(obj => {
             console.log("obj.name = ", obj.name)
-            return obj.name == discount_product['name'];
+            return obj.name == Discount_Product['name'];
         });
         console.log(index); 
         All_Products[index].qty += 1; 
         All_Products[index].line_total = (All_Products[index].qty * All_Products[index].price)
-        specials_applied = [];
-        discount_product = {};
+        Specials_Applied = [];
+        Discount_Product = {};
     }
-
+    else if($(this).attr('data-special') == 'fifty_off') {
+        Discount_Product = {};
+        Specials_Applied = [];
+        for(i=0; i < All_Products.length; i++) {
+            All_Products[i]['price'] = All_Products[i]['price'] * 2
+            All_Products[i]['line_total'] = All_Products[i]['qty'] * (All_Products[i]['price'] * 2);
+            All_Products[i]['discount_applied'] = "";
+        }
+    }
     else {
         let product_name = $(this).parent().siblings(':first').children().text();
-        let product_index = all_products.findIndex(item => item.name == product_name);
+        let product_index = All_Products.findIndex(item => item.name == product_name);
         console.log("product_index", product_index);
-        if(All_Products[product_index].name == discount_product.name) {
-            discount_product = {}
-            specials_applied = []
+        if(All_Products[product_index].name == Discount_Product.name) {
+            Discount_Product = {}
+            Specials_Applied = []
         }
         All_Products.splice(product_index, 1);
     }
+    console.log("Discount_Product = ", Discount_Product)
+    console.log("Specials_Applied = ", Specials_Applied)
     update_basket();
 })
 
+// Function run when a specials option is selected from the modal
 $(document).on('click', '.specials_option', function() {
-    var special = $(this).attr('data-special');
-    console.log('specials_option');
-    console.log('All_products', All_Products);
+    console.log($(this).attr('data-special'));
+    let special = $(this).attr('data-special');
+    let existing_special = Specials_Applied[0];
+    if(special == existing_special || Specials_Applied.length == 0) {
+        apply_specials(special)  
+    }
+    else {
+        $(".message-container").empty().append(`
+            <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="arrow-up arrow-warning"></div>
+                <div class="toast-header bg-warning text-dark">
+                    <strong class="me-auto text-light">Oops</strong>A ${existing_special} voucher is already in use.
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>`)
+        $('.toast').toast('show');
+        return
+    }
+    
+})
+
+// Function used to reapply the specials when the order basket is changed
+function apply_specials(special) {
+    console.log("apply_specials", special);
+    console.log("Specials_Applied", Specials_Applied);
+    if(!special) {
+        special = Specials_Applied[0];
+        console.log("special", special);
+    }
+    // var special = $(this).attr('data-special');
+    // console.log('All_products', All_Products);
     // TWO FOR ONE SPECIAL
     if(special == 'two_for_one') {
-        console.log('two_for_one');
         if(Total_Products_Qty > 1) {
-            discount_product = {'price': 0};
-            for(i=0; i<All_Products.length; i++) {
-                console.log("all_products[i] = ", All_Products[i])
+            if(!$.isEmptyObject(Discount_Product)) { // Reset the discounted product to normal price in order to recalculate the discounted product if the order basket is changed.
+                let index = All_Products.findIndex(obj => {
+                    console.log("obj.name = ", obj.name)
+                    return obj.name == Discount_Product['name'];
+                });
+                console.log("index = ", index)
+                if(index != -1) {
+                    All_Products[index].qty += 1; 
+                    All_Products[index].line_total = (All_Products[index].price * All_Products[index].qty)                    
+                }
+            }
+            Discount_Product = {'price': 0};
+            console.log('Discount_Product = ', Discount_Product);
+            for(i=0; i < All_Products.length; i++) {
+                // console.log("all_products[i] = ", All_Products[i])
                 if(All_Products[i]['qty'] > 1) {
-                    if((Number(All_Products[i]['price']) > Number(discount_product['price']))) {
-                        // discount_product = all_products[i]
-                        discount_product = {
+                    console.log("all_products[i] = ", All_Products[i])
+                    console.log('Discount_Product["price"] = ', Discount_Product['price']);
+                    if((Number(All_Products[i]['price']) > Number(Discount_Product['price']))) {
+                        console.log("IS GREATER", All_Products[i])
+                        Discount_Product = {
                             'category': All_Products[i]['category'],
                             'name': All_Products[i]['name'],
                             'pfand_payable': All_Products[i].pfand_payable,
+                            'price': All_Products[i]['price'],
                             'qty': 1,
-                            'price': 0,
-                            'line_total': 0
+                            'unit_discount': 0,
+                            'line_total': 0,
+                            'total_discount': All_Products[i]['price'],
+                            'discount_applied': '2 for 1'
                         }
                     }
                 } 
             }
-            console.log('discount_product = ', discount_product);
-            let index = All_Products.findIndex(obj => {
+            console.log('Discount_Product = ', Discount_Product);
+            index = All_Products.findIndex(obj => {
                 console.log("obj.name = ", obj.name)
-                return obj.name == discount_product['name'];
+                return obj.name == Discount_Product['name'];
             });
             console.log(index); 
             if(index != -1) {
                 All_Products[index].qty += -1; 
                 All_Products[index].line_total = (All_Products[index].price * All_Products[index].qty)
-                if(!specials_applied.includes('two_for_one')) {
-                    specials_applied.push(special);
+                if(!Specials_Applied.includes('two_for_one')) {
+                    Specials_Applied.push(special);
                 }
-                else {
-                    console.log("already applied")
-                }
-                console.log("specials_applied = ", specials_applied)
             }
             else {
                 console.log("Cannot apply 2 for 1 discount, there are no items of 2+")
-                discount_product = {}
+                Discount_Product = {}
+                $(".message-container").empty().append(`
+                <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="arrow-up arrow-warning"></div>
+                    <div class="toast-header bg-warning text-dark">
+                        <strong class="me-auto text-light">Oops</strong>Cannot apply voucher. There are no items of 2+ in the order.
+                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>`)
+                $('.toast').toast('show');
             }
             
         }
         else {
-            //Add message saying not enough items to apply discount
+            $(".message-container").empty().append(`
+            <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="arrow-up arrow-warning"></div>
+                <div class="toast-header bg-warning text-dark">
+                    <strong class="me-auto text-light">Oops</strong>There are not enough items in the order to apply voucher.
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>`)
+        $('.toast').toast('show');
         }
     }
     // FIFTY % OFF SPECIAL
     if(special == 'fifty_off') {
-        if(specials_applied.length < 1) {
+        if(Specials_Applied.length < 1) {
+            var total_discount = 0;
             if(Line_Totals_Total > 50) {
                 console.log("> 50")
                 $.each(All_Products, function(index, item) {
                     item.price = item.price/2;
-                    item.line_total = item.line_total/2
+                    item.line_total = item.line_total/2;
+                    total_discount += item.line_total;
+                    item.discount_applied = '50% off'
+                    console.log("total_discount = ", total_discount)
                 })
-                discount_product = {
-                    'name': special
+                Discount_Product = {
+                    'name': '',
+                    'qty': 1,
+                    'unit_discount': 0,
+                    'total_discount': total_discount,
+                    'discount_applied': '50% off'
                 }
-                specials_applied.push(special)
+                Specials_Applied.push(special)
+            }
+            else {
+                $(".message-container").empty().append(`
+                    <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="arrow-up arrow-warning"></div>
+                        <div class="toast-header bg-warning text-dark">
+                            <strong class="me-auto text-light">Oops</strong>50% off voucher is not applicable. Spend is less than €50.
+                            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>`)
+                $('.toast').toast('show');
             }
         }
         else {
-            console.log("Voucher in use already = ", specials_applied[0])
-            //Add message saying a voucher is already in use
+            console.log("Voucher in use already = ", Specials_Applied[0])
+            $(".message-container").empty().append(`
+                    <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="arrow-up arrow-warning"></div>
+                        <div class="toast-header bg-warning text-dark">
+                            <strong class="me-auto text-light">Oops</strong>Another voucher is already in use, ${Specials_Applied}
+                            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>`)
+                $('.toast').toast('show');
         }
-        console.log('fifty_off')
     }
 
     // TEN FOR ELEVEN SPECIAL
@@ -270,12 +375,12 @@ $(document).on('click', '.specials_option', function() {
         console.log('six_shot_special')
     }
     update_basket()
-})
+}
 
 // UPDATE BASKET: Update the basket each time something is added or removed
 function update_basket(){ 
-    console.log("update_basket = ")
-    console.log("All_Products = ", All_Products)
+    console.log("update_basket FN")
+    // console.log("All_Products = ", All_Products);
     if(Total_Products_Qty > 10){
         let cheapest_price = 100;
         let index_of_cheapest_price;
@@ -324,29 +429,27 @@ function update_basket(){
             </div>`
         ); // onclick="totalClick(${this.name})
     });
-    if(Object.keys(discount_product).length != 0) {
+    if(Object.keys(Discount_Product).length != 0) {
         $('.products_rows_div').append(
             `<div class="row product_row specials_row" id="product_headings_row">
                 <div class="col-4" id="product_row_div">
-                    <p class="product_row">${discount_product['name']}</p>
+                    <p class="product_row">${Discount_Product['name']}</p>
                 </div>
                 <div class="col-1" id="qty_row_div">
-                    <p class="product_row">${discount_product['qty']}</p>
+                    <p class="product_row">${Discount_Product['qty']}</p>
                 </div>
                 <div class="col" id="per_unit_row_div">
-                    <p class="product_row">€0</p>
+                    <p class="product_row">€${Discount_Product['unit_discount']}</p>
                 </div>
                 <div class="col" id="line_total_row_div">
-                    <p class="product_row">${specials_applied[0]}</p>
+                    <p class="product_row">€-${Discount_Product['total_discount'].toFixed(2)}</p>
                 </div>
-                <div class="col-1" id="add_row_div">
-                    
+                <div class="col-2" id="add_row_div">
+                <p class="product_row">${Discount_Product['discount_applied']}</p>
                 </div>
-                <div class="col-1" id="subtract_row_div">
-                    
-                </div>
+                
                 <div class="col-1" id="delete_row_div">
-                    <button class="delete_button basket_edit_button" data-special="${specials_applied[0]}">
+                    <button class="delete_button basket_edit_button" data-special="${Specials_Applied[0]}">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </div>
@@ -364,7 +467,7 @@ function basketGrandTotals(){
     Total_Products_Qty = 0;
     Line_Totals_Total = 0;
     let fn_pfand_total = 0;
-    console.log("All Products Basket Grand Totals FN", All_Products);
+    // console.log("All Products Basket Grand Totals FN", All_Products);
     $(All_Products).each(function(){
         
         // Calculates total number of products in the basket
@@ -386,8 +489,8 @@ function basketGrandTotals(){
         Pfand_Total = fn_pfand_total;
 
     });
-    // console.log("discount_product = ", discount_product)
-    $(discount_product).each(function() {
+    // console.log("Discount_Product = ", Discount_Product)
+    $(Discount_Product).each(function() {
         if(this.pfand_payable == "true"){
             fn_pfand_total += (this.qty * 2);
         } 
@@ -487,10 +590,11 @@ $('.pfand_button').click( function(){
 // CANCEL BUTTON: Empty basket once Cancel button is clicked at bottom of Grand Total section
 $('.cancel_button').click( function(){
     All_Products = [];
-    discount_product = {};
+    Discount_Product = {};
+    Specials_Applied = [];
     $('.products_rows_div').empty();
     $('#total_number_of_products').text("# Products");
-    $('#products_total').text("€");
+    $('#food_grand_total').text("€");
     $('#pfand_total').text("€");
     Pfand_Total = 0; // Makes Pfand amount 0
     Pfand_Buttons_Total = 0;
@@ -503,6 +607,18 @@ $('.cancel_button').click( function(){
 // PAYMENT BUTTONS: Fn to submit order to DB when clicking Finish, Unpaid or Waste buttons
 // https://testdriven.io/blog/django-ajax-xhr/
 $('.payment_button').click( function(){
+    if(All_Products.length == 0) {
+        $(".message-container").empty().append(`
+            <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="arrow-up arrow-warning"></div>
+                <div class="toast-header bg-warning text-dark">
+                    <strong class="me-auto text-light">Oops</strong>There are no items in the order.
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>`)
+        $('.toast').toast('show');
+        return
+    }
     let payment_method_alternative = $(this).attr("data-payment_method_alternative")
     let payment_reason = $(this).attr("data-payment_reason")
     if(payment_reason == undefined){
@@ -543,7 +659,9 @@ $('.payment_button').click( function(){
             return 
         }
     }
-
+    if(Specials_Applied.length > 0) {
+        payment_reason = Specials_Applied[0]
+    }
     Grand_Total.Pfand_Buttons_Total = Pfand_Buttons_Total;
     Grand_Total.Total_Products_Qty = Total_Products_Qty;
     Grand_Total.Line_Totals_Total = Line_Totals_Total;
@@ -562,7 +680,7 @@ $('.payment_button').click( function(){
     if(Amount_Tendered < Total_Due){
         var message_container = $(".message-container");
         // console.log("message_container", message_container);
-        $(message_container).append(`
+        $(message_container).empty().append(`
             <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="arrow-up arrow-warning"></div>
                 <div class="toast-header bg-warning text-dark">
@@ -572,8 +690,9 @@ $('.payment_button').click( function(){
             </div>`)
         $('.toast').toast('show');
     } else {
-        // console.log("All Products", All_Products);
-        // console.log("Grand Total", Grand_Total);
+        console.log("All Products", All_Products);
+        console.log("Grand Total", Grand_Total);
+        console.log("Discount_Product = ", Discount_Product)
         fetch(url, {
             method: "POST",
             credentials: "same-origin",
@@ -581,7 +700,7 @@ $('.payment_button').click( function(){
             "X-Requested-With": "XMLHttpRequest",
             "X-CSRFToken": getCookie("csrftoken"),
             },
-            body: JSON.stringify([{All_Products},{Grand_Total}])
+            body: JSON.stringify([{All_Products}, {Grand_Total}, {Discount_Product}])
         })
         .then(response => response.json())
         .then(data => {
