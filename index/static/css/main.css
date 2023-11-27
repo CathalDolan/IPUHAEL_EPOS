@@ -180,6 +180,10 @@ form {
     overflow-y:auto;
 }
 
+.specials_row {
+    border: 1px solid blue;
+}
+
 .product_row,
 .qty_row,
 .per_unit_row,

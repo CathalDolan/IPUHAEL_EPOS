@@ -237,7 +237,7 @@
                                 Engraved Glass
                             </button>
                             <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false"
-                                data-category="Polo_Shirt" data-name="Polo_Shirt" data-price_default="25.00"
+                                data-category="Polo_Shirt" data-name="Polo Shirt" data-price_default="25.00"
                                 data-bs-dismiss="modal">
                                 <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
                                 Polo Shirt
@@ -272,7 +272,7 @@
     <!--  Right Side of till with totals  -->
     <div class="col-5">
         <p class="text-end">
-            <i class="fa-solid fa-maximize" onclick="openFullscreen();"></i>
+            <i class="fa-solid fa-maximize" id="fullscreen_button" onclick="openFullscreen();"></i><!--  onclick="openFullscreen();" -->
             <i class="fa-solid fa-minimize" onclick="closeFullscreen();"></i>
             <span id="time_and_date"></span>
             <span class="logged_in_as">Logged in as: Cathal</span>
@@ -446,8 +446,8 @@
                 <div class="col-6">
                     <p class="grand_totals_row grand_totals_row_label">Number of Products:</p>
                     <!-- <p class="grand_totals_row grand_totals_row_label">Drinks / Food Sub-Total:</p>
-                        <p class="grand_totals_row grand_totals_row_label">Drinks / Food Discount:</p> -->
-                    <p class="grand_totals_row grand_totals_row_label">Drinks / Food Grand Total:</p>
+                    <p class="grand_totals_row grand_totals_row_label">Drinks / Food Discount:</p>-->
+                    <p class="grand_totals_row grand_totals_row_label">Drinks / Food Grand Total:</p> 
                     <p class="grand_totals_row grand_totals_row_label">Pfand Total:</p>
                     <p class="grand_totals_row grand_totals_row_label">Total Due:</p>
                     <p class="grand_totals_row grand_totals_row_label">Tendered Amount:</p>
@@ -455,12 +455,13 @@
                 </div>
                 <div class="col-6">
                     <p class="grand_totals_row grand_totals_figure" id="total_number_of_products"># Products</p>
-                    <p class="grand_totals_row grand_totals_figure" id="products_total">€</p>
+                    <!-- <p class="grand_totals_row grand_totals_figure" id="food_subtotal">€</p>
+                    <p class="grand_totals_row grand_totals_figure" id="food_discount">€</p> -->
+                    <p class="grand_totals_row grand_totals_figure" id="food_grand_total">€</p>
                     <p class="grand_totals_row grand_totals_figure" id="pfand_total">€</p>
                     <p class="grand_totals_row grand_totals_figure" id="total_due">€</p>
                     <span class="euro_symbol" id="amount_tendered_span">€
-                        <input type="number" class="grand_totals_row grand_totals_figure" id="amount_tendered"
-                            value=0>
+                        <input type="number" class="grand_totals_row grand_totals_figure" id="amount_tendered" value=0>
                     </span>
                     <p class="grand_totals_row grand_totals_figure" id="change_due">€</p>
                 </div>
@@ -486,22 +487,22 @@
             <!-- € Notes and Finish Buttons Row -->
             <div class="row €_notes_row">
                 <div class="col-3">
-                    <button class="btn €_notes_button pay_method_button" data-value="5" data-payment_method="Cash">
+                    <button class="btn €_notes_button pay_method_button" data-value="5" data-payment_method="cash">
                         <img src="{% static 'images/€5_note.png' %}">
                     </button>
                 </div>
                 <div class="col-3">
-                    <button class="btn €_notes_button pay_method_button" data-value="10" data-payment_method="Cash">
+                    <button class="btn €_notes_button pay_method_button" data-value="10" data-payment_method="cash">
                         <img src="{% static 'images/€10_note.png' %}">
                     </button>
                 </div>
                 <div class="col-3">
-                    <button class="btn €_notes_button pay_method_button" data-value="20" data-payment_method="Cash">
+                    <button class="btn €_notes_button pay_method_button" data-value="20" data-payment_method="cash">
                         <img src="{% static 'images/€20_note.png' %}">
                     </button>
                 </div>
                 <div class="col-3">
-                    <button class="btn pay_method_button" id="credit_card_button" data-payment_method="Credit Card">
+                    <button class="btn pay_method_button" id="credit_card_button" data-payment_method="credit_card">
                         <img src="{% static 'images/credit_card_icon.png' %}">
                     </button>
                 </div>
@@ -540,13 +541,13 @@
 
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <button class="btn specials_button" data-bs-dismiss="modal">2 for 1</button>
-                                <button class="btn specials_button" data-bs-dismiss="modal">50% Off</button>
-                                <button class="btn specials_button" data-bs-dismiss="modal">Buy 10 Get 11th
+                                <button class="btn specials_button specials_option" data-special="two_for_one" data-bs-dismiss="modal">2 for 1</button>
+                                <button class="btn specials_button specials_option" data-special="fifty_off" data-bs-dismiss="modal">50% Off</button>
+                                <button class="btn specials_button specials_option" data-special="ten_for_eleven" data-bs-dismiss="modal">Buy 10 Get 11th
                                     Free</button>
-                                <button class="btn specials_button" data-bs-dismiss="modal">6 Shot Special</button>
+                                <button class="btn specials_button specials_option" data-special="six_shot_special" data-bs-dismiss="modal">6 Shot Special</button>
                                 <!-- This better done in calculations -->
-                                <button class="btn specials_button" data-bs-dismiss="modal">€5 City Voucher</button>
+                                <button class="btn specials_button specials_option" data-special="city_voucher" data-bs-dismiss="modal">€5 City Voucher</button>
                                 <!-- <button class="btn specials_button €_notes_button pay_method_button" data-value="5" data-payment_method="Cash" data-bs-dismiss="modal">€5 City Voucher</button> -->
                             </div>
 
@@ -626,55 +627,6 @@
                     <button class="btn waste_button" data-bs-toggle="modal" data-bs-target="#wasteModal">
                         Waste
                     </button>
-                </div>
-                <!-- The Waste Modal -->
-                <div class="modal" id="wasteModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <h4 class="modal-title">Waste Reason</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method_alternative="Waste" data-payment_reason="Waste_Spilled">Waste
-                                    Spilled</button>
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method_alternative="Waste"
-                                    data-payment_reason="Waste_Set-Up_Line Cleaning"></buttonclass>Waste Set-Up / Line
-                                    Cleaning</button>
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method_alternative="Waste" data-payment_reason="Waste_Other">
-                                    </buttonclass>Waste Other</button>
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method_alternative="Waste" data-payment_reason="Customer_Return_Warm">
-                                    </buttonclass>Customer Return - Warm</button>
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method_alternative="Waste"
-                                    data-payment_reason="Cutomer_Return_Cold">Cutomer Return - Cold</button>
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method_alternative="Waste" data-payment_reason="Customer_Return_Taste">
-                                    </buttonclass>Customer Return - Taste</button>
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method_alternative="Waste"
-                                    data-payment_reason="Customer_Return_Glass_Issue"></buttonclass>Customer Return -
-                                    Glass Issue</button>
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method_alternative="Waste" data-payment_reason="Customer_Return_Other">
-                                    </buttonclass>Customer Return - Other</button>
-                            </div>
-
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
