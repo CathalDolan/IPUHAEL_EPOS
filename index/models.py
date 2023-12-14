@@ -48,6 +48,8 @@ class Product(models.Model):
                                         blank=True,
                                         decimal_places=2,
                                         max_digits=5)
+    pfand = models.BooleanField(default=True)
+
     def __str__(self):
         return self.name
 

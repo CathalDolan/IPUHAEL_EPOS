@@ -14,7 +14,9 @@ def index(request):
     if is_ajax:
         if request.method == 'POST':
             data = json.load(request)
-            print("Data", data[0])
+            print("Data 0", data[0])
+            print("Data 1", data[1])
+            print("Data 2", data[2])
             for v in data[1].values():
                 new_grand_total = GrandTotal(
                     number_of_products=int(v["Total_Products_Qty"]),
@@ -33,36 +35,39 @@ def index(request):
             # print("discount_type = ", discount[0])
             for k, v in data[0].items():
                 for x in v:
-                    print("x = ", x)
-                    product = Product.objects.get(name=x["name"])
-                    new_line_items = LineItem(
-                        grand_totals=new_grand_total,
-                        category=x["category"],
-                        name=product,
-                        quantity=int(x["qty"]),
-                        # size=int(x[""]), needed in phase 2
-                        price_unit=float(x["price"]),
-                        price_line_total=float(x["line_total"]),
-                        discount=x['discount_applied'],
-                    )
-                    new_line_items.save()
+                    # print("x = ", x)
+                    if x['qty'] != 0:
+                        product = Product.objects.get(name=x["name"])
+                        new_line_items = LineItem(
+                            grand_totals=new_grand_total,
+                            category=x["category"],
+                            name=product,
+                            quantity=int(x["qty"]),
+                            # size=int(x[""]), needed in phase 2
+                            price_unit=float(x["price"]),
+                            price_line_total=float(x["line_total"]),
+                            discount=x['discount_applied'],
+                        )
+                        new_line_items.save()
             for k, v in data[2].items():
                 print("discount product = ", v)
                 # for y in v:
                 print("v = ", v)
-                if v != {} and v['name'] != '':
-                    product = Product.objects.get(name=v["name"])
-                    new_line_items = LineItem(
-                        grand_totals=new_grand_total,
-                        category=v["category"],
-                        name=product,
-                        quantity=int(v["qty"]),
-                        # size=int(x[""]), needed in phase 2
-                        price_unit=0,
-                        price_line_total=0,
-                        discount=v['discount_applied'],
-                    )
-                    new_line_items.save()
+                for x in v:
+                    print("x['name'] = ", x['name'])
+                    if x['name'] != 'Applied' and x['name'] != 'Invalid':
+                        product = Product.objects.get(name=x['name'])
+                        new_line_items = LineItem(
+                            grand_totals=new_grand_total,
+                            category=x["category"],
+                            name=product,
+                            quantity=int(x["qty"]),
+                            # size=int(x[""]), needed in phase 2
+                            price_unit=0,
+                            price_line_total=0,
+                            discount=x['discount_applied'],
+                        )
+                        new_line_items.save()
             messages.success(request, "Transaction Complete!")
             return JsonResponse({'status': 'Checkout Complete'}, status=200)
         messages.error(request, "Problem. Try Again!")

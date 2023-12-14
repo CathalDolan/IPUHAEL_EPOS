@@ -3,8 +3,14 @@ body {
     margin: 0;
 }
 
-.col-2,
-.col {
+.product_buttons_div .col-2,
+.product_buttons_div .col,
+#measurement_row .col,
+#measurement_row .col-2,
+.food_row .col,
+.food_row .col-2,
+.pfand_button_row .col,
+.pfand_button_row .col-2 {
     padding: 2px;
 }
 
@@ -63,6 +69,10 @@ body {
     color: white;
 }
 
+.exact_tendered {
+    background-color: rgb(88, 88, 228);
+}
+
 .softdrinks,
 .unpaid_button {
     background-color: rgb(255, 145, 0);
@@ -117,6 +127,11 @@ body {
     border-radius: 50%;
     background-color: black;
     width: 62px;
+}
+
+.green {
+    background-color: green;
+    color: #fff;
 }
 
 .basket_div,
@@ -180,18 +195,28 @@ form {
     overflow-y:auto;
 }
 
-.specials_row {
-    border: 1px solid blue;
+.valid {
+    border: 1px solid green;
+    margin-bottom: 2px!important;
 }
 
-.product_row,
-.qty_row,
-.per_unit_row,
-.line_total_row,
-.add_row,
-.subtract_row,
-.delete_row {
+.invalid {
+    border: 1px solid red;
+    margin-bottom: 2px!important;
+}
+
+
+
+.product_row p {
     margin: 0;
+}
+
+.product_row p:not(.product-name) {
+    text-align: center;
+}
+
+.product_row i {
+    text-align: center;
 }
 
 .add_row,

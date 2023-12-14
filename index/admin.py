@@ -19,6 +19,7 @@ class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
         'price_440',
         'price_small',
         'price_regular',
+        'pfand',
     )
     ordering = (
         'id',
