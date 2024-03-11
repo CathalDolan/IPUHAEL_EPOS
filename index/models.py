@@ -120,3 +120,11 @@ class LineItem(models.Model):
     discount = models.CharField(null=True,
                                 blank=True,
                                 max_length=100)
+
+
+class Staff(models.Model):
+    name = models.CharField(max_length=100)
+    on_duty = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name

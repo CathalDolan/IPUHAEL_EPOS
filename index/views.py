@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from . models import Product, GrandTotal, LineItem
+from . models import Product, GrandTotal, LineItem, Staff
 from django.views.decorators.csrf import csrf_exempt, requires_csrf_token, ensure_csrf_cookie
 from django.http import JsonResponse
 from django.contrib import messages
@@ -10,9 +10,16 @@ import json
 def index(request):
     """ A view to return the index page """
     """https://testdriven.io/blog/django-ajax-xhr/"""
+    user = request.user
+    print("user = ", user)
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    print("is_ajax = ", is_ajax)
     if is_ajax:
-        if request.method == 'POST':
+        if not user.is_authenticated:
+            print("User not authenticated")
+            messages.warning(request, "Please log in. Try Again!")
+            return JsonResponse({'status': 'Checkout Complete'}, status=200)
+        elif request.method == 'POST':
             data = json.load(request)
             print("Data 0", data[0])
             print("Data 1", data[1])
@@ -68,8 +75,10 @@ def index(request):
                             discount=x['discount_applied'],
                         )
                         new_line_items.save()
+        
             messages.success(request, "Transaction Complete!")
             return JsonResponse({'status': 'Checkout Complete'}, status=200)
+
         messages.error(request, "Problem. Try Again!")
         return JsonResponse({'status': 'Checkout Failed'}, status=400)
     # else:
@@ -86,7 +95,8 @@ def index(request):
     hottoddys = Product.objects.all().filter(category="hot_toddys")
     shots = Product.objects.all().filter(category="shots")
     foods = Product.objects.all().filter(category="food")
-    
+    staff = Staff.objects.all().filter(on_duty=True)
+
     context = {
         'draughts': draughts,
         'halfandhalfs': halfandhalfs,
@@ -99,6 +109,7 @@ def index(request):
         'hottoddys': hottoddys,
         'shots': shots,
         'foods': foods,
+        'staff': staff,
     }
     template = 'index/index.html'
     # print("Index View print")

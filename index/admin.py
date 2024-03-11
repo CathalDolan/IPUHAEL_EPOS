@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, GrandTotal, LineItem
+from .models import Product, GrandTotal, LineItem, Staff
 from import_export.admin import ExportActionMixin
 
 
@@ -63,6 +63,17 @@ class LineItemAdmin(ExportActionMixin, admin.ModelAdmin):
     )
 
 
+class StaffAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'name',
+        'on_duty',
+    )
+    ordering = (
+        'id',
+    )
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(GrandTotal, GrandTotalAdmin)
 admin.site.register(LineItem, LineItemAdmin)
+admin.site.register(Staff, StaffAdmin)

@@ -51,6 +51,10 @@
     </main>
 
     {% block post_load_js %}
+    <script>
+        var staff_modal = new bootstrap.Modal(document.getElementById('staff_modal'), {})
+        staff_modal.show()
+        </script>
         <script src="{% static 'js/main.js' %}"></script>
     {% endblock %}
     

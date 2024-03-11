@@ -2,44 +2,76 @@
 {% load static %}
 
 {% block content %}
+<!-- The Staff Modal -->
+<div class="modal" id="staff_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <!-- <div class="modal-header">
+                <h4 class="modal-title">Open Drink</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div> -->
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                {% for member in staff %}
+                <div class="staff-name">{{ member }}</div>
+                {% endfor %}
+
+            </div>
+
+            <!-- Modal footer -->
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div> -->
+
+        </div>
+    </div>
+</div>
 <div class="row">
     <!--  Left Side of till with product buttons  -->
     <div class="col-7">
         <!--  Drinks Sizes Buttons -->
         <div class="row" id="measurement_row">
-            <div class="col-2">
+            <div class="col">
+                <button class="btn measure_button price_single" id="single_button" data-price="price_single">
+                    Single
+                </button>
+            </div>
+            <div class="col">
                 <button class="btn measure_button price_double" id="double_button" data-price="price_double">
                     Double
                 </button>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <button class="btn measure_button price_dash" id="dash_button" data-price="price_dash">
                     Dash
                 </button>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <button class="btn measure_button price_03" id="03_button" data-price="price_03">
                     0.3
                 </button>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <button class="btn measure_button price_04" id="04_button" data-price="price_04">
                     0.4
                 </button>
             </div>
-            <div class="col-2">
-                <button class="btn measure_button price_pint" id="pint_button" data-price="price_pint">
+            <div class="col">
+                <button class="btn measure_button price_pint selected" id="pint_button" data-price="price_pint">
                     Pint
                 </button>
             </div>
-            <div class="col-2">
+            <div class="col">
                 <button class="btn measure_button price_bottle" id="bottle_button" data-price="price_bottle">
                     Bottle
                 </button>
             </div>
         </div>
         <!--  Drink Products Buttons  -->
-        <div class="row product_buttons_div">
+        <div class="row product_buttons_div drinks_row">
             {% for draught in draughts %}
             <div class="col-2">
                 <button class="btn {{draught.category}} product_button pfand_product" id="{{draught.id}}"
@@ -53,16 +85,17 @@
             {% for canandbottle in canandbottles %}
             <div class="col-2">
                 <button class="btn {{canandbottle.category}} product_button pfand_product" id="{{canandbottle.id}}"
-                    data-pfand="{{canandbottle.pfand}}" data-category="{{canandbottle.category}}" data-name="{{canandbottle.name}}"
-                    data-price_default="{{canandbottle.price_pint}}" data-price_330="{{canandbottle.price_330}}"
-                    data-price_440="{{canandbottle.price_440}}" data-price_pint="{{canandbottle.price_pint}}">
+                    data-pfand="{{canandbottle.pfand}}" data-category="{{canandbottle.category}}"
+                    data-name="{{canandbottle.name}}" data-price_default="{{canandbottle.price_pint}}"
+                    data-price_330="{{canandbottle.price_330}}" data-price_440="{{canandbottle.price_440}}"
+                    data-price_pint="{{canandbottle.price_pint}}">
                     {{canandbottle.name}}
                 </button>
             </div>
             {% endfor %}
             {% for spirit in spirits %}
             <div class="col-2">
-                <button class="btn {{spirit.category}} {{spirit.name}} product_button pfand_product" id="{{spirit.id}}"
+                <button class="btn {{spirit.category}} product_button pfand_product" id="{{spirit.id}}"
                     data-pfand="{{spirit.pfand}}" data-category="{{spirit.category}}" data-name="{{spirit.name}}"
                     data-price_default="{{spirit.price_default}}" data-price_single="{{spirit.price_default}}"
                     data-price_double="{{spirit.price_double}}" data-price_bottle="{{spirit.price_bottle}}">
@@ -73,10 +106,11 @@
             {% for softdrink in softdrinks %}
             <div class="col-2">
                 <button class="btn {{softdrink.category}} product_button pfand_product" id="{{softdrink.id}}"
-                    data-pfand="{{softdrink.pfand}}" data-category="{{softdrink.category}}" data-name="{{softdrink.name}}"
-                    data-price_default="{{softdrink.price_03}}" data-price_dash="{{softdrink.price_dash}}"
-                    data-price_03="{{softdrink.price_03}}" data-price_04="{{softdrink.price_04}}"
-                    data-price_pint="{{softdrink.price_pint}}" data-price_bottle="{{softdrink.price_bottle}}">
+                    data-pfand="{{softdrink.pfand}}" data-category="{{softdrink.category}}"
+                    data-name="{{softdrink.name}}" data-price_default="{{softdrink.price_03}}"
+                    data-price_dash="{{softdrink.price_dash}}" data-price_03="{{softdrink.price_03}}"
+                    data-price_04="{{softdrink.price_04}}" data-price_pint="{{softdrink.price_pint}}"
+                    data-price_bottle="{{softdrink.price_bottle}}">
                     {{softdrink.name}}
                 </button>
             </div>
@@ -84,25 +118,25 @@
             {% for hotnonalcoholic in hotnonalcoholics %}
             <div class="col-2">
                 <button class="btn {{hotnonalcoholic.category}} product_button" id="{{hotnonalcoholic.id}}"
-                    data-pfand="{{hotnonalcoholic.pfand}}" data-category="{{hotnonalcoholic.category}}" data-name="{{hotnonalcoholic.name}}"
-                    data-price_default="{{hotnonalcoholic.price_default}}">
+                    data-pfand="{{hotnonalcoholic.pfand}}" data-category="{{hotnonalcoholic.category}}"
+                    data-name="{{hotnonalcoholic.name}}" data-price_default="{{hotnonalcoholic.price_default}}">
                     {{hotnonalcoholic.name}}
                 </button>
             </div>
             {% endfor %}
             {% for hotalcoholic in hotalcoholics %}
             <div class="col-2">
-                <button class="btn {{hotalcoholic.category}} product_button" id="{{hotalcoholic.id}}" data-pfand="{{hotalcoholic.pfand}}"
-                    data-category="{{hotalcoholic.category}}" data-name="{{hotalcoholic.name}}"
-                    data-price_default="{{hotalcoholic.price_default}}">
+                <button class="btn {{hotalcoholic.category}} product_button" id="{{hotalcoholic.id}}"
+                    data-pfand="{{hotalcoholic.pfand}}" data-category="{{hotalcoholic.category}}"
+                    data-name="{{hotalcoholic.name}}" data-price_default="{{hotalcoholic.price_default}}">
                     {{hotalcoholic.name}}
                 </button>
             </div>
             {% endfor %}
             {% for hottoddy in hottoddys %}
             <div class="col-2">
-                <button class="btn {{hottoddy.category}} product_button" id="{{hottoddy.id}}" data-pfand="{{hottoddy.pfand}}"
-                    data-category="{{hottoddy.category}}" data-name="{{hottoddy.name}}"
+                <button class="btn {{hottoddy.category}} product_button" id="{{hottoddy.id}}"
+                    data-pfand="{{hottoddy.pfand}}" data-category="{{hottoddy.category}}" data-name="{{hottoddy.name}}"
                     data-price_default="{{hottoddy.price_default}}">
                     {{hottoddy.name}}
                 </button>
@@ -272,10 +306,11 @@
     <!--  Right Side of till with totals  -->
     <div class="col-5">
         <p class="text-end">
-            <i class="fa-solid fa-maximize" id="fullscreen_button" onclick="openFullscreen();"></i><!--  onclick="openFullscreen();" -->
+            <i class="fa-solid fa-maximize" id="fullscreen_button" onclick="openFullscreen();"></i>
+            <!--  onclick="openFullscreen();" -->
             <i class="fa-solid fa-minimize" onclick="closeFullscreen();"></i>
             <span id="time_and_date"></span>
-            <span class="logged_in_as">Logged in as: Cathal</span>
+            <span class="logged_in_as">Logged in as: {{ request.user }}</span>
         </p>
         <!--  Pfand Buttons  -->
         <div class="row pfand_button_row">
@@ -300,7 +335,8 @@
                 </button>
             </div>
             <div class="col">
-                <button class="btn pfand_button five_plus" data-bs-toggle="modal" data-bs-target="#pfand_modal" data-value="5+">
+                <button class="btn pfand_button five_plus" data-bs-toggle="modal" data-bs-target="#pfand_modal"
+                    data-value="5+">
                     5+
                 </button>
             </div>
@@ -322,19 +358,24 @@
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal" data-value="5">
+                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
+                                data-value="5">
                                 5
                             </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal" data-value="6">
+                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
+                                data-value="6">
                                 6
                             </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal" data-value="7">
+                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
+                                data-value="7">
                                 7
                             </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal" data-value="8">
+                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
+                                data-value="8">
                                 8
                             </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal" data-value="9">
+                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
+                                data-value="9">
                                 9
                             </button>
                             <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
@@ -421,8 +462,11 @@
         <div class="basket_div">
             <!-- Line Items -->
             <div class="row product_row" id="product_headings_row">
-                <div class="col-4" id="product_row_div">
+                <div class="col-3" id="product_row_div">
                     <h6>Product</h6>
+                </div>
+                <div class="col-1" id="size">
+                    <h6>Size</h6>
                 </div>
                 <div class="col-1" id="qty_row_div">
                     <h6>Qty</h6>
@@ -452,7 +496,7 @@
                     <p class="grand_totals_row grand_totals_row_label">Number of Products:</p>
                     <!-- <p class="grand_totals_row grand_totals_row_label">Drinks / Food Sub-Total:</p>
                     <p class="grand_totals_row grand_totals_row_label">Drinks / Food Discount:</p>-->
-                    <p class="grand_totals_row grand_totals_row_label">Drinks / Food Grand Total:</p> 
+                    <p class="grand_totals_row grand_totals_row_label">Drinks / Food Grand Total:</p>
                     <p class="grand_totals_row grand_totals_row_label">Pfand Total:</p>
                     <p class="grand_totals_row grand_totals_row_label">Total Due:</p>
                     <p class="grand_totals_row grand_totals_row_label">Tendered Amount:</p>
@@ -546,13 +590,18 @@
 
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <button class="btn specials_button specials_option" data-special="2 for 1" data-bs-dismiss="modal">2 for 1</button>
-                                <button class="btn specials_button specials_option" data-special="50% off" data-bs-dismiss="modal">50% Off</button>
-                                <button class="btn specials_button specials_option" data-special="10 for 11" data-bs-dismiss="modal">Buy 10 Get 11th
+                                <button class="btn specials_button specials_option" data-special="2 for 1"
+                                    data-bs-dismiss="modal">2 for 1</button>
+                                <button class="btn specials_button specials_option" data-special="50% off"
+                                    data-bs-dismiss="modal">50% Off</button>
+                                <button class="btn specials_button specials_option" data-special="10 for 11"
+                                    data-bs-dismiss="modal">Buy 10 Get 11th
                                     Free</button>
-                                <button class="btn specials_button specials_option" data-special="six shot special" data-bs-dismiss="modal">6 Shot Special</button>
+                                <button class="btn specials_button specials_option" data-special="six shot special"
+                                    data-bs-dismiss="modal">6 Shot Special</button>
                                 <!-- This better done in calculations -->
-                                <button class="btn specials_button specials_option" data-special="city voucher" data-bs-dismiss="modal">€5 City Voucher</button>
+                                <button class="btn specials_button specials_option" data-special="city voucher"
+                                    data-bs-dismiss="modal">€5 City Voucher</button>
                                 <!-- <button class="btn specials_button €_notes_button pay_method_button" data-value="5" data-payment_method="Cash" data-bs-dismiss="modal">€5 City Voucher</button> -->
                             </div>
 
@@ -637,23 +686,41 @@
                 <div class="modal" id="wasteModal">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                    
+
                             <!-- Modal Header -->
                             <div class="modal-header">
                                 <h4 class="modal-title">Waste Reason</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                    
+
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <button class="btn btn-primary waste_button payment_button" data-payment_method_alternative="Waste" data-payment_reason="Waste_Spilled">Waste Spilled</button>
-                                <button class="btn btn-primary waste_button payment_button" data-payment_method_alternative="Waste" data-payment_reason="Waste_Set-Up_Line Cleaning"></buttonclass>Waste Set-Up / Line Cleaning</button>
-                                <button class="btn btn-primary waste_button payment_button" data-payment_method_alternative="Waste" data-payment_reason="Waste_Other"></buttonclass>Waste Other</button>
-                                <button class="btn btn-primary waste_button payment_button" data-payment_method_alternative="Waste" data-payment_reason="Customer_Return_Warm"></buttonclass>Customer Return - Warm</button>
-                                <button class="btn btn-primary waste_button payment_button" data-payment_method_alternative="Waste" data-payment_reason="Cutomer_Return_Cold">Cutomer Return - Cold</button>
-                                <button class="btn btn-primary waste_button payment_button" data-payment_method_alternative="Waste" data-payment_reason="Customer_Return_Taste"></buttonclass>Customer Return - Taste</button>
-                                <button class="btn btn-primary waste_button payment_button" data-payment_method_alternative="Waste" data-payment_reason="Customer_Return_Glass_Issue"></buttonclass>Customer Return - Glass Issue</button>
-                                <button class="btn btn-primary waste_button payment_button" data-payment_method_alternative="Waste" data-payment_reason="Customer_Return_Other"></buttonclass>Customer Return - Other</button>
+                                <button class="btn btn-primary waste_button payment_button"
+                                    data-payment_method_alternative="Waste" data-payment_reason="Waste_Spilled">Waste
+                                    Spilled</button>
+                                <button class="btn btn-primary waste_button payment_button"
+                                    data-payment_method_alternative="Waste"
+                                    data-payment_reason="Waste_Set-Up_Line Cleaning"></buttonclass>Waste Set-Up / Line
+                                    Cleaning</button>
+                                <button class="btn btn-primary waste_button payment_button"
+                                    data-payment_method_alternative="Waste" data-payment_reason="Waste_Other">
+                                    </buttonclass>Waste Other</button>
+                                <button class="btn btn-primary waste_button payment_button"
+                                    data-payment_method_alternative="Waste" data-payment_reason="Customer_Return_Warm">
+                                    </buttonclass>Customer Return - Warm</button>
+                                <button class="btn btn-primary waste_button payment_button"
+                                    data-payment_method_alternative="Waste"
+                                    data-payment_reason="Cutomer_Return_Cold">Cutomer Return - Cold</button>
+                                <button class="btn btn-primary waste_button payment_button"
+                                    data-payment_method_alternative="Waste" data-payment_reason="Customer_Return_Taste">
+                                    </buttonclass>Customer Return - Taste</button>
+                                <button class="btn btn-primary waste_button payment_button"
+                                    data-payment_method_alternative="Waste"
+                                    data-payment_reason="Customer_Return_Glass_Issue"></buttonclass>Customer Return -
+                                    Glass Issue</button>
+                                <button class="btn btn-primary waste_button payment_button"
+                                    data-payment_method_alternative="Waste" data-payment_reason="Customer_Return_Other">
+                                    </buttonclass>Customer Return - Other</button>
                             </div>
 
                             <!-- Modal footer -->
@@ -667,15 +734,5 @@
             </div>
         </div>
     </div>
-
-    <!-- For Test TOP BE REMOVED -->
-    <!-- <div class="test_div">
-            <div class="col-1" id="add_row_div">
-                <div class="add_button basket_edit_button">
-                    <i class="fa-solid fa-plus"></i>
-                </div>
-            </div>
-        </div> -->
-
 </div>
 {% endblock %}
