@@ -8,7 +8,11 @@ class Product(models.Model):
                                         blank=True,
                                         decimal_places=2,
                                         max_digits=5)
-    price_double = models.DecimalField(null=True,
+    price_sgle = models.DecimalField(null=True,
+                                       blank=True,
+                                       decimal_places=2,
+                                       max_digits=5)
+    price_dble = models.DecimalField(null=True,
                                        blank=True,
                                        decimal_places=2,
                                        max_digits=5)
@@ -28,18 +32,10 @@ class Product(models.Model):
                                      blank=True,
                                      decimal_places=2,
                                      max_digits=5)
-    price_bottle = models.DecimalField(null=True,
+    price_btle = models.DecimalField(null=True,
                                        blank=True,
                                        decimal_places=2,
                                        max_digits=5)
-    price_330 = models.DecimalField(null=True,
-                                    blank=True,
-                                    decimal_places=2,
-                                    max_digits=5)
-    price_440 = models.DecimalField(null=True,
-                                    blank=True,
-                                    decimal_places=2,
-                                    max_digits=5)
     price_small = models.DecimalField(null=True,
                                       blank=True,
                                       decimal_places=2,

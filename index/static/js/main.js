@@ -83,6 +83,12 @@ var VOUCHERS = [];
 var GLASSES_RETURNED = 0;
 var STAFF_NAME = '';
 
+$(document).ready(function() {
+    $('.drinks_row').find('.product_button').removeClass('enabled').addClass('disabled');
+    $('.drinks_row').find(`[data-price_pint!=None]`).addClass('enabled').removeClass('disabled');
+    $('.drinks_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
+})
+
 $('.staff-name').click(function() {
     STAFF_NAME = $(this).text();
     // console.log("STAFF_NAME = ", STAFF_NAME);
@@ -105,7 +111,8 @@ $('.measure_button').click(function () {
     $(this).addClass('selected');
     console.log("size = ", size);
     $('.drinks_row').find('.product_button').removeClass('enabled').addClass('disabled');
-    $('.drinks_row').find(`[data-${size}]`).addClass('enabled').removeClass('disabled');
+    $('.drinks_row').find(`[data-${size}!=None]`).addClass('enabled').removeClass('disabled');
+    $('.drinks_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
 });
 
 // PRODUCT BUTTONS
@@ -116,7 +123,16 @@ $('.product_button').click(function () {
     console.log("abbrv_size = ", abbrv_size)
     console.log("product_size = ", product_size)
     let product_name = $(this).attr('data-name');
-    let product_price = Number($(this).attr('data-' + product_size));
+    let product_price = $(this).attr('data-' + product_size);
+    console.log("product_price = ", product_price)
+    if(product_price == 'None') {
+        product_price = Number($(this).attr('data-price_default'));
+        abbrv_size = '';
+    }
+    else {
+        product_price = Number(product_price)
+    }
+    
     console.log("product_price = ", product_price)
     let product_category = $(this).attr('data-category');
     let pfand_payable = $(this).attr('data-pfand');
@@ -148,9 +164,10 @@ $('.product_button').click(function () {
 $(document).on('click', '.add_button', function () {
     console.log("Increment FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text();
+    let product_size = $(this).parent().siblings(':nth-child(2)').children().text();
     console.log("product_name = ", product_name)
-    let product = ALL_PRODUCTS.filter(item => item.name == product_name);
-    let product_index = ALL_PRODUCTS.findIndex(item => item.name == product_name);
+    let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
+    let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
 
     if (product.length > 0) {
 
@@ -164,9 +181,10 @@ $(document).on('click', '.add_button', function () {
 // DECREMENT a product line in the basket
 $(document).on('click', '.subtract_button', function () {
     console.log("Decrement FN Fires");
-    let product_name = $(this).parent().siblings(':first').children().text();
-    let product = ALL_PRODUCTS.filter(item => item.name == product_name);
-    let product_index = ALL_PRODUCTS.findIndex(item => item.name == product_name);
+    let product_name = $(this).parent().siblings(':first').children().text(); 
+    let product_size = $(this).parent().siblings(':nth-child(2)').children().text();
+    let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
+    let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
 
     // Initial If Statement used to prevent decrementor going below 0
     if (ALL_PRODUCTS[product_index].qty < 2) {
@@ -192,7 +210,8 @@ $(document).on('click', '.delete_button', function () {
         DISCOUNTS.splice(discounts_index, 1); // Splice this discount item from the discounts array
     } else { // Else this is a product row so remove this product from the ALL_PRODUCTS array
         let product_name = $(this).parent().siblings(':first').children().text();
-        let product_index = ALL_PRODUCTS.findIndex(item => item.name == product_name);
+        let product_size = $(this).parent().siblings(':nth-child(2)').children().text();
+        let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
         ALL_PRODUCTS.splice(product_index, 1);
     }
     apply_specials();

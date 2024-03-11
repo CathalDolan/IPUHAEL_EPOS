@@ -1,1 +1,705 @@
-[{"model": "index.product", "pk": 1, "fields": {"category": "draught", "name": "Guinness", "price_default": "4.70", "price_double": null, "price_dash": null, "price_03": "4.70", "price_04": "5.70", "price_pint": "7.50", "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 2, "fields": {"category": "draught", "name": "Kilkenny", "price_default": "4.70", "price_double": null, "price_dash": null, "price_03": "4.70", "price_04": "5.70", "price_pint": "7.50", "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 3, "fields": {"category": "draught", "name": "Hop House 13", "price_default": "4.70", "price_double": null, "price_dash": null, "price_03": "4.70", "price_04": "5.70", "price_pint": "7.50", "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 4, "fields": {"category": "draught", "name": "Stowford Cider", "price_default": "4.70", "price_double": null, "price_dash": null, "price_03": "4.70", "price_04": "5.70", "price_pint": "7.50", "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 5, "fields": {"category": "draught", "name": "Half and Half", "price_default": "5.20", "price_double": null, "price_dash": null, "price_03": "5.20", "price_04": "6.20", "price_pint": "8.00", "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 9, "fields": {"category": "draught", "name": "Shandy", "price_default": "4.70", "price_double": null, "price_dash": null, "price_03": "4.70", "price_04": "5.70", "price_pint": "7.50", "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 13, "fields": {"category": "spirits_and_liquers", "name": "Tullamore Chaser Special", "price_default": "2.50", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 14, "fields": {"category": "spirits_and_liquers", "name": "Tullamore Original", "price_default": "3.50", "price_double": "5.00", "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": "25.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 15, "fields": {"category": "spirits_and_liquers", "name": "Tullamore Honey", "price_default": "4.00", "price_double": "6.00", "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": "26.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 16, "fields": {"category": "spirits_and_liquers", "name": "Tullamore Cider", "price_default": "4.50", "price_double": "7.00", "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": "27.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 17, "fields": {"category": "spirits_and_liquers", "name": "Tullamore 12 y.o.", "price_default": "6.50", "price_double": "10.00", "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": "30.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 18, "fields": {"category": "spirits_and_liquers", "name": "Tullamore 14y.o.", "price_default": "7.50", "price_double": "12.00", "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": "35.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 19, "fields": {"category": "spirits_and_liquers", "name": "Garnish Island Gin", "price_default": "3.50", "price_double": "5.00", "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": "25.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 20, "fields": {"category": "spirits_and_liquers", "name": "Gunpowder Gin", "price_default": "6.50", "price_double": "10.00", "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": "30.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 21, "fields": {"category": "spirits_and_liquers", "name": "Baileys", "price_default": "3.50", "price_double": "5.00", "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": "25.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 22, "fields": {"category": "spirits_and_liquers", "name": "Rum", "price_default": "3.50", "price_double": "5.00", "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": "25.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 23, "fields": {"category": "spirits_and_liquers", "name": "Kahlua", "price_default": "3.50", "price_double": "5.00", "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": "25.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 24, "fields": {"category": "spirits_and_liquers", "name": "Port", "price_default": "3.50", "price_double": "5.00", "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": "25.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 25, "fields": {"category": "cans_and_bottles", "name": "Guinness 0.0", "price_default": null, "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": "5.50", "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 26, "fields": {"category": "softdrinks", "name": "Cola", "price_default": "3.50", "price_double": null, "price_dash": "2.50", "price_03": "3.50", "price_04": "4.50", "price_pint": "6.00", "price_bottle": "9.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 27, "fields": {"category": "softdrinks", "name": "Diet Cola", "price_default": "3.50", "price_double": null, "price_dash": "2.50", "price_03": "3.50", "price_04": "4.50", "price_pint": "6.00", "price_bottle": "9.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 28, "fields": {"category": "softdrinks", "name": "Orange", "price_default": "3.50", "price_double": null, "price_dash": "2.50", "price_03": "3.50", "price_04": "4.50", "price_pint": "6.00", "price_bottle": "9.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 29, "fields": {"category": "softdrinks", "name": "Lemonade", "price_default": "3.50", "price_double": null, "price_dash": "2.50", "price_03": "3.50", "price_04": "4.50", "price_pint": "6.00", "price_bottle": "9.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 30, "fields": {"category": "softdrinks", "name": "Tonic Water", "price_default": "3.50", "price_double": null, "price_dash": "2.50", "price_03": "3.50", "price_04": "4.50", "price_pint": "6.00", "price_bottle": "9.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 31, "fields": {"category": "softdrinks", "name": "Ginger Ale", "price_default": "3.50", "price_double": null, "price_dash": "2.50", "price_03": "3.50", "price_04": "4.50", "price_pint": "6.00", "price_bottle": "9.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 32, "fields": {"category": "softdrinks", "name": "Still Water", "price_default": "3.50", "price_double": null, "price_dash": "2.50", "price_03": "3.50", "price_04": "4.50", "price_pint": "6.00", "price_bottle": "9.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 33, "fields": {"category": "softdrinks", "name": "Sparking Water", "price_default": "3.50", "price_double": null, "price_dash": "2.50", "price_03": "3.50", "price_04": "4.50", "price_pint": "6.00", "price_bottle": "9.00", "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 34, "fields": {"category": "hot_nonalcoholics", "name": "Coffee", "price_default": "3.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 35, "fields": {"category": "hot_nonalcoholics", "name": "Tea", "price_default": "3.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 36, "fields": {"category": "hot_nonalcoholics", "name": "Hot Chocolate", "price_default": "4.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 37, "fields": {"category": "hot_alcoholics", "name": "Baileys Hot Chocolate", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 38, "fields": {"category": "hot_alcoholics", "name": "Minty Hot Chocolate", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 39, "fields": {"category": "hot_alcoholics", "name": "Irish Coffee", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 40, "fields": {"category": "hot_alcoholics", "name": "Baileys Coffee", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 41, "fields": {"category": "hot_alcoholics", "name": "Carribean Coffee", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 42, "fields": {"category": "hot_alcoholics", "name": "English Coffee", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 43, "fields": {"category": "hot_alcoholics", "name": "Jamaican Coffee", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 44, "fields": {"category": "hot_toddys", "name": "Hot Whiskey", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 45, "fields": {"category": "hot_toddys", "name": "Hot Englishman", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 46, "fields": {"category": "hot_toddys", "name": "Hot Grog (Rum)", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 47, "fields": {"category": "hot_toddys", "name": "Hot Jamaican", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 48, "fields": {"category": "hot_toddys", "name": "Hot Portuguese", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 49, "fields": {"category": "shots", "name": "Baby Guinness", "price_default": "5.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 50, "fields": {"category": "shots", "name": "Irish Flag", "price_default": "5.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 51, "fields": {"category": "shots", "name": "Pfand Shot Special", "price_default": "2.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 52, "fields": {"category": "shots", "name": "6 Shots Special", "price_default": "20.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 53, "fields": {"category": "food", "name": "Irish Stew", "price_default": "9.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": "6.00", "price_regular": "9.00"}}, {"model": "index.product", "pk": 54, "fields": {"category": "food", "name": "Seafood Chowder", "price_default": "9.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": "6.00", "price_regular": "9.00"}}, {"model": "index.product", "pk": 55, "fields": {"category": "food", "name": "Pulled Pork Bap", "price_default": "6.50", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": "6.50"}}, {"model": "index.product", "pk": 56, "fields": {"category": "food", "name": "Wedges", "price_default": "4.50", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": "4.50"}}, {"model": "index.product", "pk": 57, "fields": {"category": "food", "name": "Wedges - Garlic", "price_default": "5.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": "5.00"}}, {"model": "index.product", "pk": 58, "fields": {"category": "food", "name": "Wedges - BBQ", "price_default": "5.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": "5.00"}}, {"model": "index.product", "pk": 59, "fields": {"category": "food", "name": "Wedges - Pulled Pork", "price_default": "8.50", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": "8.50"}}, {"model": "index.product", "pk": 60, "fields": {"category": "food", "name": "Wedges - Stew", "price_default": "8.50", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": "8.50"}}, {"model": "index.product", "pk": 61, "fields": {"category": "food", "name": "Spudato Tornado", "price_default": "4.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": "4.00"}}, {"model": "index.product", "pk": 62, "fields": {"category": "food", "name": "Add Cheese", "price_default": "1.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": "1.00"}}, {"model": "index.product", "pk": 63, "fields": {"category": "food", "name": "Cookie", "price_default": "2.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": "2.00"}}, {"model": "index.product", "pk": 64, "fields": {"category": "food", "name": "Crisps", "price_default": "2.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": "2.00"}}, {"model": "index.product", "pk": 65, "fields": {"category": "gifts", "name": "Tree Decoration", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 66, "fields": {"category": "gifts", "name": "Fridge Magnet", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 67, "fields": {"category": "gifts", "name": "Magnet/Decoration Special", "price_default": "10.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 68, "fields": {"category": "gifts", "name": "Frame", "price_default": "19.90", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 69, "fields": {"category": "gifts", "name": "Personalised Glass", "price_default": "9.90", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 70, "fields": {"category": "gifts", "name": "T-Shirt", "price_default": "12.50", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 71, "fields": {"category": "gifts", "name": "Polo Shirt", "price_default": "17.50", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 72, "fields": {"category": "gifts", "name": "Baseball Cap", "price_default": "9.90", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 73, "fields": {"category": "gifts", "name": "Badge", "price_default": "1.00", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 74, "fields": {"category": "gifts", "name": "Jumper", "price_default": "59.90", "price_double": null, "price_dash": null, "price_03": null, "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}, {"model": "index.product", "pk": 75, "fields": {"category": "hot_alcoholics", "name": "Gluhcider", "price_default": "6.00", "price_double": null, "price_dash": null, "price_03": "6.00", "price_04": null, "price_pint": null, "price_bottle": null, "price_330": null, "price_440": null, "price_small": null, "price_regular": null}}]
+[{
+    "model": "index.product",
+    "pk": 1,
+    "fields": {
+        "category": "draught",
+        "name": "Guinness",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 2,
+    "fields": {
+        "category": "draught",
+        "name": "Kilkenny",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 3,
+    "fields": {
+        "category": "draught",
+        "name": "Hop House 13",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 4,
+    "fields": {
+        "category": "draught",
+        "name": "Stowford",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 5,
+    "fields": {
+        "category": "draught",
+        "name": "Black N'Tan",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 6,
+    "fields": {
+        "category": "draught",
+        "name": "Black Velvet",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+},{
+    "model": "index.product",
+    "pk": 7,
+    "fields": {
+        "category": "draught",
+        "name": "Blacksmith",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+},{
+    "model": "index.product",
+    "pk": 8,
+    "fields": {
+        "category": "draught",
+        "name": "Snake Bite",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+},{
+    "model": "index.product",
+    "pk": 9,
+    "fields": {
+        "category": "draught",
+        "name": "Guinness Shandy",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 10,
+    "fields": {
+        "category": "draught",
+        "name": "Kilkenny Shandy",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+},{
+    "model": "index.product",
+    "pk": 11,
+    "fields": {
+        "category": "draught",
+        "name": "Hop House 13 Shandy",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+},{
+    "model": "index.product",
+    "pk": 12,
+    "fields": {
+        "category": "draught",
+        "name": "Stowford Shandy",
+        "price_03": "5.00",
+        "price_04": "6.00",
+        "price_pint": "7.50"
+    }
+},{
+    "model": "index.product",
+    "pk": 13,
+    "fields": {
+        "category": "cans_and_bottles",
+        "name": "Guinness 0.0",
+        "price_pint": "6.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 14,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Chaser/Mix Special",
+        "price_sgle": "2.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 15,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Tullamore Original",
+        "price_sgle": "3.50",
+        "price_dble": "5.00",
+        "price_btle": "27.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 16,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Tullamore Honey",
+        "price_sgle": "4.00",
+        "price_dble": "6.00",
+        "price_btle": "28.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 17,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Tullamore Cider",
+        "price_sgle": "4.50",
+        "price_dble": "7.00",
+        "price_btle": "28.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 18,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Tullamore 12 y.o.",
+        "price_sgle": "6.50",
+        "price_dble": "10.00",
+        "price_btle": "32.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 19,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Tullamore 14 y.o.",
+        "price_sgle": "7.50",
+        "price_dble": "12.00",
+        "price_btle": "37.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 20,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Garnish Island Gin",
+        "price_sgle": "3.50",
+        "price_dble": "6.00",
+        "price_btle": "27.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 21,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Gunpowder Gin",
+        "price_sgle": "6.50",
+        "price_dble": "10.00",
+        "price_btle": "35.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 22,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Baileys",
+        "price_sgle": "3.50",
+        "price_dble": "5.00",
+        "price_btle": "25.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 23,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Rum",
+        "price_sgle": "3.50",
+        "price_dble": "5.00",
+        "price_btle": "25.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 24,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Kahlua",
+        "price_sgle": "3.50",
+        "price_dble": "5.00",
+        "price_btle": "25.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 25,
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Port",
+        "price_sgle": "3.50",
+        "price_dble": "5.00",
+        "price_btle": "25.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 26,
+    "fields": {
+        "category": "softdrinks",
+        "name": "Cola",
+        "price_dash": "2.50",
+        "price_03": "3.50",
+        "price_04": "4.50",
+        "price_pint": "5.50",
+        "price_btle": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 27,
+    "fields": {
+        "category": "softdrinks",
+        "name": "Diet Cola",
+        "price_dash": "2.50",
+        "price_03": "3.50",
+        "price_04": "4.50",
+        "price_pint": "5.50",
+        "price_btle": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 28,
+    "fields": {
+        "category": "softdrinks",
+        "name": "Orange",
+        "price_dash": "2.50",
+        "price_03": "3.50",
+        "price_04": "4.50",
+        "price_pint": "5.50",
+        "price_btle": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 29,
+    "fields": {
+        "category": "softdrinks",
+        "name": "Lemonade",
+        "price_dash": "2.50",
+        "price_03": "3.50",
+        "price_04": "4.50",
+        "price_pint": "5.50",
+        "price_btle": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 30,
+    "fields": {
+        "category": "softdrinks",
+        "name": "Tonic Water",
+        "price_dash": "2.50",
+        "price_03": "3.50",
+        "price_04": "4.50",
+        "price_pint": "5.50",
+        "price_btle": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 31,
+    "fields": {
+        "category": "softdrinks",
+        "name": "Ginger Ale",
+        "price_dash": "2.50",
+        "price_03": "3.50",
+        "price_04": "4.50",
+        "price_pint": "5.50",
+        "price_btle": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 32,
+    "fields": {
+        "category": "softdrinks",
+        "name": "Still Water",
+        "price_dash": "2.50",
+        "price_03": "3.50",
+        "price_04": "4.50",
+        "price_pint": "5.50",
+        "price_btle": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 33,
+    "fields": {
+        "category": "softdrinks",
+        "name": "Sparking Water",
+        "price_dash": "2.50",
+        "price_03": "3.50",
+        "price_04": "4.50",
+        "price_pint": "5.50",
+        "price_btle": "7.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 34,
+    "fields": {
+        "category": "hot_nonalcoholics",
+        "name": "Coffee",
+        "price_default": "3.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 35,
+    "fields": {
+        "category": "hot_nonalcoholics",
+        "name": "Tea",
+        "price_default": "3.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 36,
+    "fields": {
+        "category": "hot_nonalcoholics",
+        "name": "Hot Chocolate",
+        "price_default": "2.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 37,
+    "fields": {
+        "category": "hot_alcoholics",
+        "name": "Baileys Hot Chocolate",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 38,
+    "fields": {
+        "category": "hot_alcoholics",
+        "name": "Minty Hot Chocolate",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 39,
+    "fields": {
+        "category": "hot_alcoholics",
+        "name": "Irish Coffee",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 40,
+    "fields": {
+        "category": "hot_alcoholics",
+        "name": "Baileys Coffee",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 41,
+    "fields": {
+        "category": "hot_alcoholics",
+        "name": "Carribean Coffee",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 42,
+    "fields": {
+        "category": "hot_alcoholics",
+        "name": "English Coffee",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 43,
+    "fields": {
+        "category": "hot_alcoholics",
+        "name": "Jamaican Coffee",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 44,
+    "fields": {
+        "category": "hot_toddys",
+        "name": "Hot Whiskey",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 45,
+    "fields": {
+        "category": "hot_toddys",
+        "name": "Hot Englishman",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 46,
+    "fields": {
+        "category": "hot_toddys",
+        "name": "Hot Grog (Rum)",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 47,
+    "fields": {
+        "category": "hot_toddys",
+        "name": "Hot Jamaican",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 48,
+    "fields": {
+        "category": "hot_toddys",
+        "name": "Hot Portuguese",
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 49,
+    "fields": {
+        "category": "shots",
+        "name": "Baby Guinness",
+        "price_sgle": "5.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 50,
+    "fields": {
+        "category": "shots",
+        "name": "Irish Flag",
+        "price_sgle": "5.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 51,
+    "fields": {
+        "category": "shots",
+        "name": "Pfand Shot Special",
+        "price_sgle": "2.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 52,
+    "fields": {
+        "category": "shots",
+        "name": "6 Shots Special",
+        "price_default": "20.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 53,
+    "fields": {
+        "category": "food",
+        "name": "Irish Stew",
+        "price_small": "6.00",
+        "price_regular": "9.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 54,
+    "fields": {
+        "category": "food",
+        "name": "Seafood Chowder",
+        "price_small": "6.00",
+        "price_regular": "9.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 55,
+    "fields": {
+        "category": "food",
+        "name": "Pulled Pork Bap",
+        "price_regular": "6.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 56,
+    "fields": {
+        "category": "food",
+        "name": "Wedges",
+        "price_regular": "5.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 57,
+    "fields": {
+        "category": "food",
+        "name": "Wedges - Garlic",
+        "price_regular": "6.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 58,
+    "fields": {
+        "category": "food",
+        "name": "Wedges - BBQ",
+        "price_regular": "6.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 59,
+    "fields": {
+        "category": "food",
+        "name": "Wedges - Pulled Pork",
+        "price_regular": "9.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 60,
+    "fields": {
+        "category": "food",
+        "name": "Wedges - Stew",
+        "price_regular": "9.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 61,
+    "fields": {
+        "category": "food",
+        "name": "Spudato Tornado",
+        "price_regular": "4.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 62,
+    "fields": {
+        "category": "food",
+        "name": "Add Cheese",
+        "price_regular": "1.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 63,
+    "fields": {
+        "category": "food",
+        "name": "Cookie",
+        "price_regular": "2.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 64,
+    "fields": {
+        "category": "food",
+        "name": "Crisps",
+        "price_regular": "2.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 65,
+    "fields": {
+        "category": "gifts",
+        "name": "Tree Decoration",
+        "price_default": "5.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 66,
+    "fields": {
+        "category": "gifts",
+        "name": "Fridge Magnet",
+        "price_default": "5.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 67,
+    "fields": {
+        "category": "gifts",
+        "name": "Magnet/Decoration Special",
+        "price_default": "9.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 68,
+    "fields": {
+        "category": "gifts",
+        "name": "Frame",
+        "price_default": "19.90"
+    }
+}, {
+    "model": "index.product",
+    "pk": 69,
+    "fields": {
+        "category": "gifts",
+        "name": "Personalised Glass",
+        "price_default": "9.90"
+    }
+}, {
+    "model": "index.product",
+    "pk": 70,
+    "fields": {
+        "category": "gifts",
+        "name": "T-Shirt",
+        "price_default": "12.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 71,
+    "fields": {
+        "category": "gifts",
+        "name": "Polo Shirt",
+        "price_default": "17.50"
+    }
+}, {
+    "model": "index.product",
+    "pk": 72,
+    "fields": {
+        "category": "gifts",
+        "name": "Baseball Cap",
+        "price_default": "9.90"
+    }
+}, {
+    "model": "index.product",
+    "pk": 73,
+    "fields": {
+        "category": "gifts",
+        "name": "Badge",
+        "price_default": "1.00"
+    }
+}, {
+    "model": "index.product",
+    "pk": 74,
+    "fields": {
+        "category": "gifts",
+        "name": "Jumper",
+        "price_default": "59.90"
+    }
+}, {
+    "model": "index.product",
+    "pk": 75,
+    "fields": {
+        "category": "hot_alcoholics",
+        "name": "Gluhcider",
+        "price_03": "6.00"
+    }
+}]

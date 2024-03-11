@@ -24,10 +24,11 @@ body {
 
 .btn {
     width: 100%;
-    height: 61px;
+    height: 55px;
     color: white;
     border-color: black;
     font-weight: 500;
+    font-size: small;
 }
 
 .fa-maximize,
@@ -214,9 +215,15 @@ form {
 
 .product_row p {
     margin: 0;
+    font-size: .9rem;
 }
 
 .product-name {
+    text-wrap: nowrap;
+    overflow: clip;
+}
+
+#size {
     text-wrap: nowrap;
     overflow: clip;
 }
@@ -265,6 +272,7 @@ input {
     margin:1px auto;
     max-width: 80%;
     border-radius: 5px;
+    font-weight: bold;
 }
 
 #staff_modal .staff-name:nth-child(even) {
