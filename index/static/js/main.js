@@ -1,6 +1,6 @@
 console.log("JS is Working")
-// let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu108.gitpod.io/";
+let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
+// let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu108.gitpod.io/";
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function () {
