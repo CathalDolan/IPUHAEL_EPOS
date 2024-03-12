@@ -89,6 +89,23 @@
                 </button>
             </div>
             {% endfor %}
+            {% for half_n_half in half_n_halfs %}
+            <div class="col-2">
+                <button class="btn {{half_n_half.category}} product_button pfand_product" id="{{half_n_half.id}}"
+                    data-pfand="{{half_n_half.pfand}}" data-category="{{half_n_half.category}}" data-name="{{half_n_half.name}}" 
+                    data-price_default="{{half_n_half.price_default}}"
+                    data-price_sgle="{{half_n_half.price_sgle}}"
+                    data-price_dble="{{half_n_half.price_dble}}"
+                    data-price_dash="{{half_n_half.price_dash}}"
+                    data-price_03="{{half_n_half.price_03}}"
+                    data-price_04="{{half_n_half.price_04}}" 
+                    data-price_pint="{{half_n_half.price_pint}}"
+                    data-price_btle="{{half_n_half.price_btle}}"
+                    >
+                    {{half_n_half.name}}
+                </button>
+            </div>
+            {% endfor %}
             {% for canandbottle in canandbottles %}
             <div class="col-2">
                 <button class="btn {{canandbottle.category}} product_button pfand_product" id="{{canandbottle.id}}"

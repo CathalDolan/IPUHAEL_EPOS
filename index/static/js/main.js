@@ -523,7 +523,7 @@ function basketGrandTotals() {
         // Calculates Pfand Amount Due
         // console.log("pfand_applicable = ", pfand_applicable)
         if (this.pfand_payable == "True" && pfand_applicable == true) {
-            Pfand_Total += (this.qty * 2);
+            Pfand_Total += (this.qty * 2.5);
         }
     });
 
@@ -532,7 +532,7 @@ function basketGrandTotals() {
         Pfand_Total = 0;
     } else {
         // console.log("ELSE")
-        Pfand_Total = Pfand_Total - (Number(GLASSES_RETURNED) * 2);
+        Pfand_Total = Pfand_Total - (Number(GLASSES_RETURNED) * 2.5);
     }
 
     console.log("Pfand_Total = ", Pfand_Total);
@@ -796,6 +796,7 @@ function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== "") {
         const cookies = document.cookie.split(";");
+        console.log("cookies = ", cookies)
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
             // Does this cookie string begin with the name we want?

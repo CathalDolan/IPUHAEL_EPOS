@@ -42,7 +42,7 @@
     "model": "index.product",
     "pk": 5,
     "fields": {
-        "category": "draught",
+        "category": "half_n_half",
         "name": "Black N'Tan",
         "price_03": "5.00",
         "price_04": "6.00",
@@ -52,7 +52,7 @@
     "model": "index.product",
     "pk": 6,
     "fields": {
-        "category": "draught",
+        "category": "half_n_half",
         "name": "Black Velvet",
         "price_03": "5.00",
         "price_04": "6.00",
@@ -62,7 +62,7 @@
     "model": "index.product",
     "pk": 7,
     "fields": {
-        "category": "draught",
+        "category": "half_n_half",
         "name": "Blacksmith",
         "price_03": "5.00",
         "price_04": "6.00",
@@ -72,7 +72,7 @@
     "model": "index.product",
     "pk": 8,
     "fields": {
-        "category": "draught",
+        "category": "half_n_half",
         "name": "Snake Bite",
         "price_03": "5.00",
         "price_04": "6.00",
@@ -82,7 +82,7 @@
     "model": "index.product",
     "pk": 9,
     "fields": {
-        "category": "draught",
+        "category": "half_n_half",
         "name": "Guinness Shandy",
         "price_03": "5.00",
         "price_04": "6.00",
@@ -92,7 +92,7 @@
     "model": "index.product",
     "pk": 10,
     "fields": {
-        "category": "draught",
+        "category": "half_n_half",
         "name": "Kilkenny Shandy",
         "price_03": "5.00",
         "price_04": "6.00",
@@ -102,7 +102,7 @@
     "model": "index.product",
     "pk": 11,
     "fields": {
-        "category": "draught",
+        "category": "half_n_half",
         "name": "Hop House 13 Shandy",
         "price_03": "5.00",
         "price_04": "6.00",
@@ -112,7 +112,7 @@
     "model": "index.product",
     "pk": 12,
     "fields": {
-        "category": "draught",
+        "category": "half_n_half",
         "name": "Stowford Shandy",
         "price_03": "5.00",
         "price_04": "6.00",

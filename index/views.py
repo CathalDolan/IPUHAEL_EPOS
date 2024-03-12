@@ -6,7 +6,7 @@ from django.contrib import messages
 import json
 
 
-@ensure_csrf_cookie
+# @ensure_csrf_cookie
 def index(request):
     """ A view to return the index page """
     """https://testdriven.io/blog/django-ajax-xhr/"""
@@ -85,7 +85,7 @@ def index(request):
     #     return HttpResponseBadRequest('Invalid request')
 
     draughts = Product.objects.all().filter(category="draught")
-    halfandhalfs = Product.objects.all().filter(category="halfandhalfs")
+    half_n_halfs = Product.objects.all().filter(category="half_n_half")
     shandys = Product.objects.all().filter(category="shandys")
     canandbottles = Product.objects.all().filter(category="cans_and_bottles")
     spirits = Product.objects.all().filter(category="spirits_and_liquers").order_by("pk")
@@ -99,7 +99,7 @@ def index(request):
 
     context = {
         'draughts': draughts,
-        'halfandhalfs': halfandhalfs,
+        'half_n_halfs': half_n_halfs,
         'shandys': shandys,
         'canandbottles': canandbottles,
         'spirits': spirits,
