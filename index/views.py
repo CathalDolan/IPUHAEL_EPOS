@@ -24,9 +24,13 @@ def index(request):
             print("Data 0", data[0])
             print("Data 1", data[1])
             print("Data 2", data[2])
+            # staff_member = Staff.objects.get('pk'=)
             for v in data[1].values():
+                print("v = ", v)
+                staff_member = Staff.objects.get(id=v["staff_member"])
                 new_grand_total = GrandTotal(
                     number_of_products=int(v["Total_Products_Qty"]),
+                    staff_member=staff_member,
                     pfand_buttons_total=float(v["Pfand_Buttons_Total"]),
                     drinks_food_total=float(v["Line_Totals_Total"]),
                     pfand_total=float(v["Pfand_Total"]),
@@ -59,7 +63,7 @@ def index(request):
             for k, v in data[2].items():
                 print("discount product = ", v)
                 # for y in v:
-                print("v = ", v)
+                # print("v = ", v)
                 for x in v:
                     print("x['name'] = ", x['name'])
                     if x['name'] != 'Applied' and x['name'] != 'Invalid':
@@ -95,7 +99,7 @@ def index(request):
     hottoddys = Product.objects.all().filter(category="hot_toddys")
     shots = Product.objects.all().filter(category="shots")
     foods = Product.objects.all().filter(category="food")
-    staff = Staff.objects.all().filter(on_duty=True)
+    staff = Staff.objects.all().filter(on_duty=True).order_by("name")
 
     context = {
         'draughts': draughts,

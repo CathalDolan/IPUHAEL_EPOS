@@ -16,7 +16,7 @@
             <!-- Modal body -->
             <div class="modal-body">
                 {% for member in staff %}
-                <div class="staff-name">{{ member }}</div>
+                <div class="staff-name" data-member_id="{{ member.id }}">{{ member }}</div>
                 {% endfor %}
 
             </div>

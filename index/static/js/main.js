@@ -81,7 +81,7 @@ var DISCOUNTS = [];
 var NEW_BASKET = []
 var VOUCHERS = [];
 var GLASSES_RETURNED = 0;
-var STAFF_NAME = '';
+var STAFF_ID = '';
 
 $(document).ready(function() {
     $('.drinks_row').find('.product_button').removeClass('enabled').addClass('disabled');
@@ -90,14 +90,14 @@ $(document).ready(function() {
 })
 
 $('.staff-name').click(function() {
-    STAFF_NAME = $(this).text();
-    // console.log("STAFF_NAME = ", STAFF_NAME);
+    STAFF_ID = $(this).attr('data-member_id');
+    console.log("STAFF_ID = ", STAFF_ID);
     $('#staff_modal').modal('hide')
 })
 
 $('#staff_modal').on('hidden.bs.modal', function (e) {
     // console.log("modal hidden");
-    if(STAFF_NAME == '') {
+    if(STAFF_ID == '') {
         var staff_modal = new bootstrap.Modal(document.getElementById('staff_modal'), {})
         staff_modal.show()
     }
@@ -734,7 +734,6 @@ $('.payment_button').click(function () {
             }
 
         })
-
     }
     Grand_Total.Pfand_Buttons_Total = Pfand_Total;
     Grand_Total.Total_Products_Qty = Total_Products_Qty;
@@ -745,6 +744,7 @@ $('.payment_button').click(function () {
     Grand_Total.Change_Due = Change_Due;
     Grand_Total.Payment_Method = Payment_Method;
     Grand_Total.payment_reason = payment_reason;
+    Grand_Total.staff_member = STAFF_ID;
 
     // console.log("PAYMENT BUTTONS FN: Amount Tendered", Amount_Tendered);
     // console.log("PAYMENT BUTTONS FN: Total Due", Total_Due);

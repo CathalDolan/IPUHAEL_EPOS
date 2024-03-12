@@ -29,6 +29,7 @@ class GrandTotalAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = (
         'pk',
         'order_date',
+        'staff_member',
         'number_of_products',
         'pfand_buttons_total',
         'drinks_food_total',
