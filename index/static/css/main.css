@@ -31,6 +31,10 @@ body {
     font-size: small;
 }
 
+.btn:active {
+    transform: translateY(3px);
+  }
+
 .fa-maximize,
 .fa-minimize {
     font-size: 30px;
