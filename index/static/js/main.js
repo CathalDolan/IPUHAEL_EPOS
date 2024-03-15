@@ -75,7 +75,7 @@ let Line_Totals_Total = 0;
 let Pfand_Total = 0;
 let Amount_Tendered = 0.00;
 let Total_Due = 0;
-let Change_Due = 0;
+let Change_Due;
 let Payment_Method;
 var DISCOUNTS = [];
 var NEW_BASKET = []
@@ -87,6 +87,9 @@ $(document).ready(function() {
     $('.drinks_row').find('.product_button').removeClass('enabled').addClass('disabled');
     $('.drinks_row').find(`[data-price_pint!=None]`).addClass('enabled').removeClass('disabled');
     $('.drinks_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
+    $('.food_row').find('.product_button').removeClass('enabled').addClass('disabled');
+    $('.food_row').find(`[data-price_regular!=None]`).addClass('enabled').removeClass('disabled');
+    $('.food_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
 })
 
 $('.staff-name').click(function() {
@@ -104,10 +107,10 @@ $('#staff_modal').on('hidden.bs.modal', function (e) {
   })
 
 // Select product size - Needed in Phase 2
-$('.measure_button').click(function () {
+$('.drink.measure_button').click(function () {
     // Extracts the sizes for each product when button is clicked
     let size = $(this).attr("data-price");
-    $('.measure_button').removeClass('selected')
+    $('.drink.measure_button').removeClass('selected')
     $(this).addClass('selected');
     console.log("size = ", size);
     $('.drinks_row').find('.product_button').removeClass('enabled').addClass('disabled');
@@ -116,8 +119,64 @@ $('.measure_button').click(function () {
 });
 
 // PRODUCT BUTTONS
-$('.product_button').click(function () {
-    let product_size = $('.measure#_button, .selected').attr('data-price');
+$('.drink.product_button').click(function () {
+    let product_size = $('.drink.measure_button.selected').attr('data-price');
+    // console.log("product_size = ", product_size)
+    let abbrv_size = product_size.split("_")[1]; // Required when allocating variable sizs to products - Phase 2
+    // console.log("abbrv_size = ", abbrv_size)
+    // console.log("product_size = ", product_size)
+    let product_name = $(this).attr('data-name');
+    let product_price = $(this).attr('data-' + product_size);
+    // console.log("product_price = ", product_price)
+    if(product_price == 'None') {
+        product_price = Number($(this).attr('data-price_default'));
+        abbrv_size = '';
+    }
+    else {
+        product_price = Number(product_price)
+    }   
+    // console.log("product_price = ", product_price)
+
+    let product_category = $(this).attr('data-category');
+    let pfand_payable = $(this).attr('data-pfand');
+    let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
+    // console.log("product = ", product)
+    let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
+
+    if (product.length > 0) {
+        ALL_PRODUCTS[product_index].qty += 1;
+        ALL_PRODUCTS[product_index].line_total = ALL_PRODUCTS[product_index].price * ALL_PRODUCTS[product_index].qty;
+    } else {
+        product = {
+            "category": product_category,
+            "name": product_name,
+            "size": abbrv_size,
+            "qty": 1,
+            "price": product_price,
+            "line_total": product_price,
+            "pfand_payable": pfand_payable,
+            'discount_applied': ''
+        }
+        ALL_PRODUCTS.push(product);
+
+    }
+    apply_specials();
+});
+
+$('.food.measure_button').click(function() {
+    // Extracts the sizes for each product when button is clicked
+    let size = $(this).attr("data-price");
+    $('.food.measure_button').removeClass('selected')
+    $(this).addClass('selected');
+    console.log("size = ", size);
+    $('.food_row').find('.product_button').removeClass('enabled').addClass('disabled');
+    $('.food_row').find(`[data-${size}!=None]`).addClass('enabled').removeClass('disabled');
+    $('.food_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
+})
+
+$('.food.product_button').click(function() {
+    console.log("FOOD BUTTON");
+    let product_size = $('.food.measure_button.selected').attr('data-price');
     console.log("product_size = ", product_size)
     let abbrv_size = product_size.split("_")[1]; // Required when allocating variable sizs to products - Phase 2
     console.log("abbrv_size = ", abbrv_size)
@@ -132,8 +191,8 @@ $('.product_button').click(function () {
     else {
         product_price = Number(product_price)
     }
-    
     console.log("product_price = ", product_price)
+
     let product_category = $(this).attr('data-category');
     let pfand_payable = $(this).attr('data-pfand');
     let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
@@ -158,7 +217,10 @@ $('.product_button').click(function () {
 
     }
     apply_specials();
-});
+
+
+
+})
 
 // INCREMENT a product line in the basket
 $(document).on('click', '.add_button', function () {
@@ -543,16 +605,7 @@ function basketGrandTotals() {
 
     $('#total_number_of_products').text(Total_Products_Qty);
     $('#food_grand_total').text("€" + Line_Totals_Total.toFixed(2));
-
-    // Calculates the amount of pfand to be displayed using a combination of the if statement above and the Pfand butoon function
-    // let new_pfand_total = 0;
-    // console.log("new_pfand_total = ", new_pfand_total);
-    // console.log("Pfand_Buttons_Total = ", Pfand_Buttons_Total);
-    // new_pfand_total = Pfand_Total - Pfand_Buttons_Total;
-    // console.log("new_pfand_total = ", new_pfand_total)
     $('#pfand_total').text("€" + Pfand_Total.toFixed(2));
-    // Pfand_Buttons_Total = 0; // Prevents the pfand amount for returned glasses from being retained when the Cancel button is used.
-    // Pfand_Total = new_pfand_total; // This is here so that we can record when payment is made purely with a pfand as per the PAYMENT BUTTONS Fn
 
     Total_Due = Pfand_Total + Line_Totals_Total;
     var new_total_due = Total_Due.toFixed(2);
@@ -560,12 +613,10 @@ function basketGrandTotals() {
     // console.log("Total due to fixed", Total_Due);
     $('#total_due').text("€" + Total_Due.toFixed(2));
 
-    Amount_Tendered = Total_Due;
-    // console.log("TOTAL DUE", Total_Due);
-    Amount_Tendered = parseFloat($('#amount_tendered').val());
-    // console.log("Amount_Tendered", Amount_Tendered);
-    Change_Due = Amount_Tendered - Total_Due;
-    $('#change_due').text("€" + Change_Due.toFixed(2));
+    // Amount_Tendered = Total_Due;
+    // Amount_Tendered = parseFloat($('#amount_tendered').val());
+    // Change_Due = Amount_Tendered - Total_Due;
+    // $('#change_due').text("€" + Change_Due.toFixed(2));
 }
 
 // TENDERED AMOUNT INPUT & RECALCULATE CHANGE: Recalculate change due when a user manually enters a tendered amount
@@ -574,16 +625,17 @@ element.addEventListener("keyup", recalculate_change_due);
 
 function recalculate_change_due() {
     Amount_Tendered = parseFloat($('#amount_tendered').val());
-    // console.log("TENDERED AMOUNT", Amount_Tendered);
-    // Amount_Tendered.select(); // Supposed to highlight all text in the input when it's clicked. Or clear input
-    Change_Due = (Amount_Tendered - Total_Due);
-
-    // console.log("RECALCULATE CHANGE FN: Amount Tendered", Amount_Tendered);
-    // console.log("RECALCULATE CHANGE FN: Total Due", Total_Due);
-    // console.log("RECALCULATE CHANGE FN: Change Due", Change_Due);
-
-    $('#change_due').text("€" + Change_Due.toFixed(2));
-    Payment_Method = "Cash";
+    if(isNaN(Amount_Tendered)) {
+        console.log("isNaN");
+        $('#change_due').text("€");
+    }
+    else {
+        console.log("TENDERED AMOUNT", Amount_Tendered);
+        // Amount_Tendered.select(); // Supposed to highlight all text in the input when it's clicked. Or clear input
+        Change_Due = (Amount_Tendered - Total_Due);
+        $('#change_due').text("€" + Change_Due.toFixed(2));
+        Payment_Method = "Cash";
+    }
 }
 
 // NOTES BUTTONS: Put € note values into the Amount Tender input once a note image has been clicked

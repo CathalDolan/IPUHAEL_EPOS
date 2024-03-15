@@ -52,7 +52,11 @@ body {
 }
 
 .half_n_half {
-    background-color: #208920;
+    background-color: #148505;
+}
+
+.shandy {
+    background-color: #1a9e08;
 }
 
 .cans_and_bottles,
@@ -115,9 +119,8 @@ body {
     color: black;
 }
 
-.enabled {
-    /* color: palevioletred; */
-    /* border: 4px solid blue; */
+.product_button.enabled {
+    border: 4px solid #000;
     font-weight: 700;
 }
 
@@ -126,6 +129,7 @@ body {
 }
 
 .selected {
+    border: 4px solid #000;
     background-color: lightblue;
 }
 

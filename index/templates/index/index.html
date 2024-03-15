@@ -35,37 +35,37 @@
         <!--  Drinks Sizes Buttons -->
         <div class="row" id="measurement_row">
             <div class="col">
-                <button class="btn measure_button price_sgle" id="single_button" data-price="price_sgle">
+                <button class="btn drink measure_button price_sgle" id="single_button" data-price="price_sgle">
                     Single
                 </button>
             </div>
             <div class="col">
-                <button class="btn measure_button price_dble" id="double_button" data-price="price_dble">
+                <button class="btn drink measure_button price_dble" id="double_button" data-price="price_dble">
                     Double
                 </button>
             </div>
             <div class="col">
-                <button class="btn measure_button price_dash" id="dash_button" data-price="price_dash">
+                <button class="btn drink measure_button price_dash" id="dash_button" data-price="price_dash">
                     Dash
                 </button>
             </div>
             <div class="col">
-                <button class="btn measure_button price_03" id="03_button" data-price="price_03">
+                <button class="btn drink measure_button price_03" id="03_button" data-price="price_03">
                     0.3
                 </button>
             </div>
             <div class="col">
-                <button class="btn measure_button price_04" id="04_button" data-price="price_04">
+                <button class="btn drink measure_button price_04" id="04_button" data-price="price_04">
                     0.4
                 </button>
             </div>
             <div class="col">
-                <button class="btn measure_button price_pint selected" id="pint_button" data-price="price_pint">
+                <button class="btn drink measure_button price_pint selected" id="pint_button" data-price="price_pint">
                     Pint
                 </button>
             </div>
             <div class="col">
-                <button class="btn measure_button price_btle" id="bottle_button" data-price="price_btle">
+                <button class="btn drink measure_button price_btle" id="bottle_button" data-price="price_btle">
                     Bottle
                 </button>
             </div>
@@ -74,7 +74,7 @@
         <div class="row product_buttons_div drinks_row">
             {% for draught in draughts %}
             <div class="col-2">
-                <button class="btn {{draught.category}} product_button pfand_product" id="{{draught.id}}"
+                <button class="btn {{draught.category}} drink product_button pfand_product" id="{{draught.id}}"
                     data-pfand="{{draught.pfand}}" data-category="{{draught.category}}" data-name="{{draught.name}}" 
                     data-price_default="{{draught.price_default}}"
                     data-price_sgle="{{draught.price_sgle}}"
@@ -91,7 +91,7 @@
             {% endfor %}
             {% for half_n_half in half_n_halfs %}
             <div class="col-2">
-                <button class="btn {{half_n_half.category}} product_button pfand_product" id="{{half_n_half.id}}"
+                <button class="btn {{half_n_half.category}} drink product_button pfand_product" id="{{half_n_half.id}}"
                     data-pfand="{{half_n_half.pfand}}" data-category="{{half_n_half.category}}" data-name="{{half_n_half.name}}" 
                     data-price_default="{{half_n_half.price_default}}"
                     data-price_sgle="{{half_n_half.price_sgle}}"
@@ -106,9 +106,26 @@
                 </button>
             </div>
             {% endfor %}
+            {% for shandy in shandys %}
+            <div class="col-2">
+                <button class="btn {{shandy.category}} drink product_button pfand_product" id="{{shandy.id}}"
+                    data-pfand="{{shandy.pfand}}" data-category="{{shandy.category}}" data-name="{{shandy.name}}" 
+                    data-price_default="{{shandy.price_default}}"
+                    data-price_sgle="{{shandy.price_sgle}}"
+                    data-price_dble="{{shandy.price_dble}}"
+                    data-price_dash="{{shandy.price_dash}}"
+                    data-price_03="{{shandy.price_03}}"
+                    data-price_04="{{shandy.price_04}}" 
+                    data-price_pint="{{shandy.price_pint}}"
+                    data-price_btle="{{shandy.price_btle}}"
+                    >
+                    {{shandy.name}}
+                </button>
+            </div>
+            {% endfor %}
             {% for canandbottle in canandbottles %}
             <div class="col-2">
-                <button class="btn {{canandbottle.category}} product_button pfand_product" id="{{canandbottle.id}}"
+                <button class="btn {{canandbottle.category}} drink product_button pfand_product" id="{{canandbottle.id}}"
                     data-pfand="{{canandbottle.pfand}}" data-category="{{canandbottle.category}}"
                     data-name="{{canandbottle.name}}"
                     data-price_default="{{canandbottle.price_default}}"
@@ -125,7 +142,7 @@
             {% endfor %}
             {% for spirit in spirits %}
             <div class="col-2">
-                <button class="btn {{spirit.category}} product_button pfand_product" id="{{spirit.id}}"
+                <button class="btn {{spirit.category}} drink product_button pfand_product" id="{{spirit.id}}"
                     data-pfand="{{spirit.pfand}}" data-category="{{spirit.category}}" data-name="{{spirit.name}}"
                     data-price_default="{{spirit.price_default}}"
                     data-price_sgle="{{spirit.price_sgle}}"
@@ -141,7 +158,7 @@
             {% endfor %}
             {% for softdrink in softdrinks %}
             <div class="col-2">
-                <button class="btn {{softdrink.category}} product_button pfand_product" id="{{softdrink.id}}"
+                <button class="btn {{softdrink.category}} drink product_button pfand_product" id="{{softdrink.id}}"
                     data-pfand="{{softdrink.pfand}}" data-category="{{softdrink.category}}"
                     data-name="{{softdrink.name}}"
                     data-price_default="{{softdrink.price_default}}"
@@ -158,7 +175,7 @@
             {% endfor %}
             {% for hotnonalcoholic in hotnonalcoholics %}
             <div class="col-2">
-                <button class="btn {{hotnonalcoholic.category}} product_button" id="{{hotnonalcoholic.id}}"
+                <button class="btn {{hotnonalcoholic.category}} drink product_button" id="{{hotnonalcoholic.id}}"
                     data-pfand="{{hotnonalcoholic.pfand}}" data-category="{{hotnonalcoholic.category}}"
                     data-name="{{hotnonalcoholic.name}}"
                     data-price_default="{{hotnonalcoholic.price_default}}"
@@ -175,7 +192,7 @@
             {% endfor %}
             {% for hotalcoholic in hotalcoholics %}
             <div class="col-2">
-                <button class="btn {{hotalcoholic.category}} product_button" id="{{hotalcoholic.id}}"
+                <button class="btn {{hotalcoholic.category}} drink product_button" id="{{hotalcoholic.id}}"
                     data-pfand="{{hotalcoholic.pfand}}" data-category="{{hotalcoholic.category}}"
                     data-name="{{hotalcoholic.name}}"
                     data-price_default="{{hotalcoholic.price_default}}"
@@ -192,7 +209,7 @@
             {% endfor %}
             {% for hottoddy in hottoddys %}
             <div class="col-2">
-                <button class="btn {{hottoddy.category}} product_button" id="{{hottoddy.id}}"
+                <button class="btn {{hottoddy.category}} drink product_button" id="{{hottoddy.id}}"
                     data-pfand="{{hottoddy.pfand}}" data-category="{{hottoddy.category}}" data-name="{{hottoddy.name}}"
                     data-price_default="{{hottoddy.price_default}}"
                     data-price_sgle="{{hottoddy.price_sgle}}"
@@ -209,7 +226,7 @@
             {% endfor %}
             {% for shot in shots %}
             <div class="col-2">
-                <button class="btn {{shot.category}} product_button" id="{{shot.id}}" data-pfand="{{shot.pfand}}"
+                <button class="btn {{shot.category}} drink product_button" id="{{shot.id}}" data-pfand="{{shot.pfand}}"
                     data-category="{{shot.category}}" data-name="{{shot.name}}"
                     data-price_default="{{shot.price_default}}"
                     data-price_sgle="{{shot.price_sgle}}"
@@ -261,10 +278,10 @@
         <div class="row food_row">
             {% for food in foods %}
             <div class="col-2">
-                <button class="btn {{food.category}} product_button" id="{{food.id}}" data-pfand="true"
+                <button class="btn {{food.category}} product_button" id="{{food.id}}" data-pfand="{{food.pfand}}"
                     data-category="{{food.category}}" data-name="{{food.name}}"
-                    data-price_default="{{food.price_regular}}" data-price_03="{{food.price_small}}"
-                    data-price_04="{{food.price_regular}}">
+                    data-price_default="{{food.price_default}}" data-price_small="{{food.price_small}}"
+                    data-price_regular="{{food.price_regular}}">
                     {{food.name}}
                 </button>
             </div>
@@ -274,13 +291,14 @@
         <div class="row food_row">
             <!-- Small Size Button -->
             <div class="col-2">
-                <button class="btn measure_button">
+                <button class="btn food measure_button"
+                    data-price="price_small">
                     Small
                 </button>
             </div>
             <!-- Regular Size Button -->
             <div class="col-2">
-                <button class="btn measure_button">
+                <button class="btn food measure_button selected" data-price="price_regular">
                     Regular
                 </button>
             </div>

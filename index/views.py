@@ -90,7 +90,7 @@ def index(request):
 
     draughts = Product.objects.all().filter(category="draught")
     half_n_halfs = Product.objects.all().filter(category="half_n_half")
-    shandys = Product.objects.all().filter(category="shandys")
+    shandys = Product.objects.all().filter(category="shandy")
     canandbottles = Product.objects.all().filter(category="cans_and_bottles")
     spirits = Product.objects.all().filter(category="spirits_and_liquers").order_by("pk")
     softdrinks = Product.objects.all().filter(category="softdrinks")

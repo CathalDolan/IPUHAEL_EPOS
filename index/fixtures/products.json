@@ -82,7 +82,7 @@
     "model": "index.product",
     "pk": 9,
     "fields": {
-        "category": "half_n_half",
+        "category": "shandy",
         "name": "Guinness Shandy",
         "price_03": "5.00",
         "price_04": "6.00",
@@ -92,7 +92,7 @@
     "model": "index.product",
     "pk": 10,
     "fields": {
-        "category": "half_n_half",
+        "category": "shandy",
         "name": "Kilkenny Shandy",
         "price_03": "5.00",
         "price_04": "6.00",
@@ -102,7 +102,7 @@
     "model": "index.product",
     "pk": 11,
     "fields": {
-        "category": "half_n_half",
+        "category": "shandy",
         "name": "Hop House 13 Shandy",
         "price_03": "5.00",
         "price_04": "6.00",
@@ -112,7 +112,7 @@
     "model": "index.product",
     "pk": 12,
     "fields": {
-        "category": "half_n_half",
+        "category": "shandy",
         "name": "Stowford Shandy",
         "price_03": "5.00",
         "price_04": "6.00",
@@ -490,7 +490,7 @@
     "fields": {
         "category": "shots",
         "name": "Baby Guinness",
-        "price_sgle": "5.00"
+        "price_default": "5.00"
     }
 }, {
     "model": "index.product",
@@ -498,7 +498,7 @@
     "fields": {
         "category": "shots",
         "name": "Irish Flag",
-        "price_sgle": "5.00"
+        "price_default": "5.00"
     }
 }, {
     "model": "index.product",
@@ -506,7 +506,7 @@
     "fields": {
         "category": "shots",
         "name": "Pfand Shot Special",
-        "price_sgle": "2.50"
+        "price_default": "2.50"
     }
 }, {
     "model": "index.product",
@@ -540,7 +540,7 @@
     "fields": {
         "category": "food",
         "name": "Pulled Pork Bap",
-        "price_regular": "6.50"
+        "price_default": "6.50"
     }
 }, {
     "model": "index.product",
@@ -548,7 +548,7 @@
     "fields": {
         "category": "food",
         "name": "Wedges",
-        "price_regular": "5.00"
+        "price_default": "5.00"
     }
 }, {
     "model": "index.product",
@@ -556,7 +556,7 @@
     "fields": {
         "category": "food",
         "name": "Wedges - Garlic",
-        "price_regular": "6.00"
+        "price_default": "6.00"
     }
 }, {
     "model": "index.product",
@@ -564,7 +564,7 @@
     "fields": {
         "category": "food",
         "name": "Wedges - BBQ",
-        "price_regular": "6.00"
+        "price_default": "6.00"
     }
 }, {
     "model": "index.product",
@@ -572,7 +572,7 @@
     "fields": {
         "category": "food",
         "name": "Wedges - Pulled Pork",
-        "price_regular": "9.50"
+        "price_default": "9.50"
     }
 }, {
     "model": "index.product",
@@ -580,7 +580,7 @@
     "fields": {
         "category": "food",
         "name": "Wedges - Stew",
-        "price_regular": "9.50"
+        "price_default": "9.50"
     }
 }, {
     "model": "index.product",
@@ -588,7 +588,7 @@
     "fields": {
         "category": "food",
         "name": "Spudato Tornado",
-        "price_regular": "4.00"
+        "price_default": "4.00"
     }
 }, {
     "model": "index.product",
@@ -596,7 +596,7 @@
     "fields": {
         "category": "food",
         "name": "Add Cheese",
-        "price_regular": "1.00"
+        "price_default": "1.00"
     }
 }, {
     "model": "index.product",
@@ -604,7 +604,7 @@
     "fields": {
         "category": "food",
         "name": "Cookie",
-        "price_regular": "2.50"
+        "price_default": "2.50"
     }
 }, {
     "model": "index.product",
@@ -612,7 +612,7 @@
     "fields": {
         "category": "food",
         "name": "Crisps",
-        "price_regular": "2.00"
+        "price_default": "2.00"
     }
 }, {
     "model": "index.product",
@@ -700,6 +700,8 @@
     "fields": {
         "category": "hot_alcoholics",
         "name": "Gluhcider",
-        "price_03": "6.00"
+        "price_03": "6.00",
+        "price_04": "8.00",
+        "price_pint": "10.00"
     }
 }]
