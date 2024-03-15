@@ -84,7 +84,9 @@ body {
     background-color: rgb(255, 145, 0);
 }
 
-.hot_nonalcoholics,
+.hot_nonalcoholics {
+    background-color: #964B00;
+}
 .admin_button,
 .previous_orders_button {
     background-color: black;
