@@ -226,7 +226,7 @@ $('.food.product_button').click(function() {
 $(document).on('click', '.add_button', function () {
     console.log("Increment FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text();
-    let product_size = $(this).parent().siblings(':nth-child(2)').children().text();
+    let product_size = $(this).parent().siblings(':nth-child(2)').children().text().toLowerCase();
     console.log("product_name = ", product_name)
     let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
     let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
@@ -244,7 +244,7 @@ $(document).on('click', '.add_button', function () {
 $(document).on('click', '.subtract_button', function () {
     console.log("Decrement FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text(); 
-    let product_size = $(this).parent().siblings(':nth-child(2)').children().text();
+    let product_size = $(this).parent().siblings(':nth-child(2)').children().text().toLowerCase();
     let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
     let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
 
@@ -272,7 +272,7 @@ $(document).on('click', '.delete_button', function () {
         DISCOUNTS.splice(discounts_index, 1); // Splice this discount item from the discounts array
     } else { // Else this is a product row so remove this product from the ALL_PRODUCTS array
         let product_name = $(this).parent().siblings(':first').children().text();
-        let product_size = $(this).parent().siblings(':nth-child(2)').children().text();
+        let product_size = $(this).parent().siblings(':nth-child(2)').children().text().toLowerCase();
         let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
         ALL_PRODUCTS.splice(product_index, 1);
     }
