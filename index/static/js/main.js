@@ -480,23 +480,16 @@ function apply_specials() {
 
 // UPDATE BASKET: Update the basket each time something is added or removed
 function update_basket() {
-    // console.log("update_basket FN")
+    console.log("NEW_BASKET =", NEW_BASKET)
     $('.products_rows_div').empty();
     $.each(NEW_BASKET, function () {
-        // if(this.qty > 10 && !VOUCHERS.includes('10 for 11')) {
-        //     VOUCHERS.push('10 for 11');
-
-        //     $('.products_rows_div').empty();
-        //     apply_specials();
-        //     return false;
-        // }
         $('.products_rows_div').append(
             `<div class="row product_row"> 
                 <div class="col-3" id="product_row_div">
                     <p class="product-name">${this.name}</p>
                 </div>
                 <div class="col-1" id="size">
-                    <p>${this.size}</p>
+                    <p>${this.size == '' ? '': this.size[0].toUpperCase() + this.size.substring(1)}</p>
                 </div>
                 <div class="col-1" id="qty_row_div">
                     <p class="">${this.qty}</p>
@@ -523,7 +516,7 @@ function update_basket() {
                     </button>
                 </div>
             </div>`
-        ); // onclick="totalClick(${this.name})
+        );
     });
     if (DISCOUNTS.length != 0) {
         $(DISCOUNTS).each(function (index, item) {
