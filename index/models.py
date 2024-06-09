@@ -12,6 +12,7 @@ class Staff(models.Model):
 class Product(models.Model):
     category = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
+    in_use = models.BooleanField(default=True)
     price_default = models.DecimalField(null=True,
                                         blank=True,
                                         decimal_places=2,
@@ -128,3 +129,9 @@ class LineItem(models.Model):
     discount = models.CharField(null=True,
                                 blank=True,
                                 max_length=100)
+    payment_method = models.CharField(null=True,
+                                      blank=True,
+                                      max_length=100)
+    payment_reason = models.CharField(null=True,
+                                      blank=True,
+                                      max_length=100)

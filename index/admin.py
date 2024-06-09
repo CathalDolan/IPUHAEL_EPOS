@@ -8,6 +8,7 @@ class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
         'pk',
         'category',
         'name',
+        'in_use',
         'price_default',
         'price_sgle',
         'price_dble',
@@ -57,6 +58,8 @@ class LineItemAdmin(ExportActionMixin, admin.ModelAdmin):
         'price_unit',
         'price_line_total',
         'discount',
+        'payment_method',
+        'payment_reason',
     )
     ordering = (
         '-id',

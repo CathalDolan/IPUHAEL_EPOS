@@ -1,6 +1,6 @@
 console.log("JS is Working")
-let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-// let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu108.gitpod.io/";
+// let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
+let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function () {
@@ -104,7 +104,7 @@ $('#staff_modal').on('hidden.bs.modal', function (e) {
         var staff_modal = new bootstrap.Modal(document.getElementById('staff_modal'), {})
         staff_modal.show()
     }
-  })
+})
 
 // Select product size - Needed in Phase 2
 $('.drink.measure_button').click(function () {
@@ -608,8 +608,17 @@ function basketGrandTotals() {
 
     // Amount_Tendered = Total_Due;
     // Amount_Tendered = parseFloat($('#amount_tendered').val());
-    // Change_Due = Amount_Tendered - Total_Due;
-    // $('#change_due').text("€" + Change_Due.toFixed(2));
+    // console.log("Amount_Tendered = ", Amount_Tendered)
+    if(Amount_Tendered >= Total_Due) {
+        console.log("YES >");
+        Change_Due = Amount_Tendered - Total_Due;
+        $('#change_due').text("€" + Change_Due.toFixed(2));
+    }
+    else {
+        $('#change_due').text("€");
+    }
+    // recalculate_change_due()
+    
 }
 
 // TENDERED AMOUNT INPUT & RECALCULATE CHANGE: Recalculate change due when a user manually enters a tendered amount

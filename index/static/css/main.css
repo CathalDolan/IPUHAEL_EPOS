@@ -288,8 +288,8 @@ input {
 /*Staff modal */
 .staff-name {
     text-align: center;
-    padding: 3px 0;
-    margin:1px auto;
+    padding: 5px 0;
+    margin:3px auto;
     max-width: 80%;
     border-radius: 5px;
     font-weight: bold;
