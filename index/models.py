@@ -114,10 +114,9 @@ class LineItem(models.Model):
                              on_delete=models.PROTECT)
     quantity = models.IntegerField(null=True,
                                    blank=True)
-    size = models.DecimalField(null=True,
+    size = models.CharField(null=True,
                                blank=True,
-                               decimal_places=0,
-                               max_digits=5)
+                               max_length=100)
     price_unit = models.DecimalField(null=True,
                                      blank=True,
                                      decimal_places=2,
@@ -135,3 +134,7 @@ class LineItem(models.Model):
     payment_reason = models.CharField(null=True,
                                       blank=True,
                                       max_length=100)
+    staff_member = models.ForeignKey(Staff,
+                                     null=True,
+                                     blank=True,
+                                     on_delete=models.PROTECT)

@@ -60,6 +60,7 @@ class LineItemAdmin(ExportActionMixin, admin.ModelAdmin):
         'discount',
         'payment_method',
         'payment_reason',
+        'staff_member',
     )
     ordering = (
         '-id',

@@ -21,13 +21,13 @@ def index(request):
             return JsonResponse({'status': 'Checkout Complete'}, status=200)
         elif request.method == 'POST':
             data = json.load(request)
-            print("Data 0", data[0])
-            print("Data 1", data[1])
-            print("Data 2", data[2])
+            # print("Data 0", data[0])
+            print("Data 1", data[1]['Grand_Total']['Payment_Method'])
+            # print("Data 2", data[2])
             # staff_member = Staff.objects.get('pk'=)
+            staff_member = Staff.objects.get(id=data[1]['Grand_Total']["staff_member"])
             for v in data[1].values():
                 print("v = ", v)
-                staff_member = Staff.objects.get(id=v["staff_member"])
                 new_grand_total = GrandTotal(
                     number_of_products=int(v["Total_Products_Qty"]),
                     staff_member=staff_member,
@@ -54,10 +54,13 @@ def index(request):
                             category=x["category"],
                             name=product,
                             quantity=int(x["qty"]),
-                            # size=int(x[""]), needed in phase 2
+                            size=x["size"],
                             price_unit=float(x["price"]),
                             price_line_total=float(x["line_total"]),
                             discount=x['discount_applied'],
+                            payment_method=data[1]['Grand_Total']['Payment_Method'],
+                            payment_reason=data[1]['Grand_Total']["payment_reason"],
+                            staff_member=staff_member,
                         )
                         new_line_items.save()
             for k, v in data[2].items():
@@ -73,10 +76,13 @@ def index(request):
                             category=x["category"],
                             name=product,
                             quantity=int(x["qty"]),
-                            # size=int(x[""]), needed in phase 2
+                            size=x["size"],
                             price_unit=0,
                             price_line_total=0,
                             discount=x['discount_applied'],
+                            payment_method=data[1]['Grand_Total']['Payment_Method'],
+                            payment_reason=data[1]['Grand_Total']["payment_reason"],
+                            staff_member=staff_member,
                         )
                         new_line_items.save()
         
