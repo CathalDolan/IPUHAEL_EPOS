@@ -48,11 +48,11 @@ def index(request):
                 for x in v:
                     # print("x = ", x)
                     if x['qty'] != 0:
-                        product = Product.objects.get(name=x["name"])
+                        # product = Product.objects.get(name=x["name"])
                         new_line_items = LineItem(
                             grand_totals=new_grand_total,
                             category=x["category"],
-                            name=product,
+                            name=x["name"],
                             quantity=int(x["qty"]),
                             size=x["size"],
                             price_unit=float(x["price"]),
@@ -70,11 +70,11 @@ def index(request):
                 for x in v:
                     print("x['name'] = ", x['name'])
                     if x['name'] != 'Applied' and x['name'] != 'Invalid':
-                        product = Product.objects.get(name=x['name'])
+                        # product = Product.objects.get(name=x['name'])
                         new_line_items = LineItem(
                             grand_totals=new_grand_total,
                             category=x["category"],
-                            name=product,
+                            name=x["name"],
                             quantity=int(x["qty"]),
                             size=x["size"],
                             price_unit=0,

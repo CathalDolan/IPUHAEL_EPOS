@@ -109,9 +109,7 @@ class LineItem(models.Model):
                                      null=False,
                                      on_delete=models.CASCADE)
     category = models.CharField(max_length=100)
-    name = models.ForeignKey(Product,
-                             null=False,
-                             on_delete=models.PROTECT)
+    name = models.CharField(max_length=100)
     quantity = models.IntegerField(null=True,
                                    blank=True)
     size = models.CharField(null=True,

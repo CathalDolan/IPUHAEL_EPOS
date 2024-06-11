@@ -62,6 +62,16 @@ function closeFullscreen() {
     }
 }
 
+$('#open_drink_modal').on('shown.bs.modal', function () {
+    console.log("open drink modal triggered");
+    $('input[name="quantity"]').val(null);
+    $('input[name="drink-name"]').val('');
+    $('input[name="price"]').val(null);
+    $('input[name="pfand"]').prop('checked',true);
+    $('.field-error').text('')
+    $('Input').first().focus()
+  })
+
 let Buttons = document.querySelectorAll('.product_button'); // Used anywhere?
 let ALL_PRODUCTS = [];
 let Product_Details = {}; // Used anywhere?
@@ -110,9 +120,8 @@ $('#staff_modal').on('hidden.bs.modal', function (e) {
 $('.drink.measure_button').click(function () {
     // Extracts the sizes for each product when button is clicked
     let size = $(this).attr("data-price");
-    $('.drink.measure_button').removeClass('selected')
-    $(this).addClass('selected');
-    console.log("size = ", size);
+    $('.drink.measure_button').removeClass('selected');
+    $(`.drink.measure_button[data-price=${size}]`).addClass('selected');
     $('.drinks_row').find('.product_button').removeClass('enabled').addClass('disabled');
     $('.drinks_row').find(`[data-${size}!=None]`).addClass('enabled').removeClass('disabled');
     $('.drinks_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
@@ -278,6 +287,56 @@ $(document).on('click', '.delete_button', function () {
     }
     apply_specials();
 })
+
+// Function to enter an open drink
+$('.open-drink-submit').click(() => {
+    console.log("open drink submit");
+    let product_size = $('.drink.measure_button.selected').attr('data-price');
+    let abbrv_size = product_size.split("_")[1]; 
+    let product_qty = Number($('input[name="quantity"]').val());
+    let product_name = $('input[name="drink-name"]').val();
+    let product_price = Number($('input[name="price"]').val());
+    let pfand_payable = $('input[name="pfand"]').prop("checked");
+    if(product_qty == '') {
+        $('input[name="quantity"]').next('p').text("Required");
+        return;
+    }
+    else {
+        $('input[name="quantity"]').next('p').text("");
+    }
+    if(product_name == '') {
+        $('input[name="drink-name"]').next('p').text("Required");
+        return;
+    }
+    else {
+        $('input[name="drink-name"]').next('p').text("");
+    }
+    if(product_price == '') {
+        $('input[name="price"]').next('p').text("Required");
+        return;
+    }
+    else {
+        $('input[name="price"]').next('p').text("");
+    }
+    if(pfand_payable) {
+        pfand_payable = "True"
+    }
+    let line_total = product_qty * product_price;
+
+    product = {
+        "category": "Open drink",
+        "name": product_name,
+        "size": abbrv_size,
+        "qty": product_qty,
+        "price": product_price,
+        "line_total": line_total,
+        "pfand_payable": pfand_payable,
+        'discount_applied': ''
+    }
+    $('#open_drink_modal').modal('hide');
+    ALL_PRODUCTS.push(product);
+    apply_specials();
+});
 
 // Function run when a specials option is selected from the modal
 $(document).on('click', '.specials_option', function () {
@@ -483,7 +542,7 @@ function update_basket() {
     console.log("NEW_BASKET =", NEW_BASKET)
     $('.products_rows_div').empty();
     $.each(NEW_BASKET, function () {
-        $('.products_rows_div').append(
+        $('.products_rows_div').prepend(
             `<div class="row product_row"> 
                 <div class="col-3" id="product_row_div">
                     <p class="product-name">${this.name}</p>
@@ -521,7 +580,7 @@ function update_basket() {
     if (DISCOUNTS.length != 0) {
         $(DISCOUNTS).each(function (index, item) {
             // console.log("item = ", item)
-            $('.products_rows_div').append(
+            $('.products_rows_div').prepend(
                 `<div class="row product_row ${item['name']=='Invalid' ? 'invalid':'valid'}" id="product_headings_row">
                     <div class="col-4" id="product_row_div">
                         <p class="product_row">${item['discount_applied']}</p>

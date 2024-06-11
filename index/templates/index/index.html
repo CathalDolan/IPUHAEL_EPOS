@@ -6,19 +6,89 @@
 <div class="modal" id="staff_modal">
     <div class="modal-dialog">
         <div class="modal-content">
-
-            <!-- Modal Header -->
-            <!-- <div class="modal-header">
-                <h4 class="modal-title">Open Drink</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div> -->
-
             <!-- Modal body -->
             <div class="modal-body">
                 {% for member in staff %}
                 <div class="staff-name" data-member_id="{{ member.id }}">{{ member }}</div>
                 {% endfor %}
+            </div>
 
+        </div>
+    </div>
+</div>
+<!-- The Open Drink Modal -->
+<div class="modal" id="open_drink_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Open Drink</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                    <div class="row" id="measurement_row">
+                        <div class="col">
+                            <button class="btn drink measure_button price_sgle" id="single_button" data-price="price_sgle">
+                                Single
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn drink measure_button price_dble" id="double_button" data-price="price_dble">
+                                Double
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn drink measure_button price_dash" id="dash_button" data-price="price_dash">
+                                Dash
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn drink measure_button price_03" id="03_button" data-price="price_03">
+                                0.3
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn drink measure_button price_04" id="04_button" data-price="price_04">
+                                0.4
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn drink measure_button price_pint selected" id="pint_button" data-price="price_pint">
+                                Pint
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn drink measure_button price_btle" id="bottle_button" data-price="price_btle">
+                                Bottle
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col p-1">
+                            <input class="open-drink-input" name="quantity" type="number" placeholder="Qty*" min="1"></input>
+                            <p class="field-error"></p>
+                        </div>
+                        <div class="col-7 p-1">
+                            <input class="open-drink-input" name="drink-name" type="text" placeholder="Drink name*"></input>
+                            <p class="field-error"></p>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input class="open-drink-input" name="price" type="number" placeholder="Price*" min="0"></input>
+                            <p class="field-error"></p>
+                        </div>
+                        <div class="col-1 p-1">
+                            <label for="pfand">Pfand</label>
+                            <input class="open-drink-input checkbox" name="pfand" type="checkbox" checked></input>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col p-1">
+                            <button class="btn open-drink-submit" type="submit">Save</button>
+                        </div>
+                    </div>
             </div>
 
             <!-- Modal footer -->
@@ -247,32 +317,7 @@
                     Open Drink
                 </button>
             </div>
-            <!-- The Open Drink Modal -->
-            <div class="modal" id="open_drink_modal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Open Drink</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            <input class="btn specials_button" type="number"></input>
-                            <input class="btn specials_button" type="text"></input>
-                            <button class="btn specials_button" type="text">Save</button>
-                        </div>
-
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <!--  Food Products Buttons  -->
         <div class="row food_row">
@@ -395,7 +440,7 @@
     </div>
 
     <!--  Right Side of till with totals  -->
-    <div class="col-5">
+    <div class="col-5 till-right-side">
         <p class="text-end">
             <i class="fa-solid fa-maximize" id="fullscreen_button" onclick="openFullscreen();"></i>
             <!--  onclick="openFullscreen();" -->
@@ -549,37 +594,38 @@
                 </button>
             </div>
         </div>
+        <div class="row product_row" id="product_headings_row">
+            <div class="col-3" id="product_row_div">
+                <h6>Product</h6>
+            </div>
+            <div class="col-1" id="size">
+                <h6>Size</h6>
+            </div>
+            <div class="col-1" id="qty_row_div">
+                <h6>Qty</h6>
+            </div>
+            <div class="col" id="per_unit_row_div">
+                <h6>€ Unit</h6>
+            </div>
+            <div class="col" id="line_total_row_div">
+                <h6>€ Total</h6>
+            </div>
+            <div class="col-1" id="add_row_div">
+                <h6>Add</h6>
+            </div>
+            <div class="col-1" id="subtract_row_div">
+                <h6>Sub</h6>
+            </div>
+            <div class="col-1" id="delete_row_div">
+                <h6>Del</h6>
+            </div>
+        </div>
+        <div class="products_rows_div">
+        </div>
         <!-- Basket Div -->
         <div class="basket_div">
             <!-- Line Items -->
-            <div class="row product_row" id="product_headings_row">
-                <div class="col-3" id="product_row_div">
-                    <h6>Product</h6>
-                </div>
-                <div class="col-1" id="size">
-                    <h6>Size</h6>
-                </div>
-                <div class="col-1" id="qty_row_div">
-                    <h6>Qty</h6>
-                </div>
-                <div class="col" id="per_unit_row_div">
-                    <h6>€ Unit</h6>
-                </div>
-                <div class="col" id="line_total_row_div">
-                    <h6>€ Total</h6>
-                </div>
-                <div class="col-1" id="add_row_div">
-                    <h6>Add</h6>
-                </div>
-                <div class="col-1" id="subtract_row_div">
-                    <h6>Sub</h6>
-                </div>
-                <div class="col-1" id="delete_row_div">
-                    <h6>Del</h6>
-                </div>
-            </div>
-            <div class="products_rows_div">
-            </div>
+            
             <hr>
             <!-- Grand Totals Rows -->
             <div class="row totals_row" id="grand_totals_row_div">

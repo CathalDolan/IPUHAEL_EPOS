@@ -118,6 +118,26 @@ body {
     font-weight: 700;
 }
 
+.open-drink-input:not(.checkbox) {
+    width: 100%;
+    margin: 10px 0;
+    padding-left: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    height: 55px;
+}
+
+.checkbox {
+    width: 100%;
+    height: 50%;
+}
+
+.open-drink-submit {
+    background-color: aqua;
+    font-weight: 700;
+    color: #000;
+}
+
 .food {
     background-color: rgb(243, 202, 19);
     color: black;
@@ -160,10 +180,19 @@ body {
     color: #fff;
 }
 
-.basket_div,
-.basket_edit_button {
-    background-color: rgb(209, 205, 205);
+.till-right-side {
+    display: flex;
+    flex-direction: column;
+}
+
+.basket_div {
     width: 100%;
+    margin-top: auto;
+    background-color: #d1cdcd;
+}
+.basket_edit_button {
+    width: 100%;
+    margin-top: auto;
 }
 
 /*--- Centres Pfand Buttons in tyheir div ---*/
@@ -213,12 +242,19 @@ form {
     padding: 0;
 }
 
+#product_headings_row {
+    background-color: #d1cdcd;
+}
+
 .products_rows_div {
     text-overflow: ellipsis;
-    min-height: 25px;
+    /* min-height: 25px; */
     max-height: 200px;
     height:auto;
     overflow-y:auto;
+    display: flex;
+    flex-direction: column-reverse;
+    background-color: #f0f0f0;
 }
 
 .valid {
@@ -231,7 +267,9 @@ form {
     margin-bottom: 2px!important;
 }
 
-
+.product_row {
+    margin-bottom: 1px;
+}
 
 .product_row p {
     margin: 0;
@@ -277,12 +315,16 @@ form {
 .grand_totals_row {
     margin-bottom: 10px;
 }
-input {
+#amount_tendered {
     height: 30px;
     width: 75px;
 }
 #change_due_label {
     margin-top: 18px;
+}
+
+.modal {
+    background-color: #878282ab;
 }
 
 /*Staff modal */
@@ -309,6 +351,10 @@ input {
 
 .error {
     border: 2px solid red;
+}
+
+.field-error {
+    color: red;
 }
 /*-- Pfand Modal End --*/
 
