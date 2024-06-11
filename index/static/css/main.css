@@ -187,7 +187,7 @@ body {
 
 .basket_div {
     width: 100%;
-    margin-top: auto;
+    /* margin-top: auto; */
     background-color: #d1cdcd;
 }
 .basket_edit_button {
@@ -248,7 +248,7 @@ form {
 
 .products_rows_div {
     text-overflow: ellipsis;
-    /* min-height: 25px; */
+    min-height: 25px;
     max-height: 200px;
     height:auto;
     overflow-y:auto;
