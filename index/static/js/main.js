@@ -1,4 +1,10 @@
 console.log("JS is Working")
+// console.log("height = ", this.screen.height);
+// console.log("width = ", screen.width);
+// window.addEventListener('resize', function(event) {
+//     console.log("height = ", this.screen.height);
+//     console.log("width = ", screen.width);
+// }, true);
 let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
 // let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
 
@@ -10,24 +16,69 @@ window.onload = function () {
         let day = date.getDay();
         let displayDate = date.toLocaleDateString();
         let displayTime = date.toLocaleTimeString();
-
-        if (day == 1) {
-            day = "Monday";
-        } else if (day == 2) {
-            day = "Tuesday";
-        } else if (day == 3) {
-            day = "Wednesday";
-        } else if (day == 4) {
-            day = "Thursday";
-        } else if (day == 5) {
-            day = "Friday";
-        } else if (day == 6) {
-            day = "Saturday";
-        } else if (day == 7) {
-            day = "Sunday";
+        switch (date.getDay()) {
+            case 0:
+              day = "Sun";
+              break;
+            case 1:
+              day = "Mon";
+              break;
+            case 2:
+               day = "Tues";
+              break;
+            case 3:
+              day = "Wed";
+              break;
+            case 4:
+              day = "Thur";
+              break;
+            case 5:
+              day = "Fri";
+              break;
+            case 6:
+              day = "Sat";
+        }
+        switch (date.getMonth()) {
+            case 0:
+                month = "Jan";
+                break;
+            case 1:
+                month = "Feb";
+                break;
+            case 2:
+                month = "Mar";
+                break;
+            case 3:
+                month = "Apr";
+                break;
+            case 4:
+                month = "May";
+                break;
+            case 5:
+                month = "Jun";
+                break;
+            case 6:
+                month = "Jul";
+                break;
+            case 7:
+                month = "Aug";
+                break;
+            case 8:
+                month = "Sep";
+                break;
+            case 9:
+                month = "Oct";
+                break;
+            case 10:
+                month = "Nov";
+                break;
+            case 11:
+                month = "Dec";
+                break;
         }
 
-        document.getElementById('time_and_date').innerHTML = day + " " + displayDate + " " + displayTime;
+        document.getElementById('time_and_date').innerHTML = day + ", " + month + " " + date.getDate() + ", " + date.getHours() + ":" + (date.getMinutes()<10 ? 
+        "0" + date.getMinutes() : date.getMinutes());
     }, 1000); // 1000 milliseconds = 1 second
 
     // Calls message toasts
@@ -105,6 +156,8 @@ $(document).ready(function() {
 $('.staff-name').click(function() {
     STAFF_ID = $(this).attr('data-member_id');
     console.log("STAFF_ID = ", STAFF_ID);
+    console.log("STAFF_NAME = ", $(this).text());
+    $('.staff-user').text($(this).text())
     $('#staff_modal').modal('hide')
 })
 
@@ -544,7 +597,7 @@ function update_basket() {
     $.each(NEW_BASKET, function () {
         $('.products_rows_div').prepend(
             `<div class="row product_row"> 
-                <div class="col-3" id="product_row_div">
+                <div class="col-3">
                     <p class="product-name">${this.name}</p>
                 </div>
                 <div class="col-1" id="size">
@@ -582,7 +635,7 @@ function update_basket() {
             // console.log("item = ", item)
             $('.products_rows_div').prepend(
                 `<div class="row product_row ${item['name']=='Invalid' ? 'invalid':'valid'}" id="product_headings_row">
-                    <div class="col-4" id="product_row_div">
+                    <div class="col-4">
                         <p class="product_row">${item['discount_applied']}</p>
                     </div>
                     <div class="col-4" id="qty_row_div">
@@ -734,7 +787,7 @@ $('#credit_card_button').click(function () {
 $('.pfand_button.activate').click(function () {
     GLASSES_RETURNED = $(this).attr("data-value");
     console.log("GLASSES_RETURNED = ", GLASSES_RETURNED, typeof (GLASSES_RETURNED));
-    $('.pfand_button').removeClass('green');
+    $('.pfand_button .pfand_modal_button').removeClass('green');
     $(this).addClass('green');
     if (Number(GLASSES_RETURNED) > 4) {
         console.log("YES > 4")

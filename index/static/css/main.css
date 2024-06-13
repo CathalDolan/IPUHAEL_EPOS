@@ -42,10 +42,6 @@ body {
     margin-right: 10px;
 }
 
-.logged_in_as {
-    color: blue;
-}
-
 .measure_button {
     background-color: white;
     border-color: black;
@@ -170,9 +166,21 @@ body {
 }
 
 .pfand_button {
-    border-radius: 50%;
+    border-radius: 5px;
     background-color: black;
-    width: 62px;
+    width: 100%;
+    color: #fff;
+    height: 100%;
+}
+
+.pfand_button:hover {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.pfand_button#none {
+    font-size: .85rem;
 }
 
 .green {
@@ -183,6 +191,31 @@ body {
 .till-right-side {
     display: flex;
     flex-direction: column;
+}
+
+.header-info {
+    display: flex;
+    font-size: .9rem;
+    margin-bottom: 5px;
+}
+
+#time_and_date {
+    padding: 5px 0;
+}
+
+.logged_in_as {
+    flex: 1; 
+    text-align: right; 
+    white-space: nowrap;
+    padding: 5px;
+}
+
+.staff-user {
+    flex: 1; 
+    text-align: right; 
+    white-space: nowrap;
+    padding: 5px;
+    color: blue;
 }
 
 .basket_div {
@@ -201,11 +234,14 @@ body {
 }
 
 .pfand_button_row {
-    margin-bottom: 15px;
+    display: flex;
+    margin-bottom: 5px;
 }
 
-.product_lines_row {
-    height: 4em;
+.pfand-return-title {
+    margin-bottom: 0;
+    font-size: .9rem;
+    font-weight: bold;
 }
 
 hr {
@@ -244,6 +280,16 @@ form {
 
 #product_headings_row {
     background-color: #d1cdcd;
+    padding: 5px 0;
+}
+
+#product_headings_row  [class*="col"] {
+    padding: 0;
+}
+
+#product_headings_row h6 {
+    margin: 0;
+    text-align: center;
 }
 
 .products_rows_div {
@@ -271,9 +317,21 @@ form {
     margin-bottom: 1px;
 }
 
+.product_row [class*="col"] {
+    padding: 0;
+}
+
 .product_row p {
     margin: 0;
     font-size: .9rem;
+}
+
+.product_row p:not(nth-of-type(1)) {
+    text-align: center;
+}
+
+.product_row .basket_edit_button {
+    text-align: center;
 }
 
 .product-name {
@@ -345,9 +403,18 @@ form {
     background-color: #e7b1bb;
 }
 /*-- Pfand Modal --*/
-.pfand__modal_button {
+.pfand_modal_button {
+    /* margin-bottom: 10px;
+    border-radius: 50%; */
+    border-radius: 50%;
+    width: 62px;
+    height: 55px;
     margin-bottom: 10px;
 }
+
+/* #pfand_modal .row {
+    padding: 5px;
+} */
 
 .error {
     border: 2px solid red;

@@ -441,43 +441,55 @@
 
     <!--  Right Side of till with totals  -->
     <div class="col-5 till-right-side">
-        <p class="text-end">
+        <p class="header-info">
             <i class="fa-solid fa-maximize" id="fullscreen_button" onclick="openFullscreen();"></i>
             <!--  onclick="openFullscreen();" -->
             <i class="fa-solid fa-minimize" onclick="closeFullscreen();"></i>
             <span id="time_and_date"></span>
-            <span class="logged_in_as">Logged in as: {{ request.user }}</span>
+            <span class="logged_in_as text-end"><!--{{ request.user }}-->KiWo2024</span>
+            <span class="staff-user"></span>
         </p>
         <!--  Pfand Buttons  -->
         <div class="row pfand_button_row">
             <div class="col">
-                <button class="btn pfand_button activate" data-value="1">
+                <p class="pfand-return-title">Pfand return</p>
+                
+            </div>
+            <div class="col">
+                <button class="pfand_button activate" data-value="1">
                     1
                 </button>
             </div>
             <div class="col">
-                <button class="btn pfand_button activate" data-value="2">
+                <button class="pfand_button activate" data-value="2">
                     2
                 </button>
             </div>
             <div class="col">
-                <button class="btn pfand_button activate" data-value="3">
+                <button class="pfand_button activate" data-value="3">
                     3
                 </button>
             </div>
             <div class="col">
-                <button class="btn pfand_button activate" data-value="4">
+                <button class="pfand_button activate" data-value="4">
                     4
                 </button>
             </div>
             <div class="col">
-                <button class="btn pfand_button five_plus" data-bs-toggle="modal" data-bs-target="#pfand_modal"
+                <button class="pfand_button five_plus" data-bs-toggle="modal" data-bs-target="#pfand_modal"
                     data-value="5+">
                     5+
                 </button>
+                
+            </div>
+            
+            <div class="col">
+                <button class="pfand_button activate" data-value="0">
+                    Reset
+                </button>
             </div>
             <div class="col">
-                <button class="btn pfand_button activate" id="no-pfand" data-value="no-pfand">
+                <button class="pfand_button activate" id="none" data-value="no-pfand">
                     No pfand
                 </button>
             </div>
@@ -494,90 +506,91 @@
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="5">
-                                5
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="6">
-                                6
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="7">
-                                7
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="8">
-                                8
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="9">
-                                9
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="10">
-                                10
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="11">
-                                11
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="12">
-                                12
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="13">
-                                13
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="14">
-                                14
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="15">
-                                15
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="16">
-                                16
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="17">
-                                17
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="18">
-                                18
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="19">
-                                19
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="20">
-                                20
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="21">
-                                21
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="22">
-                                22
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="23">
-                                23
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="24">
-                                24
-                            </button>
-                            <button class="btn pfand_button activate pfand__modal_button" data-bs-dismiss="modal"
-                                data-value="25">
-                                25
-                            </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="5">
+                                    5
+                                    </button>
+                            
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="6">
+                                    6
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="7">
+                                    7
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="8">
+                                    8
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="9">
+                                    9
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="10">
+                                    10
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="11">
+                                    11
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="12">
+                                    12
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="13">
+                                    13
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="14">
+                                    14
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="15">
+                                    15
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="16">
+                                    16
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="17">
+                                    17
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="18">
+                                    18
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="19">
+                                    19
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="20">
+                                    20
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="21">
+                                    21
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="22">
+                                    22
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="23">
+                                    23
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="24">
+                                    24
+                                    </button>
+                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
+                                    data-value="25">
+                                    25
+                                    </button>
                         </div>
 
                         <!-- Modal footer -->
@@ -588,14 +601,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <button class="btn pfand_button activate" data-value="0">
-                    Reset
-                </button>
-            </div>
+            
         </div>
         <div class="row product_row" id="product_headings_row">
-            <div class="col-3" id="product_row_div">
+            <div class="col-3">
                 <h6>Product</h6>
             </div>
             <div class="col-1" id="size">
