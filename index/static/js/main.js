@@ -618,14 +618,14 @@ function update_basket() {
                     </div>
                 </div>
                 <div class="col-1" id="subtract_row_div">
-                    <button class="subtract_button basket_edit_button">
+                    <div class="subtract_button basket_edit_button">
                         <i class="fa-solid fa-minus"></i>
-                    </button>
+                    </div>
                 </div>
                 <div class="col-1" id="delete_row_div">
-                    <button class="delete_button basket_edit_button">
+                    <div class="delete_button basket_edit_button">
                         <i class="fa-solid fa-trash"></i>
-                    </button>
+                    </div>
                 </div>
             </div>`
         );
