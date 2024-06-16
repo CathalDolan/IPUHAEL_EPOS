@@ -134,7 +134,7 @@ body {
     color: #000;
 }
 
-.food {
+.food:not(.measure_button) {
     background-color: rgb(243, 202, 19);
     color: black;
 }
@@ -150,6 +150,7 @@ body {
     border-right: 4px solid #000;
     border-top: 1px solid #000;
     font-weight: 700;
+    padding: 0 1px;
 }
 
 .disabled {
@@ -161,8 +162,21 @@ body {
     background-color: lightblue;
 }
 
+.hide {
+    display: none;
+}
+
 .food_row {
     margin-top: 10px;
+}
+
+.global_buttons {
+    margin-top: 10px;
+}
+
+.bar_kitchen {
+    background-color: rgb(243, 202, 19);
+    color: black;
 }
 
 .pfand_button {

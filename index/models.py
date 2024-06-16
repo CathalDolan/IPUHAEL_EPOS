@@ -12,6 +12,9 @@ class Staff(models.Model):
 class Product(models.Model):
     category = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
+    abbr_name = models.CharField(null=True,
+                                 blank=True,
+                                 max_length=100)
     in_use = models.BooleanField(default=True)
     price_default = models.DecimalField(null=True,
                                         blank=True,
@@ -53,7 +56,15 @@ class Product(models.Model):
                                         blank=True,
                                         decimal_places=2,
                                         max_digits=5)
+    price_jumbo = models.DecimalField(null=True,
+                                        blank=True,
+                                        decimal_places=2,
+                                        max_digits=5)
     pfand = models.BooleanField(default=True)
+    summer_product = models.BooleanField(default=True)
+    winter_product = models.BooleanField(default=True)
+    bar_product = models.BooleanField(default=True)
+    kitchen_product = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

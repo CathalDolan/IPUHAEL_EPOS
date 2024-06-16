@@ -8,6 +8,7 @@ class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
         'pk',
         'category',
         'name',
+        'abbr_name',
         'in_use',
         'price_default',
         'price_sgle',
@@ -19,7 +20,12 @@ class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
         'price_btle',
         'price_small',
         'price_regular',
+        'price_jumbo',
         'pfand',
+        'summer_product',
+        'winter_product',
+        'bar_product',
+        'kitchen_product',
     )
     ordering = (
         'id',

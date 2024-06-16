@@ -1,12 +1,12 @@
 console.log("JS is Working")
-// console.log("height = ", this.screen.height);
-// console.log("width = ", screen.width);
-// window.addEventListener('resize', function(event) {
-//     console.log("height = ", this.screen.height);
-//     console.log("width = ", screen.width);
-// }, true);
-let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-// let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
+console.log("height = ", this.screen.height);
+console.log("width = ", screen.width);
+window.addEventListener('resize', function(event) {
+    console.log("height = ", this.screen.height);
+    console.log("width = ", screen.width);
+}, true);
+// let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
+let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function () {
@@ -151,6 +151,7 @@ $(document).ready(function() {
     $('.food_row').find('.product_button').removeClass('enabled').addClass('disabled');
     $('.food_row').find(`[data-price_regular!=None]`).addClass('enabled').removeClass('disabled');
     $('.food_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
+    $('[data-bar_product=False]').parent().addClass('hide')
 })
 
 $('.staff-name').click(function() {
@@ -167,6 +168,19 @@ $('#staff_modal').on('hidden.bs.modal', function (e) {
         var staff_modal = new bootstrap.Modal(document.getElementById('staff_modal'), {})
         staff_modal.show()
     }
+})
+
+$('.bar_kitchen').click(function() {
+    console.log("Bar_kitchen click")
+    console.log($(this).text())
+    if($(this).text() == "Bar Products") {
+        $(this).text("Kitchen Products")
+    }
+    else {
+        $(this).text("Bar Products")
+    }
+    $('[data-bar_product=True]').parent().toggleClass('hide');
+    $('[data-kitchen_product=True]').parent().toggleClass('hide');
 })
 
 // Select product size - Needed in Phase 2
@@ -201,6 +215,9 @@ $('.drink.product_button').click(function () {
 
     let product_category = $(this).attr('data-category');
     let pfand_payable = $(this).attr('data-pfand');
+    if(abbrv_size == "btle" || abbrv_size == "dash") {
+        pfand_payable = "False";
+    }
     let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
     // console.log("product = ", product)
     let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
@@ -257,6 +274,7 @@ $('.food.product_button').click(function() {
 
     let product_category = $(this).attr('data-category');
     let pfand_payable = $(this).attr('data-pfand');
+    
     let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
     console.log("product = ", product)
     let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
@@ -690,7 +708,13 @@ function basketGrandTotals() {
         // Calculates Pfand Amount Due
         // console.log("pfand_applicable = ", pfand_applicable)
         if (this.pfand_payable == "True" && pfand_applicable == true) {
-            Pfand_Total += (this.qty * 2.5);
+            if(this.name == "Whiskey Platter") {
+                Pfand_Total += (this.qty * 2.5 * 6)
+            }
+            else {
+                Pfand_Total += (this.qty * 2.5);
+            }
+            
         }
     });
 
@@ -787,7 +811,8 @@ $('#credit_card_button').click(function () {
 $('.pfand_button.activate').click(function () {
     GLASSES_RETURNED = $(this).attr("data-value");
     console.log("GLASSES_RETURNED = ", GLASSES_RETURNED, typeof (GLASSES_RETURNED));
-    $('.pfand_button .pfand_modal_button').removeClass('green');
+    $('.pfand_modal_button').removeClass('green');
+    $('.pfand_button').removeClass('green');
     $(this).addClass('green');
     if (Number(GLASSES_RETURNED) > 4) {
         console.log("YES > 4")
@@ -799,20 +824,7 @@ $('.pfand_button.activate').click(function () {
             $('.pfand_button').removeClass("green");
         }, 1000);
     }
-    // let pfand_return_value = $(this).attr("data-value");
-    // let minus_return_value = (pfand_return_value*-2).toFixed(2);
-    // let plus_return_value = (pfand_return_value*2).toFixed(2);
-
-    // Pfand_Buttons_Total = pfand_return_value*2;
-    // if(Pfand_Total == undefined){
-    //     $('#pfand_total').text("€" + minus_return_value);
-    // } else {
-    //     // let recalc_pfand_amount = (pfand_payable - plus_return_value).toFixed(2);
-    //     // $('#pfand_total').text("€" + recalc_pfand_amount);
-
-    //     // Call recalculate change due function
-    //     basketGrandTotals();
-    // }
+    
     basketGrandTotals();
 });
 

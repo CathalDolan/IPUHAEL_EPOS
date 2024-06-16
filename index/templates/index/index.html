@@ -99,9 +99,69 @@
         </div>
     </div>
 </div>
+<!-- The Gifts Modal -->
+<div class="modal" id="gifts_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Gifts Selection</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                {% for gift in gifts %}
+                <button class="btn {{gift.category}} product_button" id="{{gift.id}}" data-pfand="{{gift.pfand}}"
+                    data-category="{{gift.category}}" data-name="{{gift.name}}"
+                    data-price_default="{{food.price_default}}" data-bs-dismiss="modal">
+                    {{gift.name}}
+                </button>
+                {% endfor %}
+                <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false"
+                    data-category="gifts" data-name="Fridge Magnet" data-price_default="5.00"
+                    data-bs-dismiss="modal">
+                    <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                    Fridge Magnet
+                </button>
+                <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false"
+                    data-category="gifts" data-name="Tree Decoration" data-price_default="5.00"
+                    data-bs-dismiss="modal">
+                    <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                    Tree Decoration
+                </button>
+                <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false"
+                    data-category="gifts" data-name="Frame" data-price_default="19.99"
+                    data-bs-dismiss="modal">
+                    <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                    Picture Frame
+                </button>
+                <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false"
+                    data-category="gifts" data-name="Personalised Glass" data-price_default="10.00"
+                    data-bs-dismiss="modal">
+                    <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                    Personalised Glass
+                </button>
+                <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false"
+                    data-category="gifts" data-name="Polo Shirt" data-price_default="25.00"
+                    data-bs-dismiss="modal">
+                    <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
+                    Polo Shirt
+                </button>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 <div class="row">
     <!--  Left Side of till with product buttons  -->
-    <div class="col-7">
+    <div class="col-7 till-left-side">
         <!--  Drinks Sizes Buttons -->
         <div class="row" id="measurement_row">
             <div class="col">
@@ -154,6 +214,8 @@
                     data-price_04="{{draught.price_04}}" 
                     data-price_pint="{{draught.price_pint}}"
                     data-price_btle="{{draught.price_btle}}"
+                    data-bar_product="{{draught.bar_product}}"
+                    data-kitchen_product="{{draught.kitchen_product}}"
                     >
                     {{draught.name}}
                 </button>
@@ -171,6 +233,8 @@
                     data-price_04="{{half_n_half.price_04}}" 
                     data-price_pint="{{half_n_half.price_pint}}"
                     data-price_btle="{{half_n_half.price_btle}}"
+                    data-bar_product="{{half_n_half.bar_product}}"
+                    data-kitchen_product="{{half_n_half.kitchen_product}}"
                     >
                     {{half_n_half.name}}
                 </button>
@@ -188,6 +252,8 @@
                     data-price_04="{{shandy.price_04}}" 
                     data-price_pint="{{shandy.price_pint}}"
                     data-price_btle="{{shandy.price_btle}}"
+                    data-bar_product="{{shandy.bar_product}}"
+                    data-kitchen_product="{{shandy.kitchen_product}}"
                     >
                     {{shandy.name}}
                 </button>
@@ -205,7 +271,9 @@
                     data-price_03="{{canandbottle.price_03}}"
                     data-price_04="{{canandbottle.price_04}}" 
                     data-price_pint="{{canandbottle.price_pint}}"
-                    data-price_btle="{{canandbottle.price_btle}}">
+                    data-price_btle="{{canandbottle.price_btle}}"
+                    data-bar_product="{{canandbottle.bar_product}}"
+                    data-kitchen_product="{{canandbottle.kitchen_product}}">
                     {{canandbottle.name}}
                 </button>
             </div>
@@ -221,7 +289,9 @@
                     data-price_03="{{spirit.price_03}}"
                     data-price_04="{{spirit.price_04}}" 
                     data-price_pint="{{spirit.price_pint}}"
-                    data-price_btle="{{spirit.price_btle}}">
+                    data-price_btle="{{spirit.price_btle}}"
+                    data-bar_product="{{spirit.bar_product}}"
+                    data-kitchen_product="{{spirit.kitchen_product}}">
                     {{spirit.name}}
                 </button>
             </div>
@@ -238,7 +308,9 @@
                     data-price_03="{{softdrink.price_03}}"
                     data-price_04="{{softdrink.price_04}}" 
                     data-price_pint="{{softdrink.price_pint}}"
-                    data-price_btle="{{softdrink.price_btle}}">
+                    data-price_btle="{{softdrink.price_btle}}"
+                    data-bar_product="{{softdrink.bar_product}}"
+                    data-kitchen_product="{{softdrink.kitchen_product}}">
                     {{softdrink.name}}
                 </button>
             </div>
@@ -255,7 +327,9 @@
                     data-price_03="{{hotnonalcoholic.price_03}}"
                     data-price_04="{{hotnonalcoholic.price_04}}" 
                     data-price_pint="{{hotnonalcoholic.price_pint}}"
-                    data-price_btle="{{hotnonalcoholic.price_btle}}">
+                    data-price_btle="{{hotnonalcoholic.price_btle}}"
+                    data-bar_product="{{hotnonalcoholic.bar_product}}"
+                    data-kitchen_product="{{hotnonalcoholic.kitchen_product}}">
                     {{hotnonalcoholic.name}}
                 </button>
             </div>
@@ -272,7 +346,9 @@
                     data-price_03="{{hotalcoholic.price_03}}"
                     data-price_04="{{hotalcoholic.price_04}}" 
                     data-price_pint="{{hotalcoholic.price_pint}}"
-                    data-price_btle="{{hotalcoholic.price_btle}}">
+                    data-price_btle="{{hotalcoholic.price_btle}}"
+                    data-bar_product="{{hotalcoholic.bar_product}}"
+                    data-kitchen_product="{{hotalcoholic.kitchen_product}}">
                     {{hotalcoholic.name}}
                 </button>
             </div>
@@ -289,6 +365,8 @@
                     data-price_04="{{hottoddy.price_04}}" 
                     data-price_pint="{{hottoddy.price_pint}}"
                     data-price_btle="{{hottoddy.price_btle}}"
+                    data-bar_product="{{hottoddy.bar_product}}"
+                    data-kitchen_product="{{hottoddy.kitchen_product}}"
                     >
                     {{hottoddy.name}}
                 </button>
@@ -306,6 +384,8 @@
                     data-price_04="{{shot.price_04}}" 
                     data-price_pint="{{shot.price_pint}}"
                     data-price_btle="{{shot.price_btle}}"
+                    data-bar_product="{{shot.bar_product}}"
+                    data-kitchen_product="{{shot.kitchen_product}}"
                     >
                     {{shot.name}}
                 </button>
@@ -319,110 +399,65 @@
             </div>
             
         </div>
+        <!-- Food measurement buttons-->
+        <div class="row food_row">
+            <!-- Small Size Button -->
+            <div class="col-2">
+                <button class="btn food measure_button"
+                    data-price="price_sml"
+                    data-bar_product="False"
+                    data-kitchen_product="True">
+                    Small
+                </button>
+            </div>
+            <!-- Regular Size Button -->
+            <div class="col-2">
+                <button class="btn food measure_button selected"
+                data-price="price_reg"
+                data-bar_product="False"
+                data-kitchen_product="True">
+                    Regular
+                </button>
+            </div>
+            <!-- Jumbo Size Button -->
+            <div class="col-2">
+                <button class="btn food measure_button"
+                data-price="price_jum"
+                data-bar_product="False"
+                data-kitchen_product="True">
+                    Jumbo
+                </button>
+            </div>
+        </div>
         <!--  Food Products Buttons  -->
         <div class="row food_row">
             {% for food in foods %}
             <div class="col-2">
                 <button class="btn {{food.category}} product_button" id="{{food.id}}" data-pfand="{{food.pfand}}"
                     data-category="{{food.category}}" data-name="{{food.name}}"
-                    data-price_default="{{food.price_default}}" data-price_small="{{food.price_small}}"
-                    data-price_regular="{{food.price_regular}}">
+                    data-price_default="{{food.price_default}}" data-price_sml="{{food.price_small}}"
+                    data-price_reg="{{food.price_regular}}"
+                    data-price_jum="{{food.price_jumbo}}"
+                    data-bar_product="{{food.bar_product}}"
+                    data-kitchen_product="{{food.kitchen_product}}">
                     {{food.name}}
                 </button>
             </div>
             {% endfor %}
         </div>
+        
         <!--  Food Sizes, Gifts, Admin & Previous Drinks Buttons  -->
-        <div class="row food_row">
-            <!-- Small Size Button -->
-            <div class="col-2">
-                <button class="btn food measure_button"
-                    data-price="price_small">
-                    Small
-                </button>
-            </div>
-            <!-- Regular Size Button -->
-            <div class="col-2">
-                <button class="btn food measure_button selected" data-price="price_regular">
-                    Regular
-                </button>
-            </div>
+        <div class="row global_buttons">  
             <!-- Empty Button -->
             <div class="col-2">
-                <button class="btn measure_button">
-                    <!-- Empty Button just to fill space -->
-                    <b>DO NOT PRESS!</b>
-                </button>
+                <button class="btn bar_kitchen">Kitchen Products</button>
             </div>
-
             <!-- Gifts Button -->
             <div class="col-2">
                 <button class="btn gifts_button" data-bs-toggle="modal" data-bs-target="#gifts_modal">
                     Gifts
                 </button>
             </div>
-            <!-- The Gifts Modal -->
-            <div class="modal" id="gifts_modal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Gifts Selection</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            {% for gift in gifts %}
-                            <button class="btn {{gift.category}} product_button" id="{{gift.id}}" data-pfand="false"
-                                data-category="{{gift.category}}" data-name="{{gift.name}}"
-                                data-price_default="{{food.price_default}}" data-bs-dismiss="modal">
-                                <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
-                                {{gift.name}}
-                            </button>
-                            {% endfor %}
-                            <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false"
-                                data-category="gifts" data-name="Fridge Magnet" data-price_default="5.00"
-                                data-bs-dismiss="modal">
-                                <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
-                                Fridge Magnet
-                            </button>
-                            <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false"
-                                data-category="gifts" data-name="Tree Decoration" data-price_default="5.00"
-                                data-bs-dismiss="modal">
-                                <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
-                                Tree Decoration
-                            </button>
-                            <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false"
-                                data-category="gifts" data-name="Frame" data-price_default="19.99"
-                                data-bs-dismiss="modal">
-                                <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
-                                Picture Frame
-                            </button>
-                            <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false"
-                                data-category="gifts" data-name="Personalised Glass" data-price_default="10.00"
-                                data-bs-dismiss="modal">
-                                <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
-                                Personalised Glass
-                            </button>
-                            <button class="btn product_button gifts_button" id="{{gift.id}}" data-pfand="false"
-                                data-category="gifts" data-name="Polo Shirt" data-price_default="25.00"
-                                data-bs-dismiss="modal">
-                                <!-- data-price_default="{{gift.price_regular}}" data-price_03="{{food.price_small}}" data-price_04="{{food.price_regular}}"  -->
-                                Polo Shirt
-                            </button>
-                        </div>
-
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
             <!-- Admin Button -->
             <div class="col-2">
                 <button class="btn admin_button">

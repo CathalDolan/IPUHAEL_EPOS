@@ -1,707 +1,2179 @@
 [{
-    "model": "index.product",
     "pk": 1,
+    "model": "index.Product",
     "fields": {
         "category": "draught",
         "name": "Guinness",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "Guinness",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 5.00,
+        "price_04": 6.00,
+        "price_pint": 7.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
     "pk": 2,
+    "model": "index.Product",
     "fields": {
         "category": "draught",
         "name": "Kilkenny",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "Kilkenny",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 5.00,
+        "price_04": 6.00,
+        "price_pint": 7.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
     "pk": 3,
+    "model": "index.Product",
     "fields": {
         "category": "draught",
         "name": "Hop House 13",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "H House 13",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 5.00,
+        "price_04": 6.00,
+        "price_pint": 7.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "False",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
     "pk": 4,
+    "model": "index.Product",
     "fields": {
         "category": "draught",
         "name": "Stowford",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "Stowford",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 5.00,
+        "price_04": 6.00,
+        "price_pint": 7.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "False",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
     "pk": 5,
+    "model": "index.Product",
     "fields": {
         "category": "half_n_half",
         "name": "Black N'Tan",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "Black N'Tan",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 7.00,
+        "price_pint": 8.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
     "pk": 6,
+    "model": "index.Product",
     "fields": {
         "category": "half_n_half",
         "name": "Black Velvet",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "Black Velvet",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 7.00,
+        "price_pint": 8.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "False",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
-},{
-    "model": "index.product",
+}, {
     "pk": 7,
+    "model": "index.Product",
     "fields": {
         "category": "half_n_half",
         "name": "Blacksmith",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "Blacksmith",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 7.00,
+        "price_pint": 8.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "False",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
-},{
-    "model": "index.product",
+}, {
     "pk": 8,
+    "model": "index.Product",
     "fields": {
         "category": "half_n_half",
         "name": "Snake Bite",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "Snake Bite",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 5.00,
+        "price_04": 6.00,
+        "price_pint": 7.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "False",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
-},{
-    "model": "index.product",
+}, {
     "pk": 9,
+    "model": "index.Product",
     "fields": {
         "category": "shandy",
         "name": "Guinness Shandy",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "Guinn Shandy",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 5.00,
+        "price_04": 6.00,
+        "price_pint": 7.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
     "pk": 10,
+    "model": "index.Product",
     "fields": {
         "category": "shandy",
         "name": "Kilkenny Shandy",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "Kilken Shandy",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 5.00,
+        "price_04": 6.00,
+        "price_pint": 7.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
-},{
-    "model": "index.product",
+}, {
     "pk": 11,
+    "model": "index.Product",
     "fields": {
         "category": "shandy",
         "name": "Hop House 13 Shandy",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "HH13 Shandy",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 5.00,
+        "price_04": 6.00,
+        "price_pint": 7.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "False",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
-},{
-    "model": "index.product",
+}, {
     "pk": 12,
+    "model": "index.Product",
     "fields": {
         "category": "shandy",
         "name": "Stowford Shandy",
-        "price_03": "5.00",
-        "price_04": "6.00",
-        "price_pint": "7.50"
+        "abbr_name": "Cider Shandy",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 5.00,
+        "price_04": 6.00,
+        "price_pint": 7.50,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "False",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
-},{
-    "model": "index.product",
+}, {
     "pk": 13,
+    "model": "index.Product",
     "fields": {
         "category": "cans_and_bottles",
         "name": "Guinness 0.0",
-        "price_pint": "6.50"
+        "abbr_name": "Guinness 0.0",
+        "in_use": "True",
+        "price_default": 7.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
     "pk": 14,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
         "name": "Chaser/Mix Special",
-        "price_sgle": "2.50"
+        "abbr_name": "Chaser/Mix Sp",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 2.50,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
     "pk": 15,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
         "name": "Tullamore Original",
-        "price_sgle": "3.50",
-        "price_dble": "5.00",
-        "price_btle": "27.50"
+        "abbr_name": "Tully Original",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 3.50,
+        "price_dble": 5.50,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 27.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
     "pk": 16,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
         "name": "Tullamore Honey",
-        "price_sgle": "4.00",
-        "price_dble": "6.00",
-        "price_btle": "28.50"
+        "abbr_name": "Tully Honey",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 3.50,
+        "price_dble": 6.00,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 27.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
     "pk": 17,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
-        "name": "Tullamore Cider",
-        "price_sgle": "4.50",
-        "price_dble": "7.00",
-        "price_btle": "28.50"
+        "name": "Tullamore Cider Cask",
+        "abbr_name": "Tully Cider",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 4.00,
+        "price_dble": 7.00,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 30.00,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
     "pk": 18,
+    "model": "index.Product",
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Tullamore Rum Cask",
+        "abbr_name": "Tully Rum",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 4.00,
+        "price_dble": 7.00,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 30.00,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
+    }
+}, {
+    "pk": 19,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
         "name": "Tullamore 12 y.o.",
-        "price_sgle": "6.50",
-        "price_dble": "10.00",
-        "price_btle": "32.50"
+        "abbr_name": "Tully 12yo",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 5.00,
+        "price_dble": 9.00,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 32.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
-    "pk": 19,
+    "pk": 20,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
-        "name": "Tullamore 14 y.o.",
-        "price_sgle": "7.50",
-        "price_dble": "12.00",
-        "price_btle": "37.50"
+        "name": "Tullamore 14y.o.",
+        "abbr_name": "Tully 14yo",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 6.00,
+        "price_dble": 10.00,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 37.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
-    "pk": 20,
+    "pk": 21,
+    "model": "index.Product",
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Whiskey Platter",
+        "abbr_name": "Whiskey Platr",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 25.00,
+        "price_dble": 40.00,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 175.00,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
+    }
+}, {
+    "pk": 22,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
         "name": "Garnish Island Gin",
-        "price_sgle": "3.50",
-        "price_dble": "6.00",
-        "price_btle": "27.50"
+        "abbr_name": "Garnish Gin",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 3.50,
+        "price_dble": 5.50,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 27.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 21,
+    "pk": 23,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
         "name": "Gunpowder Gin",
-        "price_sgle": "6.50",
-        "price_dble": "10.00",
-        "price_btle": "35.00"
+        "abbr_name": "G'Powder Gin",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 4.50,
+        "price_dble": 6.50,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 35.00,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 22,
+    "pk": 24,
+    "model": "index.Product",
+    "fields": {
+        "category": "spirits_and_liquers",
+        "name": "Gin 0.0 Alcohol",
+        "abbr_name": "0.0 Gin",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 2.50,
+        "price_dble": 4.00,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 22.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 25,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
         "name": "Baileys",
-        "price_sgle": "3.50",
-        "price_dble": "5.00",
-        "price_btle": "25.00"
+        "abbr_name": "Baileys",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 3.50,
+        "price_dble": 6.00,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 27.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 23,
+    "pk": 26,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
         "name": "Rum",
-        "price_sgle": "3.50",
-        "price_dble": "5.00",
-        "price_btle": "25.00"
+        "abbr_name": "Rum",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 3.50,
+        "price_dble": 6.00,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 27.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
-    "pk": 24,
+    "pk": 27,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
         "name": "Kahlua",
-        "price_sgle": "3.50",
-        "price_dble": "5.00",
-        "price_btle": "25.00"
+        "abbr_name": "Kahlua",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 3.50,
+        "price_dble": 6.00,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 27.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
-    "pk": 25,
+    "pk": 28,
+    "model": "index.Product",
     "fields": {
         "category": "spirits_and_liquers",
         "name": "Port",
-        "price_sgle": "3.50",
-        "price_dble": "5.00",
-        "price_btle": "25.00"
+        "abbr_name": "Port",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": 3.50,
+        "price_dble": 6.00,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": 27.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
     }
 }, {
-    "model": "index.product",
-    "pk": 26,
+    "pk": 29,
+    "model": "index.Product",
     "fields": {
         "category": "softdrinks",
         "name": "Cola",
-        "price_dash": "2.50",
-        "price_03": "3.50",
-        "price_04": "4.50",
-        "price_pint": "5.50",
-        "price_btle": "7.50"
+        "abbr_name": "Cola",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": 2.50,
+        "price_03": 3.50,
+        "price_04": 4.50,
+        "price_pint": 5.50,
+        "price_btle": 7.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 27,
+    "pk": 30,
+    "model": "index.Product",
     "fields": {
         "category": "softdrinks",
-        "name": "Diet Cola",
-        "price_dash": "2.50",
-        "price_03": "3.50",
-        "price_04": "4.50",
-        "price_pint": "5.50",
-        "price_btle": "7.50"
+        "name": "Cola Light",
+        "abbr_name": "Cola Light",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": 2.50,
+        "price_03": 3.50,
+        "price_04": 4.50,
+        "price_pint": 5.50,
+        "price_btle": 7.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 28,
+    "pk": 31,
+    "model": "index.Product",
     "fields": {
         "category": "softdrinks",
         "name": "Orange",
-        "price_dash": "2.50",
-        "price_03": "3.50",
-        "price_04": "4.50",
-        "price_pint": "5.50",
-        "price_btle": "7.50"
+        "abbr_name": "Orange",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": 2.50,
+        "price_03": 3.50,
+        "price_04": 4.50,
+        "price_pint": 5.50,
+        "price_btle": 7.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 29,
+    "pk": 32,
+    "model": "index.Product",
     "fields": {
         "category": "softdrinks",
         "name": "Lemonade",
-        "price_dash": "2.50",
-        "price_03": "3.50",
-        "price_04": "4.50",
-        "price_pint": "5.50",
-        "price_btle": "7.50"
+        "abbr_name": "Lemonade",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": 2.50,
+        "price_03": 3.50,
+        "price_04": 4.50,
+        "price_pint": 5.50,
+        "price_btle": 7.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 30,
+    "pk": 33,
+    "model": "index.Product",
     "fields": {
         "category": "softdrinks",
         "name": "Tonic Water",
-        "price_dash": "2.50",
-        "price_03": "3.50",
-        "price_04": "4.50",
-        "price_pint": "5.50",
-        "price_btle": "7.50"
+        "abbr_name": "Tonic Water",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": 2.50,
+        "price_03": 3.50,
+        "price_04": 4.50,
+        "price_pint": 5.50,
+        "price_btle": 7.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 31,
+    "pk": 34,
+    "model": "index.Product",
     "fields": {
         "category": "softdrinks",
         "name": "Ginger Ale",
-        "price_dash": "2.50",
-        "price_03": "3.50",
-        "price_04": "4.50",
-        "price_pint": "5.50",
-        "price_btle": "7.50"
+        "abbr_name": "Ginger Ale",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": 2.50,
+        "price_03": 3.50,
+        "price_04": 4.50,
+        "price_pint": 5.50,
+        "price_btle": 7.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 32,
+    "pk": 35,
+    "model": "index.Product",
     "fields": {
         "category": "softdrinks",
         "name": "Still Water",
-        "price_dash": "2.50",
-        "price_03": "3.50",
-        "price_04": "4.50",
-        "price_pint": "5.50",
-        "price_btle": "7.50"
+        "abbr_name": "Still Water",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": 2.50,
+        "price_03": 3.50,
+        "price_04": 4.50,
+        "price_pint": 5.50,
+        "price_btle": 7.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 33,
+    "pk": 36,
+    "model": "index.Product",
     "fields": {
         "category": "softdrinks",
         "name": "Sparking Water",
-        "price_dash": "2.50",
-        "price_03": "3.50",
-        "price_04": "4.50",
-        "price_pint": "5.50",
-        "price_btle": "7.50"
+        "abbr_name": "Sparkle Water",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": 1.50,
+        "price_03": 2.50,
+        "price_04": 3.50,
+        "price_pint": 4.50,
+        "price_btle": 6.50,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 34,
+    "pk": 37,
+    "model": "index.Product",
     "fields": {
         "category": "hot_nonalcoholics",
         "name": "Coffee",
-        "price_default": "3.00"
+        "abbr_name": "Coffee",
+        "in_use": "True",
+        "price_default": 2.50,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 35,
+    "pk": 38,
+    "model": "index.Product",
+    "fields": {
+        "category": "hot_nonalcoholics",
+        "name": "Coffee & Cookies",
+        "abbr_name": "Coffe & Cook",
+        "in_use": "True",
+        "price_default": 4.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 39,
+    "model": "index.Product",
     "fields": {
         "category": "hot_nonalcoholics",
         "name": "Tea",
-        "price_default": "3.00"
+        "abbr_name": "Tea",
+        "in_use": "True",
+        "price_default": 2.50,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 36,
+    "pk": 40,
+    "model": "index.Product",
     "fields": {
         "category": "hot_nonalcoholics",
         "name": "Hot Chocolate",
-        "price_default": "2.50"
+        "abbr_name": "Hot Choco",
+        "in_use": "True",
+        "price_default": 2.50,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 37,
+    "pk": 41,
+    "model": "index.Product",
     "fields": {
         "category": "hot_alcoholics",
         "name": "Baileys Hot Chocolate",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
+        "abbr_name": "Bailey Hot Ch",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 38,
+    "pk": 42,
+    "model": "index.Product",
     "fields": {
         "category": "hot_alcoholics",
         "name": "Minty Hot Chocolate",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
+        "abbr_name": "Minty Hot Ch",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 39,
+    "pk": 43,
+    "model": "index.Product",
     "fields": {
         "category": "hot_alcoholics",
         "name": "Irish Coffee",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
+        "abbr_name": "Irish Coffee",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 40,
+    "pk": 44,
+    "model": "index.Product",
+    "fields": {
+        "category": "hot_alcoholics",
+        "name": "Iced Irish Coffee",
+        "abbr_name": "Iced Irish Coff",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 45,
+    "model": "index.Product",
     "fields": {
         "category": "hot_alcoholics",
         "name": "Baileys Coffee",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
+        "abbr_name": "Bailey Coffee",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 41,
+    "pk": 46,
+    "model": "index.Product",
     "fields": {
         "category": "hot_alcoholics",
         "name": "Carribean Coffee",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
+        "abbr_name": "Carrib Coffee",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 42,
+    "pk": 47,
+    "model": "index.Product",
     "fields": {
         "category": "hot_alcoholics",
         "name": "English Coffee",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
+        "abbr_name": "Eng Coffee",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 43,
+    "pk": 48,
+    "model": "index.Product",
     "fields": {
         "category": "hot_alcoholics",
         "name": "Jamaican Coffee",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
+        "abbr_name": "Jamai Coffee",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
     }
 }, {
-    "model": "index.product",
-    "pk": 44,
-    "fields": {
-        "category": "hot_toddys",
-        "name": "Hot Whiskey",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 45,
-    "fields": {
-        "category": "hot_toddys",
-        "name": "Hot Englishman",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 46,
-    "fields": {
-        "category": "hot_toddys",
-        "name": "Hot Grog (Rum)",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 47,
-    "fields": {
-        "category": "hot_toddys",
-        "name": "Hot Jamaican",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 48,
-    "fields": {
-        "category": "hot_toddys",
-        "name": "Hot Portuguese",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
-    }
-}, {
-    "model": "index.product",
     "pk": 49,
-    "fields": {
-        "category": "shots",
-        "name": "Baby Guinness",
-        "price_default": "5.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 50,
-    "fields": {
-        "category": "shots",
-        "name": "Irish Flag",
-        "price_default": "5.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 51,
-    "fields": {
-        "category": "shots",
-        "name": "Pfand Shot Special",
-        "price_default": "2.50"
-    }
-}, {
-    "model": "index.product",
-    "pk": 52,
-    "fields": {
-        "category": "shots",
-        "name": "6 Shots Special",
-        "price_default": "20.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 53,
-    "fields": {
-        "category": "food",
-        "name": "Irish Stew",
-        "price_small": "6.00",
-        "price_regular": "9.50"
-    }
-}, {
-    "model": "index.product",
-    "pk": 54,
-    "fields": {
-        "category": "food",
-        "name": "Seafood Chowder",
-        "price_small": "6.00",
-        "price_regular": "9.50"
-    }
-}, {
-    "model": "index.product",
-    "pk": 55,
-    "fields": {
-        "category": "food",
-        "name": "Pulled Pork Bap",
-        "price_default": "6.50"
-    }
-}, {
-    "model": "index.product",
-    "pk": 56,
-    "fields": {
-        "category": "food",
-        "name": "Wedges",
-        "price_default": "5.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 57,
-    "fields": {
-        "category": "food",
-        "name": "Wedges - Garlic",
-        "price_default": "6.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 58,
-    "fields": {
-        "category": "food",
-        "name": "Wedges - BBQ",
-        "price_default": "6.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 59,
-    "fields": {
-        "category": "food",
-        "name": "Wedges - Pulled Pork",
-        "price_default": "9.50"
-    }
-}, {
-    "model": "index.product",
-    "pk": 60,
-    "fields": {
-        "category": "food",
-        "name": "Wedges - Stew",
-        "price_default": "9.50"
-    }
-}, {
-    "model": "index.product",
-    "pk": 61,
-    "fields": {
-        "category": "food",
-        "name": "Spudato Tornado",
-        "price_default": "4.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 62,
-    "fields": {
-        "category": "food",
-        "name": "Add Cheese",
-        "price_default": "1.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 63,
-    "fields": {
-        "category": "food",
-        "name": "Cookie",
-        "price_default": "2.50"
-    }
-}, {
-    "model": "index.product",
-    "pk": 64,
-    "fields": {
-        "category": "food",
-        "name": "Crisps",
-        "price_default": "2.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 65,
-    "fields": {
-        "category": "gifts",
-        "name": "Tree Decoration",
-        "price_default": "5.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 66,
-    "fields": {
-        "category": "gifts",
-        "name": "Fridge Magnet",
-        "price_default": "5.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 67,
-    "fields": {
-        "category": "gifts",
-        "name": "Magnet/Decoration Special",
-        "price_default": "9.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 68,
-    "fields": {
-        "category": "gifts",
-        "name": "Frame",
-        "price_default": "19.90"
-    }
-}, {
-    "model": "index.product",
-    "pk": 69,
-    "fields": {
-        "category": "gifts",
-        "name": "Personalised Glass",
-        "price_default": "9.90"
-    }
-}, {
-    "model": "index.product",
-    "pk": 70,
-    "fields": {
-        "category": "gifts",
-        "name": "T-Shirt",
-        "price_default": "12.50"
-    }
-}, {
-    "model": "index.product",
-    "pk": 71,
-    "fields": {
-        "category": "gifts",
-        "name": "Polo Shirt",
-        "price_default": "17.50"
-    }
-}, {
-    "model": "index.product",
-    "pk": 72,
-    "fields": {
-        "category": "gifts",
-        "name": "Baseball Cap",
-        "price_default": "9.90"
-    }
-}, {
-    "model": "index.product",
-    "pk": 73,
-    "fields": {
-        "category": "gifts",
-        "name": "Badge",
-        "price_default": "1.00"
-    }
-}, {
-    "model": "index.product",
-    "pk": 74,
-    "fields": {
-        "category": "gifts",
-        "name": "Jumper",
-        "price_default": "59.90"
-    }
-}, {
-    "model": "index.product",
-    "pk": 75,
+    "model": "index.Product",
     "fields": {
         "category": "hot_alcoholics",
         "name": "Gluhcider",
-        "price_03": "6.00",
-        "price_04": "8.00",
-        "price_pint": "10.00"
+        "abbr_name": "Gluhcider",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 50,
+    "model": "index.Product",
+    "fields": {
+        "category": "hot_alcoholics",
+        "name": "Doris's Glu(Ahr)wein",
+        "abbr_name": "Gluhwein",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.50,
+        "price_04": 8.50,
+        "price_pint": 11.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 51,
+    "model": "index.Product",
+    "fields": {
+        "category": "hot_toddys",
+        "name": "Hot Whiskey",
+        "abbr_name": "Hot Whiskey",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 52,
+    "model": "index.Product",
+    "fields": {
+        "category": "hot_toddys",
+        "name": "Hot Englishman",
+        "abbr_name": "Hot England",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 53,
+    "model": "index.Product",
+    "fields": {
+        "category": "hot_toddys",
+        "name": "Hot Grog",
+        "abbr_name": "Hot Grog",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 54,
+    "model": "index.Product",
+    "fields": {
+        "category": "hot_toddys",
+        "name": "Hot Jamaican",
+        "abbr_name": "Hot Jamaica",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 55,
+    "model": "index.Product",
+    "fields": {
+        "category": "hot_toddys",
+        "name": "Hot Portuguese",
+        "abbr_name": "Hot Portugal",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 56,
+    "model": "index.Product",
+    "fields": {
+        "category": "cocktails",
+        "name": "Apferol Spritz",
+        "abbr_name": "Apferol Spritz",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": 6.00,
+        "price_04": 8.00,
+        "price_pint": 10.00,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
+    }
+}, {
+    "pk": 57,
+    "model": "index.Product",
+    "fields": {
+        "category": "shots",
+        "name": "Baby Guinness",
+        "abbr_name": "Baby Guinn",
+        "in_use": "True",
+        "price_default": 5.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
+    }
+}, {
+    "pk": 58,
+    "model": "index.Product",
+    "fields": {
+        "category": "shots",
+        "name": "Irish Flag",
+        "abbr_name": "Irish Flag",
+        "in_use": "True",
+        "price_default": 5.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
+    }
+}, {
+    "pk": 59,
+    "model": "index.Product",
+    "fields": {
+        "category": "shots",
+        "name": "Capugino",
+        "abbr_name": "Capugino",
+        "in_use": "True",
+        "price_default": 5.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
+    }
+}, {
+    "pk": 60,
+    "model": "index.Product",
+    "fields": {
+        "category": "shots",
+        "name": "Thin Lizzy",
+        "abbr_name": "Thin Lizzy",
+        "in_use": "True",
+        "price_default": 5.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
+    }
+}, {
+    "pk": 61,
+    "model": "index.Product",
+    "fields": {
+        "category": "shots",
+        "name": "Pfand Shot Special",
+        "abbr_name": "Pfand Shot",
+        "in_use": "True",
+        "price_default": 2.50,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
+    }
+}, {
+    "pk": 62,
+    "model": "index.Product",
+    "fields": {
+        "category": "shots",
+        "name": "5 Shots Special",
+        "abbr_name": "5 Shots Spec",
+        "in_use": "True",
+        "price_default": 20.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_dash": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "False"
+    }
+}, {
+    "pk": 63,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Irish Stew",
+        "abbr_name": "Irish Stew",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": 6.00,
+        "price_regular": 9.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 64,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Seafood Chowder",
+        "abbr_name": "S'food Chowd",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": 7.00,
+        "price_regular": 10.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 65,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Pulled Pork Bap",
+        "abbr_name": "Pulled Pork",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 6.50,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 66,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Wedges",
+        "abbr_name": "Wedges",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 4.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 67,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Wedges - Garlic",
+        "abbr_name": "Wdgs - Garlic",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 5.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 68,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Cheesey Wedges",
+        "abbr_name": "Wdgs - Cheese",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 5.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 69,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Wedges - Cheese & Garlic",
+        "abbr_name": "Wdgs - G & C",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 6.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 70,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Wedges - BBQ",
+        "abbr_name": "Wdgs - BBQ",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 5.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 71,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Wedges - Pulled Pork",
+        "abbr_name": "Wdgs - P'Pork",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 9.50,
+        "price_jumbo": 19.00,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 72,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Wedges - Stew",
+        "abbr_name": "Wdgs - Stew",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 9.50,
+        "price_jumbo": 19.00,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 73,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Spudato Tornado",
+        "abbr_name": "Spud Tornado",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 4.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 74,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Add Cheese",
+        "abbr_name": "Add Cheese",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 1.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 75,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Irish Bratwurst",
+        "abbr_name": "Sausage",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 5.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 76,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Vegan Sausage",
+        "abbr_name": "Vegan Sausag",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 6.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 77,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "DOD's Burger",
+        "abbr_name": "Burger",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 9.50,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 78,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Cookies x 2",
+        "abbr_name": "Cookie",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 1.50,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 79,
+    "model": "index.Product",
+    "fields": {
+        "category": "food",
+        "name": "Crisps",
+        "abbr_name": "Crisps",
+        "in_use": "True",
+        "price_default": null,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": 2.00,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "False",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 80,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Tree Decoration",
+        "abbr_name": "Tree Decor",
+        "in_use": "True",
+        "price_default": 5.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 81,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Fridge Magnet",
+        "abbr_name": "Fridge Magnet",
+        "in_use": "True",
+        "price_default": 5.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 82,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Magnet/Decoration Special",
+        "abbr_name": "Mag/Dec Spec",
+        "in_use": "True",
+        "price_default": 9.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 83,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Frame",
+        "abbr_name": "Frame",
+        "in_use": "True",
+        "price_default": 19.90,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "False",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 84,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Personalised Pint Glass",
+        "abbr_name": "Pint Glass",
+        "in_use": "True",
+        "price_default": 10.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 85,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Personalised 0.4 Glass",
+        "abbr_name": "0.4 Glass",
+        "in_use": "True",
+        "price_default": 9.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 86,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Personalised 0.3 Glass",
+        "abbr_name": "0.3 Glass",
+        "in_use": "True",
+        "price_default": 8.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 87,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Personalised Tully Glass",
+        "abbr_name": "Tully Glass",
+        "in_use": "True",
+        "price_default": 8.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 88,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "T-Shirt",
+        "abbr_name": "T-Shirt",
+        "in_use": "True",
+        "price_default": 12.50,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 89,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Polo Shirt",
+        "abbr_name": "Polo Shirt",
+        "in_use": "True",
+        "price_default": 20.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 90,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Hoodie",
+        "abbr_name": "Hoodie",
+        "in_use": "True",
+        "price_default": 50.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 91,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Baseball Cap",
+        "abbr_name": "Baseball Cap",
+        "in_use": "True",
+        "price_default": 15.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
+    }
+}, {
+    "pk": 92,
+    "model": "index.Product",
+    "fields": {
+        "category": "gifts",
+        "name": "Badge",
+        "abbr_name": "Badge",
+        "in_use": "True",
+        "price_default": 1.00,
+        "price_sgle": null,
+        "price_dble": null,
+        "price_03": null,
+        "price_04": null,
+        "price_pint": null,
+        "price_btle": null,
+        "price_small": null,
+        "price_regular": null,
+        "price_jumbo": null,
+        "summer_product": "True",
+        "winter_product": "True",
+        "bar_product": "True",
+        "kitchen_product": "True"
     }
 }]

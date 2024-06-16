@@ -11,9 +11,9 @@ def index(request):
     """ A view to return the index page """
     """https://testdriven.io/blog/django-ajax-xhr/"""
     user = request.user
-    print("user = ", user)
+    # print("user = ", user)
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-    print("is_ajax = ", is_ajax)
+    # print("is_ajax = ", is_ajax)
     if is_ajax:
         if not user.is_authenticated:
             print("User not authenticated")
@@ -94,19 +94,20 @@ def index(request):
     # else:
     #     return HttpResponseBadRequest('Invalid request')
 
-    draughts = Product.objects.all().filter(category="draught")
-    half_n_halfs = Product.objects.all().filter(category="half_n_half")
-    shandys = Product.objects.all().filter(category="shandy")
-    canandbottles = Product.objects.all().filter(category="cans_and_bottles")
-    spirits = Product.objects.all().filter(category="spirits_and_liquers").order_by("pk")
-    softdrinks = Product.objects.all().filter(category="softdrinks")
-    hotnonalcoholics = Product.objects.all().filter(category="hot_nonalcoholics")
-    hotalcoholics = Product.objects.all().filter(category="hot_alcoholics")
-    hottoddys = Product.objects.all().filter(category="hot_toddys")
-    shots = Product.objects.all().filter(category="shots")
-    foods = Product.objects.all().filter(category="food")
+    draughts = Product.objects.all().filter(category="draught").exclude(summer_product=False)
+    half_n_halfs = Product.objects.all().filter(category="half_n_half").exclude(summer_product=False)
+    shandys = Product.objects.all().filter(category="shandy").exclude(summer_product=False)
+    canandbottles = Product.objects.all().filter(category="cans_and_bottles").exclude(summer_product=False)
+    spirits = Product.objects.all().filter(category="spirits_and_liquers").order_by("pk").exclude(summer_product=False)
+    softdrinks = Product.objects.all().filter(category="softdrinks").exclude(summer_product=False)
+    hotnonalcoholics = Product.objects.all().filter(category="hot_nonalcoholics").exclude(summer_product=False)
+    hotalcoholics = Product.objects.all().filter(category="hot_alcoholics").exclude(summer_product=False)
+    hottoddys = Product.objects.all().filter(category="hot_toddys").exclude(summer_product=False)
+    shots = Product.objects.all().filter(category="shots").exclude(summer_product=False)
+    foods = Product.objects.all().filter(category="food").exclude(summer_product=False)
+    gifts = Product.objects.all().filter(category="gift").exclude(summer_product=False)
     staff = Staff.objects.all().filter(on_duty=True).order_by("name")
-
+    print("shots = ", shots)
     context = {
         'draughts': draughts,
         'half_n_halfs': half_n_halfs,
@@ -119,6 +120,7 @@ def index(request):
         'hottoddys': hottoddys,
         'shots': shots,
         'foods': foods,
+        'gifts': gifts,
         'staff': staff,
     }
     template = 'index/index.html'
