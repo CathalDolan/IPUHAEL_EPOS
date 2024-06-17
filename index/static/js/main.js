@@ -202,6 +202,35 @@ $('.drink.measure_button').click(function () {
     $('.drinks_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
 });
 
+$('.add_gift_button').click(function() {
+    let product_name = $(this).attr('data-name');
+    let abbr_name = $(this).attr('data-abbr_name');
+    let product_price = Number($(this).attr('data-price_default'));
+    let product_category = $(this).attr('data-category');
+    let pfand_payable = $(this).attr('data-pfand');
+    let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`));
+    let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`))
+    if (product.length > 0) {
+        ALL_PRODUCTS[product_index].qty += 1;
+        ALL_PRODUCTS[product_index].line_total = ALL_PRODUCTS[product_index].price * ALL_PRODUCTS[product_index].qty;
+    } else {
+        product = {
+            "category": product_category,
+            "name": product_name,
+            "abbr_name": abbr_name,
+            "size": '',
+            "qty": 1,
+            "price": product_price,
+            "line_total": product_price,
+            "pfand_payable": pfand_payable,
+            'discount_applied': ''
+        }
+        ALL_PRODUCTS.push(product);
+
+    }
+    apply_specials();
+})
+
 // PRODUCT BUTTONS
 $('.drink.product_button').click(function () {
     let product_size = $('.drink.measure_button.selected').attr('data-price');
@@ -210,6 +239,7 @@ $('.drink.product_button').click(function () {
     // console.log("abbrv_size = ", abbrv_size)
     // console.log("product_size = ", product_size)
     let product_name = $(this).attr('data-name');
+    let abbr_name = $(this).attr('data-abbr_name');
     let product_price = $(this).attr('data-' + product_size);
     // console.log("product_price = ", product_price)
     if(product_price == 'None') {
@@ -237,6 +267,7 @@ $('.drink.product_button').click(function () {
         product = {
             "category": product_category,
             "name": product_name,
+            "abbr_name": abbr_name,
             "size": abbrv_size,
             "qty": 1,
             "price": product_price,
@@ -269,6 +300,7 @@ $('.food.product_button').click(function() {
     console.log("abbrv_size = ", abbrv_size)
     console.log("product_size = ", product_size)
     let product_name = $(this).attr('data-name');
+    let abbr_name = $(this).attr('data-abbr_name');
     let product_price = $(this).attr('data-' + product_size);
     console.log("product_price = ", product_price)
     if(product_price == 'None') {
@@ -294,6 +326,7 @@ $('.food.product_button').click(function() {
         product = {
             "category": product_category,
             "name": product_name,
+            "abbr_name": abbr_name,
             "size": abbrv_size,
             "qty": 1,
             "price": product_price,
@@ -316,8 +349,8 @@ $(document).on('click', '.add_button', function () {
     let product_name = $(this).parent().siblings(':first').children().text();
     let product_size = $(this).parent().siblings(':nth-child(2)').children().text().toLowerCase();
     console.log("product_name = ", product_name)
-    let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
-    let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
+    let product = ALL_PRODUCTS.filter(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
+    let product_index = ALL_PRODUCTS.findIndex(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
 
     if (product.length > 0) {
 
@@ -333,8 +366,8 @@ $(document).on('click', '.subtract_button', function () {
     console.log("Decrement FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text(); 
     let product_size = $(this).parent().siblings(':nth-child(2)').children().text().toLowerCase();
-    let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
-    let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
+    let product = ALL_PRODUCTS.filter(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
+    let product_index = ALL_PRODUCTS.findIndex(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
 
     // Initial If Statement used to prevent decrementor going below 0
     if (ALL_PRODUCTS[product_index].qty < 2) {
@@ -361,7 +394,7 @@ $(document).on('click', '.delete_button', function () {
     } else { // Else this is a product row so remove this product from the ALL_PRODUCTS array
         let product_name = $(this).parent().siblings(':first').children().text();
         let product_size = $(this).parent().siblings(':nth-child(2)').children().text().toLowerCase();
-        let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${product_size}`));
+        let product_index = ALL_PRODUCTS.findIndex(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
         ALL_PRODUCTS.splice(product_index, 1);
     }
     apply_specials();
@@ -493,45 +526,46 @@ function apply_specials() {
         let price = 0;
         discount_item = {};
         $.each(NEW_BASKET, function (index, item) {
-            // console.log("double_item = ", double_item)
-            if (item.qty > 1) {
-                double_item = true;
-                // console.log("YES > 1");
-                if ((Number(item.price) > price)) {
-                    price = item.price;
-                    discount_item = {
-                        'category': item.category,
-                        'name': item.name,
-                        'pfand_payable': item.pfand_payable,
-                        'price': item.price,
-                        'qty': 1,
-                        'unit_discount': 0,
-                        'line_total': 0,
-                        'total_discount': item.price,
-                        'discount_applied': '2 for 1',
-                        'status': 'Applied',
-                        'details': item.name
+            console.log("item.category = ", item.category)
+            if(item.category != "gifts")
+                if (item.qty > 1) {
+                    double_item = true;
+                    // console.log("YES > 1");
+                    if ((Number(item.price) > price)) {
+                        price = item.price;
+                        discount_item = {
+                            'category': item.category,
+                            'name': item.name,
+                            'pfand_payable': item.pfand_payable,
+                            'price': item.price,
+                            'qty': 1,
+                            'unit_discount': 0,
+                            'line_total': 0,
+                            'total_discount': item.price,
+                            'discount_applied': '2 for 1',
+                            'status': 'Applied',
+                            'details': item.name
+                        }
+                        single_items = [discount_item, discount_item];
                     }
-                    single_items = [discount_item, discount_item];
-                }
-            } else {
-                if (double_item == false) {
-                    discount_item = {
-                        'category': item.category,
-                        'name': item.name,
-                        'pfand_payable': item.pfand_payable,
-                        'price': item.price,
-                        'qty': 1,
-                        'unit_discount': 0,
-                        'line_total': 0,
-                        'total_discount': item.price,
-                        'discount_applied': '2 for 1',
-                        'status': 'Applied',
-                        'details': item.name
+                } else {
+                    if (double_item == false) {
+                        discount_item = {
+                            'category': item.category,
+                            'name': item.name,
+                            'pfand_payable': item.pfand_payable,
+                            'price': item.price,
+                            'qty': 1,
+                            'unit_discount': 0,
+                            'line_total': 0,
+                            'total_discount': item.price,
+                            'discount_applied': '2 for 1',
+                            'status': 'Applied',
+                            'details': item.name
+                        }
+                        single_items.push(discount_item);
                     }
-                    single_items.push(discount_item);
                 }
-            }
 
         })
 
@@ -624,7 +658,7 @@ function update_basket() {
         $('.products_rows_div').prepend(
             `<div class="row product_row"> 
                 <div class="col-3">
-                    <p class="product-name">${this.name}</p>
+                    <p class="product-name">${this.abbr_name}</p>
                 </div>
                 <div class="col-1" id="size">
                     <p>${this.size == '' ? '': this.size[0].toUpperCase() + this.size.substring(1)}</p>
