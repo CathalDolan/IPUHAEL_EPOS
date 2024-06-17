@@ -220,7 +220,7 @@ body {
 }
 
 .till-left-side {
-    height: 90vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -499,6 +499,9 @@ form {
     margin-bottom: 10px;
 }
 
+#gifts_modal .gifts_button {
+    margin: 1px;
+}
 /* #pfand_modal .row {
     padding: 5px;
 } */
