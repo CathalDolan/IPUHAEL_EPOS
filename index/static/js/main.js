@@ -5,8 +5,8 @@ window.addEventListener('resize', function(event) {
     console.log("height = ", this.screen.height);
     console.log("width = ", screen.width);
 }, true);
-// let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
+let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
+// let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function () {
@@ -77,7 +77,7 @@ window.onload = function () {
                 break;
         }
 
-        document.getElementById('time_and_date').innerHTML = day + ", " + month + " " + date.getDate() + ", " + date.getHours() + ":" + (date.getMinutes()<10 ? 
+        document.getElementById('time_and_date').innerHTML = day + " " + month + " " + date.getDate() + " " + date.getHours() + ":" + (date.getMinutes()<10 ? 
         "0" + date.getMinutes() : date.getMinutes());
     }, 1000); // 1000 milliseconds = 1 second
 

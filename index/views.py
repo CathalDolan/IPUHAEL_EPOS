@@ -104,6 +104,7 @@ def index(request):
     hotalcoholics = Product.objects.all().filter(category="hot_alcoholics").exclude(summer_product=False)
     hottoddys = Product.objects.all().filter(category="hot_toddys").exclude(summer_product=False)
     shots = Product.objects.all().filter(category="shots").exclude(summer_product=False)
+    cocktails = Product.objects.all().filter(category="cocktails").exclude(summer_product=False)
     foods = Product.objects.all().filter(category="food").exclude(summer_product=False)
     gifts = Product.objects.all().filter(category="gift").exclude(summer_product=False)
     staff = Staff.objects.all().filter(on_duty=True).order_by("name")
@@ -119,6 +120,7 @@ def index(request):
         'hotalcoholics': hotalcoholics,
         'hottoddys': hottoddys,
         'shots': shots,
+        'cocktails': cocktails,
         'foods': foods,
         'gifts': gifts,
         'staff': staff,

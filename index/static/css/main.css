@@ -10,7 +10,8 @@ body {
 .food_row .col,
 .food_row .col-2,
 .pfand_button_row .col,
-.pfand_button_row .col-2 {
+.pfand_button_row .col-2,
+.global_buttons .col-2 {
     padding: 2px;
 }
 
@@ -24,11 +25,11 @@ body {
 
 .btn {
     width: 100%;
-    height: 55px;
+    height: 45px;
     color: white;
     border-color: black;
     font-weight: 500;
-    font-size: small;
+    font-size: .7rem;
 }
 
 .btn:active {
@@ -106,6 +107,10 @@ body {
     background-color: rgb(87, 10, 138);
 }
 
+.cocktails {
+    background-color: #81663f;
+}
+
 .open_drink {
     background-color: aqua;
     border-bottom: 4px solid #000;
@@ -128,6 +133,10 @@ body {
     height: 50%;
 }
 
+.open_drink {
+    margin-left: auto;
+}
+
 .open-drink-submit {
     background-color: aqua;
     font-weight: 700;
@@ -145,12 +154,16 @@ body {
     color: black;
 }
 
+.product_button {
+    padding: 0 1px;
+}
+
 .product_button.enabled {
     border-bottom: 4px solid #000;
     border-right: 4px solid #000;
     border-top: 1px solid #000;
     font-weight: 700;
-    padding: 0 1px;
+    
 }
 
 .disabled {
@@ -168,10 +181,17 @@ body {
 
 .food_row {
     margin-top: 10px;
+    display: flex;
+}
+
+.col-2:has(.open_drink) {
+    margin-left: auto;
 }
 
 .global_buttons {
-    margin-top: 10px;
+    margin-top: auto;
+    margin-bottom: 3px;
+
 }
 
 .bar_kitchen {
@@ -185,6 +205,7 @@ body {
     width: 100%;
     color: #fff;
     height: 100%;
+    font-size: .8rem;
 }
 
 .pfand_button:hover {
@@ -193,23 +214,26 @@ body {
     font-size: 1.1rem;
 }
 
-.pfand_button#none {
-    font-size: .85rem;
-}
-
 .green {
     background-color: green;
     color: #fff;
 }
 
-.till-right-side {
+.till-left-side {
+    height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
+.till-right-side {
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+}
+
 .header-info {
     display: flex;
-    font-size: .9rem;
+    font-size: .8rem;
     margin-bottom: 5px;
 }
 
@@ -234,7 +258,7 @@ body {
 
 .basket_div {
     width: 100%;
-    /* margin-top: auto; */
+    margin-top: auto;
     background-color: #d1cdcd;
 }
 .basket_edit_button {
@@ -268,18 +292,52 @@ hr {
 }
 
 .€_notes_row {
-    padding-bottom: 15px;
+    padding-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.€_notes_row  [class*="col"] {
+    padding: 2px;
 }
 
 /* .col-3 {
     padding: 2px;
 } */
 
-.pay_method_button {
-    /* padding: 0; */
+.pay_method_button,
+.exact_tendered,
+.oap-students,
+.specials_button,
+.finish_button,
+.cancel_button,
+.unpaid_button,
+.waste_button {
+    padding: 2px;
     border: none;
-    margin-top: 5px;
-    height: 61px;
+    height: 45px;
+}
+
+#specialsModal .specials_button {
+    margin: 1px;
+}
+
+#wasteModal .waste_button  {
+    margin: 1px;
+}
+
+#unpaidModal .unpaid_button {
+    margin: 1px;
+}
+
+.pay_method_button img {
+    filter: brightness(1.15);
+    border-radius: 5px;
+}
+
+
+.oap-students {
+    background-color:rgb(87, 10, 138)
 }
 
 img {
@@ -304,6 +362,7 @@ form {
 #product_headings_row h6 {
     margin: 0;
     text-align: center;
+    font-size: .8rem;
 }
 
 .products_rows_div {
@@ -337,7 +396,7 @@ form {
 
 .product_row p {
     margin: 0;
-    font-size: .9rem;
+    font-size: .8rem;
 }
 
 .product_row p:not(nth-of-type(1)) {
@@ -346,11 +405,13 @@ form {
 
 .product_row .basket_edit_button {
     text-align: center;
+    font-size: .8rem;
 }
 
 .product-name {
     text-wrap: nowrap;
     overflow: clip;
+    margin-right: 2px !important;
 }
 
 #size {
@@ -383,16 +444,17 @@ form {
 /*-- Grand Totals Section --*/
 .grand_totals_row_label {
     font-weight: 500;
+    
 }
-.grand_totals_row {
-    margin-bottom: 10px;
+
+.grand_totals_row_label, .grand_totals_figure  {
+    font-size: .9rem;
+    margin-bottom: 5px;
 }
+
 #amount_tendered {
-    height: 30px;
+    height: 21px;
     width: 75px;
-}
-#change_due_label {
-    margin-top: 18px;
 }
 
 .modal {
@@ -401,12 +463,19 @@ form {
 
 /*Staff modal */
 .staff-name {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 5px 0;
     margin:3px auto;
     max-width: 80%;
     border-radius: 5px;
     font-weight: bold;
+    height: 46px;
+}
+
+.staff-name p {
+    margin: 0;
 }
 
 #staff_modal .staff-name:nth-child(even) {
@@ -454,6 +523,7 @@ form {
     border-radius: 1rem;
     margin-bottom: 3px; */
     width: 100%;
+    /* z-index: 99999999999; */
 }
 
 .toast-header {

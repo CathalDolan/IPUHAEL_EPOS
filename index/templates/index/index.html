@@ -9,7 +9,8 @@
             <!-- Modal body -->
             <div class="modal-body">
                 {% for member in staff %}
-                <div class="staff-name" data-member_id="{{ member.id }}">{{ member }}</div>
+
+                <div class="staff-name" data-member_id="{{ member.id }}"><p>{{ member }}</p></div>
                 {% endfor %}
             </div>
 
@@ -372,6 +373,25 @@
                 </button>
             </div>
             {% endfor %}
+            {% for cocktail in cocktails %}
+            <div class="col-2">
+                <button class="btn {{cocktail.category}} drink product_button" id="{{cocktail.id}}"
+                    data-pfand="{{cocktail.pfand}}" data-category="{{cocktail.category}}" data-name="{{cocktail.name}}"
+                    data-price_default="{{cocktail.price_default}}"
+                    data-price_sgle="{{cocktail.price_sgle}}"
+                    data-price_dble="{{cocktail.price_dble}}"
+                    data-price_dash="{{cocktail.price_dash}}"
+                    data-price_03="{{cocktail.price_03}}"
+                    data-price_04="{{cocktail.price_04}}" 
+                    data-price_pint="{{cocktail.price_pint}}"
+                    data-price_btle="{{cocktail.price_btle}}"
+                    data-bar_product="{{cocktail.bar_product}}"
+                    data-kitchen_product="{{cocktail.kitchen_product}}"
+                    >
+                    {{cocktail.name}}
+                </button>
+            </div>
+            {% endfor %}
             {% for shot in shots %}
             <div class="col-2">
                 <button class="btn {{shot.category}} drink product_button" id="{{shot.id}}" data-pfand="{{shot.pfand}}"
@@ -393,7 +413,9 @@
             {% endfor %}
             <div class="col-2">
                 <button class="btn open_drink pfand_product" data-pfand="true" data-bs-toggle="modal"
-                    data-bs-target="#open_drink_modal" data-value="0">
+                    data-bs-target="#open_drink_modal" data-value="0"
+                    data-bar_product="True"
+                    data-kitchen_product="False">
                     Open Drink
                 </button>
             </div>
@@ -426,6 +448,14 @@
                 data-bar_product="False"
                 data-kitchen_product="True">
                     Jumbo
+                </button>
+            </div>
+            <div class="col-2">
+                <button class="btn open_drink pfand_product" data-pfand="true" data-bs-toggle="modal"
+                    data-bs-target="#open_drink_modal" data-value="0"
+                    data-bar_product="False"
+                    data-kitchen_product="True">
+                    Open Drink
                 </button>
             </div>
         </div>
@@ -486,10 +516,10 @@
         </p>
         <!--  Pfand Buttons  -->
         <div class="row pfand_button_row">
-            <div class="col">
+            <!-- <div class="col">
                 <p class="pfand-return-title">Pfand return</p>
                 
-            </div>
+            </div> -->
             <div class="col">
                 <button class="pfand_button activate" data-value="1">
                     1
@@ -674,10 +704,10 @@
             <!-- Grand Totals Rows -->
             <div class="row totals_row" id="grand_totals_row_div">
                 <div class="col-6">
-                    <p class="grand_totals_row grand_totals_row_label d-none">Number of Products:</p>
-                    <!-- <p class="grand_totals_row grand_totals_row_label">Drinks / Food Sub-Total:</p>
-                    <p class="grand_totals_row grand_totals_row_label">Drinks / Food Discount:</p>-->
-                    <p class="grand_totals_row grand_totals_row_label d-none">Drinks / Food Grand Total:</p>
+                    <!-- <p class="grand_totals_row grand_totals_row_label d-none">Number of Products:</p> -->
+                    <!-- <p class="grand_totals_row grand_totals_row_label">Drinks / Food Sub-Total:</p> -->
+                    <!-- <p class="grand_totals_row grand_totals_row_label">Drinks / Food Discount:</p> -->
+                    <!-- <p class="grand_totals_row grand_totals_row_label d-none">Drinks / Food Grand Total:</p> -->
                     <p class="grand_totals_row grand_totals_row_label">Pfand Total:</p>
                     <p class="grand_totals_row grand_totals_row_label">Total Due:</p>
                     <p class="grand_totals_row grand_totals_row_label">Tendered Amount:</p>
@@ -685,9 +715,9 @@
                 </div>
                 <div class="col-6">
                     <p class="grand_totals_row grand_totals_figure d-none" id="total_number_of_products"># Products</p>
-                    <!-- <p class="grand_totals_row grand_totals_figure" id="food_subtotal">€</p>
-                    <p class="grand_totals_row grand_totals_figure" id="food_discount">€</p> -->
-                    <p class="grand_totals_row grand_totals_figure d-none" id="food_grand_total">€</p>
+                    <!-- <p class="grand_totals_row grand_totals_figure" id="food_subtotal">€</p> -->
+                    <!-- <p class="grand_totals_row grand_totals_figure" id="food_discount">€</p> -->
+                    <!-- <p class="grand_totals_row grand_totals_figure d-none" id="food_grand_total">€</p> -->
                     <p class="grand_totals_row grand_totals_figure" id="pfand_total">€</p>
                     <p class="grand_totals_row grand_totals_figure" id="total_due">€</p>
                     <span class="euro_symbol" id="amount_tendered_span">€
@@ -726,14 +756,10 @@
                         <img src="{% static 'images/€20_note.png' %}">
                     </button>
                 </div>
+                
                 <div class="col-3">
                     <button class="btn €_notes_button pay_method_button" data-value="50" data-payment_method="Cash">
                         <img src="{% static 'images/€50_note.png' %}">
-                    </button>
-                </div>
-                <div class="col-3">
-                    <button class="btn pay_method_button" id="credit_card_button" data-payment_method="credit_card">
-                        <img src="{% static 'images/credit_card_icon.png' %}">
                     </button>
                 </div>
                 <div class="col-3">
@@ -742,20 +768,27 @@
                     </button>
                 </div>
                 <div class="col-3">
+                    <button class="btn pay_method_button" id="credit_card_button" data-payment_method="credit_card">
+                        <img src="{% static 'images/credit_card_icon.png' %}">
+                    </button>
+                </div>
+                <div class="col-3">
                     <button class="btn exact_tendered">
                         Exact Tendered
                     </button>
                 </div>
+                
+                
                 <div class="col-3">
-                    <!-- <button class="btn €_notes_button pay_method_button" data-value="200" data-payment_method="Cash">
-                        <img src="{% static 'images/€200_note.png' %}">
-                    </button> -->
+                    <button class="btn oap-students">
+                        OAP/Student Discount
+                    </button>
                 </div>
                 <!-- The Specials Button -->
                 <div class="col-3">
                     <button class="btn specials_button" type="button" data-bs-toggle="modal"
                         data-bs-target="#specialsModal">
-                        Specials
+                        Discount Specials
                     </button>
                 </div>
                 <!-- The Specials Modal -->
@@ -794,8 +827,20 @@
                         </div>
                     </div>
                 </div>
-                <!-- The Unpaid Button -->
+               
+                <!-- Finish Button -->
                 <div class="col-3">
+                    <button class="btn finish_button payment_button">
+                        Finish
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button class="btn cancel_button">
+                        Cancel
+                    </button>
+                </div>
+                 <!-- The Unpaid Button -->
+                 <div class="col-3">
                     <button class="btn unpaid_button" data-bs-toggle="modal" data-bs-target="#unpaidModal">
                         Unpaid
                     </button>
@@ -845,17 +890,6 @@
 
                         </div>
                     </div>
-                </div>
-                <!-- Finish Button -->
-                <div class="col-3">
-                    <button class="btn finish_button payment_button">
-                        Finish
-                    </button>
-                </div>
-                <div class="col-3">
-                    <button class="btn cancel_button">
-                        Cancel
-                    </button>
                 </div>
                 <!-- The Waste Button -->
                 <div class="col-3">
