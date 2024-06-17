@@ -367,8 +367,8 @@ form {
 
 .products_rows_div {
     text-overflow: ellipsis;
-    min-height: 25px;
-    max-height: 200px;
+    /* min-height: 25px; */
+    /* max-height: 200px; */
     height:auto;
     overflow-y:auto;
     display: flex;
@@ -393,6 +393,10 @@ form {
 .product_row [class*="col"] {
     padding: 0;
 }
+
+/* .product_row:nth-child(odd) {
+    background-color: #fff;
+} */
 
 .product_row p {
     margin: 0;

@@ -1,9 +1,17 @@
 console.log("JS is Working")
+console.log("body = ", $('body'));
 console.log("height = ", this.screen.height);
 console.log("width = ", screen.width);
+$('#screenHeight').text(`screenHeight =  ${screen.height}`);
+$('#screenWidth').text(`screenWidth =  ${screen.width}`);
+// $('#bodyHeight').text(`bodyHeight =  ${$('body').height}`);
+// $('#bodyWidth').text(`bodyWidth =  ${body.width}`);
+
 window.addEventListener('resize', function(event) {
-    console.log("height = ", this.screen.height);
+    console.log("height = ", screen.height);
     console.log("width = ", screen.width);
+    $('#screenHeight').text("screenHeight = ", screen.height);
+    $('#screenWidth').text("screenWidth = ", screen.width);
 }, true);
 let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
 // let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
