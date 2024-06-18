@@ -21,13 +21,12 @@ def index(request):
             return JsonResponse({'status': 'Checkout Complete'}, status=200)
         elif request.method == 'POST':
             data = json.load(request)
-            # print("Data 0", data[0])
-            print("Data 1", data[1]['Grand_Total']['Payment_Method'])
-            # print("Data 2", data[2])
-            # staff_member = Staff.objects.get('pk'=)
+            print("Data 0", data[0])
+            print("Data 1 = ", data[1])
+            print("Data 2", data[2])
             staff_member = Staff.objects.get(id=data[1]['Grand_Total']["staff_member"])
             for v in data[1].values():
-                print("v = ", v)
+                # print("v = ", v)
                 new_grand_total = GrandTotal(
                     number_of_products=int(v["Total_Products_Qty"]),
                     staff_member=staff_member,
@@ -37,12 +36,13 @@ def index(request):
                     total_due=float(v["Total_Due"]),
                     tendered_amount=float(v["Amount_Tendered"]),
                     change_due=float(v["Change_Due"]),
+                    discounts=v["Discounts"],
                     payment_method=v["Payment_Method"],
                     payment_reason=v["payment_reason"],
                 )
                 new_grand_total.save()
             discount = data[2]
-            print("discount = ", discount)
+            # print("discount = ", discount)
             # print("discount_type = ", discount[0])
             for k, v in data[0].items():
                 for x in v:
@@ -65,10 +65,8 @@ def index(request):
                         new_line_items.save()
             for k, v in data[2].items():
                 print("discount product = ", v)
-                # for y in v:
-                # print("v = ", v)
                 for x in v:
-                    print("x['name'] = ", x['name'])
+                    # print("x['name'] = ", x['name'])
                     if x['name'] != 'Applied' and x['name'] != 'Invalid':
                         # product = Product.objects.get(name=x['name'])
                         new_line_items = LineItem(

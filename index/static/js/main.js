@@ -4,21 +4,30 @@ console.log("height = ", this.screen.height);
 console.log("width = ", screen.width);
 $('#screenHeight').text(`screenHeight =  ${screen.height}`);
 $('#screenWidth').text(`screenWidth =  ${screen.width}`);
-// $('#bodyHeight').text(`bodyHeight =  ${$('body').height}`);
-// $('#bodyWidth').text(`bodyWidth =  ${body.width}`);
+$('#bodyHeight').text(`bodyHeight =  ${document.body.offsetHeight}`);
+$('#bodyWidth').text(`bodyWidth =  ${document.body.offsetWidth}`);
 
 window.addEventListener('resize', function(event) {
-    console.log("height = ", screen.height);
-    console.log("width = ", screen.width);
-    $('#screenHeight').text("screenHeight = ", screen.height);
-    $('#screenWidth').text("screenWidth = ", screen.width);
+    // console.log("height = ", screen.height);
+    // console.log("width = ", screen.width);
+    $('#screenHeight').empty().text(`screenHeight =  ${screen.height}`);
+    $('#screenWidth').empty().text(`screenWidth =  ${screen.width}`);
+    $('#bodyHeight').empty().text(`bodyHeight =  ${document.body.offsetHeight}`);
+    $('#bodyWidth').empty().text(`bodyWidth =  ${document.body.offsetWidth}`);
 }, true);
-let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-// let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
+// let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
+let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function () {
-    
+    // sessionStorage.removeItem("kitchen_display");
+    let kitchen_display = sessionStorage.getItem("kitchen_display");
+    console.log("kitchen_display = ", kitchen_display);
+    if(kitchen_display == "true") {
+        $('.bar_kitchen').text("Bar Products");
+        $('[data-bar_product=True]').parent().addClass('hide');
+        $('[data-kitchen_product=True]').parent().removeClass('hide');
+    }
     setInterval(function () {
         let date = new Date();
         let day = date.getDay();
@@ -123,12 +132,14 @@ function closeFullscreen() {
 
 $('#open_drink_modal').on('shown.bs.modal', function () {
     console.log("open drink modal triggered");
-    $('input[name="quantity"]').val(null);
+    $('input[name="quantity"]').val(1);
     $('input[name="drink-name"]').val('');
     $('input[name="price"]').val(null);
     $('input[name="pfand"]').prop('checked',true);
     $('.field-error').text('')
-    $('Input').first().focus()
+    // $('Input').first().focus()
+    console.log($('#open_drink_modal').find('[name=price'))
+    $('#open_drink_modal').find('[name=price').focus();
   })
 
 let Buttons = document.querySelectorAll('.product_button'); // Used anywhere?
@@ -182,10 +193,12 @@ $('.bar_kitchen').click(function() {
     console.log("Bar_kitchen click")
     console.log($(this).text())
     if($(this).text() == "Bar Products") {
-        $(this).text("Kitchen Products")
+        $(this).text("Kitchen Products");
+        sessionStorage.setItem("kitchen_display", false);
     }
     else {
-        $(this).text("Bar Products")
+        $(this).text("Bar Products");
+        sessionStorage.setItem("kitchen_display", true);
     }
     $('[data-bar_product=True]').parent().toggleClass('hide');
     $('[data-kitchen_product=True]').parent().toggleClass('hide');
@@ -407,6 +420,7 @@ $('.open-drink-submit').click(() => {
     let abbrv_size = product_size.split("_")[1]; 
     let product_qty = Number($('input[name="quantity"]').val());
     let product_name = $('input[name="drink-name"]').val();
+    let abbr_name = $('input[name="drink-name"]').val();
     let product_price = Number($('input[name="price"]').val());
     let pfand_payable = $('input[name="pfand"]').prop("checked");
     if(product_qty == '') {
@@ -438,6 +452,7 @@ $('.open-drink-submit').click(() => {
     product = {
         "category": "Open drink",
         "name": product_name,
+        "abbr_name": abbr_name,
         "size": abbrv_size,
         "qty": product_qty,
         "price": product_price,
@@ -449,6 +464,11 @@ $('.open-drink-submit').click(() => {
     ALL_PRODUCTS.push(product);
     apply_specials();
 });
+
+// Function for OAP/Studen discount for food items over €6
+// $('.oap-students').click(function() {
+    
+// })
 
 // Function run when a specials option is selected from the modal
 $(document).on('click', '.specials_option', function () {
@@ -473,12 +493,40 @@ $(document).on('click', '.specials_option', function () {
 
 // Function used to reapply the specials when the order basket is changed
 function apply_specials() {
-    // console.log("apply_specials");
+    // console.log("VOUCHERS = ", VOUCHERS);
     // Clone the ALL_PRODUCTS array to a new array called NEW_BASKET in order to manipulate the values without distorting the ALL_PRODUCTS array
     NEW_BASKET = JSON.parse(JSON.stringify(ALL_PRODUCTS)); //https://www.freecodecamp.org/news/how-to-clone-an-array-in-javascript-1d3183468f6a/
     DISCOUNTS = []; // Reset the discounts applied 
     var discount_item = {}; // Reset the discounted item
     // First check is if the 10 for 11 special is in the VOUCHERS array
+    if(VOUCHERS.includes('oap-students')) {
+        console.log("oap-students = ", VOUCHERS);
+        let total_discount = 0;
+        $.each(NEW_BASKET, function(index, item) {
+            if(item.category == 'food') {
+                if(item.price >= 6) {
+                    item.discount_applied = 'oap-students';
+                    item.line_total -= 1;
+                    total_discount += 1;
+                }
+            }
+        })
+        discount_item = { // Create the discounted item with discounted prices applied
+            'category': 'food',
+            'name': 'Applied',
+            'pfand_payable': '',
+            'price': '',
+            'qty': '',
+            'unit_discount': '',
+            'line_total': '',
+            'total_discount': total_discount,
+            'discount_applied': 'OAP/Student',
+            'status': 'Appied',
+            'details': 'Food €'
+        }
+        DISCOUNTS.push(discount_item) 
+
+    }
     if (VOUCHERS.includes('10 for 11')) {
         $.each(NEW_BASKET, function (index, item) { // Iterate through the NEW_BASKET array
             if (item.category == 'draught') { // If there's a draught
@@ -653,6 +701,7 @@ function apply_specials() {
 // UPDATE BASKET: Update the basket each time something is added or removed
 function update_basket() {
     console.log("NEW_BASKET =", NEW_BASKET)
+    console.log("DISCOUNTS =", DISCOUNTS)
     $('.products_rows_div').empty();
     $.each(NEW_BASKET, function () {
         $('.products_rows_div').prepend(
@@ -694,7 +743,7 @@ function update_basket() {
         $(DISCOUNTS).each(function (index, item) {
             // console.log("item = ", item)
             $('.products_rows_div').prepend(
-                `<div class="row product_row ${item['name']=='Invalid' ? 'invalid':'valid'}" id="product_headings_row">
+                `<div class="row product_row ${item['name']=='Invalid' ? 'invalid':'valid'}">
                     <div class="col-4">
                         <p class="product_row">${item['discount_applied']}</p>
                     </div>
@@ -706,9 +755,9 @@ function update_basket() {
                     </div>
                     
                     <div class="col-1" id="delete_row_div">
-                        <button class="delete_button basket_edit_button" data-special="${item['discount_applied']}">
+                        <div class="delete_button basket_edit_button" data-special="${item['discount_applied']}">
                             <i class="fa-solid fa-trash"></i>
-                        </button>
+                        </div>
                     </div>
                 </div>`
             );
@@ -945,12 +994,13 @@ $('.payment_button').click(function () {
             return
         }
     }
+    let discounts = '';
     if (DISCOUNTS.length > 0) {
-        payment_reason = '';
+        
         $(DISCOUNTS).each(function () {
             if (this.name != 'Invalid') {
                 console.log("DISCOUNT = ", this.discount_applied)
-                payment_reason += this.discount_applied + ', ';
+                discounts += this.discount_applied + ', ';
             }
 
         })
@@ -962,6 +1012,7 @@ $('.payment_button').click(function () {
     Grand_Total.Amount_Tendered = Amount_Tendered;
     Grand_Total.Total_Due = Total_Due;
     Grand_Total.Change_Due = Change_Due;
+    Grand_Total.Discounts = discounts;
     Grand_Total.Payment_Method = Payment_Method;
     Grand_Total.payment_reason = payment_reason;
     Grand_Total.staff_member = STAFF_ID;
@@ -1004,6 +1055,7 @@ $('.payment_button').click(function () {
             })
             .then(response => response.json())
             .then(data => {
+                console.log("response.data = ", data)
                 if (data.status == "Checkout Complete") {
                     location.reload();
                 }

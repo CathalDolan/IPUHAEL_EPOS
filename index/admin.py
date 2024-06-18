@@ -44,6 +44,7 @@ class GrandTotalAdmin(ExportActionMixin, admin.ModelAdmin):
         'total_due',
         'tendered_amount',
         'change_due',
+        'discounts',
         'payment_method',
         'payment_reason',
     )

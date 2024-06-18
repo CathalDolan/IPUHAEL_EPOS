@@ -103,6 +103,9 @@ class GrandTotal(models.Model):
     payment_method = models.CharField(null=True,
                                       blank=True,
                                       max_length=100)
+    discounts = models.CharField(null=True,
+                                 blank=True,
+                                 max_length=100)
     payment_reason = models.CharField(null=True,
                                       blank=True,
                                       max_length=100)

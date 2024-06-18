@@ -220,7 +220,7 @@ body {
 }
 
 .till-left-side {
-    height: 90vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
 }
@@ -228,7 +228,7 @@ body {
 .till-right-side {
     display: flex;
     flex-direction: column;
-    max-height: 100vh;
+    max-height: 100dvh;
 }
 
 .header-info {
