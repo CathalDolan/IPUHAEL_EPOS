@@ -106,7 +106,7 @@ def index(request):
     foods = Product.objects.all().filter(category="food").exclude(summer_product=False)
     gifts = Product.objects.all().filter(category="gift").exclude(summer_product=False)
     staff = Staff.objects.all().filter(on_duty=True).order_by("name")
-    print("shots = ", shots)
+    
     context = {
         'draughts': draughts,
         'half_n_halfs': half_n_halfs,

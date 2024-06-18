@@ -536,6 +536,7 @@ function apply_specials() {
                     'pfand_payable': item.pfand_payable,
                     'price': 0,
                     'qty': 1,
+                    'size': item.size,
                     'unit_discount': 0,
                     'line_total': 0,
                     'total_discount': item.price,
@@ -587,6 +588,7 @@ function apply_specials() {
                             'pfand_payable': item.pfand_payable,
                             'price': item.price,
                             'qty': 1,
+                            'size': item.size,
                             'unit_discount': 0,
                             'line_total': 0,
                             'total_discount': item.price,
@@ -604,6 +606,7 @@ function apply_specials() {
                             'pfand_payable': item.pfand_payable,
                             'price': item.price,
                             'qty': 1,
+                            'size': item.size,
                             'unit_discount': 0,
                             'line_total': 0,
                             'total_discount': item.price,
@@ -623,6 +626,7 @@ function apply_specials() {
         single_items = single_items.slice(-2)
         if (single_items.length > 1) {
             discount_item = single_items[0]
+            console.log(" = ", )
         } else {
             discount_item = {
                 'name': 'Invalid',
@@ -636,13 +640,15 @@ function apply_specials() {
         }
 
         index = NEW_BASKET.findIndex(obj => {
-            // console.log("obj.name = ", obj.name)
-            return obj.name == discount_item.name;
+            console.log("obj.name = ", obj.name)
+            return (obj.name == discount_item.name && obj.size == discount_item.size);
         })
+        console.log("index = ", index)
         if (index != -1) {
             // NEW_BASKET[index].name += '*'
             // NEW_BASKET[index].qty += -1; 
             NEW_BASKET[index].line_total = NEW_BASKET[index].price * (NEW_BASKET[index].qty - 1);
+            NEW_BASKET[index].qty = NEW_BASKET[index].qty - 1;
         }
         DISCOUNTS.push(discount_item);
     }
