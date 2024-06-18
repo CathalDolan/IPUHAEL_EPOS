@@ -558,7 +558,7 @@
             <!--  onclick="openFullscreen();" -->
             <i class="fa-solid fa-minimize" onclick="closeFullscreen();"></i>
             <span id="time_and_date"></span>
-            <span class="logged_in_as text-end"><!--{{ request.user }}-->KiWo2024</span>
+            <span class="logged_in_as text-end">{% if request.user.is_authenticated %} KiWo2024 {% else %} <a href="/admin/">Login</a> {% endif %}</span>
             <span class="staff-user"></span>
         </p>
         <!--  Pfand Buttons  -->

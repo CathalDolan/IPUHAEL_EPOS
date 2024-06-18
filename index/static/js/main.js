@@ -101,7 +101,7 @@ window.onload = function () {
                 break;
         }
 
-        document.getElementById('time_and_date').innerHTML = day + " " + month + " " + date.getDate() + " " + date.getHours() + ":" + (date.getMinutes()<10 ? 
+        document.getElementById('time_and_date').innerHTML = day + ", " + month + " " + date.getDate() + ", " + date.getHours() + ":" + (date.getMinutes()<10 ? 
         "0" + date.getMinutes() : date.getMinutes());
     }, 1000); // 1000 milliseconds = 1 second
 

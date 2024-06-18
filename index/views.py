@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from . models import Product, GrandTotal, LineItem, Staff
 from django.views.decorators.csrf import csrf_exempt, requires_csrf_token, ensure_csrf_cookie
 from django.http import JsonResponse
@@ -7,6 +8,7 @@ import json
 
 
 # @ensure_csrf_cookie
+# @login_required
 def index(request):
     """ A view to return the index page """
     """https://testdriven.io/blog/django-ajax-xhr/"""
