@@ -32,8 +32,13 @@ window.onload = function () {
     let kitchen_display = sessionStorage.getItem("kitchen_display");
     if(kitchen_display == "true") {
         $('.bar_kitchen').text("Bar Products");
-        $('[data-bar_product=True]').parent().addClass('hide');
         $('[data-kitchen_product=True]').parent().removeClass('hide');
+        $('[data-kitchen_product=False]').parent().addClass('hide');
+    }
+    else {
+        $('.bar_kitchen').text("Kitchen Products");
+        $('[data-bar_product=True]').parent().removeClass('hide');
+        $('[data-bar_product=False]').parent().addClass('hide');
     }
     setInterval(function () {
         let date = new Date();
@@ -200,15 +205,17 @@ $('.bar_kitchen').click(function() {
     console.log("Bar_kitchen click")
     console.log($(this).text())
     if($(this).text() == "Bar Products") {
-        $(this).text("Kitchen Products");
+        $('.bar_kitchen').text("Kitchen Products");
+        $('[data-bar_product=True]').parent().removeClass('hide');
+        $('[data-bar_product=False]').parent().addClass('hide');
         sessionStorage.setItem("kitchen_display", false);
     }
     else {
         $(this).text("Bar Products");
+        $('[data-kitchen_product=True]').parent().removeClass('hide');
+        $('[data-kitchen_product=False]').parent().addClass('hide');
         sessionStorage.setItem("kitchen_display", true);
     }
-    $('[data-bar_product=True]').parent().toggleClass('hide');
-    $('[data-kitchen_product=True]').parent().toggleClass('hide');
 })
 
 // Select product size - Needed in Phase 2
