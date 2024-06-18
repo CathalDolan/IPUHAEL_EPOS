@@ -1,11 +1,20 @@
 console.log("JS is Working")
-console.log("body = ", $('body'));
-console.log("height = ", this.screen.height);
-console.log("width = ", screen.width);
+
 $('#screenHeight').text(`screenHeight =  ${screen.height}`);
 $('#screenWidth').text(`screenWidth =  ${screen.width}`);
 $('#bodyHeight').text(`bodyHeight =  ${document.body.offsetHeight}`);
 $('#bodyWidth').text(`bodyWidth =  ${document.body.offsetWidth}`);
+
+const host = window.location.host;
+var url = '';
+if(host.includes("heroku")) {
+    console.log("HEROKU")
+    url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/"
+}
+else {
+    console.log("GITPOD")
+    url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
+}
 
 window.addEventListener('resize', function(event) {
     // console.log("height = ", screen.height);
@@ -15,14 +24,12 @@ window.addEventListener('resize', function(event) {
     $('#bodyHeight').empty().text(`bodyHeight =  ${document.body.offsetHeight}`);
     $('#bodyWidth').empty().text(`bodyWidth =  ${document.body.offsetWidth}`);
 }, true);
-let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-// let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
+
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function () {
     // sessionStorage.removeItem("kitchen_display");
     let kitchen_display = sessionStorage.getItem("kitchen_display");
-    console.log("kitchen_display = ", kitchen_display);
     if(kitchen_display == "true") {
         $('.bar_kitchen').text("Bar Products");
         $('[data-bar_product=True]').parent().addClass('hide');
