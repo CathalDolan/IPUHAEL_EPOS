@@ -15,8 +15,8 @@ window.addEventListener('resize', function(event) {
     $('#bodyHeight').empty().text(`bodyHeight =  ${document.body.offsetHeight}`);
     $('#bodyWidth').empty().text(`bodyWidth =  ${document.body.offsetWidth}`);
 }, true);
-// let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
-let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
+let url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/";
+// let url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function () {
