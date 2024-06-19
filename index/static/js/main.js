@@ -4,6 +4,11 @@ $('#screenHeight').text(`screenHeight =  ${screen.height}`);
 $('#screenWidth').text(`screenWidth =  ${screen.width}`);
 $('#bodyHeight').text(`bodyHeight =  ${document.body.offsetHeight}`);
 $('#bodyWidth').text(`bodyWidth =  ${document.body.offsetWidth}`);
+console.log("sessionStorage = ", sessionStorage)
+for (const [key, value] of Object.entries(sessionStorage)) {
+    console.log(`${key}: ${value}`);
+    $('#sessionStorage').append(`${key}: ${value}`)
+}
 
 const host = window.location.host;
 var url = '';
