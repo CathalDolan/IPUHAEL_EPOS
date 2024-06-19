@@ -21,14 +21,14 @@ else {
     url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
 }
 
-window.addEventListener('resize', function(event) {
-    // console.log("height = ", screen.height);
-    // console.log("width = ", screen.width);
-    $('#screenHeight').empty().text(`screenHeight =  ${screen.height}`);
-    $('#screenWidth').empty().text(`screenWidth =  ${screen.width}`);
-    $('#bodyHeight').empty().text(`bodyHeight =  ${document.body.offsetHeight}`);
-    $('#bodyWidth').empty().text(`bodyWidth =  ${document.body.offsetWidth}`);
-}, true);
+// window.addEventListener('resize', function(event) {
+//     // console.log("height = ", screen.height);
+//     // console.log("width = ", screen.width);
+//     $('#screenHeight').empty().text(`screenHeight =  ${screen.height}`);
+//     $('#screenWidth').empty().text(`screenWidth =  ${screen.width}`);
+//     $('#bodyHeight').empty().text(`bodyHeight =  ${document.body.offsetHeight}`);
+//     $('#bodyWidth').empty().text(`bodyWidth =  ${document.body.offsetWidth}`);
+// }, true);
 
 
 //SET TIME & DATE: Fn to set time and date.
@@ -222,6 +222,11 @@ $('.bar_kitchen').click(function() {
         $('[data-kitchen_product=False]').parent().addClass('hide');
         sessionStorage.setItem("kitchen_display", true);
     }
+    for (const [key, value] of Object.entries(sessionStorage)) {
+        console.log(`${key}: ${value}`);
+        $('#sessionStorage').empty().append(`${key}: ${value}`)
+    }
+    
 })
 
 // Select product size - Needed in Phase 2
