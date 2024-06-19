@@ -36,7 +36,7 @@ window.onload = function () {
     // sessionStorage.removeItem("kitchen_display");
     console.log(sessionStorage)
     let kitchen_display = sessionStorage.getItem("kitchen_display");
-    if(kitchen_display == "true") {
+    if(kitchen_display == "True") {
         $('.bar_kitchen').text("Bar Products");
         $('[data-kitchen_product=True]').parent().removeClass('hide');
         $('[data-kitchen_product=False]').parent().addClass('hide');
@@ -188,7 +188,7 @@ $(document).ready(function() {
     $('.food_row').find('.product_button').removeClass('enabled').addClass('disabled');
     $('.food_row').find(`[data-price_regular!=None]`).addClass('enabled').removeClass('disabled');
     $('.food_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
-    $('[data-bar_product=False]').parent().addClass('hide')
+    // $('[data-bar_product=False]').parent().addClass('hide')
 })
 
 $('.staff-name').click(function() {
@@ -214,13 +214,13 @@ $('.bar_kitchen').click(function() {
         $('.bar_kitchen').text("Kitchen Products");
         $('[data-bar_product=True]').parent().removeClass('hide');
         $('[data-bar_product=False]').parent().addClass('hide');
-        sessionStorage.setItem("kitchen_display", false);
+        sessionStorage.setItem("kitchen_display", "False");
     }
     else {
         $('.bar_kitchen').text("Bar Products");
         $('[data-kitchen_product=True]').parent().removeClass('hide');
         $('[data-kitchen_product=False]').parent().addClass('hide');
-        sessionStorage.setItem("kitchen_display", true);
+        sessionStorage.setItem("kitchen_display", "True");
     }
     for (const [key, value] of Object.entries(sessionStorage)) {
         console.log(`${key}: ${value}`);
