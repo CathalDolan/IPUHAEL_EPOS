@@ -1,15 +1,5 @@
 console.log("JS is Working")
 
-$('#screenHeight').text(`screenHeight =  ${screen.height}`);
-$('#screenWidth').text(`screenWidth =  ${screen.width}`);
-$('#bodyHeight').text(`bodyHeight =  ${document.body.offsetHeight}`);
-$('#bodyWidth').text(`bodyWidth =  ${document.body.offsetWidth}`);
-console.log("sessionStorage = ", sessionStorage)
-for (const [key, value] of Object.entries(sessionStorage)) {
-    console.log(`${key}: ${value}`);
-    $('#sessionStorage').append(`${key}: ${value}`)
-}
-
 const host = window.location.host;
 var url = '';
 if(host.includes("heroku")) {
@@ -20,16 +10,6 @@ else {
     console.log("GITPOD")
     url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
 }
-
-// window.addEventListener('resize', function(event) {
-//     // console.log("height = ", screen.height);
-//     // console.log("width = ", screen.width);
-//     $('#screenHeight').empty().text(`screenHeight =  ${screen.height}`);
-//     $('#screenWidth').empty().text(`screenWidth =  ${screen.width}`);
-//     $('#bodyHeight').empty().text(`bodyHeight =  ${document.body.offsetHeight}`);
-//     $('#bodyWidth').empty().text(`bodyWidth =  ${document.body.offsetWidth}`);
-// }, true);
-
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function () {
@@ -154,11 +134,10 @@ $('#open_drink_modal').on('shown.bs.modal', function () {
     $('input[name="drink-name"]').val('');
     $('input[name="price"]').val(null);
     $('input[name="pfand"]').prop('checked',true);
-    $('.field-error').text('')
-    // $('Input').first().focus()
-    console.log($('#open_drink_modal').find('[name=price'))
+    $('.field-error').text('');
+    console.log($('#open_drink_modal').find('[name=price'));
     $('#open_drink_modal').find('[name=price').focus();
-  })
+})
 
 let Buttons = document.querySelectorAll('.product_button'); // Used anywhere?
 let ALL_PRODUCTS = [];
@@ -188,7 +167,6 @@ $(document).ready(function() {
     $('.food_row').find('.product_button').removeClass('enabled').addClass('disabled');
     $('.food_row').find(`[data-price_regular!=None]`).addClass('enabled').removeClass('disabled');
     $('.food_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
-    // $('[data-bar_product=False]').parent().addClass('hide')
 })
 
 $('.staff-name').click(function() {
@@ -208,8 +186,6 @@ $('#staff_modal').on('hidden.bs.modal', function (e) {
 })
 
 $('.bar_kitchen').click(function() {
-    console.log("Bar_kitchen click")
-    console.log($(this).text())
     if($(this).text() == "Bar Products") {
         $('.bar_kitchen').text("Kitchen Products");
         $('[data-bar_product=True]').parent().removeClass('hide');
@@ -222,11 +198,6 @@ $('.bar_kitchen').click(function() {
         $('[data-kitchen_product=False]').parent().addClass('hide');
         sessionStorage.setItem("kitchen_display", "True");
     }
-    for (const [key, value] of Object.entries(sessionStorage)) {
-        console.log(`${key}: ${value}`);
-        $('#sessionStorage').empty().append(`${key}: ${value}`)
-    }
-    
 })
 
 // Select product size - Needed in Phase 2
@@ -272,14 +243,10 @@ $('.add_gift_button').click(function() {
 // PRODUCT BUTTONS
 $('.drink.product_button').click(function () {
     let product_size = $('.drink.measure_button.selected').attr('data-price');
-    // console.log("product_size = ", product_size)
     let abbrv_size = product_size.split("_")[1]; // Required when allocating variable sizs to products - Phase 2
-    // console.log("abbrv_size = ", abbrv_size)
-    // console.log("product_size = ", product_size)
     let product_name = $(this).attr('data-name');
     let abbr_name = $(this).attr('data-abbr_name');
     let product_price = $(this).attr('data-' + product_size);
-    // console.log("product_price = ", product_price)
     if(product_price == 'None') {
         product_price = Number($(this).attr('data-price_default'));
         abbrv_size = '';
@@ -287,16 +254,14 @@ $('.drink.product_button').click(function () {
     else {
         product_price = Number(product_price)
     }   
-    // console.log("product_price = ", product_price)
 
     let product_category = $(this).attr('data-category');
     let pfand_payable = $(this).attr('data-pfand');
     if(abbrv_size == "btle" || abbrv_size == "dash") {
         pfand_payable = "False";
     }
-    let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
-    // console.log("product = ", product)
-    let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
+    let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); 
+    let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); 
 
     if (product.length > 0) {
         ALL_PRODUCTS[product_index].qty += 1;
@@ -423,7 +388,7 @@ $(document).on('click', '.subtract_button', function () {
 // DELETE a product line from the basket
 $(document).on('click', '.delete_button', function () {
     console.log("Delete Function Fires", this);
-    // If the product row has a data-special attribute not equal to undefined means that this ow is a voucher
+    // If the product row has a data-special attribute not equal to undefined means that this row is a voucher
     if ($(this).attr('data-special') != undefined) {
         let voucher_index = VOUCHERS.findIndex(item => item == $(this).attr('data-special')); // Find this attribute in the VOUCHERS array
         VOUCHERS.splice(voucher_index, 1); // Remove this voucher from the VOUCHERS array
@@ -490,11 +455,6 @@ $('.open-drink-submit').click(() => {
     apply_specials();
 });
 
-// Function for OAP/Studen discount for food items over €6
-// $('.oap-students').click(function() {
-    
-// })
-
 // Function run when a specials option is selected from the modal
 $(document).on('click', '.specials_option', function () {
     let special = $(this).attr('data-special');
@@ -523,7 +483,6 @@ function apply_specials() {
     NEW_BASKET = JSON.parse(JSON.stringify(ALL_PRODUCTS)); //https://www.freecodecamp.org/news/how-to-clone-an-array-in-javascript-1d3183468f6a/
     DISCOUNTS = []; // Reset the discounts applied 
     var discount_item = {}; // Reset the discounted item
-    // First check is if the 10 for 11 special is in the VOUCHERS array
     if(VOUCHERS.includes('oap-students')) {
         console.log("oap-students = ", VOUCHERS);
         let total_discount = 0;
@@ -552,6 +511,7 @@ function apply_specials() {
         DISCOUNTS.push(discount_item) 
 
     }
+    // First check is if the 10 for 11 special is in the VOUCHERS array
     if (VOUCHERS.includes('10 for 11')) {
         $.each(NEW_BASKET, function (index, item) { // Iterate through the NEW_BASKET array
             if (item.category == 'draught') { // If there's a draught
@@ -604,7 +564,6 @@ function apply_specials() {
             if(item.category != "gifts")
                 if (item.qty > 1) {
                     double_item = true;
-                    // console.log("YES > 1");
                     if ((Number(item.price) > price)) {
                         price = item.price;
                         discount_item = {
@@ -917,9 +876,6 @@ $('.exact_tendered').click(function () {
 })
 
 // CREDIT CARD BUTTON: Populate tendered amount when Credit Card button pressed
-// const card_button = document.getElementById("credit_card_button");
-// card_button.addEventListener("click", card_tendered);
-// function card_tendered(){
 $('#credit_card_button').click(function () {
     // Amount Tendered
     Amount_Tendered = Total_Due;
@@ -994,8 +950,6 @@ $('.payment_button').click(function () {
 
     // Functionality to allow a payment be submitted where the total due is 0 because the pfand covered the cost.
     // e.g. where a customer buys 1 Pfand Shot Special, but returns a glass. One cancels the other so amount submitted and amount due is 0
-    // console.log("FINISH BTN Pfand_Total", Pfand_Total);
-    // console.log("FINISH BTN Line_Totals_Total", Line_Totals_Total);
     if ((Line_Totals_Total * -1) >= Pfand_Total) {
         Payment_Method = "Pfand Payment" // This applies where the pfand is sufficient to cover the payment.
         $('#amount_tendered').val(0);
@@ -1048,14 +1002,11 @@ $('.payment_button').click(function () {
     Grand_Total.payment_reason = payment_reason;
     Grand_Total.staff_member = STAFF_ID;
 
-    // console.log("PAYMENT BUTTONS FN: Amount Tendered", Amount_Tendered);
-    // console.log("PAYMENT BUTTONS FN: Total Due", Total_Due);
     let sub_amount = Amount_Tendered - Total_Due;
     // console.log("PAYMENT BUTTONS FN: Sub Amount", sub_amount);
 
     if (Amount_Tendered < Total_Due) {
         var message_container = $(".message-container");
-        // console.log("message_container", message_container);
         $(message_container).empty().append(`
             <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="arrow-up arrow-warning"></div>
