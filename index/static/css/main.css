@@ -102,7 +102,7 @@ body {
 }
 
 .shots,
-.gifts_button,
+.gifts,
 .specials_button {
     background-color: rgb(87, 10, 138);
 }
@@ -499,7 +499,7 @@ form {
     margin-bottom: 10px;
 }
 
-#gifts_modal .gifts_button {
+#gifts_modal .gifts {
     margin: 1px;
 }
 /* #pfand_modal .row {

@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% block extra_css %}
+<!--My CSS stylesheet-->
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock %}
 {% block content %}
 <!-- The Staff Modal -->
 <div class="modal" id="staff_modal">
@@ -114,9 +117,9 @@
             <!-- Modal body -->
             <div class="modal-body">
                 {% for gift in gifts %}
-                <button class="btn {{gift.category}} product_button" id="{{gift.id}}" data-pfand="{{gift.pfand}}"
-                    data-category="{{gift.category}}" data-name="{{gift.name}}"
-                    data-price_default="{{food.price_default}}" data-bs-dismiss="modal">
+                <button class="btn {{gift.category}} product_button add_gift_button" id="{{gift.id}}" data-pfand="{{gift.pfand}}"
+                    data-category="{{gift.category}}" data-name="{{gift.name}}" data-abbr_name="{{ gift.abbr_name }}"
+                    data-price_default="{{gift.price_default}}" data-bs-dismiss="modal">
                     {{gift.name}}
                 </button>
                 {% endfor %}
@@ -130,7 +133,7 @@
                     data-bs-dismiss="modal">
                     Fridge Magnet
                 </button> -->
-                <button class="btn product_button gifts_button add_gift_button" id="{{gift.id}}" data-pfand="false"
+                <!-- <button class="btn product_button gifts_button add_gift_button" id="{{gift.id}}" data-pfand="false"
                     data-category="gifts" data-name="Magnet/Decoration Special" data-abbr_name="Mag/Dec Spec" data-price_default="19.99"
                     data-bs-dismiss="modal">
                     Magnet/Decoration Special
@@ -184,7 +187,7 @@
                     data-category="gifts" data-name="Badge" data-abbr_name="Badge" data-price_default="1.00"
                     data-bs-dismiss="modal">
                     Badge
-                </button>
+                </button> -->
             </div>
 
             <!-- Modal footer -->
@@ -531,7 +534,7 @@
             </div>
             <!-- Gifts Button -->
             <div class="col-2">
-                <button class="btn gifts_button" data-bs-toggle="modal" data-bs-target="#gifts_modal">
+                <button class="btn gifts" data-bs-toggle="modal" data-bs-target="#gifts_modal">
                     Gifts
                 </button>
             </div>
@@ -546,6 +549,12 @@
                 <button class="btn previous_orders_button">
                     Previous Orders
                 </button>
+            </div>
+            <!-- Reports Button -->
+            <div class="col-2">
+                <a href="{% url 'reports' %}"><button class="btn previous_orders_button">
+                    Reports
+                </button></a>
             </div>
         </div>
         <input type="hidden" name="redirect_url" value="{{ request.path}}">
@@ -1002,4 +1011,12 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block post_load_js %}
+{{ block.super }}
+<script>
+    var staff_modal = new bootstrap.Modal(document.getElementById('staff_modal'), {})
+    staff_modal.show()
+</script>
+<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

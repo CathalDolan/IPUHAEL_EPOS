@@ -106,7 +106,7 @@ def index(request):
     shots = Product.objects.all().filter(category="shots").exclude(summer_product=False)
     cocktails = Product.objects.all().filter(category="cocktails").exclude(summer_product=False)
     foods = Product.objects.all().filter(category="food").exclude(summer_product=False)
-    gifts = Product.objects.all().filter(category="gift").exclude(summer_product=False)
+    gifts = Product.objects.all().filter(category="gifts").exclude(summer_product=False)
     staff = Staff.objects.all().filter(on_duty=True).order_by("name")
     
     context = {
@@ -158,4 +158,50 @@ def takings(request):
 
 def reports(request):
     """ A view to return the past orders page """
-    return render(request, 'index/reports.html')
+    entries = LineItem.objects.all().values(
+        'order_date_li',
+        'grand_totals',
+        'category',
+        'name',
+        'quantity',
+        'size',
+        'price_unit',
+        'price_line_total',
+        'discount',
+        'payment_method',
+        'payment_reason',
+        'staff_member__name'
+    )
+    staff = Staff.objects.all()
+    products = Product.objects.all()
+    earliest_date = entries.earliest('order_date_li')
+    latest_date = entries.latest('order_date_li')
+    print("latest_date = ", latest_date["order_date_li"])
+    context = {
+        "data": list(entries),
+        "staff": staff,
+        "products": products,
+        "earliest_date": earliest_date,
+        "latest_date": latest_date
+    }
+    return render(request, 'index/reports.html' , context)
+
+def generate_report(request):
+    print("generate_report")
+    entries = LineItem.objects.all().values(
+        'order_date_li',
+        'grand_totals',
+        'category',
+        'name',
+        'quantity',
+        'size',
+        'price_unit',
+        'price_line_total',
+        'discount',
+        'payment_method',
+        'payment_reason',
+        'staff_member__name'
+    )
+    print("entries = ", entries)
+    return JsonResponse(list(entries),
+                        safe=False)
