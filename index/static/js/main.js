@@ -162,7 +162,7 @@ var STAFF_ID = '';
 
 $(document).ready(function() {
     $('.drinks_row').find('.product_button').removeClass('enabled').addClass('disabled');
-    $('.drinks_row').find(`[data-price_pint!=None]`).addClass('enabled').removeClass('disabled');
+    $('.drinks_row').find(`[data-price_03!=None]`).addClass('enabled').removeClass('disabled');
     $('.drinks_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
     $('.food_row').find('.product_button').removeClass('enabled').addClass('disabled');
     $('.food_row').find(`[data-price_regular!=None]`).addClass('enabled').removeClass('disabled');
@@ -243,13 +243,14 @@ $('.add_gift_button').click(function() {
 // PRODUCT BUTTONS
 $('.drink.product_button').click(function () {
     let product_size = $('.drink.measure_button.selected').attr('data-price');
+    console.log("product_size = ", product_size)
     let abbrv_size = product_size.split("_")[1]; // Required when allocating variable sizs to products - Phase 2
     let product_name = $(this).attr('data-name');
     let abbr_name = $(this).attr('data-abbr_name');
     let product_price = $(this).attr('data-' + product_size);
     if(product_price == 'None') {
         product_price = Number($(this).attr('data-price_default'));
-        abbrv_size = '';
+        abbrv_size = 'Default';
     }
     else {
         product_price = Number(product_price)
