@@ -8,7 +8,7 @@ if(host.includes("heroku")) {
 }
 else {
     console.log("GITPOD")
-    url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu114.gitpod.io/";
+    url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu116.gitpod.io/";
 }
 
 //SET TIME & DATE: Fn to set time and date.
@@ -639,7 +639,7 @@ function apply_specials() {
     }
 
     // // FIFTY % OFF SPECIAL
-    if (VOUCHERS.includes('50% off')) {
+    if (VOUCHERS.includes('20% off')) {
         var applicable_balance = 0;
         var total_discount = 0;
         $.each(NEW_BASKET, function (index, item) {
@@ -653,10 +653,10 @@ function apply_specials() {
         }
         if (applicable_balance > 50) {
             $.each(NEW_BASKET, function (index, item) {
-                item.price = item.price / 2;
-                item.line_total = item.line_total / 2;
-                total_discount += item.line_total;
-                item.discount_applied = '50% off'
+                total_discount += item.line_total * .2
+                item.price = item.price * .8;
+                item.line_total = item.line_total * .8;
+                item.discount_applied = '20% off'
                 console.log("total_discount = ", total_discount)
             })
             discount_item = {
@@ -664,7 +664,7 @@ function apply_specials() {
                 'qty': 1,
                 'unit_discount': 0,
                 'total_discount': total_discount,
-                'discount_applied': '50% off',
+                'discount_applied': '20% off',
                 'status': 'Applied',
                 'details': 'Discount - €' + total_discount.toFixed(2)
             }
@@ -674,7 +674,7 @@ function apply_specials() {
                 'qty': 0,
                 'unit_discount': 0,
                 'total_discount': 0,
-                'discount_applied': '50% off',
+                'discount_applied': '20% off',
                 'status': 'Invalid',
                 'details': ''
             }

@@ -328,6 +328,7 @@ hr {
 
 #unpaidModal .unpaid_button {
     margin: 1px;
+    color: #000;
 }
 
 .pay_method_button img {
