@@ -172,14 +172,18 @@ def reports(request):
         'payment_reason',
         'staff_member__name'
     )
-    staff = Staff.objects.all()
     products = Product.objects.all()
+    categories = products.values('category').distinct()
+    # sizes = products.values('size').distinct()
+    staff = Staff.objects.all()
     earliest_date = entries.earliest('order_date_li')
     latest_date = entries.latest('order_date_li')
-    print("latest_date = ", latest_date["order_date_li"])
+    print("staff = ", staff)
+    print("categories = ", categories)
     context = {
         "data": list(entries),
         "staff": staff,
+        "categories": categories,
         "products": products,
         "earliest_date": earliest_date,
         "latest_date": latest_date
