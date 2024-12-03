@@ -88,7 +88,7 @@ $('document').ready(function () {
             // console.log("groupItemIndex = ", groups[groupItemIndex])
             if(groupItem == undefined) {
                 groups.push({
-                    "staff": item.staff_member__name,
+                    // "staff": item.staff_member__name,
                     "name": item.name,
                     "size": item.size,
                     "quantity": Number(item.quantity),
@@ -116,7 +116,6 @@ $('document').ready(function () {
         groups.forEach(item => {
             $('.table_body').append(
                 `<tr>
-                    <td>${item.staff}</td>
                     <td>${item.name}</td>
                     <td>${item.size}</td>
                     <td>${item.quantity}</td>
