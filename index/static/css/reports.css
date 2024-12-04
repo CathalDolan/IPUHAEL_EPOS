@@ -14,16 +14,35 @@ button {
     vertical-align: middle;
 }
 
+table {
+  margin-bottom: 5px!important;
+}
+
 .summary-table, .group-table {
   font-size: .9rem;
   border: 1px solid black; 
-  padding: 5px; 
+  padding: 2px; 
   margin-bottom: 5px;
+  background-color: #cacaca;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #D6EEEE;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+thead {
+  background-color: #dbdfdf!important;
 }
 
 th:not(:nth-child(1)), td:not(:nth-child(1)) {
   text-align: center;
 }
+
+
 
 .filter-container {
     border: 1px solid black;
