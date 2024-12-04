@@ -155,7 +155,7 @@ def takings(request):
     """ A view to return the past orders page """
     return render(request, 'index/takings.html')
 
-
+@login_required
 def reports(request):
     """ A view to return the past orders page """
     entries = LineItem.objects.all().values(
