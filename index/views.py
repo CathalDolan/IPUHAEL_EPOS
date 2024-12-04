@@ -172,13 +172,13 @@ def reports(request):
         'payment_reason',
         'staff_member__name'
     )
-    products = LineItem.objects.all()
-    for product in products:
-        # print(product.size)
-        if product.size == '':
-            print(product.name)
-            product.size = "Default"
-            product.save()
+    # products = LineItem.objects.all()
+    # for product in products:
+    #     # print(product.size)
+    #     if product.size == '':
+    #         print(product.name)
+    #         product.size = "Default"
+    #         product.save()
     categories = products.values('category').distinct()
     drinks = Product.objects.all().exclude(category="food").exclude(category="gifts")
     food = Product.objects.all().filter(category="food")
