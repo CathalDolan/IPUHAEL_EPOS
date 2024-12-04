@@ -78,8 +78,8 @@ label {
   .dropdown-check-list .anchor:after {
     position: absolute;
     content: "";
-    border-left: 2px solid black;
-    border-top: 2px solid black;
+    border-left: 2px solid #fff;
+    border-top: 2px solid #fff;
     padding: 5px;
     right: 10px;
     top: 20%;
@@ -118,7 +118,7 @@ label {
   .dropdown-check-list.visible .items {
     z-index: 1;
     display: block;
-    height: 500px;
+    max-height: 500px;
     overflow-y: scroll;
   }
 

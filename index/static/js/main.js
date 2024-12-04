@@ -227,7 +227,7 @@ $('.add_gift_button').click(function() {
             "category": product_category,
             "name": product_name,
             "abbr_name": abbr_name,
-            "size": '',
+            "size": 'Default',
             "qty": 1,
             "price": product_price,
             "line_total": product_price,
@@ -235,7 +235,7 @@ $('.add_gift_button').click(function() {
             'discount_applied': ''
         }
         ALL_PRODUCTS.push(product);
-
+        console.log("ALL_PRODUCTS = ", ALL_PRODUCTS)
     }
     apply_specials();
 })

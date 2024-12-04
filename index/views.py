@@ -18,14 +18,14 @@ def index(request):
     # print("is_ajax = ", is_ajax)
     if is_ajax:
         if not user.is_authenticated:
-            print("User not authenticated")
+            # print("User not authenticated")
             messages.warning(request, "Please log in. Try Again!")
             return JsonResponse({'status': 'Checkout Complete'}, status=200)
         elif request.method == 'POST':
             data = json.load(request)
-            print("Data 0", data[0])
-            print("Data 1 = ", data[1])
-            print("Data 2", data[2])
+            # print("Data 0", data[0])
+            # print("Data 1 = ", data[1])
+            # print("Data 2", data[2])
             staff_member = Staff.objects.get(id=data[1]['Grand_Total']["staff_member"])
             for v in data[1].values():
                 # print("v = ", v)
@@ -172,19 +172,30 @@ def reports(request):
         'payment_reason',
         'staff_member__name'
     )
-    products = Product.objects.all()
+    products = LineItem.objects.all()
+    for product in products:
+        # print(product.size)
+        if product.size == '':
+            print(product.name)
+            product.size = "Default"
+            product.save()
     categories = products.values('category').distinct()
+    drinks = Product.objects.all().exclude(category="food").exclude(category="gifts")
+    food = Product.objects.all().filter(category="food")
+    gifts = Product.objects.all().filter(category="gifts")
     # sizes = products.values('size').distinct()
     staff = Staff.objects.all()
     earliest_date = entries.earliest('order_date_li')
     latest_date = entries.latest('order_date_li')
-    print("staff = ", staff)
-    print("categories = ", categories)
+    # print("staff = ", staff)
+    # print("categories = ", categories)
     context = {
         "data": list(entries),
         "staff": staff,
         "categories": categories,
-        "products": products,
+        "drinks": drinks,
+        "food": food,
+        "gifts": gifts,
         "earliest_date": earliest_date,
         "latest_date": latest_date
     }

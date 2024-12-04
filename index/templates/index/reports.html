@@ -54,13 +54,13 @@
                 <h6 class="text-center">FILTER</h6>
                 <div>
                     <label for="from_date">From</label>
-                    <input class="datepicker" id="from_date" type="date" name="from_date" value='{{ earliest_date.order_date_li | date:"Y" }}-{{ earliest_date.order_date_li | date:"m" }}-{{ earliest_date.order_date_li | date:"d" }}'>
+                    <input class="datepicker" min='{{ earliest_date.order_date_li | date:"Y" }}-{{ earliest_date.order_date_li | date:"m" }}-{{ earliest_date.order_date_li | date:"d" }}' max='{{ latest_date.order_date_li | date:"Y" }}-{{ latest_date.order_date_li | date:"m" }}-{{ latest_date.order_date_li | date:"d" }}' id="from_date" type="date" name="from_date" value='{{ earliest_date.order_date_li | date:"Y" }}-{{ earliest_date.order_date_li | date:"m" }}-{{ earliest_date.order_date_li | date:"d" }}'>
                     <input class="timepicker" type="time" id="from_time" name="from_time" value='{{ earliest_date.order_date_li | time:"H:i"}}'>
                 </div>
                 
                 <div>
                     <label for="to_date">To</label>
-                    <input class="datepicker" id="to_date" type="date" name="to_date" value='{{ latest_date.order_date_li | date:"Y" }}-{{ latest_date.order_date_li | date:"m" }}-{{ latest_date.order_date_li | date:"d" }}'>
+                    <input class="datepicker" min='{{ earliest_date.order_date_li | date:"Y" }}-{{ earliest_date.order_date_li | date:"m" }}-{{ earliest_date.order_date_li | date:"d" }}' max='{{ latest_date.order_date_li | date:"Y" }}-{{ latest_date.order_date_li | date:"m" }}-{{ latest_date.order_date_li | date:"d" }}' id="to_date" type="date" name="to_date" value='{{ latest_date.order_date_li | date:"Y" }}-{{ latest_date.order_date_li | date:"m" }}-{{ latest_date.order_date_li | date:"d" }}'>
                     <input class="timepicker" type="time" id="to_time" name="to_time" value='{{ latest_date.order_date_li | time:"H:i"}}'>
                 </div>
                 
@@ -91,12 +91,38 @@
                 </div>
     
                 <div>
-                    <label for="product">Product</label>
-                    <div id="product" class="dropdown-check-list">
-                        <span class="anchor">Select Product</span>
+                    <label for="drinks">Drinks</label>
+                    <div id="drinks" class="dropdown-check-list">
+                        <span class="anchor">Select Drinks</span>
                         <ul class="items">
                             <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
-                            {% for item in products %}
+                            {% for item in drinks %}
+                            <li><input class="checkbox" type="checkbox" name="{{ item }}" checked/><span>{{ item }}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="food">Food</label>
+                    <div id="food" class="dropdown-check-list">
+                        <span class="anchor">Select Food</span>
+                        <ul class="items">
+                            <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
+                            {% for item in food %}
+                            <li><input class="checkbox" type="checkbox" name="{{ item }}" checked/><span>{{ item }}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="gifts">Gifts</label>
+                    <div id="gifts" class="dropdown-check-list">
+                        <span class="anchor">Select Gifts</span>
+                        <ul class="items">
+                            <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
+                            {% for item in gifts %}
                             <li><input class="checkbox" type="checkbox" name="{{ item }}" checked/><span>{{ item }}</span></li>
                             {% endfor %}
                         </ul>

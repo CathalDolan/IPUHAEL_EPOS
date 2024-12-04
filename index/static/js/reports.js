@@ -18,7 +18,6 @@ $('document').ready(function () {
 
     // Function to display the filter dropdown lists when clicked
     $('.anchor').on('click', function () {
-        console.log("this = ", this.parentNode.classList)
         if (this.parentNode.classList.contains('visible')) {
             this.parentNode.classList.remove('visible')
         } else {
@@ -31,7 +30,6 @@ $('document').ready(function () {
         generateCharts()
     })
     $('.checkbox').click(function () {
-        console.log("find = ",  $(this).parents('.items').find("[name='all']"))
         if (this.name == "all") {
             if ($(this).is(':checked')) {
                 $(this).parent().siblings().children().prop("checked", true)
@@ -60,7 +58,13 @@ $('document').ready(function () {
         var selected_categories = $('#category').find("input:checked").map(function () {
             return this.name;
         });
-        var selected_products = $('#product').find("input:checked").map(function () {
+        var selected_drinks = $('#drinks').find("input:checked").map(function () {
+            return this.name;
+        });
+        var selected_food = $('#food').find("input:checked").map(function () {
+            return this.name;
+        });
+        var selected_gifts = $('#gifts').find("input:checked").map(function () {
             return this.name;
         });
         var selected_sizes = $('#size').find("input:checked").map(function () {
@@ -70,16 +74,25 @@ $('document').ready(function () {
             return this.name
         })
 
-        console.log("selected_transaction_type = ", Object.values(selected_transaction_type))
-
+        // console.log("selected_drinks = ", selected_drinks)
+        // console.log("selected_food = ", selected_food)
+        // console.log("selected_gifts = ", selected_gifts)
+        // DATA.forEach(item => {
+        //     console.log(item.name)
+        //     if(Object.values(selected_gifts).includes(item.name)) {
+        //         console.log("------------------------")
+        //     }
+        // })
         let data_filtered = DATA.filter(item => 
-            (Date.parse(item.order_date_li) >= `${Date.parse(from_date)}`) 
+            ((Date.parse(item.order_date_li) >= `${Date.parse(from_date)}`) 
             && (Date.parse(item.order_date_li) <= `${Date.parse(to_date)}`) 
             && Object.values(selected_staff).includes(item.staff_member__name)
             && Object.values(selected_categories).includes(item.category)
-            && Object.values(selected_products).includes(item.name)
             && Object.values(selected_sizes).includes(item.size)
-            && Object.values(selected_transaction_type).includes(item.payment_method)
+            && Object.values(selected_transaction_type).includes(item.payment_method))
+            && (Object.values(selected_drinks).includes(item.name)
+            || Object.values(selected_food).includes(item.name)
+            || Object.values(selected_gifts).includes(item.name))
         );
         console.log("data_filtered = ", data_filtered)
 
@@ -165,10 +178,10 @@ $('document').ready(function () {
             //     y: time
             // })
         })
-        console.log("cashTransactions = ", cashTransactions)
-        console.log("cardTransactions = ", cardTransactions)
-        console.log("wasteTransactions = ", wasteTransactions)
-        console.log("compTransactions = ", compTransactions)
+        // console.log("cashTransactions = ", cashTransactions)
+        // console.log("cardTransactions = ", cardTransactions)
+        // console.log("wasteTransactions = ", wasteTransactions)
+        // console.log("compTransactions = ", compTransactions)
         $('#summary-table').empty()
         $('#summary-table').append(
             `<tr>
