@@ -159,6 +159,7 @@ def takings(request):
 def reports(request):
     """ A view to return the past orders page """
     entries = LineItem.objects.all().values(
+        'id',
         'order_date_li',
         'grand_totals',
         'category',
@@ -172,7 +173,7 @@ def reports(request):
         'payment_reason',
         'staff_member__name'
     )
-    # products = LineItem.objects.all()
+    products = Product.objects.all()
     # for product in products:
     #     # print(product.size)
     #     if product.size == '':

@@ -13,6 +13,7 @@ $('document').ready(function () {
 
     const DATA = JSON.parse(document.getElementById('data').textContent);
     console.log("DATA = ", DATA)
+    console.log("DATA = ", DATA.length)
 
     generateCharts()
 
@@ -46,7 +47,7 @@ $('document').ready(function () {
 
 
     function generateCharts() {
-        console.log("generateCharts")
+        // console.log("generateCharts")
         // console.log("DATA = ", DATA)
         var from_date = new Date($('#from_date').val());
         var to_date = new Date($('#to_date').val());
@@ -74,15 +75,10 @@ $('document').ready(function () {
             return this.name
         })
 
-        // console.log("selected_drinks = ", selected_drinks)
+        // console.log("selected_categories = ", selected_categories)
         // console.log("selected_food = ", selected_food)
         // console.log("selected_gifts = ", selected_gifts)
-        // DATA.forEach(item => {
-        //     console.log(item.name)
-        //     if(Object.values(selected_gifts).includes(item.name)) {
-        //         console.log("------------------------")
-        //     }
-        // })
+        
         let data_filtered = DATA.filter(item => 
             ((Date.parse(item.order_date_li) >= `${Date.parse(from_date)}`) 
             && (Date.parse(item.order_date_li) <= `${Date.parse(to_date)}`) 
@@ -90,11 +86,21 @@ $('document').ready(function () {
             && Object.values(selected_categories).includes(item.category)
             && Object.values(selected_sizes).includes(item.size)
             && Object.values(selected_transaction_type).includes(item.payment_method))
-            && (Object.values(selected_drinks).includes(item.name)
+            && ((Object.values(selected_drinks).includes(item.name) || (item.category == 'Open drink' && Object.values(selected_categories).includes(item.category)))
             || Object.values(selected_food).includes(item.name)
             || Object.values(selected_gifts).includes(item.name))
         );
-        console.log("data_filtered = ", data_filtered)
+        console.log("data_filtered = ", data_filtered.length);
+        DATA.forEach(item => {
+            // console.log(item.name)
+            if(data_filtered.includes(item))
+                 {
+                    console.log("YES")
+            }
+            else {
+                console.log(item.id)  
+            }
+        })
 
         var groups = [];
         var transactions = [];
