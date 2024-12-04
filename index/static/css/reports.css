@@ -5,51 +5,53 @@
 }
 
 h1 {
-    color: green;
+    color: #000;
     text-align: center;
+    font-weight: bolder;
 }
 
 button {
     vertical-align: middle;
 }
 
+.summary-table, .group-table {
+  font-size: .9rem;
+  border: 1px solid black; 
+  padding: 5px; 
+  margin-bottom: 5px;
+}
+
+th:not(:nth-child(1)), td:not(:nth-child(1)) {
+  text-align: center;
+}
+
 .filter-container {
     border: 1px solid black;
-    padding-bottom: 5px;
+    padding: 5px;
+    color: #fff;
+    background-color: #000;
+    font-size: .9rem;
 }
 
-.filter-titles .col {
-    display: flex;
-    justify-content: center;
-
+label {
+  display: block;
+  padding-top: 5px;
 }
 
-.filter-titles p {
-    margin-bottom: 5px;
-}
-
-.filters .col {
-    display: flex;
-    justify-content: center;
-}
-
-.datepicker {
+.datepicker, .timepicker {
    display: block;
+   width: 100%;
+   margin: 5px 0;
 }
-
-/* input, select {
-    height: 28px;
-} */
 
 .dropdown-check-list {
-    display: inline-block;
     position: relative;
   }
   
   .dropdown-check-list .anchor {
-    position: relative;
+    width: 100%;
     cursor: pointer;
-    display: inline-block;
+    display: block;
     padding: 5px 50px 5px 10px;
     border: 1px solid #ccc;
   }
@@ -81,7 +83,8 @@ button {
     display: none;
     margin: 0;
     /* border: 1px solid #ccc; */
-    background-color: #fafafa;
+    background-color: #000;
+    color: #fff;
     border-top: none;
   }
   
@@ -94,6 +97,7 @@ button {
   }
   
   .dropdown-check-list.visible .items {
+    z-index: 1;
     display: block;
     height: 500px;
     overflow-y: scroll;

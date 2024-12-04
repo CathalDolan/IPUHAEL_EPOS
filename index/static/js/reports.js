@@ -66,8 +66,11 @@ $('document').ready(function () {
         var selected_sizes = $('#size').find("input:checked").map(function () {
             return this.name;
         });
+        var selected_transaction_type = $('#transaction_type').find("input:checked").map(function() {
+            return this.name
+        })
 
-        console.log("selected_sizes = ", Object.values(selected_sizes))
+        console.log("selected_transaction_type = ", Object.values(selected_transaction_type))
 
         let data_filtered = DATA.filter(item => 
             (Date.parse(item.order_date_li) >= `${Date.parse(from_date)}`) 
@@ -76,10 +79,16 @@ $('document').ready(function () {
             && Object.values(selected_categories).includes(item.category)
             && Object.values(selected_products).includes(item.name)
             && Object.values(selected_sizes).includes(item.size)
+            && Object.values(selected_transaction_type).includes(item.payment_method)
         );
         console.log("data_filtered = ", data_filtered)
 
         var groups = [];
+        var transactions = [];
+        var cashTransactions = {"number": 0, "total": 0};
+        var cardTransactions = {"number": 0, "total": 0};
+        var wasteTransactions = {"number": 0, "total": 0};
+        var compTransactions = {"number": 0, "total": 0};
         var xyValues = [];
         data_filtered.forEach(item => {
             var groupItem = groups.find(x => x.name == item.name && x.size == item.size);
@@ -100,6 +109,52 @@ $('document').ready(function () {
                 groups[groupItemIndex].total += Number(item.price_line_total);
             }
             
+            var transaction = transactions.find(x => x.id == item.grand_totals);
+            var transactionIndex = transactions.findIndex(x => x.id == item.grand_totals);
+            var cashIncrement = 0;
+            var cashTotalIncrement = 0;
+            var cardIncrement = 0;
+            var cardTotalIncrement = 0;
+            var wasteIncrement = 0;
+            var wasteTotalIncrement = 0;
+            var compIncrement = 0;
+            var compTotalIncrement = 0;
+            switch (item.payment_method) {
+                case "Cash":
+                    cashIncrement = 1;
+                    cashTotalIncrement = Number(item.price_line_total);
+                  break;
+                case "credit_card":
+                    cardIncrement = 1;
+                    cardTotalIncrement = Number(item.price_line_total);
+                  break;
+                case "Waste":
+                    wasteIncrement = 1;
+                    wasteTotalIncrement = Number(item.price_line_total);
+                  break;
+                case "Complimentary":
+                    compIncrement = 1;
+                    compTotalIncrement = Number(item.price_line_total);
+                  break;
+            }    
+            if(transaction == undefined) {
+                transactions.push({"id": item.grand_totals});
+                cashTransactions.number += cashIncrement;
+                cashTransactions.total += cashTotalIncrement;
+                cardTransactions.number += cardIncrement;
+                cardTransactions.total += cardTotalIncrement;
+                wasteTransactions.number += wasteIncrement;
+                wasteTransactions.total += wasteTotalIncrement;
+                compTransactions.number += compIncrement;
+                compTransactions.total += compTotalIncrement;
+            }
+            else {
+                cashTransactions.total += cashTotalIncrement;
+                cardTransactions.total += cardTotalIncrement;
+                wasteTransactions.total += wasteTotalIncrement;
+                compTransactions.total += compTotalIncrement;
+            }
+            
             // console.log("item.order_date_li = ", item.order_date_li);
             // var dateTime = new Date(item.order_date_li);
             // console.log("dateTime = ",dateTime);
@@ -110,11 +165,31 @@ $('document').ready(function () {
             //     y: time
             // })
         })
+        console.log("cashTransactions = ", cashTransactions)
+        console.log("cardTransactions = ", cardTransactions)
+        console.log("wasteTransactions = ", wasteTransactions)
+        console.log("compTransactions = ", compTransactions)
+        $('#summary-table').empty()
+        $('#summary-table').append(
+            `<tr>
+                <td>${transactions.length}</td>
+                <td>${cashTransactions.number}</td>
+                <td>€${cashTransactions.total.toFixed(2)}</td>
+                <td>${cardTransactions.number}</td>
+                <td>€${cardTransactions.total.toFixed(2)}</td>
+                <td>${wasteTransactions.number}</td>
+                <td>€${wasteTransactions.total.toFixed(2)}</td>
+                <td>${compTransactions.number}</td>
+                <td>€${compTransactions.total.toFixed(2)}</td>
+            </tr>`
+        )
+
+
         groups.sort((a,b) => a.name.localeCompare(b.name));
         console.log("groups = ", groups);
-        $('.table_body').empty();
+        $('#group-table').empty();
         groups.forEach(item => {
-            $('.table_body').append(
+            $('#group-table').append(
                 `<tr>
                     <td>${item.name}</td>
                     <td>${item.size}</td>
