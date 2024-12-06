@@ -106,7 +106,7 @@ def index(request):
     shots = Product.objects.all().filter(category="shots").exclude(summer_product=False)
     cocktails = Product.objects.all().filter(category="cocktails").exclude(summer_product=False)
     foods = Product.objects.all().filter(category="food").exclude(summer_product=False)
-    gifts = Product.objects.all().filter(category="gifts").exclude(summer_product=False)
+    gifts = Product.objects.all().filter(category="gifts").exclude(summer_product=False).order_by('name')
     staff = Staff.objects.all().filter(on_duty=True).order_by("name")
     
     context = {
