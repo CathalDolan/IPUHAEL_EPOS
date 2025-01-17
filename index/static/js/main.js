@@ -651,7 +651,8 @@ function apply_specials() {
                 applicable_balance -= item.price;
             })
         }
-        if (applicable_balance > 50) {
+        // I changed (applicable_balance > 50) to (applicable_balance > 0) on 17/1/2025
+        if (applicable_balance > 0) {
             $.each(NEW_BASKET, function (index, item) {
                 total_discount += item.line_total * .2
                 item.price = item.price * .8;
