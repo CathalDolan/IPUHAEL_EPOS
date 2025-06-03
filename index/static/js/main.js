@@ -16,15 +16,18 @@ window.onload = function () {
     // sessionStorage.removeItem("kitchen_display");
     console.log(sessionStorage)
     let kitchen_display = sessionStorage.getItem("kitchen_display");
+    $(".gifts_row").addClass('hide')
     if(kitchen_display == "True") {
-        $('.bar_kitchen').text("Bar Products");
+        // $('.bar_kitchen').text("Bar Products");
         $('[data-kitchen_product=True]').parent().removeClass('hide');
         $('[data-kitchen_product=False]').parent().addClass('hide');
+        $('.kitchen_products').addClass('selected')
     }
     else {
-        $('.bar_kitchen').text("Kitchen Products");
+        // $('.bar_kitchen').text("Kitchen Products");
         $('[data-bar_product=True]').parent().removeClass('hide');
         $('[data-bar_product=False]').parent().addClass('hide');
+        $('.bar_products').addClass('selected')
     }
     setInterval(function () {
         let date = new Date();
@@ -185,19 +188,43 @@ $('#staff_modal').on('hidden.bs.modal', function (e) {
     }
 })
 
-$('.bar_kitchen').click(function() {
-    if($(this).text() == "Bar Products") {
-        $('.bar_kitchen').text("Kitchen Products");
-        $('[data-bar_product=True]').parent().removeClass('hide');
-        $('[data-bar_product=False]').parent().addClass('hide');
-        sessionStorage.setItem("kitchen_display", "False");
-    }
-    else {
-        $('.bar_kitchen').text("Bar Products");
-        $('[data-kitchen_product=True]').parent().removeClass('hide');
-        $('[data-kitchen_product=False]').parent().addClass('hide');
-        sessionStorage.setItem("kitchen_display", "True");
-    }
+$('.bar_products').click(function() {
+    console.log("BAR")
+    $('[data-bar_product=True]').parent().removeClass('hide');
+    $('[data-bar_product=False]').parent().addClass('hide');
+    $('.gifts_row').addClass('hide');
+    $('.product_selection').removeClass('selected')
+    $(this).addClass('selected')
+    sessionStorage.setItem("kitchen_display", "False");
+    // if($(this).text() == "Bar Products") {
+    //     $('.bar_kitchen').text("Kitchen Products");
+    //     $('[data-bar_product=True]').parent().removeClass('hide');
+    //     $('[data-bar_product=False]').parent().addClass('hide');
+    //     sessionStorage.setItem("kitchen_display", "False");
+    // }
+    // else {
+    //     $('.bar_kitchen').text("Bar Products");
+    //     $('[data-kitchen_product=True]').parent().removeClass('hide');
+    //     $('[data-kitchen_product=False]').parent().addClass('hide');
+    //     sessionStorage.setItem("kitchen_display", "True");
+    // }
+})
+$('.kitchen_products').click(function() {
+    console.log("KITCHEN")
+    $('[data-kitchen_product=True]').parent().removeClass('hide');
+    $('[data-kitchen_product=False]').parent().addClass('hide');
+    $('.gifts_row').addClass('hide');
+    $('.product_selection').removeClass('selected')
+    $(this).addClass('selected')
+    sessionStorage.setItem("kitchen_display", "True");
+})
+$('.gift_products').click(function() {
+    console.log("GIFTS")
+    $('.drinks_row').children().addClass('hide');
+    $('.food_row').children().addClass('hide');
+    $('.gifts_row').removeClass('hide');
+    $('.product_selection').removeClass('selected')
+    $(this).addClass('selected')
 })
 
 // Select product size - Needed in Phase 2

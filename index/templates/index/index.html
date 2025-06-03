@@ -460,16 +460,34 @@
             </div>
             {% endfor %}
         </div>
+        <div class="row gifts_row">
+            {% for gift in gifts %}
+            <div class="col-2">
+                <button class="btn {{gift.category}} product_button add_gift_button enabled" id="{{gift.id}}" data-pfand="{{gift.pfand}}"
+                    data-category="{{gift.category}}" data-name="{{gift.name}}" data-abbr_name="{{ gift.abbr_name }}"
+                    data-price_default="{{gift.price_default}}" data-bs-dismiss="modal">
+                    {{gift.name}}
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+
+
+
+
         
         <!--  Food Sizes, Gifts, Admin & Previous Drinks Buttons  -->
         <div class="row global_buttons">  
             <!-- Empty Button -->
             <div class="col-2">
-                <button class="btn bar_kitchen">Kitchen Products</button>
+                <button class="btn product_selection bar_products">Bar Products</button>
+            </div>
+            <div class="col-2">
+                <button class="btn product_selection kitchen_products">Kitchen Products</button>
             </div>
             <!-- Gifts Button -->
             <div class="col-2">
-                <button class="btn gifts" data-bs-toggle="modal" data-bs-target="#gifts_modal">
+                <button class="btn product_selection gift_products">
                     Gifts
                 </button>
             </div>

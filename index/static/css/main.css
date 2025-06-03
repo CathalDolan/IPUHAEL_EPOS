@@ -9,6 +9,7 @@ body {
 #measurement_row .col-2,
 .food_row .col,
 .food_row .col-2,
+.gifts_row .col-2,
 .pfand_button_row .col,
 .pfand_button_row .col-2,
 .global_buttons .col-2 {
@@ -52,7 +53,7 @@ body {
     background-color: darkgreen;
 }
 
-.half_n_half {
+.half_n_half, .bar_products {
     background-color: #148505;
 }
 
@@ -103,6 +104,7 @@ body {
 
 .shots,
 .gifts,
+.gift_products,
 .specials_button {
     background-color: rgb(87, 10, 138);
 }
@@ -143,6 +145,7 @@ body {
     color: #000;
 }
 
+.kitchen_products,
 .food:not(.measure_button) {
     background-color: rgb(243, 202, 19);
     color: black;
@@ -170,9 +173,16 @@ body {
     color: #777;
 }
 
-.selected {
+.measure_button.selected {
     border: 4px solid #000;
     background-color: lightblue;
+}
+
+.product_selection.selected {
+    scale: 100% 120%;
+}
+.product_selection:not(.selected) {
+    scale: 100% 100%;
 }
 
 .hide {
