@@ -492,11 +492,13 @@
                 </button>
             </div>
             <!-- Admin Button -->
+             {% if request.user.is_superuser %} 
             <div class="col-2">
-                <button class="btn admin_button">
+                <a href="{% url 'admin:index' %}"><button class="btn admin_button">
                     Admin
-                </button>
+                </button></a>
             </div>
+            {% endif %}
             <!-- Previous Orders Button -->
             <div class="col-2">
                 <button class="btn previous_orders_button">
@@ -504,11 +506,13 @@
                 </button>
             </div>
             <!-- Reports Button -->
+             {% if request.user.is_superuser %} 
             <div class="col-2">
                 <a href="{% url 'reports' %}"><button class="btn previous_orders_button">
                     Reports
                 </button></a>
             </div>
+            {% endif %}
         </div>
         <input type="hidden" name="redirect_url" value="{{ request.path}}">
     </div>
@@ -520,7 +524,15 @@
             <!--  onclick="openFullscreen();" -->
             <i class="fa-solid fa-minimize" onclick="closeFullscreen();"></i>
             <span id="time_and_date"></span>
-            <span class="logged_in_as text-end">{% if request.user.is_authenticated %} KiWo2024 {% else %} <a href="/admin/">Login</a> {% endif %}</span>
+            <span class="logged_in_as text-end">
+                {% if request.user.is_authenticated %} 
+                    {% if request.user.is_superuser %} 
+                        SUPERADMIN
+                    {% else %}
+                        KiWo2024
+                    {% endif %}
+                {% else %} <a href="/admin/">Login</a> 
+                {% endif %}</span>
             <span class="staff-user"></span>
         </p>
         <!--  Pfand Buttons  -->
