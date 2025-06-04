@@ -95,7 +95,7 @@ $('document').ready(function () {
             || Object.values(selected_food).includes(item.name)
             || Object.values(selected_gifts).includes(item.name))
         );
-        console.log("data_filtered = ", data_filtered.length);
+        console.log("data_filtered = ", data_filtered);
         // DATA.forEach(item => {
         //     // console.log(item.name)
         //     if(!data_filtered.includes(item))
@@ -113,6 +113,7 @@ $('document').ready(function () {
         var cardTransactions = {"number": 0, "total": 0};
         var wasteTransactions = {"number": 0, "total": 0};
         var compTransactions = {"number": 0, "total": 0};
+        var revenue_total = 0;
         var xyValues = [];
         data_filtered.forEach(item => {
             var groupItem = groups.find(x => x.name == item.name && x.size == item.size);
@@ -179,6 +180,7 @@ $('document').ready(function () {
                 compTransactions.total += compTotalIncrement;
             }
             
+           
             // console.log("item.order_date_li = ", item.order_date_li);
             // var dateTime = new Date(item.order_date_li);
             // console.log("dateTime = ",dateTime);
@@ -189,6 +191,7 @@ $('document').ready(function () {
             //     y: time
             // })
         })
+         revenue_total = cashTransactions.total + cardTransactions.total;
         // console.log("cashTransactions = ", cashTransactions)
         // console.log("cardTransactions = ", cardTransactions)
         // console.log("wasteTransactions = ", wasteTransactions)
@@ -197,6 +200,7 @@ $('document').ready(function () {
         $('#summary-table').append(
             `<tr>
                 <td>${transactions.length}</td>
+                <td>€${revenue_total}</td>
                 <td>${cashTransactions.number}</td>
                 <td>€${cashTransactions.total.toFixed(2)}</td>
                 <td>${cardTransactions.number}</td>

@@ -31,6 +31,7 @@
                         <tr>
                         <!-- <th scope="col">Staff</th> -->
                         <th scope="col"># Transactions</th>
+                        <th scope="col"># Revenue Total</th>
                         <th scope="col"># Cash Transactions </th>
                         <th scope="col">Cash Total</th>
                         <th scope="col"># Card Transactions</th>
@@ -61,7 +62,7 @@
                 <div>
                     <label for="to_date">To</label>
                     <input class="datepicker" min='{{ earliest_date.order_date_li | date:"Y" }}-{{ earliest_date.order_date_li | date:"m" }}-{{ earliest_date.order_date_li | date:"d" }}' max='{{ latest_date.order_date_li | date:"Y" }}-{{ latest_date.order_date_li | date:"m" }}-{{ latest_date.order_date_li | date:"d" }}' id="to_date" type="date" name="to_date" value='{{ date_now | date:"Y" }}-{{ date_now | date:"m" }}-{{ date_now | date:"d" }}'>
-                    <input class="timepicker" type="time" id="to_time" name="to_time" value='02:00'>
+                    <input class="timepicker" type="time" id="to_time" name="to_time" value='22:00'>
                 </div>
                 
                 <div>

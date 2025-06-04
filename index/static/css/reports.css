@@ -38,11 +38,13 @@ thead {
   background-color: #dbdfdf!important;
 }
 
-th:not(:nth-child(1)), td:not(:nth-child(1)) {
+.group-table th:not(:nth-child(1)), .group-table td:not(:nth-child(1)) {
   text-align: center;
 }
 
-
+.summary-table th, .summary-table td {
+  text-align: center;
+}
 
 .filter-container {
     border: 1px solid black;
