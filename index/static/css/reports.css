@@ -98,7 +98,7 @@ label {
   .dropdown-check-list ul.items {
     width: 100%;
     position: absolute;
-    padding: 2px;
+    padding: 1em 0 0;
     display: none;
     margin: 0;
     /* border: 1px solid #ccc; */
@@ -106,13 +106,20 @@ label {
     color: #fff;
     border-top: none;
   }
+
+  .checkbox {
+    transform: scale(1.5);
+  }
   
   .dropdown-check-list ul.items li {
     list-style: none;
+    margin-bottom: 1em;
+    padding-left: 1em;
   }
   
   .dropdown-check-list.visible .anchor {
-    color: #0094ff;
+    /* color: #0094ff; */
+    background-color: #494848;
   }
   
   .dropdown-check-list.visible .items {
@@ -120,8 +127,9 @@ label {
     display: block;
     max-height: 500px;
     overflow-y: scroll;
+    background-color: #494848;
   }
 
   .dropdown-check-list span {
-    padding: 5px;
+    padding: 1em;
   }

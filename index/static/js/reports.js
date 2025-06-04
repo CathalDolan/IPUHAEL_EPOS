@@ -30,6 +30,9 @@ $('document').ready(function () {
     $('.datepicker').on("change", function () {
         generateCharts()
     })
+    $('.timepicker').on("change", function () {
+        generateCharts()
+    })
     $('.checkbox').click(function () {
         if (this.name == "all") {
             if ($(this).is(':checked')) {
@@ -51,7 +54,9 @@ $('document').ready(function () {
         // console.log("DATA = ", DATA)
         var from_date = new Date($('#from_date').val());
         var to_date = new Date($('#to_date').val());
-        to_date.setDate(to_date.getDate() + 1)
+        to_date.setHours($('#to_time').val().split(':')[0])
+        to_date.setMinutes($('#to_time').val().split(':')[1])
+        console.log("to_date = ", to_date)
 
         var selected_staff = $('#staff').find("input:checked").map(function () {
             return this.name;

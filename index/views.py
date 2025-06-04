@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt, requires_csrf_token, ensur
 from django.http import JsonResponse
 from django.contrib import messages
 import json
+from datetime import datetime, timedelta
 
 
 # @ensure_csrf_cookie
@@ -158,6 +159,11 @@ def takings(request):
 @login_required
 def reports(request):
     """ A view to return the past orders page """
+    # delete_entries = LineItem.objects.all()
+    # for entry in delete_entries:
+    #     entry.delete()
+    # print("delete_entries = ", delete_entries)
+    
     entries = LineItem.objects.all().values(
         'id',
         'order_date_li',
@@ -173,23 +179,40 @@ def reports(request):
         'payment_reason',
         'staff_member__name'
     )
-    products = Product.objects.all()
-    # for product in products:
-    #     # print(product.size)
-    #     if product.size == '':
-    #         print(product.name)
-    #         product.size = "Default"
-    #         product.save()
-    categories = products.values('category').distinct()
-    drinks = Product.objects.all().exclude(category="food").exclude(category="gifts")
-    food = Product.objects.all().filter(category="food")
-    gifts = Product.objects.all().filter(category="gifts")
-    # sizes = products.values('size').distinct()
-    staff = Staff.objects.all()
+    staff = []
+    categories = []
+    drinks = []
+    food = []
+    gifts = []
+    sizes = []
+    payment = []
+    for entry in entries:
+        if not entry["staff_member__name"] in staff:
+            print("Yes")
+            staff.append(entry["staff_member__name"])
+        if not entry["category"] in categories:
+            print("category = ", entry["category"])
+            categories.append(entry["category"])
+        if not entry["name"] in drinks and not entry["category"] == "food" and not entry["category"] == "gifts":
+            drinks.append(entry["name"])
+        if entry["category"] == "food" and not entry["name"] in food:
+            food.append(entry["name"])
+        if entry["category"] == "gifts" and not entry["name"] in gifts:
+            gifts.append(entry["name"])
+        if not entry["size"] in sizes:
+            sizes.append(entry["size"])
+        if not entry["payment_method"] in payment:
+            payment.append(entry["payment_method"])
+    
     earliest_date = entries.earliest('order_date_li')
     latest_date = entries.latest('order_date_li')
-    # print("staff = ", staff)
-    # print("categories = ", categories)
+    date_now = datetime.now()
+    date_yesterday = datetime.now() + timedelta(days=-1)
+    print("earliest_date = ", earliest_date["order_date_li"])
+    print("latest_date = ", latest_date["order_date_li"])
+    print("date_now = ", date_now)
+    print("date_yesterday = ", date_yesterday)
+    
     context = {
         "data": list(entries),
         "staff": staff,
@@ -197,8 +220,12 @@ def reports(request):
         "drinks": drinks,
         "food": food,
         "gifts": gifts,
+        "sizes": sizes,
+        "payment": payment,
         "earliest_date": earliest_date,
-        "latest_date": latest_date
+        "latest_date": latest_date,
+        "date_now": date_now,
+        "date_yesterday": date_yesterday
     }
     return render(request, 'index/reports.html' , context)
 

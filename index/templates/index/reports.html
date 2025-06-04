@@ -54,14 +54,14 @@
                 <h6 class="text-center">FILTER</h6>
                 <div>
                     <label for="from_date">From</label>
-                    <input class="datepicker" min='{{ earliest_date.order_date_li | date:"Y" }}-{{ earliest_date.order_date_li | date:"m" }}-{{ earliest_date.order_date_li | date:"d" }}' max='{{ latest_date.order_date_li | date:"Y" }}-{{ latest_date.order_date_li | date:"m" }}-{{ latest_date.order_date_li | date:"d" }}' id="from_date" type="date" name="from_date" value='{{ earliest_date.order_date_li | date:"Y" }}-{{ earliest_date.order_date_li | date:"m" }}-{{ earliest_date.order_date_li | date:"d" }}'>
-                    <input class="timepicker" type="time" id="from_time" name="from_time" value='{{ earliest_date.order_date_li | time:"H:i"}}'>
+                    <input class="datepicker" min='{{ earliest_date.order_date_li | date:"Y" }}-{{ earliest_date.order_date_li | date:"m" }}-{{ earliest_date.order_date_li | date:"d" }}' max='{{ latest_date.order_date_li | date:"Y" }}-{{ latest_date.order_date_li | date:"m" }}-{{ latest_date.order_date_li | date:"d" }}' id="from_date" type="date" name="from_date" value='{{ date_yesterday | date:"Y" }}-{{ date_yesterday | date:"m" }}-{{ date_yesterday | date:"d" }}'>
+                    <input class="timepicker" type="time" id="from_time" name="from_time" value='10:00'>
                 </div>
                 
                 <div>
                     <label for="to_date">To</label>
-                    <input class="datepicker" min='{{ earliest_date.order_date_li | date:"Y" }}-{{ earliest_date.order_date_li | date:"m" }}-{{ earliest_date.order_date_li | date:"d" }}' max='{{ latest_date.order_date_li | date:"Y" }}-{{ latest_date.order_date_li | date:"m" }}-{{ latest_date.order_date_li | date:"d" }}' id="to_date" type="date" name="to_date" value='{{ latest_date.order_date_li | date:"Y" }}-{{ latest_date.order_date_li | date:"m" }}-{{ latest_date.order_date_li | date:"d" }}'>
-                    <input class="timepicker" type="time" id="to_time" name="to_time" value='{{ latest_date.order_date_li | time:"H:i"}}'>
+                    <input class="datepicker" min='{{ earliest_date.order_date_li | date:"Y" }}-{{ earliest_date.order_date_li | date:"m" }}-{{ earliest_date.order_date_li | date:"d" }}' max='{{ latest_date.order_date_li | date:"Y" }}-{{ latest_date.order_date_li | date:"m" }}-{{ latest_date.order_date_li | date:"d" }}' id="to_date" type="date" name="to_date" value='{{ date_now | date:"Y" }}-{{ date_now | date:"m" }}-{{ date_now | date:"d" }}'>
+                    <input class="timepicker" type="time" id="to_time" name="to_time" value='02:00'>
                 </div>
                 
                 <div>
@@ -84,7 +84,7 @@
                         <ul class="items">
                             <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
                             {% for item in categories %}
-                            <li><input class="checkbox" type="checkbox" name="{{ item.category }}" checked/><span>{{ item.category }}</span></li>
+                            <li><input class="checkbox" type="checkbox" name="{{ item }}" checked/><span>{{ item }}</span></li>
                             {% endfor %}
                             <li><input class="checkbox" type="checkbox" name="Open drink" checked/><span>Open Drink</span></li>
                         </ul>
@@ -136,17 +136,9 @@
                         <span class="anchor">Select Sizes</span>
                         <ul class="items">
                             <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
-                            <li><input class="checkbox" type="checkbox" name="03" checked/><span>03</span></li>
-                            <li><input class="checkbox" type="checkbox" name="04" checked/><span>04</span></li>
-                            <li><input class="checkbox" type="checkbox" name="pint" checked/><span>Pint</span></li>
-                            <li><input class="checkbox" type="checkbox" name="btle" checked/><span>Btle</span></li>
-                            <li><input class="checkbox" type="checkbox" name="sgle" checked/><span>Sgle</span></li>
-                            <li><input class="checkbox" type="checkbox" name="dble" checked/><span>Dble</span></li>
-                            <li><input class="checkbox" type="checkbox" name="dash" checked/><span>Dash</span></li>
-                            <li><input class="checkbox" type="checkbox" name="sml" checked/><span>Sml</span></li>
-                            <li><input class="checkbox" type="checkbox" name="reg" checked/><span>Reg</span></li>
-                            <li><input class="checkbox" type="checkbox" name="jum" checked/><span>Jum</span></li>
-                            <li><input class="checkbox" type="checkbox" name="Default" checked/><span>Default</span></li>
+                            {% for item in sizes %}
+                            <li><input class="checkbox" type="checkbox" name="{{ item }}" checked/><span>{{ item }}</span></li>
+                            {% endfor %}
                             
                         </ul>
                     </div>
@@ -158,11 +150,9 @@
                         <span class="anchor">Select</span>
                         <ul class="items">
                             <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
-                            <li><input class="checkbox" type="checkbox" name="Cash" checked/><span>Cash</span></li>
-                            <li><input class="checkbox" type="checkbox" name="credit_card" checked/><span>Card</span></li>
-                            <li><input class="checkbox" type="checkbox" name="Complimentary" checked/><span>Complimentary</span></li>
-                            <li><input class="checkbox" type="checkbox" name="Waste" checked/><span>Waste</span></li>
-                            <li><input class="checkbox" type="checkbox" name="Pfand Payment" checked/><span>Pfand Payment</span></li>
+                            {% for item in payment %}
+                            <li><input class="checkbox" type="checkbox" name="{{ item }}" checked/><span>{{ item }}</span></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>

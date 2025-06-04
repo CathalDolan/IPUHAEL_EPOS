@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('IPUHAEL_EPOS_SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'https://8000-cathaldolan-ipuhaelepos-e452p7jqft4.ws-eu106.gitpod.io/',
+    'https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu120.gitpod.io/',
     'ipuhael-epos-8b5f0c382be3.herokuapp.com',
 ]
 
