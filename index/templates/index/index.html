@@ -396,7 +396,7 @@
             </div>
             {% endfor %}
             <div class="col-2">
-                <button class="btn open_drink pfand_product" data-pfand="true" data-bs-toggle="modal"
+                <button class="btn open_drink product_button pfand_product" data-pfand="true" data-bs-toggle="modal"
                     data-bs-target="#open_drink_modal" data-value="0"
                     data-bar_product="True"
                     data-kitchen_product="False">
@@ -426,22 +426,22 @@
                 </button>
             </div>
             <!-- Jumbo Size Button -->
-            <div class="col-2">
+            <!-- <div class="col-2">
                 <button class="btn food measure_button"
                 data-price="price_jum"
                 data-bar_product="False"
                 data-kitchen_product="True">
                     Jumbo
                 </button>
-            </div>
-            <div class="col-2">
+            </div> -->
+            <!-- <div class="col-2">
                 <button class="btn open_drink pfand_product" data-pfand="true" data-bs-toggle="modal"
                     data-bs-target="#open_drink_modal" data-value="0"
                     data-bar_product="False"
                     data-kitchen_product="True">
                     Open Drink
                 </button>
-            </div>
+            </div> -->
         </div>
         <!--  Food Products Buttons  -->
         <div class="row food_row">
@@ -463,9 +463,13 @@
         <div class="row gifts_row">
             {% for gift in gifts %}
             <div class="col-2">
-                <button class="btn {{gift.category}} product_button add_gift_button enabled" id="{{gift.id}}" data-pfand="{{gift.pfand}}"
-                    data-category="{{gift.category}}" data-name="{{gift.name}}" data-abbr_name="{{ gift.abbr_name }}"
-                    data-price_default="{{gift.price_default}}" data-bs-dismiss="modal">
+                <button class="btn {{gift.category}} product_button add_gift_button enabled" id="{{gift.id}}" 
+                    data-pfand="{{gift.pfand}}"
+                    data-category="{{gift.category}}" 
+                    data-name="{{gift.name}}" 
+                    data-abbr_name="{{ gift.abbr_name }}"
+                    data-price_default="{{gift.price_default}}" 
+                    data-gift_product="True">
                     {{gift.name}}
                 </button>
             </div>
@@ -480,14 +484,14 @@
         <div class="row global_buttons">  
             <!-- Empty Button -->
             <div class="col-2">
-                <button class="btn product_selection bar_products">Bar Products</button>
+                <button id="bar_product" class="btn product_selection">Bar Products</button>
             </div>
             <div class="col-2">
-                <button class="btn product_selection kitchen_products">Kitchen Products</button>
+                <button id="kitchen_product" class="btn product_selection">Kitchen Products</button>
             </div>
             <!-- Gifts Button -->
             <div class="col-2">
-                <button class="btn product_selection gift_products">
+                <button id="gift_product" class="btn product_selection">
                     Gifts
                 </button>
             </div>
@@ -716,15 +720,16 @@
             </div>
         </div>
         <div class="products_rows_div">
-            <div id="sessionStorage"></div>
-            <!-- <div id="screenHeight"></div> -->
-            <!-- <div id="screenWidth"></div> -->
-            <!-- <div id="bodyHeight"></div> -->
-            <!-- <div id="bodyWidth"></div> -->
+            
         </div>
         <!-- Basket Div -->
         <div class="basket_div">
             <!-- Line Items -->
+            <div class="input-group">   SET BUTTON HEIGHT   
+                <button id="decrement">-</button>
+                <input type="number" id="input" readonly>
+                <button id="increment">+</button>
+            </div>
             
             <hr>
             <!-- Grand Totals Rows -->

@@ -16,6 +16,11 @@ class Product(models.Model):
                                  blank=True,
                                  max_length=100)
     in_use = models.BooleanField(default=True)
+    pfand = models.BooleanField(default=True)
+    summer_product = models.BooleanField(default=True)
+    winter_product = models.BooleanField(default=True)
+    bar_product = models.BooleanField(default=True)
+    kitchen_product = models.BooleanField(default=True)
     price_default = models.DecimalField(null=True,
                                         blank=True,
                                         decimal_places=2,
@@ -60,11 +65,6 @@ class Product(models.Model):
                                         blank=True,
                                         decimal_places=2,
                                         max_digits=5)
-    pfand = models.BooleanField(default=True)
-    summer_product = models.BooleanField(default=True)
-    winter_product = models.BooleanField(default=True)
-    bar_product = models.BooleanField(default=True)
-    kitchen_product = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

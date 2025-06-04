@@ -15,20 +15,32 @@ else {
 window.onload = function () {
     // sessionStorage.removeItem("kitchen_display");
     console.log(sessionStorage)
-    let kitchen_display = sessionStorage.getItem("kitchen_display");
-    $(".gifts_row").addClass('hide')
-    if(kitchen_display == "True") {
-        // $('.bar_kitchen').text("Bar Products");
-        $('[data-kitchen_product=True]').parent().removeClass('hide');
-        $('[data-kitchen_product=False]').parent().addClass('hide');
-        $('.kitchen_products').addClass('selected')
+    let till_display = sessionStorage.getItem("till_display");
+    console.log("till_display = ", till_display)
+    if(till_display == null) {
+        till_display = "bar_product";
     }
-    else {
-        // $('.bar_kitchen').text("Kitchen Products");
-        $('[data-bar_product=True]').parent().removeClass('hide');
-        $('[data-bar_product=False]').parent().addClass('hide');
-        $('.bar_products').addClass('selected')
+    $('.product_button').parent().addClass('hide');
+    $(`[data-${till_display}=True]`).parent().removeClass('hide');
+    $(`#${till_display}`).addClass('selected');
+    $('.food_row').children().addClass('hide');
+    if(display_selected == "kitchen_product") {
+        $('.food_row').children().removeClass('hide');
     }
+
+
+    // if(kitchen_display == "True") {
+    //     // $('.bar_kitchen').text("Bar Products");
+    //     $('[data-kitchen_product=True]').parent().removeClass('hide');
+    //     $('[data-kitchen_product=False]').parent().addClass('hide');
+    //     $('.kitchen_products').addClass('selected')
+    // }
+    // else {
+    //     // $('.bar_kitchen').text("Kitchen Products");
+    //     $('[data-bar_product=True]').parent().removeClass('hide');
+    //     $('[data-bar_product=False]').parent().addClass('hide');
+    //     $('.bar_products').addClass('selected')
+    // }
     setInterval(function () {
         let date = new Date();
         let day = date.getDay();
@@ -188,43 +200,18 @@ $('#staff_modal').on('hidden.bs.modal', function (e) {
     }
 })
 
-$('.bar_products').click(function() {
-    console.log("BAR")
-    $('[data-bar_product=True]').parent().removeClass('hide');
-    $('[data-bar_product=False]').parent().addClass('hide');
-    $('.gifts_row').addClass('hide');
+$('.product_selection').click(function(){
+    var display_selected = $(this).attr("id");
+    console.log("display_selected = ", display_selected);
+    sessionStorage.setItem("till_display", display_selected);
     $('.product_selection').removeClass('selected')
-    $(this).addClass('selected')
-    sessionStorage.setItem("kitchen_display", "False");
-    // if($(this).text() == "Bar Products") {
-    //     $('.bar_kitchen').text("Kitchen Products");
-    //     $('[data-bar_product=True]').parent().removeClass('hide');
-    //     $('[data-bar_product=False]').parent().addClass('hide');
-    //     sessionStorage.setItem("kitchen_display", "False");
-    // }
-    // else {
-    //     $('.bar_kitchen').text("Bar Products");
-    //     $('[data-kitchen_product=True]').parent().removeClass('hide');
-    //     $('[data-kitchen_product=False]').parent().addClass('hide');
-    //     sessionStorage.setItem("kitchen_display", "True");
-    // }
-})
-$('.kitchen_products').click(function() {
-    console.log("KITCHEN")
-    $('[data-kitchen_product=True]').parent().removeClass('hide');
-    $('[data-kitchen_product=False]').parent().addClass('hide');
-    $('.gifts_row').addClass('hide');
-    $('.product_selection').removeClass('selected')
-    $(this).addClass('selected')
-    sessionStorage.setItem("kitchen_display", "True");
-})
-$('.gift_products').click(function() {
-    console.log("GIFTS")
-    $('.drinks_row').children().addClass('hide');
+    $(`#${display_selected}`).addClass('selected')
+    $('.product_button').parent().addClass('hide'); 
     $('.food_row').children().addClass('hide');
-    $('.gifts_row').removeClass('hide');
-    $('.product_selection').removeClass('selected')
-    $(this).addClass('selected')
+    $(`[data-${display_selected}=True]`).parent().removeClass('hide');
+    if(display_selected == "kitchen_product") {
+        $('.food_row').children().removeClass('hide');
+    }
 })
 
 // Select product size - Needed in Phase 2
@@ -269,10 +256,23 @@ $('.add_gift_button').click(function() {
 
 // PRODUCT BUTTONS
 $('.drink.product_button').click(function () {
+    let product_name = $(this).attr('data-name');
+    let product_category = $(this).attr('data-category');
+    
+    // Check for draught beer to set flag to all chaser/mix special
+    if(product_name == "Chaser/Mix Special") {
+        let check_draught = ALL_PRODUCTS.find(item => (item.category == `draught`));
+        console.log("check_draught = ", check_draught)
+        if(check_draught == undefined) {
+            console.log("undefined")
+            return;
+        }
+    }
     let product_size = $('.drink.measure_button.selected').attr('data-price');
     console.log("product_size = ", product_size)
     let abbrv_size = product_size.split("_")[1]; // Required when allocating variable sizs to products - Phase 2
-    let product_name = $(this).attr('data-name');
+    
+    
     let abbr_name = $(this).attr('data-abbr_name');
     let product_price = $(this).attr('data-' + product_size);
     if(product_price == 'None') {
@@ -283,7 +283,7 @@ $('.drink.product_button').click(function () {
         product_price = Number(product_price)
     }   
 
-    let product_category = $(this).attr('data-category');
+    
     let pfand_payable = $(this).attr('data-pfand');
     if(abbrv_size == "btle" || abbrv_size == "dash") {
         pfand_payable = "False";
@@ -1073,8 +1073,35 @@ $('.payment_button').click(function () {
             });
     }
 });
+//-------------TEST
+let counter = $('.product_button').innerHeight();
+const inc = document.getElementById("increment");
+const input = document.getElementById("input");
+const dec = document.getElementById("decrement");
+input.value = counter;
+function increment() {
+  counter++;
+}
+function decrement() {
+  counter--;
+}
+function get() {
+  return counter;
+}
 
-
+inc.addEventListener("click", () => {
+  increment();
+  input.value = get();
+  $('.product_button').innerHeight(counter)
+});
+dec.addEventListener("click", () => {
+  if (input.value > 0) {
+    decrement();
+  }
+  input.value = get();
+  $('.product_button').innerHeight(counter)
+});
+//---------------------------------------------
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== "") {

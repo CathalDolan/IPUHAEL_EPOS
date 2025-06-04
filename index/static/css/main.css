@@ -1,3 +1,9 @@
+.input-group {
+    background-color: #fff;
+    border: 2px solid red;
+    padding:5px;
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -53,7 +59,7 @@ body {
     background-color: darkgreen;
 }
 
-.half_n_half, .bar_products {
+.half_n_half, #bar_product {
     background-color: #148505;
 }
 
@@ -104,7 +110,7 @@ body {
 
 .shots,
 .gifts,
-.gift_products,
+#gift_product,
 .specials_button {
     background-color: rgb(87, 10, 138);
 }
@@ -145,7 +151,7 @@ body {
     color: #000;
 }
 
-.kitchen_products,
+#kitchen_product,
 .food:not(.measure_button) {
     background-color: rgb(243, 202, 19);
     color: black;
