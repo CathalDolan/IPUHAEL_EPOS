@@ -203,15 +203,21 @@ def reports(request):
             sizes.append(entry["size"])
         if not entry["payment_method"] in payment:
             payment.append(entry["payment_method"])
-    
+    staff.sort()
+    categories.sort()
+    drinks.sort()
+    food.sort()
+    gifts.sort()
+    sizes.sort()
+    payment.sort()
     earliest_date = entries.earliest('order_date_li')
     latest_date = entries.latest('order_date_li')
     date_now = datetime.now()
     date_yesterday = datetime.now() + timedelta(days=-1)
-    print("earliest_date = ", earliest_date["order_date_li"])
-    print("latest_date = ", latest_date["order_date_li"])
-    print("date_now = ", date_now)
-    print("date_yesterday = ", date_yesterday)
+    # print("earliest_date = ", earliest_date["order_date_li"])
+    # print("latest_date = ", latest_date["order_date_li"])
+    # print("date_now = ", date_now)
+    # print("date_yesterday = ", date_yesterday)
     
     context = {
         "data": list(entries),
