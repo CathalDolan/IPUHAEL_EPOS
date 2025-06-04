@@ -200,7 +200,7 @@ $('document').ready(function () {
         $('#summary-table').append(
             `<tr>
                 <td>${transactions.length}</td>
-                <td>€${revenue_total}</td>
+                <td>€${revenue_total.toFixed(2)}</td>
                 <td>${cashTransactions.number}</td>
                 <td>€${cashTransactions.total.toFixed(2)}</td>
                 <td>${cardTransactions.number}</td>
