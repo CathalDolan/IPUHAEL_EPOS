@@ -96,16 +96,16 @@ $('document').ready(function () {
             || Object.values(selected_gifts).includes(item.name))
         );
         console.log("data_filtered = ", data_filtered.length);
-        DATA.forEach(item => {
-            // console.log(item.name)
-            if(data_filtered.includes(item))
-                 {
-                    console.log("YES")
-            }
-            else {
-                console.log(item.id)  
-            }
-        })
+        // DATA.forEach(item => {
+        //     // console.log(item.name)
+        //     if(!data_filtered.includes(item))
+        //          {
+        //             console.log("YES")
+        //     }
+        //     else {
+        //         console.log(item.id)  
+        //     }
+        // })
 
         var groups = [];
         var transactions = [];
