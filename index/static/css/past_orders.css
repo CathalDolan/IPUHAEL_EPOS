@@ -1,0 +1,26 @@
+h1 {
+    color:#000;
+    text-align: center;;
+}
+
+th, tr {
+    text-align: center;
+}
+
+th, td {
+    padding: 0 5px;
+    font-size: small;
+}
+
+table {
+    margin: auto;
+}
+
+.left-align {
+    text-align: left;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}

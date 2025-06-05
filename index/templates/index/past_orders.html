@@ -1,6 +1,60 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% block extra_css %}
+<!-- dc CSS -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.min.css" type="text/css" /> -->
+<!--My CSS stylesheet-->
+<link rel="stylesheet" href="{% static 'css/past_orders.css' %}">
+{% endblock %}
 {% block content %}
-    <h1 class="display-4 text-success">Past Orders</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h1 class="">Past Orders</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table>
+                <tr>
+                    <th>Transaction</th>
+                    <th>Date</th>
+                    <th>Staff</th>
+                    <th>Pfand Due</th>
+                    <th>Drinks/Food Total</th>
+                    <th>Total Due</th>
+                    <th>Amount Tendered</th>
+                    <th>Change </th>
+                    <th>Payment Method</th>
+                    <th>Comp/Disc</th>
+                    <th>Number  of Products</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Unit price</th>
+                </tr>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.grand_totals.id }}</td>
+                    <td>{{ order.order_date_li }}</td>
+                    <td>{{ order.staff_member }}</td>
+                    <td>{{ order.grand_totals.pfand_total }}</td>
+                    <td>{{ order.grand_totals.drinks_food_total }}</td>
+                    <td>{{ order.grand_totals.total_due }}</td>
+                    <td>{{ order.grand_totals.tendered_amount }}</td>
+                    <td>{{ order.grand_totals.change_due }}</td>
+                    <td>{{ order.payment_method }}</td>
+                    <td>{{ order.discount }}</td>
+                    <td>{{ order.grand_totals.number_of_products }}</td>
+                    <td class="left-align">{{ order.name }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.price_unit }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+    
+    
+    
 {% endblock %}

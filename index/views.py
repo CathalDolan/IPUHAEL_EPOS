@@ -175,7 +175,12 @@ def index(request):
 
 def past_orders(request):
     """ A view to return the past orders page """
-    return render(request, 'index/past_orders.html')
+    orders = LineItem.objects.all().order_by('-order_date_li')
+    context = {
+        'orders': orders,
+    }
+    template = 'index/past_orders.html'
+    return render(request, template, context)
 
 
 def takings(request):
