@@ -228,7 +228,7 @@ $('.add_gift_button').click(function() {
             "category": product_category,
             "name": product_name,
             "abbr_name": abbr_name,
-            "size": 'Default',
+            "size": 'default',
             "qty": 1,
             "price": product_price,
             "line_total": product_price,
@@ -264,7 +264,7 @@ $('.drink.product_button').click(function () {
     let product_price = $(this).attr('data-' + product_size);
     if(product_price == 'None') {
         product_price = Number($(this).attr('data-price_default'));
-        abbrv_size = 'Default';
+        abbrv_size = 'default';
     }
     else {
         product_price = Number(product_price)
@@ -365,7 +365,7 @@ $('.food.product_button').click(function() {
 $(document).on('click', '.add_button', function () {
     console.log("Increment FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text();
-    let product_size = $(this).parent().siblings(':nth-child(2)').children().text();
+    let product_size = $(this).parent().siblings(':nth-child(2)').children().text().toLowerCase();
     console.log("product_name = ", product_name)
     console.log("product_size = ", product_size)
     let product = ALL_PRODUCTS.filter(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
@@ -384,7 +384,7 @@ $(document).on('click', '.add_button', function () {
 $(document).on('click', '.subtract_button', function () {
     console.log("Decrement FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text(); 
-    let product_size = $(this).parent().siblings(':nth-child(2)').children().text();
+    let product_size = $(this).parent().siblings(':nth-child(2)').children().text().toLowerCase();
     let product = ALL_PRODUCTS.filter(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
     let product_index = ALL_PRODUCTS.findIndex(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
 
