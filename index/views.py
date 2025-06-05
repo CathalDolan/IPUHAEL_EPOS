@@ -175,7 +175,7 @@ def index(request):
 
 def past_orders(request):
     """ A view to return the past orders page """
-    orders = LineItem.objects.all().order_by('-order_date_li')
+    orders = LineItem.objects.all().order_by('-order_date_li')[:100]
     context = {
         'orders': orders,
     }
