@@ -7,6 +7,14 @@ th, tr {
     text-align: center;
 }
 
+th {
+    position: sticky;
+    top: 0;
+    color: #fff;
+    background-color: #000;
+    border: 1px solid grey;
+}
+
 th, td {
     padding: 0 5px;
     font-size: small;
@@ -14,13 +22,14 @@ th, td {
 
 table {
     margin: auto;
+    position: relative;
 }
 
 .left-align {
     text-align: left;
 }
 
-table, th, td {
-  border: 1px solid black;
+table, td {
+  border: 1px solid grey;
   border-collapse: collapse;
 }
