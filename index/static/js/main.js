@@ -28,19 +28,6 @@ window.onload = function () {
         $('.food_row').children().removeClass('hide');
     }
 
-
-    // if(kitchen_display == "True") {
-    //     // $('.bar_kitchen').text("Bar Products");
-    //     $('[data-kitchen_product=True]').parent().removeClass('hide');
-    //     $('[data-kitchen_product=False]').parent().addClass('hide');
-    //     $('.kitchen_products').addClass('selected')
-    // }
-    // else {
-    //     // $('.bar_kitchen').text("Kitchen Products");
-    //     $('[data-bar_product=True]').parent().removeClass('hide');
-    //     $('[data-bar_product=False]').parent().addClass('hide');
-    //     $('.bar_products').addClass('selected')
-    // }
     setInterval(function () {
         let date = new Date();
         let day = date.getDay();
@@ -326,14 +313,14 @@ $('.food.measure_button').click(function() {
 $('.food.product_button').click(function() {
     console.log("FOOD BUTTON");
     let product_size = $('.food.measure_button.selected').attr('data-price');
-    console.log("product_size = ", product_size)
+    // console.log("product_size = ", product_size)
     let abbrv_size = product_size.split("_")[1]; // Required when allocating variable sizs to products - Phase 2
-    console.log("abbrv_size = ", abbrv_size)
-    console.log("product_size = ", product_size)
+    // console.log("abbrv_size = ", abbrv_size)
+    // console.log("product_size = ", product_size)
     let product_name = $(this).attr('data-name');
     let abbr_name = $(this).attr('data-abbr_name');
     let product_price = $(this).attr('data-' + product_size);
-    console.log("product_price = ", product_price)
+    // console.log("product_price = ", product_price)
     if(product_price == 'None') {
         product_price = Number($(this).attr('data-price_default'));
         abbrv_size = '';
@@ -341,7 +328,7 @@ $('.food.product_button').click(function() {
     else {
         product_price = Number(product_price)
     }
-    console.log("product_price = ", product_price)
+    // console.log("product_price = ", product_price)
 
     let product_category = $(this).attr('data-category');
     let pfand_payable = $(this).attr('data-pfand');
