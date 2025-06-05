@@ -365,11 +365,12 @@ $('.food.product_button').click(function() {
 $(document).on('click', '.add_button', function () {
     console.log("Increment FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text();
-    let product_size = $(this).parent().siblings(':nth-child(2)').children().text().toLowerCase();
+    let product_size = $(this).parent().siblings(':nth-child(2)').children().text();
     console.log("product_name = ", product_name)
+    console.log("product_size = ", product_size)
     let product = ALL_PRODUCTS.filter(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
     let product_index = ALL_PRODUCTS.findIndex(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
-
+    // console.log("product_index = ", product_index)
     if (product.length > 0) {
 
         ALL_PRODUCTS[product_index].qty += 1;
@@ -383,7 +384,7 @@ $(document).on('click', '.add_button', function () {
 $(document).on('click', '.subtract_button', function () {
     console.log("Decrement FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text(); 
-    let product_size = $(this).parent().siblings(':nth-child(2)').children().text().toLowerCase();
+    let product_size = $(this).parent().siblings(':nth-child(2)').children().text();
     let product = ALL_PRODUCTS.filter(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
     let product_index = ALL_PRODUCTS.findIndex(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
 
