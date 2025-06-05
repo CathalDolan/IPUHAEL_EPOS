@@ -447,7 +447,7 @@
         <div class="row food_row">
             {% for food in foods %}
             <div class="col-2">
-                <button class="btn {{food.category}} product_button" id="{{food.id}}" data-pfand="{{food.pfand}}"
+                <button class="btn {{food.category}} food product_button" id="{{food.id}}" data-pfand="{{food.pfand}}"
                     data-category="{{food.category}}" data-name="{{food.name}}"
                     data-abbr_name="{{food.abbr_name}}"
                     data-price_default="{{food.price_default}}" data-price_sml="{{food.price_small}}"
@@ -459,18 +459,191 @@
                 </button>
             </div>
             {% endfor %}
+            {% for item in food_extra_cheese %}
+            <div class="col-2">
+                <button class="btn {{item.category}} food product_button" id="{{item.id}}" data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" data-name="{{item.name}}"
+                    data-abbr_name="{{item.abbr_name}}"
+                    data-price_default="{{item.price_default}}" data-price_sml="{{item.price_small}}"
+                    data-price_reg="{{item.price_regular}}"
+                    data-price_jum="{{item.price_jumbo}}"
+                    data-bar_product="{{item.bar_product}}"
+                    data-kitchen_product="{{item.kitchen_product}}">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in food_extra_meat %}
+            <div class="col-2">
+                <button class="btn {{item.category}} food product_button" id="{{item.id}}" data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" data-name="{{item.name}}"
+                    data-abbr_name="{{item.abbr_name}}"
+                    data-price_default="{{item.price_default}}" data-price_sml="{{item.price_small}}"
+                    data-price_reg="{{item.price_regular}}"
+                    data-price_jum="{{item.price_jumbo}}"
+                    data-bar_product="{{item.bar_product}}"
+                    data-kitchen_product="{{item.kitchen_product}}">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in food_extra_sauce %}
+            <div class="col-2">
+                <button class="btn {{item.category}} food product_button" id="{{item.id}}" data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" data-name="{{item.name}}"
+                    data-abbr_name="{{item.abbr_name}}"
+                    data-price_default="{{item.price_default}}" data-price_sml="{{item.price_small}}"
+                    data-price_reg="{{item.price_regular}}"
+                    data-price_jum="{{item.price_jumbo}}"
+                    data-bar_product="{{item.bar_product}}"
+                    data-kitchen_product="{{item.kitchen_product}}">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in food_extra_veg %}
+            <div class="col-2">
+                <button class="btn {{item.category}} food product_button" id="{{item.id}}" data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" data-name="{{item.name}}"
+                    data-abbr_name="{{item.abbr_name}}"
+                    data-price_default="{{item.price_default}}" data-price_sml="{{item.price_small}}"
+                    data-price_reg="{{item.price_regular}}"
+                    data-price_jum="{{item.price_jumbo}}"
+                    data-bar_product="{{item.bar_product}}"
+                    data-kitchen_product="{{item.kitchen_product}}">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
         </div>
         <div class="row gifts_row">
-            {% for gift in gifts %}
+            {% for item in gifts %}
             <div class="col-2">
-                <button class="btn {{gift.category}} product_button add_gift_button enabled" id="{{gift.id}}" 
-                    data-pfand="{{gift.pfand}}"
-                    data-category="{{gift.category}}" 
-                    data-name="{{gift.name}}" 
-                    data-abbr_name="{{ gift.abbr_name }}"
-                    data-price_default="{{gift.price_default}}" 
+                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" 
+                    data-name="{{item.name}}" 
+                    data-abbr_name="{{ item.abbr_name }}"
+                    data-price_default="{{item.price_default}}" 
                     data-gift_product="True">
-                    {{gift.name}}
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in gifts_caps %}
+            <div class="col-2">
+                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" 
+                    data-name="{{item.name}}" 
+                    data-abbr_name="{{ item.abbr_name }}"
+                    data-price_default="{{item.price_default}}" 
+                    data-gift_product="True">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in gifts_decoration %}
+            <div class="col-2">
+                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" 
+                    data-name="{{item.name}}" 
+                    data-abbr_name="{{ item.abbr_name }}"
+                    data-price_default="{{item.price_default}}" 
+                    data-gift_product="True">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in gifts_food %}
+            <div class="col-2">
+                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" 
+                    data-name="{{item.name}}" 
+                    data-abbr_name="{{ item.abbr_name }}"
+                    data-price_default="{{item.price_default}}" 
+                    data-gift_product="True">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in gifts_glasses %}
+            <div class="col-2">
+                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" 
+                    data-name="{{item.name}}" 
+                    data-abbr_name="{{ item.abbr_name }}"
+                    data-price_default="{{item.price_default}}" 
+                    data-gift_product="True">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in gifts_magnets %}
+            <div class="col-2">
+                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" 
+                    data-name="{{item.name}}" 
+                    data-abbr_name="{{ item.abbr_name }}"
+                    data-price_default="{{item.price_default}}" 
+                    data-gift_product="True">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in gifts_small %}
+            <div class="col-2">
+                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" 
+                    data-name="{{item.name}}" 
+                    data-abbr_name="{{ item.abbr_name }}"
+                    data-price_default="{{item.price_default}}" 
+                    data-gift_product="True">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in gifts_medium %}
+            <div class="col-2">
+                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" 
+                    data-name="{{item.name}}" 
+                    data-abbr_name="{{ item.abbr_name }}"
+                    data-price_default="{{item.price_default}}" 
+                    data-gift_product="True">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in gifts_sweats %}
+            <div class="col-2">
+                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" 
+                    data-name="{{item.name}}" 
+                    data-abbr_name="{{ item.abbr_name }}"
+                    data-price_default="{{item.price_default}}" 
+                    data-gift_product="True">
+                    {{item.name}}
+                </button>
+            </div>
+            {% endfor %}
+            {% for item in gifts_tshirts %}
+            <div class="col-2">
+                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}" 
+                    data-name="{{item.name}}" 
+                    data-abbr_name="{{ item.abbr_name }}"
+                    data-price_default="{{item.price_default}}" 
+                    data-gift_product="True">
+                    {{item.name}}
                 </button>
             </div>
             {% endfor %}

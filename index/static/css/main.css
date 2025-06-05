@@ -115,6 +115,42 @@ body {
     background-color: rgb(87, 10, 138);
 }
 
+.gifts_caps {
+    background-color: rgb(138, 10, 70);
+}
+
+.gifts_decoration {
+    background-color: rgb(138, 10, 100);
+}
+
+.gifts_food {
+    background-color: rgb(38, 10, 138);
+}
+
+.gifts_glasses {
+    background-color: rgb(10, 87, 138);
+}
+
+.gifts_magnets {
+    background-color: rgb(10, 134, 138);
+}
+
+.gifts_small {
+    background-color: rgb(10, 138, 138);
+}
+
+.gifts_medium {
+    background-color: rgb(10, 138, 89);
+}
+
+.gifts_sweats {
+    background-color: rgb(10, 138, 89);
+}
+
+.gifts_tshirts {
+    background-color: rgb(10, 138, 42);
+}
+
 .cocktails {
     background-color: #81663f;
 }
@@ -157,6 +193,25 @@ body {
     color: black;
 }
 
+.food_extra_cheese {
+    color:#fff!important;
+    background-color: blue!important;
+}
+
+.food_extra_meat {
+    color:#fff!important;
+    background-color: red!important;
+}
+
+.food_extra_sauce {
+    color:#fff!important;
+    background-color: #81663f!important;
+}
+
+.food_extra_veg {
+    color:#fff!important;
+    background-color: #1a9e08!important;
+}
 .open_drink,
 .foods,
 .measure_button {

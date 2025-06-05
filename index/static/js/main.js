@@ -21,9 +21,9 @@ window.onload = function () {
         till_display = "bar_product";
     }
     $('.product_button').parent().addClass('hide');
+    $('.food_row').children().addClass('hide');
     $(`[data-${till_display}=True]`).parent().removeClass('hide');
     $(`#${till_display}`).addClass('selected');
-    $('.food_row').children().addClass('hide');
     if(display_selected == "kitchen_product") {
         $('.food_row').children().removeClass('hide');
     }

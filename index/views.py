@@ -95,19 +95,32 @@ def index(request):
     # else:
     #     return HttpResponseBadRequest('Invalid request')
 
-    draughts = Product.objects.all().filter(category="draught").exclude(summer_product=False)
-    half_n_halfs = Product.objects.all().filter(category="half_n_half").exclude(summer_product=False)
-    shandys = Product.objects.all().filter(category="shandy").exclude(summer_product=False)
-    canandbottles = Product.objects.all().filter(category="cans_and_bottles").exclude(summer_product=False)
-    spirits = Product.objects.all().filter(category="spirits_and_liquers").order_by("pk").exclude(summer_product=False)
-    softdrinks = Product.objects.all().filter(category="softdrinks").exclude(summer_product=False)
-    hotnonalcoholics = Product.objects.all().filter(category="hot_nonalcoholics").exclude(summer_product=False)
-    hotalcoholics = Product.objects.all().filter(category="hot_alcoholics").exclude(summer_product=False)
-    hottoddys = Product.objects.all().filter(category="hot_toddys").exclude(summer_product=False)
-    shots = Product.objects.all().filter(category="shots").exclude(summer_product=False)
-    cocktails = Product.objects.all().filter(category="cocktails").exclude(summer_product=False)
-    foods = Product.objects.all().filter(category="food").exclude(summer_product=False)
-    gifts = Product.objects.all().filter(category="gifts").exclude(summer_product=False).order_by('name')
+    draughts = Product.objects.all().filter(category="draught").exclude(in_use=False).exclude(summer_product=False)
+    half_n_halfs = Product.objects.all().filter(category="half_n_half").exclude(in_use=False).exclude(summer_product=False)
+    shandys = Product.objects.all().filter(category="shandy").exclude(in_use=False).exclude(summer_product=False)
+    canandbottles = Product.objects.all().filter(category="cans_and_bottles").exclude(in_use=False).exclude(summer_product=False)
+    spirits = Product.objects.all().filter(category="spirits_and_liquers").exclude(in_use=False).exclude(summer_product=False).order_by("pk")
+    softdrinks = Product.objects.all().filter(category="softdrinks").exclude(in_use=False).exclude(summer_product=False)
+    hotnonalcoholics = Product.objects.all().filter(category="hot_nonalcoholics").exclude(in_use=False).exclude(summer_product=False)
+    hotalcoholics = Product.objects.all().filter(category="hot_alcoholics").exclude(in_use=False).exclude(summer_product=False)
+    hottoddys = Product.objects.all().filter(category="hot_toddys").exclude(in_use=False).exclude(summer_product=False)
+    shots = Product.objects.all().filter(category="shots").exclude(in_use=False).exclude(summer_product=False)
+    cocktails = Product.objects.all().filter(category="cocktails").exclude(in_use=False).exclude(summer_product=False)
+    foods = Product.objects.all().filter(category="food").exclude(in_use=False).exclude(summer_product=False)
+    food_extra_cheese = Product.objects.all().filter(category="food_extra_cheese").exclude(in_use=False).exclude(summer_product=False)
+    food_extra_meat = Product.objects.all().filter(category="food_extra_meat").exclude(in_use=False).exclude(summer_product=False)
+    food_extra_sauce = Product.objects.all().filter(category="food_extra_sauce").exclude(in_use=False).exclude(summer_product=False)
+    food_extra_veg = Product.objects.all().filter(category="food_extra_veg").exclude(in_use=False).exclude(summer_product=False)
+    gifts = Product.objects.all().filter(category="gifts").exclude(in_use=False).exclude(summer_product=False).order_by('name')
+    gifts_caps = Product.objects.all().filter(category="gifts_caps").exclude(in_use=False).exclude(summer_product=False).order_by('name')
+    gifts_decoration = Product.objects.all().filter(category="gifts_decoration").exclude(in_use=False).exclude(summer_product=False).order_by('name')
+    gifts_food = Product.objects.all().filter(category="gifts_food").exclude(in_use=False).exclude(summer_product=False).order_by('name')
+    gifts_glasses = Product.objects.all().filter(category="gifts_glasses").exclude(in_use=False).exclude(summer_product=False).order_by('name')
+    gifts_magnets = Product.objects.all().filter(category="gifts_magnets").exclude(in_use=False).exclude(summer_product=False).order_by('name')
+    gifts_small = Product.objects.all().filter(category="gifts_small").exclude(in_use=False).exclude(summer_product=False).order_by('name')
+    gifts_medium = Product.objects.all().filter(category="gifts_medium").exclude(in_use=False).exclude(summer_product=False).order_by('name')
+    gifts_sweats = Product.objects.all().filter(category="gifts_sweats").exclude(in_use=False).exclude(summer_product=False).order_by('name')
+    gifts_tshirts = Product.objects.all().filter(category="gifts_tshirts").exclude(in_use=False).exclude(summer_product=False).order_by('name')
     staff = Staff.objects.all().filter(on_duty=True).order_by("name")
     
     context = {
@@ -123,7 +136,20 @@ def index(request):
         'shots': shots,
         'cocktails': cocktails,
         'foods': foods,
+        'food_extra_cheese': food_extra_cheese,
+        'food_extra_sauce': food_extra_sauce,
+        'food_extra_meat': food_extra_meat,
+        'food_extra_veg': food_extra_veg,
         'gifts': gifts,
+        'gifts_caps': gifts_caps,
+        'gifts_decoration': gifts_decoration,
+        'gifts_food': gifts_food,
+        'gifts_glasses': gifts_glasses,
+        'gifts_magnets': gifts_magnets,
+        'gifts_small': gifts_small,
+        'gifts_medium': gifts_medium,
+        'gifts_sweats': gifts_sweats,
+        'gifts_tshirts': gifts_tshirts,
         'staff': staff,
     }
     template = 'index/index.html'
