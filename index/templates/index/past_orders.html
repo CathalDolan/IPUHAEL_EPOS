@@ -33,22 +33,42 @@
                     <th>Unit price</th>
                 </tr>
                 {% for order in orders %}
-                <tr>
-                    <td>{{ order.grand_totals.id }}</td>
-                    <td>{{ order.order_date_li }}</td>
-                    <td>{{ order.staff_member }}</td>
-                    <td>{{ order.grand_totals.pfand_total }}</td>
-                    <td>{{ order.grand_totals.drinks_food_total }}</td>
-                    <td>{{ order.grand_totals.total_due }}</td>
-                    <td>{{ order.grand_totals.tendered_amount }}</td>
-                    <td>{{ order.grand_totals.change_due }}</td>
-                    <td>{{ order.payment_method }}</td>
-                    <td>{{ order.discount }}</td>
-                    <td>{{ order.grand_totals.number_of_products }}</td>
-                    <td class="left-align">{{ order.name }}</td>
-                    <td>{{ order.quantity }}</td>
-                    <td>{{ order.price_unit }}</td>
-                </tr>
+                {% ifchanged order.grand_totals.id %}
+                    <tr>
+                        <td class="no-border-bottom" class="no-border-bottom">{{ order.grand_totals.id }}</td>
+                        <td class="no-border-bottom">{{ order.order_date_li }}</td>
+                        <td class="no-border-bottom">{{ order.staff_member }}</td>
+                        <td class="no-border-bottom">{{ order.grand_totals.pfand_total }}</td>
+                        <td class="no-border-bottom">{{ order.grand_totals.drinks_food_total }}</td>
+                        <td class="no-border-bottom">{{ order.grand_totals.total_due }}</td>
+                        <td class="no-border-bottom">{{ order.grand_totals.tendered_amount }}</td>
+                        <td class="no-border-bottom">{{ order.grand_totals.change_due }}</td>
+                        <td class="no-border-bottom">{{ order.payment_method }}</td>
+                        <td class="no-border-bottom">{{ order.discount }}</td>
+                        <td class="no-border-bottom">{{ order.grand_totals.number_of_products }}</td>
+                        <td class="left-align">{{ order.name }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ order.price_unit }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td class="no-border-top no-border-bottom"></td>
+                        <td class="no-border-top no-border-bottom"></td>
+                        <td class="no-border-top no-border-bottom"></td>
+                        <td class="no-border-top no-border-bottom"></td>
+                        <td class="no-border-top no-border-bottom"></td>
+                        <td class="no-border-top no-border-bottom"></td>
+                        <td class="no-border-top no-border-bottom"></td>
+                        <td class="no-border-top no-border-bottom"></td>
+                        <td class="no-border-top no-border-bottom"></td>
+                        <td class="no-border-top no-border-bottom"></td>
+                        <td class="no-border-top no-border-bottom"></td>
+                        <td class="left-align">{{ order.name }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ order.price_unit }}</td>
+                    </tr>
+                {% endifchanged %}
+                
                 {% endfor %}
             </table>
         </div>

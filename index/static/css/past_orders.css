@@ -33,3 +33,11 @@ table, td {
   border: 1px solid grey;
   border-collapse: collapse;
 }
+
+.no-border-bottom {
+    border-bottom: none;
+}
+
+.no-border-top {
+    border-top: none;
+}
