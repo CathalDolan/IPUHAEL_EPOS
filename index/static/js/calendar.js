@@ -1,5 +1,14 @@
 console.log("Calendar.js")
-
+const host = window.location.host;
+var url = '';
+if(host.includes("heroku")) {
+    console.log("HEROKU")
+    url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/past_orders"
+}
+else {
+    console.log("GITPOD")
+    url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu120.gitpod.io/past_orders";
+}
 const calendarDates = document.querySelector('.calendar-dates');
 const monthYear = document.getElementById('month-year');
 const prevMonthBtn = document.getElementById('prev-month');
@@ -86,7 +95,7 @@ calendarDates.addEventListener('click', (e) => {
     $('.datepicker').children('.footer').text(dayOfWeek[selectedDate.getDay()])
     $('.calendar-body').hide(500)
     
-    fetch(`https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu120.gitpod.io/past_orders?` + new URLSearchParams({
+    fetch(`${url}?` + new URLSearchParams({
       day: e.target.textContent,
       month: currentMonth,
       year: currentYear,
