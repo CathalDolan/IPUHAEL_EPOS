@@ -5,20 +5,29 @@
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.min.css" type="text/css" /> -->
 <!--My CSS stylesheet-->
 <link rel="stylesheet" href="{% static 'css/past_orders.css' %}">
+<link rel="stylesheet" href="{% static 'css/calendar.css' %}">
 {% endblock %}
+
+
 {% block content %}
 <div class="container-fluid">
     <div class="row">
+        <div class="col-3">
+
+        </div>
         <div class="col">
             <h1 class="">Past Orders</h1>
         </div>
+        <div class="col-3">
+            <a href="{% url 'index' %}"><button type="button" class="btn btn-primary">Back to site</button></a>
+        </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col main-section">
             <table>
                 <tr>
-                    <th>Transaction</th>
                     <th>Date</th>
+                    <th>Time</th>
                     <th>Staff</th>
                     <th>Pfand Due</th>
                     <th>Drinks/Food Total</th>
@@ -31,12 +40,13 @@
                     <th>Product</th>
                     <th>Quantity</th>
                     <th>Unit price</th>
+                    <th>#</th>
                 </tr>
                 {% for order in orders %}
                 {% ifchanged order.grand_totals.id %}
-                    <tr>
-                        <td class="no-border-bottom" class="no-border-bottom">{{ order.grand_totals.id }}</td>
-                        <td class="no-border-bottom">{{ order.order_date_li }}</td>
+                    <tr class="content {% cycle 'row1' 'row2' as rowcolors %}">
+                        <td class="no-border-bottom left-align">{{ order.order_date_li|date:"D j M 'y" }}</td>
+                        <td class="no-border-bottom left-align">{{ order.order_date_li|date:"G:i" }}</td>
                         <td class="no-border-bottom">{{ order.staff_member }}</td>
                         <td class="no-border-bottom">{{ order.grand_totals.pfand_total }}</td>
                         <td class="no-border-bottom">{{ order.grand_totals.drinks_food_total }}</td>
@@ -49,9 +59,10 @@
                         <td class="left-align">{{ order.name }}</td>
                         <td>{{ order.quantity }}</td>
                         <td>{{ order.price_unit }}</td>
+                        <td class="no-border-bottom" class="no-border-bottom">{{ order.grand_totals.id }}</td>
                     </tr>
                 {% else %}
-                    <tr>
+                    <tr class="{{ rowcolors }}">
                         <td class="no-border-top no-border-bottom"></td>
                         <td class="no-border-top no-border-bottom"></td>
                         <td class="no-border-top no-border-bottom"></td>
@@ -66,6 +77,7 @@
                         <td class="left-align">{{ order.name }}</td>
                         <td>{{ order.quantity }}</td>
                         <td>{{ order.price_unit }}</td>
+                        <td class="no-border-top no-border-bottom"></td>
                     </tr>
                 {% endifchanged %}
                 
@@ -73,8 +85,70 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        <div class="col no-entries">
+
+        </div>
+    </div>
 </div>
-    
-    
-    
+<div class="floating-icons">
+    <div class="icon">
+        <i class="fa-solid fa-user fa-3x"></i>
+        
+    </div> 
+    <div class="staff-name">All</div>
+</div>    
+ 
+
+<div class="figure datepicker">
+    <div class="header">
+        <script>
+        var	month = new Date().getMonth();
+            months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+        
+        document.write(months[month]);
+        </script>
+    </div>
+    <section>
+        <script>
+            document.write(new Date().getDate());
+        </script>
+    </section>
+    <div class="footer">
+        <script>
+        var	day = new Date().getDay();
+        var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        
+        document.write(dayOfWeek[day]);
+        </script>
+    </div>
+</div>
+<div class="calendar-body">
+    <div class="calendar">
+        <div class="calendar-header">
+        <button id="prev-month">‹‹‹‹‹</button>
+        <div id="month-year"></div>
+        <button id="next-month">›››››</button>
+        </div>
+        <div class="calendar-body">
+        <div class="calendar-weekdays">
+            <!-- Weekday Names -->
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+        <div class="calendar-dates">
+        <!-- Dates will be populated here -->
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block post_load_js %}
+{{ block.super }}
+<script src="{% static 'js/calendar.js' %}"></script>
 {% endblock %}

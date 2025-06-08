@@ -1,3 +1,15 @@
+// function init(evt) {
+//     console.log("init svg")
+//     var time = new Date();
+//     var locale = "en-gb";
+//     var options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+//     var dateString = time.toLocaleDateString(locale, options);
+
+//     // Get the text element and update its content
+//     var textElement = evt.target.querySelector("tspan");
+//     textElement.textContent = dateString.replace(/^.*(\d+)$/,"$1"); // Get only the date
+// }
+
 $('document').ready(function () {
     console.log("reports.js");
     //Get the host name from url and set the fetch url accordingly
@@ -228,72 +240,5 @@ $('document').ready(function () {
         })
 
     }
+    
 })
-
-// console.log("xyValues = ", xyValues)
-// const xyValues = [{
-//         x: 50,
-//         y: 7
-//     },
-//     {
-//         x: 60,
-//         y: 8
-//     },
-//     {
-//         x: 70,
-//         y: 8
-//     },
-//     {
-//         x: 80,
-//         y: 9
-//     },
-//     {
-//         x: 90,
-//         y: 9
-//     },
-//     {
-//         x: 100,
-//         y: 9
-//     },
-//     {
-//         x: 110,
-//         y: 10
-//     },
-//     {
-//         x: 120,
-//         y: 11
-//     },
-//     {
-//         x: 130,
-//         y: 14
-//     },
-//     {
-//         x: 140,
-//         y: 14
-//     },
-//     {
-//         x: 150,
-//         y: 15
-//     }
-// ];
-
-// new Chart("scatter-plot", {
-//     type: "scatter",
-//     data: {
-//         datasets: [{
-//             pointRadius: 4,
-//             pointBackgroundColor: "rgba(0,0,255,1)",
-//             data: xyValues
-//         }]
-//     },
-//     options: {
-//         scales: {
-//             xAxes: [{
-//                 type: 'time',
-//                 time: {
-//                     unit: 'day'
-//                 }
-//             }]
-//         }
-//     }
-// })

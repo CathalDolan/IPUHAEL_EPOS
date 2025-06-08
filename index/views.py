@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from . models import Product, GrandTotal, LineItem, Staff
 from django.views.decorators.csrf import csrf_exempt, requires_csrf_token, ensure_csrf_cookie
@@ -174,13 +174,55 @@ def index(request):
 
 
 def past_orders(request):
+    print("PAST_ORDERS!!")
     """ A view to return the past orders page """
-    orders = LineItem.objects.all().order_by('-order_date_li')[:100]
-    context = {
-        'orders': orders,
-    }
-    template = 'index/past_orders.html'
-    return render(request, template, context)
+    if request.GET:
+        print("YES GET")
+        day = int(request.GET['day'])
+        month = int(request.GET['month'])+1
+        year = int(request.GET['year'])
+        print("day = ", type(day))
+        print("month = ", month)
+        print("year = ", year)
+        day_from = datetime(year, month, day)
+        day_to = day_from + timedelta(days=1)
+        print("day_from = ", day_from)
+        print("day_to = ", day_to)
+        orders = LineItem.objects.filter(order_date_li__gte=day_from).filter(order_date_li__lte=day_to).order_by('-order_date_li').values(
+            'grand_totals_id',
+            'order_date_li',
+            'staff_member_id__name',
+            'grand_totals_id__pfand_total',
+            'grand_totals_id__drinks_food_total',
+            'grand_totals_id__total_due',
+            'grand_totals_id__tendered_amount',
+            'grand_totals_id__change_due',
+            'grand_totals_id__payment_method',
+            'discount',
+            'grand_totals_id__number_of_products',
+            'name',
+            'quantity',
+            'price_unit'
+        )
+        for order in orders:
+            print("order = ", order)
+        context = {
+            'orders': orders
+        }
+        return JsonResponse({"orders": list(orders)},
+                            safe=False)
+    else:
+        today = datetime.now()
+        day_from = today.strftime("%Y-%m-%d")
+        day_to = today + timedelta(days=1)
+        print("day_from = ", day_from)
+        print("day_to = ", day_to)
+        orders = LineItem.objects.filter(order_date_li__gte=day_from).filter(order_date_li__lte=day_to).order_by('-order_date_li')[:100]
+        context = {
+            'orders': orders,
+        }
+        template = 'index/past_orders.html'
+        return render(request, template, context)
 
 
 def takings(request):
