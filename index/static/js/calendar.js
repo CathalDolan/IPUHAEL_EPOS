@@ -157,7 +157,7 @@ function getOrders() {
         $('table').append(
           `<tr class="content ${rowcolors[transaction_counter%2]}">
               <td class="no-border-bottom left-align">${dayOfWeek[day].slice(0, 3)} ${date}/${month+1}/${String(year).substr(2)}</td>
-              <td class="no-border-bottom left-align">${hours}:${minutes}</td>
+              <td class="no-border-bottom left-align">${hours}:${minutes<10?0:''}${minutes}</td>
               <td class="no-border-bottom">${orders[i]['staff_member_id__name']}</td>
               <td class="no-border-bottom">${orders[i]['grand_totals_id__pfand_total'] }</td>
               <td class="no-border-bottom">${orders[i]['grand_totals_id__drinks_food_total'] }</td>
