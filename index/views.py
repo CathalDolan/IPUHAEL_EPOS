@@ -181,16 +181,17 @@ def past_orders(request):
         day = int(request.GET['day'])
         month = int(request.GET['month'])+1
         year = int(request.GET['year'])
-        print("day = ", type(day))
-        print("month = ", month)
-        print("year = ", year)
+        # print("day = ", day)
+        # print("month = ", month)
+        # print("year = ", year)
         day_from = datetime(year, month, day)
         day_to = day_from + timedelta(days=1)
-        print("day_from = ", day_from)
-        print("day_to = ", day_to)
+        # print("day_from = ", day_from)
+        # print("day_to = ", day_to)
         orders = LineItem.objects.filter(order_date_li__gte=day_from).filter(order_date_li__lte=day_to).order_by('-order_date_li').values(
             'grand_totals_id',
             'order_date_li',
+            'staff_member_id',
             'staff_member_id__name',
             'grand_totals_id__pfand_total',
             'grand_totals_id__drinks_food_total',
@@ -204,22 +205,49 @@ def past_orders(request):
             'quantity',
             'price_unit'
         )
+        
+        
+        staff_list = [{'staffId': 0, 'name': 'All'}]
         for order in orders:
-            print("order = ", order)
-        context = {
-            'orders': orders
-        }
-        return JsonResponse({"orders": list(orders)},
+            # print("order['staff_member'] = ", order['staff_member_id'])
+            # if not order['staff_member_id'] in staff_list.keys():
+            #     staff_list[order['staff_member_id']]=order['staff_member_id__name']
+            if not any(item['staffId'] == order['staff_member_id'] for item in staff_list):
+                staff_list.append({
+                    "staffId": order['staff_member_id'],
+                    "name": order['staff_member_id__name']
+                })
+        print("staff_list = ", staff_list)
+        staffId = request.GET['staffId']
+        print("staffId = ", staffId)
+        if request.GET['staffId'] != '0':
+            print("NOT ALL")
+            staffId = request.GET['staffId']
+            orders = orders.filter(staff_member=staffId)
+        return JsonResponse({"orders": list(orders),
+                             'staff_list': staff_list},
                             safe=False)
     else:
         today = datetime.now()
         day_from = today.strftime("%Y-%m-%d")
         day_to = today + timedelta(days=1)
-        print("day_from = ", day_from)
-        print("day_to = ", day_to)
-        orders = LineItem.objects.filter(order_date_li__gte=day_from).filter(order_date_li__lte=day_to).order_by('-order_date_li')[:100]
+        # print("day_from = ", day_from)
+        # print("day_to = ", day_to)
+        orders = LineItem.objects.filter(order_date_li__gte=day_from).filter(order_date_li__lte=day_to).order_by('-order_date_li')
+        staff_list = [{'staffId': 0, 'name': 'All'}]
+        for order in orders:
+            print("order = ", order)
+            # if not order.staff_member_id in staff_list.keys():
+            #     staff_list[order.staff_member_id] = order.staff_member
+            if not any(item['staffId'] == order.staff_member_id for item in staff_list):
+                staff_list.append({
+                    "staffId": order.staff_member_id,
+                    "name": order.staff_member
+                })
+        print("staff_list = ", staff_list)
         context = {
             'orders': orders,
+            'staff_list': staff_list
         }
         template = 'index/past_orders.html'
         return render(request, template, context)

@@ -45,7 +45,7 @@
                 {% for order in orders %}
                 {% ifchanged order.grand_totals.id %}
                     <tr class="content {% cycle 'row1' 'row2' as rowcolors %}">
-                        <td class="no-border-bottom left-align">{{ order.order_date_li|date:"D j M 'y" }}</td>
+                        <td class="no-border-bottom left-align">{{ order.order_date_li|date:"D j/m/y" }}</td>
                         <td class="no-border-bottom left-align">{{ order.order_date_li|date:"G:i" }}</td>
                         <td class="no-border-bottom">{{ order.staff_member }}</td>
                         <td class="no-border-bottom">{{ order.grand_totals.pfand_total }}</td>
@@ -62,7 +62,7 @@
                         <td class="no-border-bottom" class="no-border-bottom">{{ order.grand_totals.id }}</td>
                     </tr>
                 {% else %}
-                    <tr class="{{ rowcolors }}">
+                    <tr class="content {{ rowcolors }}">
                         <td class="no-border-top no-border-bottom"></td>
                         <td class="no-border-top no-border-bottom"></td>
                         <td class="no-border-top no-border-bottom"></td>
@@ -87,21 +87,31 @@
     </div>
     <div class="row">
         <div class="col no-entries">
-
+            {% if not orders %}
+                <h5>No Entries Found</h5>
+            {% endif %}
         </div>
     </div>
 </div>
-<div class="floating-icons">
+<div class="staff-icon">
+    <div class="icon-header">STAFF</div>
     <div class="icon">
         <i class="fa-solid fa-user fa-3x"></i>
         
     </div> 
-    <div class="staff-name">All</div>
+    <div class="icon-footer staff-name">All</div>
 </div>    
- 
+<div class="staff-list-container">
+    <div class="staff-list-header">STAFF LIST</div>
+    <div class="staff-list-body">
+        {% for item in staff_list %}       
+            <p data-staffId="{{item.staffId }}" class="staff-list-item">{{item.name }}</p>
+        {% endfor %}
+    </div>
+</div>
 
 <div class="figure datepicker">
-    <div class="header">
+    <div class="icon-header">
         <script>
         var	month = new Date().getMonth();
             months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
@@ -114,7 +124,7 @@
             document.write(new Date().getDate());
         </script>
     </section>
-    <div class="footer">
+    <div class="icon-footer">
         <script>
         var	day = new Date().getDay();
         var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');

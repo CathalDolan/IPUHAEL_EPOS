@@ -29,7 +29,7 @@ th, td {
 }
 
 table {
-    margin: auto;
+    width: 100%;
     position: relative;
 }
 
@@ -58,9 +58,9 @@ table, td {
     background-color: blanchedalmond;
 }
 
-.floating-icons {
+.staff-icon {
     position: fixed;
-    bottom: 160px;
+    bottom: 180px;
     right: 10px;
 	border-radius: 10px;
 	width: 128px;
@@ -86,10 +86,7 @@ table, td {
 
 .fa-user {
     color: #fa565a;
-	
     display:block;
-    /* height:100px;
-    width:100px; */
 }
 
 .staff-name {
@@ -98,6 +95,41 @@ table, td {
 	width:100%;
 	margin: 0;
 	background-color: #fa565a;
+}
+
+.staff-list-container {
+	display: none;
+	position: fixed;
+	bottom: 180px;
+	right: 150px;
+    width: 300px;
+}
+
+.staff-list-header {
+	color: #fff;
+	background-color: #fa565a;
+	text-align: center;
+	font-size: 1.2em;
+    font-weight: bold;
+	padding: 10px;
+}
+
+.staff-list-body {
+	background-color: #474343;
+	color: #fff;
+	text-align: center;
+	font-size: 1.2em;
+	padding: 10px;
+}
+
+.staff-list-item {
+	border: 1px solid #fa565a;
+	padding: 3px;
+}
+
+.selected-staff {
+	background-color: #fa565a;
+	color: #000;
 }
 
 /*------------------------------------------------*/
@@ -114,120 +146,84 @@ table, td {
 
 .figure {
 	margin: 30px auto;
-    margin-left: 0;
-	
+    margin-left: 0;	
 	width: 128px;
-	height: 111px;
-	
+	height: 111px;	
 	background-color: #474343;
-	border-radius: 10px;
-	
-	/* position: relative; */
+	border-radius: 10px;	
 	position: fixed;
     bottom: 10px;
-    right: 10px;
-	
+    right: 10px;	
 	&:before {
 		content: '';
 		display: block;
-		
-		/* width:128px;
-		height: 69px; */
-		
 		border-radius: 10px 10px 0 0;
-		
 		background-image: -webkit-linear-gradient(white 0%, #edeeef 100%); 
 		background-image: -moz-linear-gradient(white 0%, #edeeef 100%); 
 		background-image: -o-linear-gradient(white 0%, #edeeef 100%); 
 		background-image: linear-gradient(white 0%, #edeeef 100%);
-
-	}
-	
-	.header {
-		width: 128px;
-		height: 27px;
-		
-		position: absolute;
-		top: -1px;
-		
-		background-color: #fa565a;
-		border-radius: 10px 10px 0 0;
-		/* border-bottom: 3px solid #e5e5e5; */
-		
-		font: 400 15px/27px Arial, Helvetica, Geneva, sans-serif;
-		letter-spacing: 0.5px;
-		color: #fff;
-		
-		text-align: center;
 	}
 	
 	section {
 		width: 128px;
-		height: 80px;
-		
+		height: 80px;		
 		position: absolute;
-		top: 28px;
-		
+		top: 28px;		
 		font: 400 55px/75px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 		letter-spacing: -2px;
-		color: #fff;
-		
-		text-align: center;
-		
-		z-index: 10;
-		
+		color: #fff;		
+		text-align: center;		
+		z-index: 10;		
 		&:before {
 			content: '';
-			display: block;
-			
+			display: block;			
 			position: absolute;
 			top: 35px;
-						
-			/* width: 3px;
-			height: 10px; */
-			
 			background-image: -webkit-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
 			background-image: -moz-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
 			background-image: -o-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
 			background-image: linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
-		}
-		
+		}		
 		&:after {
 			content: '';
-			display: block;
-			
+			display: block;			
 			position: absolute;
 			top: 35px;
-			right: 0;
-						
-			/* width: 3px;
-			height: 10px; */
-			
+			right: 0;			
 			background-image: -webkit-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
 			background-image: -moz-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
 			background-image: -o-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
 			background-image: linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
-		}
-		
+		}		
 	}
-
-	.footer {
-		width: 128px;
-		/* height: 27px; */
-		/* padding-bottom: 2px; */
-		position: absolute;
-		bottom: -20px;
-		
-		background-color: #fa565a;
-		border-radius: 0 0 10px 10px;
-		border-bottom: 3px solid #e5e5e5;
-		
-		font: 400 15px/27px Arial, Helvetica, Geneva, sans-serif;
-		letter-spacing: 0.5px;
-		color: #fff;
-		
-		text-align: center;
-	}
+	
 }
+
+.icon-header {
+	width: 128px;
+	height: 27px;		
+	position: absolute;
+	top: -1px;		
+	background-color: #fa565a;
+	border-radius: 10px 10px 0 0;		
+	font: 400 15px/27px Arial, Helvetica, Geneva, sans-serif;
+	letter-spacing: 0.5px;
+	color: #fff;		
+	text-align: center;
+}
+
+.icon-footer {
+	width: 128px;
+	position: absolute;
+	bottom: -20px;
+	background-color: #fa565a;
+	border-radius: 0 0 10px 10px;
+	border-bottom: 3px solid #e5e5e5;		
+	font: 400 15px/27px Arial, Helvetica, Geneva, sans-serif;
+	letter-spacing: 0.5px;
+	color: #fff;		
+	text-align: center;
+}
+
 
 /* @end */
