@@ -1,17 +1,16 @@
-.calendar-body {
+/* .calendar-body {
     font-family: Arial, sans-serif;
     background-color: #f4f6f9;
     display: none;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-}
+} */
 .calendar {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    display: none;
     position: fixed;
-    bottom: 25px;
-    right: 150px;
+    bottom: 120px;
+    right: 60px;
     width: 350px;
-    background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -74,3 +73,4 @@
   color: #fa565a;
   border-radius: 10px;
 }
+

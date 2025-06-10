@@ -54,8 +54,15 @@ function renderCalendar(month, year) {
       year === today.getFullYear() &&
       month === today.getMonth()
     ) {
-      day.classList.add('current-date', 'selected-date');
+      day.classList.add('current-date');
     }
+     if (
+      i === selectedDate.getDate() &&
+      year === selectedDate.getFullYear() &&
+      month === selectedDate.getMonth()
+    ) {
+      day.classList.add('selected-date');
+    } 
     calendarDates.appendChild(day);
   }
 
@@ -81,32 +88,57 @@ nextMonthBtn.addEventListener('click', () => {
   renderCalendar(currentMonth, currentYear);
 });
 
+$('#prevDayBtn').click(() => {
+  console.log("prevDay = ",)
+  selectedDate.setDate(selectedDate.getDate() - 1)
+  console.log(selectedDate)
+  currentMonth = selectedDate.getMonth()
+  console.log("currentMonth = ", currentMonth)
+  currentYear = selectedDate.getFullYear()
+  $('#calendar-header').text(months[currentMonth])
+  $('#calendar-body').text(selectedDate.getDate());
+  $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
+  renderCalendar(currentMonth, currentYear);
+  getOrders();
+})
+
+$('#nextDayBtn').click(() => {
+  console.log("nextDayBtn = ",)
+  selectedDate.setDate(selectedDate.getDate() + 1)
+  console.log(selectedDate)
+  currentMonth = selectedDate.getMonth()
+  console.log("currentMonth = ", currentMonth)
+  currentYear = selectedDate.getFullYear()
+  $('#calendar-header').text(months[currentMonth])
+  $('#calendar-body').text(selectedDate.getDate());
+  $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
+  renderCalendar(currentMonth, currentYear);
+  getOrders();
+})
 calendarDates.addEventListener('click', (e) => {
   if (e.target.textContent !== '') {
     $('.calendar-dates').children('div').removeClass('selected-date')
     $(e.target).addClass('selected-date')
-    // alert(`You clicked on ${e.target.textContent} ${months[currentMonth]} ${currentYear}`);
-    console.log("this = ", e.target)
     var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
     selectedDate = new Date(`${currentYear}-${currentMonth}-${e.target.textContent}`)
     // console.log("getDay(selectedDate) =", selectedDate.getDay())
-    $('.datepicker').children('.icon-header').text(months[currentMonth])
-    $('.datepicker').children('section').text(e.target.textContent)
-    $('.datepicker').children('.icon-footer').text(dayOfWeek[selectedDate.getDay()])
-    $('.calendar-body').hide(500) 
+    $('#calendar-header').text(months[currentMonth])
+    $('#calendar-body').text(e.target.textContent)
+    $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
+    $('.calendar').hide(500) 
     getOrders(); 
   }
 
 });
 
-$('.datepicker').click(() => {
-    $('.calendar-body').toggle(500)
+$('#datepicker').click(() => {
+    $('.calendar').toggle(500)
     $('.staff-list-container').hide(500)
 })
 
-$('.staff-icon').click(() => {
+$('#staff-picker').click(() => {
   $('.staff-list-container').toggle(500);
-  $('.calendar-body').hide(500);
+  $('.calendar').hide(500);
 })
 
 $('.staff-list-body').on('click','.staff-list-item', function() {
@@ -122,8 +154,8 @@ $('.staff-list-body').on('click','.staff-list-item', function() {
 function getOrders() {
   fetch(`${url}?` + new URLSearchParams({
     day: selectedDate.getDate(),
-    month: currentMonth,
-    year: currentYear,
+    month: selectedDate.getMonth(),
+    year: selectedDate.getFullYear(),
     staffId: staffId
   }).toString())
   .then(response => response.json())

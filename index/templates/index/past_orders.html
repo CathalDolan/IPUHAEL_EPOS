@@ -93,7 +93,7 @@
         </div>
     </div>
 </div>
-<div class="staff-icon">
+<!-- <div class="staff-icon">
     <div class="icon-header">STAFF</div>
     <div class="icon">
         <i class="fa-solid fa-user fa-3x"></i>
@@ -108,54 +108,140 @@
             <p data-staffId="{{item.staffId }}" class="staff-list-item">{{item.name }}</p>
         {% endfor %}
     </div>
-</div>
+</div> -->
 
-<div class="figure datepicker">
-    <div class="icon-header">
-        <script>
-        var	month = new Date().getMonth();
-            months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+<!-- <div class="calendar-container">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="0, 55 60, 0 60, 110 0, 55"/>
+    </svg>
+    <div class="figure datepicker">
+        <div class="icon-header">
+            <script>
+            var	month = new Date().getMonth();
+                months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+            
+            document.write(months[month]);
+            </script>
+        </div>
+        <section>
+            <script>
+                document.write(new Date().getDate());
+            </script>
+        </section>
+        <div class="icon-footer">
+            <script>
+            var	day = new Date().getDay();
+            var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+            
+            document.write(dayOfWeek[day]);
+            </script>
+        </div>
+    </div>
+    <div class="calendar-body">
+        <div class="calendar">
+            <div class="calendar-header">
+            <button id="prev-month">‹‹‹‹‹</button>
+            <div id="month-year"></div>
+            <button id="next-month">›››››</button>
+            </div>
+            <div class="calendar-body">
+            <div class="calendar-weekdays">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div> -->
+            <!-- <div class="calendar-dates"> -->
+            <!-- Dates will be populated here -->
+            <!-- </div> -->
+            <!-- </div>
+        </div>
+    </div>
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="60, 55 0, 120 0, 0 60, 55"/>
+    </svg>
+</div> -->
+
+
+<div class="test-icons-container">
+    <div id="staff-picker" class="test-icon">
+        <div class="test-icon-header">
+            STAFF
+        </div>
+        <div class="test-icon-body">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <div id="staff-footer" class="test-icon-footer">
+            All
+        </div>
+    </div>
+    <div class="staff-list-container">
+        <div class="staff-list-header">STAFF LIST</div>
+        <div class="staff-list-body">
+            {% for item in staff_list %}       
+                <p data-staffId="{{item.staffId }}" class="staff-list-item">{{item.name }}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="test-calendar-container">
+        <svg id="prevDayBtn" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="0, 50 40, 10 40, 90 "/>
+            <text x="20" y="60">-</text>
+        </svg>
+        <div id="datepicker" class="test-icon">
+            <div id="calendar-header" class="test-icon-header">
+                <script>
+                    var	month = new Date().getMonth();
+                        months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+                    document.write(months[month]);
+                </script>
+            </div>
+            <div id="calendar-body" class="test-icon-body">
+                <script>
+                    document.write(new Date().getDate());
+                </script>
+            </div>
+            <div id="calendar-footer" class="test-icon-footer">
+                <script>
+                    var	day = new Date().getDay();
+                    var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday',   'Wednesday', 'Thursday', 'Friday', 'Saturday');
+                    document.write(dayOfWeek[day]);
+                </script>
+            </div>
+        </div>
+        <svg id="nextDayBtn" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="40, 50 0, 10 0, 90"/>
+            <text x="5" y="60">+</text>
+        </svg>
         
-        document.write(months[month]);
-        </script>
-    </div>
-    <section>
-        <script>
-            document.write(new Date().getDate());
-        </script>
-    </section>
-    <div class="icon-footer">
-        <script>
-        var	day = new Date().getDay();
-        var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        <div class="calendar">
+            <div class="calendar-header">
+            <button id="prev-month">‹‹‹‹‹</button>
+            <div id="month-year"></div>
+            <button id="next-month">›››››</button>
+            </div>
+            <div class="calendar-body">
+                <div class="calendar-weekdays">
+                    <!-- Weekday Names -->
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="calendar-dates">
+                <!-- Dates will be populated here -->
+                </div>
+            </div>
+        </div>
         
-        document.write(dayOfWeek[day]);
-        </script>
     </div>
-</div>
-<div class="calendar-body">
-    <div class="calendar">
-        <div class="calendar-header">
-        <button id="prev-month">‹‹‹‹‹</button>
-        <div id="month-year"></div>
-        <button id="next-month">›››››</button>
-        </div>
-        <div class="calendar-body">
-        <div class="calendar-weekdays">
-            <!-- Weekday Names -->
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-        </div>
-        <div class="calendar-dates">
-        <!-- Dates will be populated here -->
-        </div>
-        </div>
-    </div>
+    
 </div>
 {% endblock %}
 {% block post_load_js %}
