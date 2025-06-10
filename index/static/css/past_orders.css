@@ -154,6 +154,15 @@ svg {
     stroke-width:2; */
 	filter: drop-shadow(#fa565a 2px 2px 5px);
 }
+
+svg:hover {
+    cursor: pointer;
+}
+
+.test-icon:hover {
+    cursor: pointer;
+}
+
 text {
 	stroke: #fff;
 	font-size: 2em;
