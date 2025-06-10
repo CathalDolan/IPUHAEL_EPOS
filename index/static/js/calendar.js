@@ -76,7 +76,14 @@ prevMonthBtn.addEventListener('click', () => {
     currentMonth = 11;
     currentYear--;
   }
+  selectedDate.setMonth(currentMonth);
+  selectedDate.setFullYear(currentYear);
+  // console.log("selectedDate", selectedDate)
+  $('#calendar-header').text(months[currentMonth])
+  $('#calendar-body').text(selectedDate.getDate());
+  $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
   renderCalendar(currentMonth, currentYear);
+  getOrders();
 });
 
 nextMonthBtn.addEventListener('click', () => {
@@ -85,7 +92,14 @@ nextMonthBtn.addEventListener('click', () => {
     currentMonth = 0;
     currentYear++;
   }
+  selectedDate.setMonth(currentMonth);
+  selectedDate.setFullYear(currentYear);
+  // console.log("selectedDate", selectedDate)
+  $('#calendar-header').text(months[currentMonth])
+  $('#calendar-body').text(selectedDate.getDate());
+  $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
   renderCalendar(currentMonth, currentYear);
+  getOrders();
 });
 
 $('#prevDayBtn').click(() => {
