@@ -78,7 +78,7 @@ prevMonthBtn.addEventListener('click', () => {
   }
   selectedDate.setMonth(currentMonth);
   selectedDate.setFullYear(currentYear);
-  // console.log("selectedDate", selectedDate)
+  console.log("selectedDate", selectedDate)
   $('#calendar-header').text(months[currentMonth])
   $('#calendar-body').text(selectedDate.getDate());
   $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
@@ -121,7 +121,7 @@ $('#nextDayBtn').click(() => {
   selectedDate.setDate(selectedDate.getDate() + 1)
   console.log(selectedDate)
   currentMonth = selectedDate.getMonth()
-  console.log("currentMonth = ", currentMonth)
+  // console.log("currentMonth = ", currentMonth)
   currentYear = selectedDate.getFullYear()
   $('#calendar-header').text(months[currentMonth])
   $('#calendar-body').text(selectedDate.getDate());
@@ -129,20 +129,25 @@ $('#nextDayBtn').click(() => {
   renderCalendar(currentMonth, currentYear);
   getOrders();
 })
+
 calendarDates.addEventListener('click', (e) => {
   if (e.target.textContent !== '') {
+    console.log("selectedDate =", selectedDate)
+    console.log("selectedDate.getMonth() =", selectedDate.getMonth())
+    console.log("currentMonth =", currentMonth)
     $('.calendar-dates').children('div').removeClass('selected-date')
     $(e.target).addClass('selected-date')
     var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
-    selectedDate = new Date(`${currentYear}-${currentMonth}-${e.target.textContent}`)
-    // console.log("getDay(selectedDate) =", selectedDate.getDay())
+    selectedDate = new Date(`${currentYear}-${currentMonth+1}-${e.target.textContent}`)
+    console.log("selectedDate =", selectedDate)
+    console.log("selectedDate.getMonth() =", selectedDate.getMonth())
+    console.log("currentMonth =", currentMonth)
     $('#calendar-header').text(months[currentMonth])
     $('#calendar-body').text(e.target.textContent)
     $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
     $('.calendar').hide(500) 
     getOrders(); 
   }
-
 });
 
 $('#datepicker').click(() => {
@@ -174,7 +179,7 @@ function getOrders() {
   }).toString())
   .then(response => response.json())
   .then(data => {
-    console.log("data = ", data)
+    // console.log("data = ", data)
     orders = data.orders;
     $('.content').empty();
     $('.no-entries').empty();
@@ -248,11 +253,8 @@ function getOrders() {
     }
 
     var staff_list = data.staff_list;
-    console.log("typo(staff_list) = ", typeof(staff_list))
     $('.staff-list-body').empty();
     staff_list.forEach((item, index) => {
-      console.log("item = ", item['staffId'])      
-      console.log("index = ", index)
       if(item['staffId'] == staffId) {
         $('.staff-list-body').append(`<p class="staff-list-item selected-staff" data-staffId=${item['staffId']}>${item['name']}</p>`)
       }
