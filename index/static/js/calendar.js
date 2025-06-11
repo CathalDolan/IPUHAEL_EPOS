@@ -165,7 +165,7 @@ $('.staff-list-body').on('click','.staff-list-item', function() {
   var staff_name = $(this).text();
   staffId = $(this).attr('data-staffId')
   console.log("StaffId = ", staffId)
-  $('.icon-footer.staff-name').text(staff_name)
+  $('#staff-footer').text(staff_name)
   $('.staff-list-container').hide(500);
   getOrders()
 })
