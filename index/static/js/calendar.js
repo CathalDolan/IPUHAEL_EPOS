@@ -46,7 +46,6 @@ function renderCalendar(month, year) {
   // Populate the days
   for (let i = 1; i <= daysInMonth; i++) {
     const day = document.createElement('div');
-    // day.href = "{% url 'past_orders' %}";
     day.textContent = i;
     // Highlight today's date
     if (
@@ -56,6 +55,7 @@ function renderCalendar(month, year) {
     ) {
       day.classList.add('current-date');
     }
+    // Highlight selected date
      if (
       i === selectedDate.getDate() &&
       year === selectedDate.getFullYear() &&
@@ -63,6 +63,7 @@ function renderCalendar(month, year) {
     ) {
       day.classList.add('selected-date');
     } 
+    day.classList.add('calendar-date')
     calendarDates.appendChild(day);
   }
 
@@ -130,18 +131,19 @@ $('#nextDayBtn').click(() => {
   getOrders();
 })
 
-calendarDates.addEventListener('click', (e) => {
+$('.calendar-dates').on('click', '.calendar-date', (e) => {
+    console.log("e.target.textContent =", e.target.textContent)
   if (e.target.textContent !== '') {
-    console.log("selectedDate =", selectedDate)
-    console.log("selectedDate.getMonth() =", selectedDate.getMonth())
-    console.log("currentMonth =", currentMonth)
+    console.log("e.target.textContent =", e.target.textContent)
+    // console.log("selectedDate.getMonth() =", selectedDate.getMonth())
+    // console.log("currentMonth =", currentMonth)
     $('.calendar-dates').children('div').removeClass('selected-date')
     $(e.target).addClass('selected-date')
     var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
     selectedDate = new Date(`${currentYear}-${currentMonth+1}-${e.target.textContent}`)
-    console.log("selectedDate =", selectedDate)
-    console.log("selectedDate.getMonth() =", selectedDate.getMonth())
-    console.log("currentMonth =", currentMonth)
+    // console.log("selectedDate =", selectedDate)
+    // console.log("selectedDate.getMonth() =", selectedDate.getMonth())
+    // console.log("currentMonth =", currentMonth)
     $('#calendar-header').text(months[currentMonth])
     $('#calendar-body').text(e.target.textContent)
     $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
