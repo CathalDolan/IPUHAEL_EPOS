@@ -1,0 +1,91 @@
+/* https://www.30secondsofcode.org/css/s/circular-progress-bar/#anatomy-of-a-circular-progress-bar */
+.circular-progress {
+    display: block;
+    margin: 2px auto;
+    width: 50px;
+    height: 50px;
+  --size: 50px;
+  --half-size: calc(var(--size) / 2);
+  --stroke-width: 5px;
+  --radius: calc((var(--size) - var(--stroke-width)) / 2);
+  --circumference: calc(var(--radius) * pi * 2);
+  --dash: calc((var(--progress) * var(--circumference)) / 100);
+  animation: progress-animation 3s linear 0s 1 forwards;
+}
+
+.circular-progress circle {
+  cx: var(--half-size);
+  cy: var(--half-size);
+  r: var(--radius);
+  stroke-width: var(--stroke-width);
+  fill: none;
+  stroke-linecap: round;
+}
+
+.circular-progress circle.bg {
+  stroke: #fff;
+}
+
+.circular-progress circle.fg {
+  stroke: #1a9e08;
+}
+
+.circular-progress circle.rotate {
+  transform: rotate(-90deg);
+  transform-origin: var(--half-size) var(--half-size);
+  stroke-dasharray: var(--dash) calc(var(--circumference) - var(--dash));
+  transition: stroke-dasharray 0.3s linear 0s;
+  stroke: #1a9e08;
+}
+
+@property --progress {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@keyframes progress-animation {
+  from {
+    --progress: 0;
+  }
+  to {
+    --progress: 100;
+  }
+}
+
+.checkout-timer-wrapper {
+    display: none;
+    padding: 0;
+    margin-bottom: 5px;
+}
+
+.checkout-timer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  height: 100%;
+} 
+
+.checkout-timer p {
+    margin: 0;
+    color: #1a9e08;
+    font-weight: 700;
+}
+
+#countdown {
+    fill:#1a9e08;
+    stroke:#1a9e08;
+    font-weight: 700;
+}
+
+.cancel-timer {
+    height: 25px;
+    padding: 0;
+    background-color: red;
+}
+
+.test-svg {
+  height: 50px;
+  width: 50px;
+}

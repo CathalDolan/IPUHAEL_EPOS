@@ -144,7 +144,7 @@ $('.calendar-dates').on('click', '.calendar-date', (e) => {
     // console.log("selectedDate =", selectedDate)
     // console.log("selectedDate.getMonth() =", selectedDate.getMonth())
     // console.log("currentMonth =", currentMonth)
-    $('#calendar-header').text(months[currentMonth])
+    $('#calendar-header').text(`${months[currentMonth]}`)
     $('#calendar-body').text(e.target.textContent)
     $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
     $('.calendar').hide(500) 
@@ -190,7 +190,7 @@ function getOrders() {
     var transaction_counter = 0;
     if(orders.length<1) {
       $('.no-entries').append(
-        `<h5 class="">No Entries Found</h5>`
+        `<h4 class="">No Entries Found For ${dayOfWeek[selectedDate.getDay()]}, ${formatOrdinals(selectedDate.getDate())} ${months[selectedDate.getMonth()]}, ${selectedDate.getFullYear()}</h4>`
       )
     }
     for(let i=0;i<orders.length;i++) {
@@ -268,3 +268,17 @@ function getOrders() {
   })
   .catch(err => console.error(err));   
 }
+
+const pr = new Intl.PluralRules("en-US", { type: "ordinal" });
+
+const suffixes = new Map([
+  ["one", "st"],
+  ["two", "nd"],
+  ["few", "rd"],
+  ["other", "th"],
+]);
+const formatOrdinals = (n) => {
+  const rule = pr.select(n);
+  const suffix = suffixes.get(rule);
+  return `${n}${suffix}`;
+};

@@ -14,9 +14,9 @@ else {
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function () {
     // sessionStorage.removeItem("kitchen_display");
-    console.log(sessionStorage)
+    // console.log(sessionStorage)
     let till_display = sessionStorage.getItem("till_display");
-    console.log("till_display = ", till_display)
+    // console.log("till_display = ", till_display)
     if(till_display == null) {
         till_display = "bar_product";
     }
@@ -24,7 +24,7 @@ window.onload = function () {
     $('.food_row').children().addClass('hide');
     $(`[data-${till_display}=True]`).parent().removeClass('hide');
     $(`#${till_display}`).addClass('selected');
-    if(display_selected == "kitchen_product") {
+    if(till_display == "kitchen_product") {
         $('.food_row').children().removeClass('hide');
     }
 
@@ -313,14 +313,10 @@ $('.food.measure_button').click(function() {
 $('.food.product_button').click(function() {
     console.log("FOOD BUTTON");
     let product_size = $('.food.measure_button.selected').attr('data-price');
-    // console.log("product_size = ", product_size)
     let abbrv_size = product_size.split("_")[1]; // Required when allocating variable sizs to products - Phase 2
-    // console.log("abbrv_size = ", abbrv_size)
-    // console.log("product_size = ", product_size)
     let product_name = $(this).attr('data-name');
     let abbr_name = $(this).attr('data-abbr_name');
     let product_price = $(this).attr('data-' + product_size);
-    // console.log("product_price = ", product_price)
     if(product_price == 'None') {
         product_price = Number($(this).attr('data-price_default'));
         abbrv_size = '';
@@ -328,7 +324,6 @@ $('.food.product_button').click(function() {
     else {
         product_price = Number(product_price)
     }
-    // console.log("product_price = ", product_price)
 
     let product_category = $(this).attr('data-category');
     let pfand_payable = $(this).attr('data-pfand');
@@ -356,9 +351,6 @@ $('.food.product_button').click(function() {
 
     }
     apply_specials();
-
-
-
 })
 
 // INCREMENT a product line in the basket
@@ -798,13 +790,7 @@ function basketGrandTotals() {
         // console.log("Total_Products_Qty", Total_Products_Qty);
 
         // Calculates total value of all products in basket
-        // let this_line_total = this.line_total;
-        // console.log("this_line_total", this_line_total);
-        // Line_Totals_Total += this_line_total;
-        // console.log("Line_Totals_Total pre fixed", Line_Totals_Total);
-
         // Calculates Pfand Amount Due
-        // console.log("pfand_applicable = ", pfand_applicable)
         if (this.pfand_payable == "True" && pfand_applicable == true) {
             if(this.name == "Whiskey Platter") {
                 Pfand_Total += (this.qty * 2.5 * 6)
@@ -880,8 +866,8 @@ $('.€_notes_button').click(function () {
     $('#amount_tendered').val(note_value);
     Payment_Method = $(this).attr("data-payment_method");
     // Call recalculate change due function
-    recalculate_change_due()
-
+    recalculate_change_due();
+    checkoutTimer();
 });
 
 $('.exact_tendered').click(function () {
@@ -890,6 +876,7 @@ $('.exact_tendered').click(function () {
     Change_Due = (Amount_Tendered - Total_Due);
     $('#change_due').text("€" + Change_Due.toFixed(2));
     Payment_Method = "Cash";
+    checkoutTimer();
 })
 
 // CREDIT CARD BUTTON: Populate tendered amount when Credit Card button pressed
@@ -898,8 +885,8 @@ $('#credit_card_button').click(function () {
     Amount_Tendered = Total_Due;
     $('#amount_tendered').val(Total_Due.toFixed(2));
     recalculate_change_due();
-
     Payment_Method = $(this).attr("data-payment_method");
+    checkoutTimer();
 });
 
 // PFAND BUTTONS: Allow Users input the number of Pfand items returned
@@ -945,7 +932,20 @@ $('.cancel_button').click(function () {
 
 // PAYMENT BUTTONS: Fn to submit order to DB when clicking Finish, Unpaid or Waste buttons
 // https://testdriven.io/blog/django-ajax-xhr/
-$('.payment_button').click(function () {
+$('.finish_button').click(function () {
+    var valid = validate();
+    if(valid === true) {
+        checkout();
+    }  
+});
+
+$('.payment_button').click(function() {
+    let payment_method_alternative = $(this).attr("data-payment_method_alternative")
+    let payment_reason = $(this).attr("data-payment_reason")
+    checkout(payment_method_alternative, payment_reason)
+})
+
+function validate() {
     if (ALL_PRODUCTS.length == 0) {
         $(".message-container").empty().append(`
             <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -956,15 +956,42 @@ $('.payment_button').click(function () {
                 </div>
             </div>`)
         $('.toast').toast('show');
-        return
+        return false;
     }
-    let payment_method_alternative = $(this).attr("data-payment_method_alternative")
-    let payment_reason = $(this).attr("data-payment_reason")
+    if ($('#amount_tendered').val() == "") {
+        $('#amount_tendered').addClass('error');
+        var message_container = $(".message-container");
+        $(message_container).append(`
+            <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="arrow-up arrow-warning"></div>
+                <div class="toast-header bg-warning text-dark">
+                    <strong class="me-auto text-light">Oops!</strong>${ "Please add a tendered amount" }
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>`)
+        $('.toast').toast('show');
+        return false;
+    }
+    if (Amount_Tendered < Total_Due) {
+        var message_container = $(".message-container");
+        $(message_container).empty().append(`
+            <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="arrow-up arrow-warning"></div>
+                <div class="toast-header bg-warning text-dark">
+                    <strong class="me-auto text-light">Oops</strong>${ "Not Enough Tendered!!!" }
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>`)
+        $('.toast').toast('show');
+        return false;
+    }
+    return true;
+}
+
+function checkout(payment_method_alternative, payment_reason) {
     if (payment_reason == undefined) {
         payment_reason = null;
     }
-    // console.log("payment_method_alternative", payment_method_alternative);
-
     // Functionality to allow a payment be submitted where the total due is 0 because the pfand covered the cost.
     // e.g. where a customer buys 1 Pfand Shot Special, but returns a glass. One cancels the other so amount submitted and amount due is 0
     if ((Line_Totals_Total * -1) >= Pfand_Total) {
@@ -980,22 +1007,8 @@ $('.payment_button').click(function () {
         Total_Due = 0;
         Change_Due = 0;
         Payment_Method = payment_method_alternative;
-    } else {
-        if ($('#amount_tendered').val() == "") {
-            $('#amount_tendered').addClass('error');
-            var message_container = $(".message-container");
-            $(message_container).append(`
-                <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="arrow-up arrow-warning"></div>
-                    <div class="toast-header bg-warning text-dark">
-                        <strong class="me-auto text-light">Oops!</strong>${ "Please add a tendered amount" }
-                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                </div>`)
-            $('.toast').toast('show');
-            return
-        }
-    }
+    } 
+
     let discounts = '';
     if (DISCOUNTS.length > 0) {
         
@@ -1020,75 +1033,99 @@ $('.payment_button').click(function () {
     Grand_Total.staff_member = STAFF_ID;
 
     let sub_amount = Amount_Tendered - Total_Due;
-    // console.log("PAYMENT BUTTONS FN: Sub Amount", sub_amount);
+    fetch(url, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify([{
+            NEW_BASKET
+        }, {
+            Grand_Total
+        }, {
+            DISCOUNTS
+        }])
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("response.data = ", data)
+        if (data.status == "Checkout Complete") {
+            location.reload();
+        }
+    });
+}
 
-    if (Amount_Tendered < Total_Due) {
-        var message_container = $(".message-container");
-        $(message_container).empty().append(`
-            <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="arrow-up arrow-warning"></div>
-                <div class="toast-header bg-warning text-dark">
-                    <strong class="me-auto text-light">Oops</strong>${ "Not Enough Tendered!!!" }
-                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>`)
-        $('.toast').toast('show');
-    } else {
-        console.log("NEW_BASKET", NEW_BASKET);
-        console.log("Grand Total", Grand_Total);
-        console.log("DISCOUNTS = ", DISCOUNTS)
-        fetch(url, {
-                method: "POST",
-                credentials: "same-origin",
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                    "X-CSRFToken": getCookie("csrftoken"),
-                },
-                body: JSON.stringify([{
-                    NEW_BASKET
-                }, {
-                    Grand_Total
-                }, {
-                    DISCOUNTS
-                }])
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("response.data = ", data)
-                if (data.status == "Checkout Complete") {
-                    location.reload();
-                }
-            });
+var timerOn = true;
+$('.cancel-timer').click(() => {
+    if(timerOn === true) {
+        timerOn = false;
+        $('.fg').removeClass('rotate')
     }
-});
-//-------------TEST
-let counter = $('.product_button').innerHeight();
-const inc = document.getElementById("increment");
-const input = document.getElementById("input");
-const dec = document.getElementById("decrement");
-input.value = counter;
-function increment() {
-  counter++;
-}
-function decrement() {
-  counter--;
-}
-function get() {
-  return counter;
+    else {
+        timerOn = true;
+        checkoutTimer();
+    }    
+})
+
+
+let counter = 3;
+function checkoutTimer() {
+    const valid = validate();
+    console.log("valid = ", valid)
+    if(valid === true) {
+        const timer = setInterval(countDown, 100);
+        $('.checkout-timer-wrapper').show()
+        let path = $('.fg');
+        $('#countdown').text(Math.ceil(counter).toFixed(0))
+        function countDown() {
+            if(timerOn === true) {
+                counter -= 0.1;
+                path.css('stroke-dashoffset', counter*35)
+                $('#countdown').text(Math.ceil(counter).toFixed(0))           
+                if (counter < 0) {
+                    clearInterval(timer);
+                    checkout();
+                } 
+            }
+            else {
+                clearInterval(timer);
+            }
+            
+        }
+    }
+    
 }
 
-inc.addEventListener("click", () => {
-  increment();
-  input.value = get();
-  $('.product_button').innerHeight(counter)
-});
-dec.addEventListener("click", () => {
-  if (input.value > 0) {
-    decrement();
-  }
-  input.value = get();
-  $('.product_button').innerHeight(counter)
-});
+//-------------TEST for button height adjust
+// let counter = $('.product_button').innerHeight();
+// const inc = document.getElementById("increment");
+// const input = document.getElementById("input");
+// const dec = document.getElementById("decrement");
+// input.value = counter;
+// function increment() {
+//   counter++;
+// }
+// function decrement() {
+//   counter--;
+// }
+// function get() {
+//   return counter;
+// }
+
+// inc.addEventListener("click", () => {
+//   increment();
+//   input.value = get();
+//   $('.product_button').innerHeight(counter)
+// });
+// dec.addEventListener("click", () => {
+//   if (input.value > 0) {
+//     decrement();
+//   }
+//   input.value = get();
+//   $('.product_button').innerHeight(counter)
+// });
 //---------------------------------------------
 function getCookie(name) {
     let cookieValue = null;

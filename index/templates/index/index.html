@@ -3,6 +3,7 @@
 {% block extra_css %}
 <!--My CSS stylesheet-->
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" href="{% static 'css/circular_progress.css' %}">
 {% endblock %}
 {% block content %}
 <!-- The Staff Modal -->
@@ -903,33 +904,6 @@
                 <input type="number" id="input" readonly>
                 <button id="increment">+</button>
             </div> -->
-            
-            <hr>
-            <!-- Grand Totals Rows -->
-            <div class="row totals_row" id="grand_totals_row_div">
-                <div class="col-6">
-                    <!-- <p class="grand_totals_row grand_totals_row_label d-none">Number of Products:</p> -->
-                    <!-- <p class="grand_totals_row grand_totals_row_label">Drinks / Food Sub-Total:</p> -->
-                    <!-- <p class="grand_totals_row grand_totals_row_label">Drinks / Food Discount:</p> -->
-                    <!-- <p class="grand_totals_row grand_totals_row_label d-none">Drinks / Food Grand Total:</p> -->
-                    <p class="grand_totals_row grand_totals_row_label">Pfand Total:</p>
-                    <p class="grand_totals_row grand_totals_row_label">Total Due:</p>
-                    <p class="grand_totals_row grand_totals_row_label">Tendered Amount:</p>
-                    <p class="grand_totals_row grand_totals_row_label" id="change_due_label">Change Due:</p>
-                </div>
-                <div class="col-6">
-                    <p class="grand_totals_row grand_totals_figure d-none" id="total_number_of_products"># Products</p>
-                    <!-- <p class="grand_totals_row grand_totals_figure" id="food_subtotal">€</p> -->
-                    <!-- <p class="grand_totals_row grand_totals_figure" id="food_discount">€</p> -->
-                    <!-- <p class="grand_totals_row grand_totals_figure d-none" id="food_grand_total">€</p> -->
-                    <p class="grand_totals_row grand_totals_figure" id="pfand_total">€</p>
-                    <p class="grand_totals_row grand_totals_figure" id="total_due">€</p>
-                    <span class="euro_symbol" id="amount_tendered_span">€
-                        <input type="number" class="grand_totals_row grand_totals_figure" id="amount_tendered" value=0>
-                    </span>
-                    <p class="grand_totals_row grand_totals_figure" id="change_due">€</p>
-                </div>
-            </div>
             <!-- Message Container -->
             <div class="message-container">
                 {% if messages %}
@@ -948,6 +922,56 @@
                 {% endfor %}
                 {% endif %}
             </div>
+
+            <hr>
+            <!-- Grand Totals Rows -->
+            <div class="row">
+                <div class="col-9 px-0">
+                    <div class="row totals_row" id="grand_totals_row_div">
+                        <div class="col-8">
+                            <!-- <p class="grand_totals_row grand_totals_row_label d-none">Number of Products:</p> -->
+                            <!-- <p class="grand_totals_row grand_totals_row_label">Drinks / Food Sub-Total:</p> -->
+                            <!-- <p class="grand_totals_row grand_totals_row_label">Drinks / Food Discount:</p> -->
+                            <!-- <p class="grand_totals_row grand_totals_row_label d-none">Drinks / Food Grand Total:</p> -->
+                            <p class="grand_totals_row grand_totals_row_label">Pfand Total:</p>
+                            <p class="grand_totals_row grand_totals_row_label">Total Due:</p>
+                            <p class="grand_totals_row grand_totals_row_label">Tendered Amount:</p>
+                            <p class="grand_totals_row grand_totals_row_label" id="change_due_label">Change Due:</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="grand_totals_row grand_totals_figure d-none" id="total_number_of_products"># Products</p>
+                            <!-- <p class="grand_totals_row grand_totals_figure" id="food_subtotal">€</p> -->
+                            <!-- <p class="grand_totals_row grand_totals_figure" id="food_discount">€</p> -->
+                            <!-- <p class="grand_totals_row grand_totals_figure d-none" id="food_grand_total">€</p> -->
+                            <p class="grand_totals_row grand_totals_figure" id="pfand_total">€</p>
+                            <p class="grand_totals_row grand_totals_figure" id="total_due">€</p>
+                            <span class="euro_symbol" id="amount_tendered_span">€
+                                <input type="number" class="grand_totals_row grand_totals_figure" id="amount_tendered" value=0>
+                            </span>
+                            <p class="grand_totals_row grand_totals_figure" id="change_due">€</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3 checkout-timer-wrapper">  
+                    <div class="checkout-timer">
+                         <p>CHECKOUT</p>
+                        <svg class="circular-progress" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="bg"></circle>
+                            <circle class="fg" stroke-dasharray="100" stroke-dashoffset="100" pathLength="100"/>
+                            <text id="countdown" x="20" y="30"></text>
+                            <!-- <text id="stopped" x="0" y="30">Stopped</text> -->
+                        </svg>
+                        <button class="btn cancel-timer">Cancel</button> 
+                    </div>
+                   
+                    
+                </div>
+            </div>
+            <!-- <button class="btn test_button">
+                        test button
+                    </button> -->
+            
             <!-- € Notes and Finish Buttons Row -->
             <div class="row €_notes_row">
                 <div class="col-3">
@@ -1034,7 +1058,7 @@
                
                 <!-- Finish Button -->
                 <div class="col-3">
-                    <button class="btn finish_button payment_button">
+                    <button class="btn finish_button">
                         Finish
                     </button>
                 </div>

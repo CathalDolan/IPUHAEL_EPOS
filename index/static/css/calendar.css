@@ -1,8 +1,3 @@
-/* .calendar-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f9;
-    display: none;
-} */
 .calendar {
     font-family: Arial, sans-serif;
     background-color: #f4f6f9;
@@ -56,20 +51,15 @@
     padding:2px;
 }
 .calendar-dates div {
-  /* border-bottom: 1px solid #eaeef3; */
   cursor: pointer;
   border-radius: 10px;
 }
-/* .calendar-dates div:hover {
-  background-color: #f1f1f1;
-} */
 
 .selected-date {
     background-color: #fff;
     color:#fa565a;
 }
 .current-date {
-  /* background-color: #fa565a; */
   color: #fa565a;
   border-radius: 10px;
 }

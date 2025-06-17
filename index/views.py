@@ -24,9 +24,9 @@ def index(request):
             return JsonResponse({'status': 'Checkout Complete'}, status=200)
         elif request.method == 'POST':
             data = json.load(request)
-            # print("Data 0", data[0])
-            # print("Data 1 = ", data[1])
-            # print("Data 2", data[2])
+            print("Data 0", data[0])
+            print("Data 1 = ", data[1])
+            print("Data 2", data[2])
             staff_member = Staff.objects.get(id=data[1]['Grand_Total']["staff_member"])
             for v in data[1].values():
                 # print("v = ", v)
@@ -209,9 +209,6 @@ def past_orders(request):
         
         staff_list = [{'staffId': 0, 'name': 'All'}]
         for order in orders:
-            # print("order['staff_member'] = ", order['staff_member_id'])
-            # if not order['staff_member_id'] in staff_list.keys():
-            #     staff_list[order['staff_member_id']]=order['staff_member_id__name']
             if not any(item['staffId'] == order['staff_member_id'] for item in staff_list):
                 staff_list.append({
                     "staffId": order['staff_member_id'],
@@ -231,14 +228,9 @@ def past_orders(request):
         today = datetime.now()
         day_from = today.strftime("%Y-%m-%d")
         day_to = today + timedelta(days=1)
-        # print("day_from = ", day_from)
-        # print("day_to = ", day_to)
         orders = LineItem.objects.filter(order_date_li__gte=day_from).filter(order_date_li__lte=day_to).order_by('-order_date_li')
         staff_list = [{'staffId': 0, 'name': 'All'}]
         for order in orders:
-            print("order = ", order)
-            # if not order.staff_member_id in staff_list.keys():
-            #     staff_list[order.staff_member_id] = order.staff_member
             if not any(item['staffId'] == order.staff_member_id for item in staff_list):
                 staff_list.append({
                     "staffId": order.staff_member_id,
@@ -259,12 +251,7 @@ def takings(request):
 
 @login_required
 def reports(request):
-    """ A view to return the past orders page """
-    # delete_entries = LineItem.objects.all()
-    # for entry in delete_entries:
-    #     entry.delete()
-    # print("delete_entries = ", delete_entries)
-    
+    """ A view to return the past orders page """ 
     entries = LineItem.objects.all().values(
         'id',
         'order_date_li',
@@ -315,10 +302,6 @@ def reports(request):
     latest_date = entries.latest('order_date_li')
     date_now = datetime.now()
     date_yesterday = datetime.now() + timedelta(days=-1)
-    # print("earliest_date = ", earliest_date["order_date_li"])
-    # print("latest_date = ", latest_date["order_date_li"])
-    # print("date_now = ", date_now)
-    # print("date_yesterday = ", date_yesterday)
     
     context = {
         "data": list(entries),

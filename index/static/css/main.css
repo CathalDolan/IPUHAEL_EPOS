@@ -528,7 +528,7 @@ form {
 
 #amount_tendered {
     height: 21px;
-    width: 75px;
+    width: 75%;
 }
 
 .modal {

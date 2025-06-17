@@ -10,86 +10,146 @@
 
 
 {% block content %}
-<div class="container-fluid">
+<!-- <div class="container test">
     <div class="row">
+        <div>
+            <svg id="prevDayBtn" class="vert-svg" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="50, 0 10, 50 90, 50 "/>
+                <text class="symbol" x="10" y="60">-</text>
+                <text class="" x="40" y="40">Month</text>
+            </svg>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col test-navBtn">
+            <svg id="prevDayBtn" class="horz-svg" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="0, 50 50, 10 50, 90 "/>
+                <text class="symbol" x="10" y="57">-</text>
+                <text class="vertical-text" x="40" y="40">D</text>
+                <text class="vertical-text" x="40" y="55">a</text>
+                <text class="vertical-text" x="40" y="70">y</text>
+            </svg>
+        </div>
+        <div class="col-2 icon">
+            <div id="calendar-header" class="icon-header">
+                <script>
+                    var	month = new Date().getMonth();
+                        months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+                    document.write(months[month]);
+                </script>
+            </div>
+            <div id="calendar-body" class="icon-body">
+                <script>
+                    document.write(new Date().getDate());
+                </script>
+            </div>
+            <div id="calendar-footer" class="icon-footer">
+                <script>
+                    var	day = new Date().getDay();
+                    var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday',   'Wednesday', 'Thursday', 'Friday', 'Saturday');
+                    document.write(dayOfWeek[day]);
+                </script>
+            </div>
+        </div>
+        <div class="col test-navBtn">
+            <svg id="nextDayBtn" class="horz-svg" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="50, 50 0, 10 0, 90"/>
+            <text x="25" y="57">+</text>
+            <text class="vertical-text" x="10" y="40">D</text>
+            <text class="vertical-text" x="10" y="55">a</text>
+            <text class="vertical-text" x="10" y="70">y</text>
+        </svg>
+        </div>
+    </div>
+    <div class="row">
+        <div>prev month</div>
+    </div>
+</div> -->
+<div class="container-fluid heading-container">
+    <div class="row heading_row">
         <div class="col-3">
 
         </div>
         <div class="col">
-            <h1 class="">Past Orders</h1>
+            <h1 class="">Previous Orders</h1>
         </div>
         <div class="col-3">
             <a href="{% url 'index' %}"><button type="button" class="btn btn-primary">Back to site</button></a>
         </div>
     </div>
+</div>
+<div class="container-fluid">
     <div class="row">
-        <div class="col main-section">
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Staff</th>
-                    <th>Pfand Due</th>
-                    <th>Drinks/Food Total</th>
-                    <th>Total Due</th>
-                    <th>Amount Tendered</th>
-                    <th>Change </th>
-                    <th>Payment Method</th>
-                    <th>Comp/Disc</th>
-                    <th>Number  of Products</th>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Unit price</th>
-                    <th>#</th>
-                </tr>
-                {% for order in orders %}
-                {% ifchanged order.grand_totals.id %}
-                    <tr class="content {% cycle 'row1' 'row2' as rowcolors %}">
-                        <td class="no-border-bottom left-align">{{ order.order_date_li|date:"D j/m/y" }}</td>
-                        <td class="no-border-bottom left-align">{{ order.order_date_li|date:"G:i" }}</td>
-                        <td class="no-border-bottom">{{ order.staff_member }}</td>
-                        <td class="no-border-bottom">{{ order.grand_totals.pfand_total }}</td>
-                        <td class="no-border-bottom">{{ order.grand_totals.drinks_food_total }}</td>
-                        <td class="no-border-bottom">{{ order.grand_totals.total_due }}</td>
-                        <td class="no-border-bottom">{{ order.grand_totals.tendered_amount }}</td>
-                        <td class="no-border-bottom">{{ order.grand_totals.change_due }}</td>
-                        <td class="no-border-bottom">{{ order.payment_method }}</td>
-                        <td class="no-border-bottom">{{ order.discount }}</td>
-                        <td class="no-border-bottom">{{ order.grand_totals.number_of_products }}</td>
-                        <td class="left-align">{{ order.name }}</td>
-                        <td>{{ order.quantity }}</td>
-                        <td>{{ order.price_unit }}</td>
-                        <td class="no-border-bottom" class="no-border-bottom">{{ order.grand_totals.id }}</td>
+        <div class="col">
+            <div class="main-section">
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Staff</th>
+                        <th>Pfand Due</th>
+                        <th>Drinks/Food Total</th>
+                        <th>Total Due</th>
+                        <th>Amount Tendered</th>
+                        <th>Change </th>
+                        <th>Payment Method</th>
+                        <th>Comp/Disc</th>
+                        <th>Number  of Products</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Unit price</th>
+                        <th>#</th>
                     </tr>
-                {% else %}
-                    <tr class="content {{ rowcolors }}">
-                        <td class="no-border-top no-border-bottom"></td>
-                        <td class="no-border-top no-border-bottom"></td>
-                        <td class="no-border-top no-border-bottom"></td>
-                        <td class="no-border-top no-border-bottom"></td>
-                        <td class="no-border-top no-border-bottom"></td>
-                        <td class="no-border-top no-border-bottom"></td>
-                        <td class="no-border-top no-border-bottom"></td>
-                        <td class="no-border-top no-border-bottom"></td>
-                        <td class="no-border-top no-border-bottom"></td>
-                        <td class="no-border-top no-border-bottom"></td>
-                        <td class="no-border-top no-border-bottom"></td>
-                        <td class="left-align">{{ order.name }}</td>
-                        <td>{{ order.quantity }}</td>
-                        <td>{{ order.price_unit }}</td>
-                        <td class="no-border-top no-border-bottom"></td>
-                    </tr>
-                {% endifchanged %}
-                
-                {% endfor %}
-            </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col no-entries">
-            {% if not orders %}
-                <h5>No Entries Found</h5>
-            {% endif %}
+                    {% for order in orders %}
+                    {% ifchanged order.grand_totals.id %}
+                        <tr class="content {% cycle 'row1' 'row2' as rowcolors %}">
+                            <td class="no-border-bottom left-align">{{ order.order_date_li|date:"D j/m/y" }}</td>
+                            <td class="no-border-bottom left-align">{{ order.order_date_li|date:"G:i" }}</td>
+                            <td class="no-border-bottom">{{ order.staff_member }}</td>
+                            <td class="no-border-bottom">{{ order.grand_totals.pfand_total }}</td>
+                            <td class="no-border-bottom">{{ order.grand_totals.drinks_food_total }}</td>
+                            <td class="no-border-bottom">{{ order.grand_totals.total_due }}</td>
+                            <td class="no-border-bottom">{{ order.grand_totals.tendered_amount }}</td>
+                            <td class="no-border-bottom">{{ order.grand_totals.change_due }}</td>
+                            <td class="no-border-bottom">{{ order.payment_method }}</td>
+                            <td class="no-border-bottom">{{ order.discount }}</td>
+                            <td class="no-border-bottom">{{ order.grand_totals.number_of_products }}</td>
+                            <td class="left-align">{{ order.name }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.price_unit }}</td>
+                            <td class="no-border-bottom" class="no-border-bottom">{{ order.grand_totals.id }}</td>
+                        </tr>
+                    {% else %}
+                        <tr class="content {{ rowcolors }}">
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="left-align">{{ order.name }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.price_unit }}</td>
+                            <td class="no-border-top no-border-bottom"></td>
+                        </tr>
+                    {% endifchanged %}
+                    
+                    {% endfor %}
+                </table>
+                <div class="row">
+                    <div class="col no-entries">
+                        {% if not orders %}
+                            <h4>No Entries Found For Today</h4>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -117,7 +177,7 @@
     <div class="calendar-container">
         <svg id="prevDayBtn" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <polyline points="0, 50 40, 10 40, 90 "/>
-            <text x="20" y="60">-</text>
+            <text x="20" y="55">-</text>
         </svg>
         <div id="datepicker" class="icon">
             <div id="calendar-header" class="icon-header">
