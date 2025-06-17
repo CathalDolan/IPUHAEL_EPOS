@@ -13,10 +13,7 @@ else {
 
 //SET TIME & DATE: Fn to set time and date.
 window.onload = function () {
-    // sessionStorage.removeItem("kitchen_display");
-    // console.log(sessionStorage)
     let till_display = sessionStorage.getItem("till_display");
-    // console.log("till_display = ", till_display)
     if(till_display == null) {
         till_display = "bar_product";
     }
@@ -137,7 +134,6 @@ $('#open_drink_modal').on('shown.bs.modal', function () {
     $('input[name="price"]').val(null);
     $('input[name="pfand"]').prop('checked',true);
     $('.field-error').text('');
-    console.log($('#open_drink_modal').find('[name=price'));
     $('#open_drink_modal').find('[name=price').focus();
 })
 
@@ -173,14 +169,12 @@ $(document).ready(function() {
 
 $('.staff-name').click(function() {
     STAFF_ID = $(this).attr('data-member_id');
-    console.log("STAFF_ID = ", STAFF_ID);
-    console.log("STAFF_NAME = ", $(this).text());
+    console.log(`STAFF_ID: STAFF_NAME = ${STAFF_ID}: ${$(this).text()}` );
     $('.staff-user').text($(this).text())
     $('#staff_modal').modal('hide')
 })
 
 $('#staff_modal').on('hidden.bs.modal', function (e) {
-    // console.log("modal hidden");
     if(STAFF_ID == '') {
         var staff_modal = new bootstrap.Modal(document.getElementById('staff_modal'), {})
         staff_modal.show()
@@ -189,7 +183,6 @@ $('#staff_modal').on('hidden.bs.modal', function (e) {
 
 $('.product_selection').click(function(){
     var display_selected = $(this).attr("id");
-    console.log("display_selected = ", display_selected);
     sessionStorage.setItem("till_display", display_selected);
     $('.product_selection').removeClass('selected')
     $(`#${display_selected}`).addClass('selected')
@@ -249,14 +242,20 @@ $('.drink.product_button').click(function () {
     // Check for draught beer to set flag to all chaser/mix special
     if(product_name == "Chaser/Mix Special") {
         let check_draught = ALL_PRODUCTS.find(item => (item.category == `draught`));
-        console.log("check_draught = ", check_draught)
         if(check_draught == undefined) {
-            console.log("undefined")
+            $(".message-container").empty().append(`
+                <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="arrow-up arrow-warning"></div>
+                    <div class="toast-header bg-warning text-dark">
+                        <strong class="me-auto text-light">Oops!! </strong>Please add a draught drink first.
+                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>`)
+            $('.toast').toast('show');
             return;
         }
     }
     let product_size = $('.drink.measure_button.selected').attr('data-price');
-    console.log("product_size = ", product_size)
     let abbrv_size = product_size.split("_")[1]; // Required when allocating variable sizs to products - Phase 2
     
     
@@ -304,14 +303,12 @@ $('.food.measure_button').click(function() {
     let size = $(this).attr("data-price");
     $('.food.measure_button').removeClass('selected')
     $(this).addClass('selected');
-    console.log("size = ", size);
     $('.food_row').find('.product_button').removeClass('enabled').addClass('disabled');
     $('.food_row').find(`[data-${size}!=None]`).addClass('enabled').removeClass('disabled');
     $('.food_row').find(`[data-price_default!=None]`).addClass('enabled').removeClass('disabled');
 })
 
 $('.food.product_button').click(function() {
-    console.log("FOOD BUTTON");
     let product_size = $('.food.measure_button.selected').attr('data-price');
     let abbrv_size = product_size.split("_")[1]; // Required when allocating variable sizs to products - Phase 2
     let product_name = $(this).attr('data-name');
@@ -329,7 +326,6 @@ $('.food.product_button').click(function() {
     let pfand_payable = $(this).attr('data-pfand');
     
     let product = ALL_PRODUCTS.filter(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); //${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
-    console.log("product = ", product)
     let product_index = ALL_PRODUCTS.findIndex(item => (item.name == `${product_name}`) && (item.size == `${abbrv_size}`)); // ${product_name} ${abbrv_size[1]}. Required when allocating variable sizs to products - Phase 2
 
     if (product.length > 0) {
@@ -358,11 +354,8 @@ $(document).on('click', '.add_button', function () {
     console.log("Increment FN Fires");
     let product_name = $(this).parent().siblings(':first').children().text();
     let product_size = $(this).parent().siblings(':nth-child(2)').children().text().toLowerCase();
-    console.log("product_name = ", product_name)
-    console.log("product_size = ", product_size)
     let product = ALL_PRODUCTS.filter(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
     let product_index = ALL_PRODUCTS.findIndex(item => (item.abbr_name == `${product_name}`) && (item.size == `${product_size}`));
-    // console.log("product_index = ", product_index)
     if (product.length > 0) {
 
         ALL_PRODUCTS[product_index].qty += 1;
@@ -382,20 +375,17 @@ $(document).on('click', '.subtract_button', function () {
 
     // Initial If Statement used to prevent decrementor going below 0
     if (ALL_PRODUCTS[product_index].qty < 2) {
-
         console.log("Nothing ever happens");
-
     } else if (product.length > 0) {
         ALL_PRODUCTS[product_index].qty -= 1;
         ALL_PRODUCTS[product_index].line_total = ALL_PRODUCTS[product_index].price * ALL_PRODUCTS[product_index].qty;
-
     }
     apply_specials();
 })
 
 // DELETE a product line from the basket
 $(document).on('click', '.delete_button', function () {
-    console.log("Delete Function Fires", this);
+    console.log("Delete Function Fires");
     // If the product row has a data-special attribute not equal to undefined means that this row is a voucher
     if ($(this).attr('data-special') != undefined) {
         let voucher_index = VOUCHERS.findIndex(item => item == $(this).attr('data-special')); // Find this attribute in the VOUCHERS array
@@ -413,7 +403,6 @@ $(document).on('click', '.delete_button', function () {
 
 // Function to enter an open drink
 $('.open-drink-submit').click(() => {
-    console.log("open drink submit");
     let product_size = $('.drink.measure_button.selected').attr('data-price');
     let abbrv_size = product_size.split("_")[1]; 
     let product_qty = Number($('input[name="quantity"]').val());
@@ -486,13 +475,12 @@ $(document).on('click', '.specials_option', function () {
 
 // Function used to reapply the specials when the order basket is changed
 function apply_specials() {
-    // console.log("VOUCHERS = ", VOUCHERS);
+    console.log("VOUCHERS = ", VOUCHERS);
     // Clone the ALL_PRODUCTS array to a new array called NEW_BASKET in order to manipulate the values without distorting the ALL_PRODUCTS array
     NEW_BASKET = JSON.parse(JSON.stringify(ALL_PRODUCTS)); //https://www.freecodecamp.org/news/how-to-clone-an-array-in-javascript-1d3183468f6a/
     DISCOUNTS = []; // Reset the discounts applied 
     var discount_item = {}; // Reset the discounted item
     if(VOUCHERS.includes('oap-students')) {
-        console.log("oap-students = ", VOUCHERS);
         let total_discount = 0;
         $.each(NEW_BASKET, function(index, item) {
             if(item.category == 'food') {
@@ -568,7 +556,6 @@ function apply_specials() {
         let price = 0;
         discount_item = {};
         $.each(NEW_BASKET, function (index, item) {
-            console.log("item.category = ", item.category)
             if(item.category != "gifts")
                 if (item.qty > 1) {
                     double_item = true;
@@ -618,7 +605,6 @@ function apply_specials() {
         single_items = single_items.slice(-2)
         if (single_items.length > 1) {
             discount_item = single_items[0]
-            console.log(" = ", )
         } else {
             discount_item = {
                 'name': 'Invalid',
@@ -632,13 +618,9 @@ function apply_specials() {
         }
 
         index = NEW_BASKET.findIndex(obj => {
-            console.log("obj.name = ", obj.name)
             return (obj.name == discount_item.name && obj.size == discount_item.size);
         })
-        console.log("index = ", index)
         if (index != -1) {
-            // NEW_BASKET[index].name += '*'
-            // NEW_BASKET[index].qty += -1; 
             NEW_BASKET[index].line_total = NEW_BASKET[index].price * (NEW_BASKET[index].qty - 1);
             NEW_BASKET[index].qty = NEW_BASKET[index].qty - 1;
         }
@@ -651,7 +633,6 @@ function apply_specials() {
         var total_discount = 0;
         $.each(NEW_BASKET, function (index, item) {
             applicable_balance += item.line_total;
-            console.log("applicable_balance = ", applicable_balance)
         })
         if (single_items.length > 1) {
             $.each(single_items, function (index, item) {
@@ -665,7 +646,6 @@ function apply_specials() {
                 item.price = item.price * .8;
                 item.line_total = item.line_total * .8;
                 item.discount_applied = '20% off'
-                console.log("total_discount = ", total_discount)
             })
             discount_item = {
                 'name': 'Applied',
@@ -740,7 +720,6 @@ function update_basket() {
     });
     if (DISCOUNTS.length != 0) {
         $(DISCOUNTS).each(function (index, item) {
-            // console.log("item = ", item)
             $('.products_rows_div').prepend(
                 `<div class="row product_row ${item['name']=='Invalid' ? 'invalid':'valid'}">
                     <div class="col-4">
@@ -782,12 +761,10 @@ function basketGrandTotals() {
     Total_Products_Qty = 0;
     Line_Totals_Total = 0;
     Pfand_Total = 0;
-    // console.log("All Products Basket Grand Totals FN", ALL_PRODUCTS);
     $(ALL_PRODUCTS).each(function () {
         // Calculates total number of products in the basket
         let this_quantity = this.qty;
         Total_Products_Qty += this_quantity;
-        // console.log("Total_Products_Qty", Total_Products_Qty);
 
         // Calculates total value of all products in basket
         // Calculates Pfand Amount Due
@@ -802,17 +779,13 @@ function basketGrandTotals() {
         }
     });
 
-    // console.log("GLASSES_RETURNED = ", GLASSES_RETURNED)
     if (GLASSES_RETURNED == 'no-pfand') {
         Pfand_Total = 0;
     } else {
-        // console.log("ELSE")
         Pfand_Total = Pfand_Total - (Number(GLASSES_RETURNED) * 2.5);
     }
 
-    console.log("Pfand_Total = ", Pfand_Total);
     $(NEW_BASKET).each(function () {
-        // console.log("THIS = ", this);
         Line_Totals_Total += this.line_total;
     })
 
@@ -823,14 +796,9 @@ function basketGrandTotals() {
     Total_Due = Pfand_Total + Line_Totals_Total;
     var new_total_due = Total_Due.toFixed(2);
     Total_Due = parseFloat(new_total_due);
-    // console.log("Total due to fixed", Total_Due);
     $('#total_due').text("€" + Total_Due.toFixed(2));
 
-    // Amount_Tendered = Total_Due;
-    // Amount_Tendered = parseFloat($('#amount_tendered').val());
-    // console.log("Amount_Tendered = ", Amount_Tendered)
     if(Amount_Tendered >= Total_Due) {
-        console.log("YES >");
         Change_Due = Amount_Tendered - Total_Due;
         $('#change_due').text("€" + Change_Due.toFixed(2));
     }
@@ -848,11 +816,9 @@ element.addEventListener("keyup", recalculate_change_due);
 function recalculate_change_due() {
     Amount_Tendered = parseFloat($('#amount_tendered').val());
     if(isNaN(Amount_Tendered)) {
-        console.log("isNaN");
         $('#change_due').text("€");
     }
     else {
-        console.log("TENDERED AMOUNT", Amount_Tendered);
         // Amount_Tendered.select(); // Supposed to highlight all text in the input when it's clicked. Or clear input
         Change_Due = (Amount_Tendered - Total_Due);
         $('#change_due').text("€" + Change_Due.toFixed(2));
@@ -876,7 +842,11 @@ $('.exact_tendered').click(function () {
     Change_Due = (Amount_Tendered - Total_Due);
     $('#change_due').text("€" + Change_Due.toFixed(2));
     Payment_Method = "Cash";
-    checkoutTimer();
+    resetCheckoutTimer();
+    var valid = validate();
+    if(valid === true) {
+        checkout();
+    }  
 })
 
 // CREDIT CARD BUTTON: Populate tendered amount when Credit Card button pressed
@@ -886,18 +856,20 @@ $('#credit_card_button').click(function () {
     $('#amount_tendered').val(Total_Due.toFixed(2));
     recalculate_change_due();
     Payment_Method = $(this).attr("data-payment_method");
-    checkoutTimer();
+    resetCheckoutTimer();
+    var valid = validate();
+    if(valid === true) {
+        checkout();
+    }  
 });
 
 // PFAND BUTTONS: Allow Users input the number of Pfand items returned
 $('.pfand_button.activate').click(function () {
     GLASSES_RETURNED = $(this).attr("data-value");
-    console.log("GLASSES_RETURNED = ", GLASSES_RETURNED, typeof (GLASSES_RETURNED));
     $('.pfand_modal_button').removeClass('green');
     $('.pfand_button').removeClass('green');
     $(this).addClass('green');
     if (Number(GLASSES_RETURNED) > 4) {
-        console.log("YES > 4")
         $(".pfand_button[data-value='5+']").addClass('green');
     }
     if (GLASSES_RETURNED == '0') {
@@ -928,11 +900,14 @@ $('.cancel_button').click(function () {
     Total_Due = 0;
     $('#amount_tendered').val(0);
     $('#change_due').text("€");
+    resetCheckoutTimer();
+
 });
 
 // PAYMENT BUTTONS: Fn to submit order to DB when clicking Finish, Unpaid or Waste buttons
 // https://testdriven.io/blog/django-ajax-xhr/
 $('.finish_button').click(function () {
+    resetCheckoutTimer();
     var valid = validate();
     if(valid === true) {
         checkout();
@@ -956,6 +931,7 @@ function validate() {
                 </div>
             </div>`)
         $('.toast').toast('show');
+        resetCheckoutTimer();
         return false;
     }
     if ($('#amount_tendered').val() == "") {
@@ -970,6 +946,7 @@ function validate() {
                 </div>
             </div>`)
         $('.toast').toast('show');
+        resetCheckoutTimer();
         return false;
     }
     if (Amount_Tendered < Total_Due) {
@@ -983,6 +960,7 @@ function validate() {
                 </div>
             </div>`)
         $('.toast').toast('show');
+        resetCheckoutTimer();
         return false;
     }
     return true;
@@ -1014,7 +992,6 @@ function checkout(payment_method_alternative, payment_reason) {
         
         $(DISCOUNTS).each(function () {
             if (this.name != 'Invalid') {
-                console.log("DISCOUNT = ", this.discount_applied)
                 discounts += this.discount_applied + ', ';
             }
 
@@ -1057,45 +1034,59 @@ function checkout(payment_method_alternative, payment_reason) {
     });
 }
 
-var timerOn = true;
-$('.cancel-timer').click(() => {
-    if(timerOn === true) {
-        timerOn = false;
-        $('.fg').removeClass('rotate')
+var timer;
+var timerPaused = false;
+var countdownCounter = 3;
+
+$('.pause-button').click(() => {
+    if(timerPaused === true) {
+        timerPaused = false;
+        $('#countdown').text("||")
+        $('.pause-button').text("Resume");
     }
     else {
-        timerOn = true;
-        checkoutTimer();
+        timerPaused = true;
     }    
 })
 
-
-let counter = 3;
 function checkoutTimer() {
     const valid = validate();
-    console.log("valid = ", valid)
+    $('.pause-button').text("Pause");
+    timerPaused = false;
     if(valid === true) {
-        const timer = setInterval(countDown, 100);
+        countdownCounter = 3;
+        clearInterval(timer);
+        timer = setInterval(countDown, 100);
         $('.checkout-timer-wrapper').show()
-        let path = $('.fg');
-        $('#countdown').text(Math.ceil(counter).toFixed(0))
-        function countDown() {
-            if(timerOn === true) {
-                counter -= 0.1;
-                path.css('stroke-dashoffset', counter*35)
-                $('#countdown').text(Math.ceil(counter).toFixed(0))           
-                if (counter < 0) {
-                    clearInterval(timer);
-                    checkout();
-                } 
-            }
-            else {
-                clearInterval(timer);
-            }
-            
-        }
+        $('#countdown').text(Math.ceil(countdownCounter).toFixed(0))
+    } else {
+        clearInterval(timer);
     }
-    
+}
+
+function countDown() {
+    if(timerPaused === false) {
+        let path = $('.fg');
+        $('.pause-button').text("Pause");
+        countdownCounter -= 0.1;
+        path.css('stroke-dashoffset', countdownCounter*35)
+        $('#countdown').text(Math.ceil(countdownCounter).toFixed(0))           
+        if (countdownCounter < 0) {
+            clearInterval(timer);
+            checkout();
+        } 
+    } else {
+        $('.pause-button').text("Resume");
+        $('#countdown').text('||')
+    }
+}
+
+function resetCheckoutTimer() {
+    clearInterval(timer);
+    countdownCounter = 3;
+    timerPaused = false;
+    $('.pause-button').text("Pause");
+    $('.checkout-timer-wrapper').hide();
 }
 
 //-------------TEST for button height adjust
@@ -1131,7 +1122,6 @@ function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== "") {
         const cookies = document.cookie.split(";");
-        console.log("cookies = ", cookies)
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
             // Does this cookie string begin with the name we want?

@@ -169,8 +169,12 @@
     <div class="staff-list-container">
         <div class="staff-list-header">STAFF LIST</div>
         <div class="staff-list-body">
-            {% for item in staff_list %}       
-                <p data-staffId="{{item.staffId }}" class="staff-list-item">{{item.name }}</p>
+            {% for item in staff_list %} 
+                {% if item.staffId == 0 %}  
+                    <p data-staffId="{{item.staffId }}" class="staff-list-item selected-staff">{{item.name }}</p>
+                {% else %}
+                    <p data-staffId="{{item.staffId }}" class="staff-list-item">{{item.name }}</p>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

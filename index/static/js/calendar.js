@@ -79,7 +79,6 @@ prevMonthBtn.addEventListener('click', () => {
   }
   selectedDate.setMonth(currentMonth);
   selectedDate.setFullYear(currentYear);
-  console.log("selectedDate", selectedDate)
   $('#calendar-header').text(months[currentMonth])
   $('#calendar-body').text(selectedDate.getDate());
   $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
@@ -95,7 +94,6 @@ nextMonthBtn.addEventListener('click', () => {
   }
   selectedDate.setMonth(currentMonth);
   selectedDate.setFullYear(currentYear);
-  // console.log("selectedDate", selectedDate)
   $('#calendar-header').text(months[currentMonth])
   $('#calendar-body').text(selectedDate.getDate());
   $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
@@ -104,11 +102,9 @@ nextMonthBtn.addEventListener('click', () => {
 });
 
 $('#prevDayBtn').click(() => {
-  console.log("prevDay = ",)
+  console.log("prevDayBtn clicked");
   selectedDate.setDate(selectedDate.getDate() - 1)
-  console.log(selectedDate)
   currentMonth = selectedDate.getMonth()
-  console.log("currentMonth = ", currentMonth)
   currentYear = selectedDate.getFullYear()
   $('#calendar-header').text(months[currentMonth])
   $('#calendar-body').text(selectedDate.getDate());
@@ -118,11 +114,9 @@ $('#prevDayBtn').click(() => {
 })
 
 $('#nextDayBtn').click(() => {
-  console.log("nextDayBtn = ",)
+  console.log("nextDayBtn clicked");
   selectedDate.setDate(selectedDate.getDate() + 1)
-  console.log(selectedDate)
   currentMonth = selectedDate.getMonth()
-  // console.log("currentMonth = ", currentMonth)
   currentYear = selectedDate.getFullYear()
   $('#calendar-header').text(months[currentMonth])
   $('#calendar-body').text(selectedDate.getDate());
@@ -132,18 +126,12 @@ $('#nextDayBtn').click(() => {
 })
 
 $('.calendar-dates').on('click', '.calendar-date', (e) => {
-    console.log("e.target.textContent =", e.target.textContent)
   if (e.target.textContent !== '') {
     console.log("e.target.textContent =", e.target.textContent)
-    // console.log("selectedDate.getMonth() =", selectedDate.getMonth())
-    // console.log("currentMonth =", currentMonth)
     $('.calendar-dates').children('div').removeClass('selected-date')
     $(e.target).addClass('selected-date')
     var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
     selectedDate = new Date(`${currentYear}-${currentMonth+1}-${e.target.textContent}`)
-    // console.log("selectedDate =", selectedDate)
-    // console.log("selectedDate.getMonth() =", selectedDate.getMonth())
-    // console.log("currentMonth =", currentMonth)
     $('#calendar-header').text(`${months[currentMonth]}`)
     $('#calendar-body').text(e.target.textContent)
     $('#calendar-footer').text(dayOfWeek[selectedDate.getDay()])
@@ -166,7 +154,6 @@ $('.staff-list-body').on('click','.staff-list-item', function() {
   $(this).toggleClass('selected-staff').siblings().removeClass('selected-staff')
   var staff_name = $(this).text();
   staffId = $(this).attr('data-staffId')
-  console.log("StaffId = ", staffId)
   $('#staff-footer').text(staff_name)
   $('.staff-list-container').hide(500);
   getOrders()
@@ -181,7 +168,7 @@ function getOrders() {
   }).toString())
   .then(response => response.json())
   .then(data => {
-    // console.log("data = ", data)
+    console.log("data = ", data)
     orders = data.orders;
     $('.content').empty();
     $('.no-entries').empty();
@@ -194,7 +181,6 @@ function getOrders() {
       )
     }
     for(let i=0;i<orders.length;i++) {
-      // console.log("item = ", orders[i])
       const jsonData = `{"timeStamp":"${orders[i]['order_date_li']}"}`;
       const parsedData = JSON.parse(jsonData);
       const dateObject = new Date(parsedData.timeStamp);
@@ -204,7 +190,6 @@ function getOrders() {
       var year = dateObject.getFullYear()
       var hours = dateObject.getHours()
       var minutes = dateObject.getMinutes()
-      // console.log(dateObject);  // Sat Mar 01 2025 12:34:56 GMT+0000 (UTC)
       if(orders[i]['grand_totals_id'] != transaction_id) {
         transaction_counter++;
         $('table').append(
@@ -225,8 +210,7 @@ function getOrders() {
               <td>${orders[i]['price_unit'] }</td>
               <td class="no-border-bottom" class="no-border-bottom">${orders[i]['grand_totals_id']}</td>
           </tr>`
-        )          
-        // console.log("tc= ", transaction_counter)
+        )
         transaction_id = orders[i]['grand_totals_id'];
       }
       else {

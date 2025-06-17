@@ -145,11 +145,6 @@ svg {
 	filter: drop-shadow(#fa565a 2px 2px 5px);
 }
 
-/* .nextMonthBtn {
-	display:block;
-} */
-
-
 svg:hover {
     cursor: pointer;
 }

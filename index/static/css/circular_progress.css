@@ -8,9 +8,9 @@
   --half-size: calc(var(--size) / 2);
   --stroke-width: 5px;
   --radius: calc((var(--size) - var(--stroke-width)) / 2);
-  --circumference: calc(var(--radius) * pi * 2);
+  /* --circumference: calc(var(--radius) * pi * 2);
   --dash: calc((var(--progress) * var(--circumference)) / 100);
-  animation: progress-animation 3s linear 0s 1 forwards;
+  animation: progress-animation 3s linear 0s 1 forwards; */
 }
 
 .circular-progress circle {
@@ -30,15 +30,7 @@
   stroke: #1a9e08;
 }
 
-.circular-progress circle.rotate {
-  transform: rotate(-90deg);
-  transform-origin: var(--half-size) var(--half-size);
-  stroke-dasharray: var(--dash) calc(var(--circumference) - var(--dash));
-  transition: stroke-dasharray 0.3s linear 0s;
-  stroke: #1a9e08;
-}
-
-@property --progress {
+/* @property --progress {
   syntax: "<number>";
   inherits: false;
   initial-value: 0;
@@ -51,7 +43,7 @@
   to {
     --progress: 100;
   }
-}
+} */
 
 .checkout-timer-wrapper {
     display: none;
@@ -79,13 +71,18 @@
     font-weight: 700;
 }
 
-.cancel-timer {
+.pause-button {
     height: 25px;
     padding: 0;
     background-color: red;
+    color:#fff;
 }
 
-.test-svg {
+.pause-button:focus {
+  color: #fff;
+}
+
+/* .test-svg {
   height: 50px;
   width: 50px;
-}
+} */
