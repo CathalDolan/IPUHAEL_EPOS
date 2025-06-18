@@ -176,18 +176,25 @@ def index(request):
 def past_orders(request):
     print("PAST_ORDERS!!")
     """ A view to return the past orders page """
+    entries = LineItem.objects.all()
+    for entry in entries:
+        print('entry.payment_reason = ', entry.payment_reason)
+        if entry.payment_method is not None:
+            value = entry.payment_method.replace("_", " ")
+            entry.payment_method = value
+            entry.save()
+        if entry.payment_reason is not None:
+            value1 = entry.payment_reason.replace("_", " ")
+            entry.payment_reason = value1
+            entry.save()
     if request.GET:
         print("YES GET")
         day = int(request.GET['day'])
         month = int(request.GET['month'])+1
         year = int(request.GET['year'])
-        # print("day = ", day)
-        # print("month = ", month)
-        # print("year = ", year)
         day_from = datetime(year, month, day)
         day_to = day_from + timedelta(days=1)
-        # print("day_from = ", day_from)
-        # print("day_to = ", day_to)
+
         orders = LineItem.objects.filter(order_date_li__gte=day_from).filter(order_date_li__lte=day_to).order_by('-order_date_li').values(
             'grand_totals_id',
             'order_date_li',
@@ -199,6 +206,7 @@ def past_orders(request):
             'grand_totals_id__tendered_amount',
             'grand_totals_id__change_due',
             'grand_totals_id__payment_method',
+            'grand_totals_id__payment_reason',
             'discount',
             'grand_totals_id__number_of_products',
             'name',
@@ -209,16 +217,20 @@ def past_orders(request):
         
         staff_list = [{'staffId': 0, 'name': 'All'}]
         for order in orders:
+            # print("order = ", order['grand_totals_id__payment_reason'])
             if not any(item['staffId'] == order['staff_member_id'] for item in staff_list):
                 staff_list.append({
                     "staffId": order['staff_member_id'],
                     "name": order['staff_member_id__name']
-                })
-        print("staff_list = ", staff_list)
+            })
+            # Temp code to remove null values in payment_reason
+            if order['grand_totals_id__payment_reason'] is None:
+                order['grand_totals_id__payment_reason'] = ''
+        # print("staff_list = ", staff_list)
         staffId = request.GET['staffId']
-        print("staffId = ", staffId)
+        # print("staffId = ", staffId)
         if request.GET['staffId'] != '0':
-            print("NOT ALL")
+            # print("NOT ALL")
             staffId = request.GET['staffId']
             orders = orders.filter(staff_member=staffId)
         return JsonResponse({"orders": list(orders),
@@ -230,12 +242,14 @@ def past_orders(request):
         day_to = today + timedelta(days=1)
         orders = LineItem.objects.filter(order_date_li__gte=day_from).filter(order_date_li__lte=day_to).order_by('-order_date_li')
         staff_list = [{'staffId': 0, 'name': 'All'}]
-        for order in orders:
+        for order in orders: 
+            # print("order = ", order.payment_reason)
             if not any(item['staffId'] == order.staff_member_id for item in staff_list):
                 staff_list.append({
                     "staffId": order.staff_member_id,
                     "name": order.staff_member
                 })
+            
         print("staff_list = ", staff_list)
         context = {
             'orders': orders,

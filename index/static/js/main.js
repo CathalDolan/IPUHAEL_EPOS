@@ -915,9 +915,10 @@ $('.finish_button').click(function () {
 });
 
 $('.payment_button').click(function() {
-    let payment_method_alternative = $(this).attr("data-payment_method_alternative")
+    let payment_method = $(this).attr("data-payment_method")
     let payment_reason = $(this).attr("data-payment_reason")
-    checkout(payment_method_alternative, payment_reason)
+    console.log("payment_method = ", payment_method)
+    checkout(payment_method, payment_reason)
 })
 
 function validate() {
@@ -966,9 +967,9 @@ function validate() {
     return true;
 }
 
-function checkout(payment_method_alternative, payment_reason) {
+function checkout(payment_method, payment_reason) {
     if (payment_reason == undefined) {
-        payment_reason = null;
+        payment_reason = '';
     }
     // Functionality to allow a payment be submitted where the total due is 0 because the pfand covered the cost.
     // e.g. where a customer buys 1 Pfand Shot Special, but returns a glass. One cancels the other so amount submitted and amount due is 0
@@ -977,14 +978,14 @@ function checkout(payment_method_alternative, payment_reason) {
         $('#amount_tendered').val(0);
     };
 
-    if (payment_method_alternative == "Complimentary" || payment_method_alternative == "Waste") {
+    if (payment_method == "Complimentary" || payment_method == "Waste") {
         Pfand_Buttons_Total = 0;
         Line_Totals_Total = 0;
         Pfand_Total = 0;
         Amount_Tendered = 0;
         Total_Due = 0;
         Change_Due = 0;
-        Payment_Method = payment_method_alternative;
+        Payment_Method = payment_method;
     } 
 
     let discounts = '';

@@ -203,6 +203,7 @@ function getOrders() {
               <td class="no-border-bottom">${orders[i]['grand_totals_id__tendered_amount'] }</td>
               <td class="no-border-bottom">${orders[i]['grand_totals_id__change_due'] }</td>
               <td class="no-border-bottom">${orders[i]['grand_totals_id__payment_method'] }</td>
+              <td class="no-border-bottom">${orders[i]['grand_totals_id__payment_reason'] }</td>
               <td class="no-border-bottom">${orders[i]['discount'] }</td>
               <td class="no-border-bottom">${orders[i]['grand_totals_id__number_of_products'] }</td>
               <td class="no-border-bottom">${orders[i]['name'] }</td>
@@ -218,6 +219,7 @@ function getOrders() {
           `<tr class="content ${rowcolors[transaction_counter%2]}">
               <td class="no-border-top no-border-bottom left-align"></td>
               <td class="no-border-top no-border-bottom left-align"></td>
+              <td class="no-border-top no-border-bottom"></td>
               <td class="no-border-top no-border-bottom"></td>
               <td class="no-border-top no-border-bottom"></td>
               <td class="no-border-top no-border-bottom"></td>
