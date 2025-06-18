@@ -177,16 +177,26 @@ def past_orders(request):
     print("PAST_ORDERS!!")
     """ A view to return the past orders page """
     entries = LineItem.objects.all()
-    for entry in entries:
-        print('entry.payment_reason = ', entry.payment_reason)
-        if entry.payment_method is not None:
-            value = entry.payment_method.replace("_", " ")
-            entry.payment_method = value
-            entry.save()
-        if entry.payment_reason is not None:
-            value1 = entry.payment_reason.replace("_", " ")
-            entry.payment_reason = value1
-            entry.save()
+    lowestId = 99999999
+    highestId = 0
+    print("entries first = ", entries.order_by('id').first())
+    print("entries last = ", entries.order_by('id').last())
+    for entry in entries[:500]:
+        # print('entry.payment_reason = ', entry.id)
+        if entry.id < lowestId:
+            lowestId = entry.id
+        if entry.id > highestId:
+            highestId = entry.id
+        # if entry.payment_method is not None:
+        #     value = entry.payment_method.replace("_", " ")
+        #     entry.payment_method = value
+        #     entry.save()
+        # if entry.payment_reason is not None:
+        #     value1 = entry.payment_reason.replace("_", " ")
+        #     entry.payment_reason = value1
+        #     entry.save()
+    print("lowestId = ", lowestId)
+    print("highestId = ", highestId)
     if request.GET:
         print("YES GET")
         day = int(request.GET['day'])
