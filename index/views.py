@@ -182,7 +182,7 @@ def past_orders(request):
     print("entries first = ", entries.order_by('id').first())
     print("entries last = ", entries.order_by('id').last())
     for entry in entries[:500]:
-        # print('entry.payment_reason = ', entry.id)
+        print('entry.payment_reason = ', entry.id)
         if entry.id < lowestId:
             lowestId = entry.id
         if entry.id > highestId:
