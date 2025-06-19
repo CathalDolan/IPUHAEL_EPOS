@@ -1,7 +1,12 @@
+body {
+	background-color: antiquewhite;
+}
+
 .heading_row {
     display: flex;
     align-items: center;
     justify-content: center;
+	background-color: #fff;
 }
 
 h1 {
@@ -12,14 +17,14 @@ h1 {
 
 h4 {
 	text-align: center;
-	background-color: antiquewhite;
+	/* background-color: antiquewhite;
 	width: 100%;
-	padding: 25px 0;
+	padding: 25px 0; */
 }
 
 .main-section {
-	background-color: antiquewhite;
-	height: 105vh;
+	/* background-color: antiquewhite; */
+	/* height: 105vh; */
 }
 
 th, tr {
@@ -43,6 +48,7 @@ th, td {
 table {
     width: 100%;
     position: relative;
+	margin-bottom: 120px;
 }
 
 .left-align {
@@ -69,6 +75,10 @@ table, td {
 .row2 {
     background-color: blanchedalmond;
 }
+
+/* .no-entries {
+	padding: 0;
+} */
 
 .staff-icon {
     position: fixed;

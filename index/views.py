@@ -200,6 +200,7 @@ def past_orders(request):
             'grand_totals_id__number_of_products',
             'name',
             'quantity',
+            'size',
             'price_unit'
         )
         

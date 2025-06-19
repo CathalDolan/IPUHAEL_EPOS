@@ -78,10 +78,8 @@
             <a href="{% url 'index' %}"><button type="button" class="btn btn-primary">Back to site</button></a>
         </div>
     </div>
-</div>
-<div class="container-fluid">
     <div class="row">
-        <div class="col">
+        <div class="col px-0">
             <div class="main-section">
                 <table>
                     <tr>
@@ -99,6 +97,7 @@
                         <th>Number  of Products</th>
                         <th>Product</th>
                         <th>Quantity</th>
+                        <th>Size</th>
                         <th>Unit price</th>
                         <th>#</th>
                     </tr>
@@ -119,6 +118,7 @@
                             <td class="no-border-bottom">{{ order.grand_totals.number_of_products }}</td>
                             <td class="left-align">{{ order.name }}</td>
                             <td>{{ order.quantity }}</td>
+                            <td>{{ order.size }}</td>
                             <td>{{ order.price_unit }}</td>
                             <td class="no-border-bottom" class="no-border-bottom">{{ order.grand_totals.id }}</td>
                         </tr>
@@ -138,6 +138,7 @@
                             <td class="no-border-top no-border-bottom"></td>
                             <td class="left-align">{{ order.name }}</td>
                             <td>{{ order.quantity }}</td>
+                            <td>{{ order.size }}</td>
                             <td>{{ order.price_unit }}</td>
                             <td class="no-border-top no-border-bottom"></td>
                         </tr>
@@ -145,13 +146,13 @@
                     
                     {% endfor %}
                 </table>
-                <div class="row">
-                    <div class="col no-entries">
-                        {% if not orders %}
-                            <h4>No Entries Found For Today</h4>
-                        {% endif %}
-                    </div>
+                
+                <div class="no-entries">
+                    {% if not orders %}
+                        <h4>No Entries Found For Today</h4>
+                    {% endif %}
                 </div>
+                
             </div>
         </div>
     </div>
