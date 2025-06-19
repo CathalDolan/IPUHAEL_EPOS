@@ -196,20 +196,20 @@ function getOrders() {
           `<tr class="content ${rowcolors[transaction_counter%2]}">
               <td class="no-border-bottom left-align">${dayOfWeek[day].slice(0, 3)} ${date}/${month+1}/${String(year).substr(2)}</td>
               <td class="no-border-bottom left-align">${hours}:${minutes<10?0:''}${minutes}</td>
-              <td class="no-border-bottom">${orders[i]['staff_member_id__name']}</td>
-              <td class="no-border-bottom">${orders[i]['grand_totals_id__pfand_total'] }</td>
-              <td class="no-border-bottom">${orders[i]['grand_totals_id__drinks_food_total'] }</td>
-              <td class="no-border-bottom">${orders[i]['grand_totals_id__total_due'] }</td>
-              <td class="no-border-bottom">${orders[i]['grand_totals_id__tendered_amount'] }</td>
-              <td class="no-border-bottom">${orders[i]['grand_totals_id__change_due'] }</td>
-              <td class="no-border-bottom">${orders[i]['grand_totals_id__payment_method'] }</td>
-              <td class="no-border-bottom">${orders[i]['grand_totals_id__payment_reason'] }</td>
-              <td class="no-border-bottom">${orders[i]['discount'] }</td>
+              <td class="no-border-bottom left-align">${orders[i]['staff_member_id__name']}</td>
+              <td class="no-border-bottom">€${orders[i]['grand_totals_id__pfand_total'] }</td>
+              <td class="no-border-bottom">€${orders[i]['grand_totals_id__drinks_food_total'] }</td>
+              <td class="no-border-bottom">€${orders[i]['grand_totals_id__total_due'] }</td>
+              <td class="no-border-bottom">€${orders[i]['grand_totals_id__tendered_amount'] }</td>
+              <td class="no-border-bottom">€${orders[i]['grand_totals_id__change_due'] }</td>
+              <td class="no-border-bottom left-align">${orders[i]['grand_totals_id__payment_method'] }</td>
+              <td class="no-border-bottom left-align">${orders[i]['grand_totals_id__payment_reason'] }</td>
+              <td class="no-border-bottom left-align">${orders[i]['discount'] }</td>
               <td class="no-border-bottom">${orders[i]['grand_totals_id__number_of_products'] }</td>
-              <td class="no-border-bottom">${orders[i]['name'] }</td>
-              <td class="left-align">${orders[i]['quantity'] }</td>
+              <td class="left-align">${orders[i]['name'] }</td>
+              <td class="">${orders[i]['quantity'] }</td>
               <td class="left-align">${orders[i]['size'] }</td>
-              <td>${orders[i]['price_unit'] }</td>
+              <td>€${orders[i]['price_unit'] }</td>
               <td class="no-border-bottom" class="no-border-bottom">${orders[i]['grand_totals_id']}</td>
           </tr>`
         )
@@ -230,10 +230,10 @@ function getOrders() {
               <td class="no-border-top no-border-bottom"></td>
               <td class="no-border-top no-border-bottom"></td>
               <td class="no-border-top no-border-bottom"></td>
-              <td class="no-border-bottom">${orders[i]['name'] }</td>
-              <td class="left-align">${orders[i]['quantity'] }</td>
+              <td class="no-border-bottom left-align">${orders[i]['name'] }</td>
+              <td class="">${orders[i]['quantity'] }</td>
               <td class="left-align">${orders[i]['size'] }</td>
-              <td>${orders[i]['price_unit'] }</td>
+              <td>€${orders[i]['price_unit'] }</td>
               <td class="no-border-top no-border-bottom"></td>
           </tr>`
         )
