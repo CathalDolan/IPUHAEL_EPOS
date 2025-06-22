@@ -307,12 +307,13 @@ def reports(request):
     date_yesterday = datetime.now() + timedelta(days=-1)
 
     if request.GET:
-        # print("YES GET")
+        print("YES GET")
         from_date = datetime.strptime(request.GET['from_date'], "%a, %d %b %Y %H:%M:%S %Z")
         to_date = datetime.strptime(request.GET['to_date'], "%a, %d %b %Y %H:%M:%S %Z")
-        # print("from_date = ", from_date) 
-        # print("to_date = ", to_date) 
-        entries.filter(order_date_li__gte=from_date).filter(order_date_li__lte=to_date)
+        print("from_date = ", from_date) 
+        print("to_date = ", to_date) 
+        entries = entries.filter(order_date_li__range=(from_date, to_date))
+        print("entries = ", entries.count())
         return JsonResponse({"orders": list(entries)},
                             safe=False)
         
@@ -330,7 +331,7 @@ def reports(request):
             to_date = latest_date.replace(hour=2, minute=00, second=00) + timedelta(1)
             # print("from_date = ", from_date)
             # print("to_date = ", to_date)
-        entries.filter(order_date_li__gte=from_date).filter(order_date_li__lte=to_date)
+        entries = entries.filter(order_date_li__range=(from_date, to_date))
         
         context = {
             "data": list(entries),

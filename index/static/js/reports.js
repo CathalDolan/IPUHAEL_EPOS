@@ -51,10 +51,12 @@ $('document').ready(function () {
     var timeOut;
     function generateCharts(data) {
         console.log("generateCharts data = ", data)
-        // console.log("DATA = ", DATA)
+        var time = new Date()
+        console.log(`time = ${time.getHours()<10?'0':''}${time.getHours()}:${time.getMinutes()<10?'0':''}${time.getMinutes()}:${time.getSeconds()<10?'0':''}${time.getSeconds()}`)
+        
         timeOut = setTimeout(fetchData, 60000)
+
         if(data !== undefined) {
-            console.log("Yes not undefined")
             orders = data;
         }
         else {
@@ -64,7 +66,6 @@ $('document').ready(function () {
         var to_date = new Date($('#to_date').val());
         to_date.setHours($('#to_time').val().split(':')[0])
         to_date.setMinutes($('#to_time').val().split(':')[1])
-        // console.log("to_date = ", to_date)
 
         var selected_staff = $('#staff').find("input:checked").map(function () {
             return this.name;
@@ -88,7 +89,7 @@ $('document').ready(function () {
             return this.name
         })
         
-        let data_filtered = DATA.filter(item => 
+        let data_filtered = orders.filter(item => 
             ((Date.parse(item.order_date_li) >= `${Date.parse(from_date)}`) 
             && (Date.parse(item.order_date_li) <= `${Date.parse(to_date)}`) 
             && Object.values(selected_staff).includes(item.staff_member__name)
@@ -122,8 +123,6 @@ $('document').ready(function () {
         data_filtered.forEach(item => {
             var groupItem = groups.find(x => x.name == item.name && x.size == item.size);
             var groupItemIndex = groups.findIndex(x => x.name == item.name && x.size == item.size);
-            // console.log("Item.payment_method = ", item.grand_totals_id__payment_method)
-            // console.log("groupItemIndex = ", groups[groupItemIndex])
             if(groupItem == undefined) {
                 groups.push({
                     // "staff": item.staff_member__name,
@@ -208,7 +207,7 @@ $('document').ready(function () {
 
 
         groups.sort((a,b) => a.name.localeCompare(b.name));
-        // console.log("groups = ", groups);
+        console.log("groups = ", groups);
         $('#group-table').empty();
         groups.forEach(item => {
             $('#group-table').append(
@@ -228,13 +227,12 @@ $('document').ready(function () {
         from_date = new Date($('#from_date').val())
         from_date.setHours(from_time.split(':')[0])
         from_date.setMinutes(from_time.split(':')[1])
-        console.log("from_date = ", from_date)
 
         to_time = $('#to_time').val()
         to_date = new Date($('#to_date').val())
         to_date.setHours(to_time.split(':')[0])
         to_date.setMinutes(to_time.split(':')[1])
-        console.log("to_date = ", to_date)
+        
         clearTimeout(timeOut)
 
         fetch(`${url}?` + new URLSearchParams({
