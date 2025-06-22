@@ -12,7 +12,6 @@ if (host.includes("heroku")) {
 
 $('document').ready(function () {
     console.log("reports.js");
-
     const DATA = JSON.parse(document.getElementById('data').textContent);
     console.log("DATA = ", DATA)
     console.log("DATA = ", DATA.length)
@@ -49,10 +48,11 @@ $('document').ready(function () {
         generateCharts();
     })
         
-
+    var timeOut;
     function generateCharts(data) {
         console.log("generateCharts data = ", data)
         // console.log("DATA = ", DATA)
+        timeOut = setTimeout(fetchData, 60000)
         if(data !== undefined) {
             console.log("Yes not undefined")
             orders = data;
@@ -182,9 +182,7 @@ $('document').ready(function () {
                 cardTransactions.total += cardTotalIncrement;
                 wasteTransactions.total += wasteTotalIncrement;
                 compTransactions.total += compTotalIncrement;
-            }
-            
-           
+            }          
             // console.log("cashTransactions = ", cashTransactions)
             // console.log("cardTransactions = ", cardTransactions)
             // console.log("wasteTransactions = ", wasteTransactions)
@@ -224,6 +222,7 @@ $('document').ready(function () {
         })
 
     }
+    
     function fetchData() {
         from_time = $('#from_time').val()
         from_date = new Date($('#from_date').val())
@@ -236,7 +235,7 @@ $('document').ready(function () {
         to_date.setHours(to_time.split(':')[0])
         to_date.setMinutes(to_time.split(':')[1])
         console.log("to_date = ", to_date)
-
+        clearTimeout(timeOut)
 
         fetch(`${url}?` + new URLSearchParams({
             from_date: from_date.toUTCString(),

@@ -256,6 +256,7 @@ def takings(request):
 @login_required
 def reports(request):
     """ A view to return the past orders page """ 
+    print("NOW = ", datetime.now())
     entries = LineItem.objects.all().values(
         'grand_totals_id',
         'order_date_li',
@@ -306,11 +307,11 @@ def reports(request):
     date_yesterday = datetime.now() + timedelta(days=-1)
 
     if request.GET:
-        print("YES GET")
+        # print("YES GET")
         from_date = datetime.strptime(request.GET['from_date'], "%a, %d %b %Y %H:%M:%S %Z")
         to_date = datetime.strptime(request.GET['to_date'], "%a, %d %b %Y %H:%M:%S %Z")
-        print("from_date = ", from_date) 
-        print("to_date = ", to_date) 
+        # print("from_date = ", from_date) 
+        # print("to_date = ", to_date) 
         entries.filter(order_date_li__gte=from_date).filter(order_date_li__lte=to_date)
         return JsonResponse({"orders": list(entries)},
                             safe=False)
@@ -318,17 +319,17 @@ def reports(request):
     else:
         latest_entry = LineItem.objects.latest('order_date_li')
         latest_date = latest_entry.order_date_li
-        print("latest_date = ", latest_date)
+        # print("latest_date = ", latest_date)
         if latest_date.hour < 10:
             from_date = latest_date.replace(hour=10, minute=00, second=00) + timedelta(-1)
             to_date = latest_date.replace(hour=2, minute=00, second=00)
-            print("from_date = ", from_date)
-            print("to_date = ", to_date) 
+            # print("from_date = ", from_date)
+            # print("to_date = ", to_date) 
         else:
             from_date = latest_date.replace(hour=10, minute=00, second=00)  
             to_date = latest_date.replace(hour=2, minute=00, second=00) + timedelta(1)
-            print("from_date = ", from_date)
-            print("to_date = ", to_date)
+            # print("from_date = ", from_date)
+            # print("to_date = ", to_date)
         entries.filter(order_date_li__gte=from_date).filter(order_date_li__lte=to_date)
         
         context = {
