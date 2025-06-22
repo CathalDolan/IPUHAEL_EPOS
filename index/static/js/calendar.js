@@ -160,6 +160,9 @@ $('.staff-list-body').on('click','.staff-list-item', function() {
 })
 
 function getOrders() {
+  $('.content').empty();
+  $('.no-entries').empty();
+   $('.no-entries').append("<h4>Please wait...</h4><div class='loader'></div>")
   fetch(`${url}?` + new URLSearchParams({
     day: selectedDate.getDate(),
     month: selectedDate.getMonth(),
@@ -170,11 +173,10 @@ function getOrders() {
   .then(data => {
     console.log("data = ", data)
     orders = data.orders;
-    $('.content').empty();
-    $('.no-entries').empty();
     var transaction_id = '';
     var rowcolors = ['row2', 'row1'];
     var transaction_counter = 0;
+    $('.no-entries').empty();
     if(orders.length<1) {
       $('.no-entries').append(
         `<h4 class="">No Entries Found For ${dayOfWeek[selectedDate.getDay()]}, ${formatOrdinals(selectedDate.getDate())} ${months[selectedDate.getMonth()]}, ${selectedDate.getFullYear()}</h4>`

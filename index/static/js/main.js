@@ -174,12 +174,12 @@ $('.staff-name').click(function() {
     $('#staff_modal').modal('hide')
 })
 
-// $('#staff_modal').on('hidden.bs.modal', function (e) {
-//     if(STAFF_ID == '') {
-//         var staff_modal = new bootstrap.Modal(document.getElementById('staff_modal'), {})
-//         staff_modal.show()
-//     }
-// })
+$('#staff_modal').on('hidden.bs.modal', function (e) {
+    if(STAFF_ID == '') {
+        var staff_modal = new bootstrap.Modal(document.getElementById('staff_modal'), {})
+        staff_modal.show()
+    }
+})
 
 $('.product_selection').click(function(){
     var display_selected = $(this).attr("id");

@@ -1,27 +1,17 @@
-// function init(evt) {
-//     console.log("init svg")
-//     var time = new Date();
-//     var locale = "en-gb";
-//     var options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
-//     var dateString = time.toLocaleDateString(locale, options);
 
-//     // Get the text element and update its content
-//     var textElement = evt.target.querySelector("tspan");
-//     textElement.textContent = dateString.replace(/^.*(\d+)$/,"$1"); // Get only the date
-// }
+//Get the host name from url and set the fetch url accordingly
+const host = window.location.host;
+var url = '';
+if (host.includes("heroku")) {
+    console.log("HEROKU")
+    url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/reports"
+} else {
+    console.log("GITPOD")
+    url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu120.gitpod.io/reports";
+}
 
 $('document').ready(function () {
     console.log("reports.js");
-    //Get the host name from url and set the fetch url accordingly
-    const host = window.location.host;
-    var url = '';
-    if (host.includes("heroku")) {
-        console.log("HEROKU")
-        url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/"
-    } else {
-        console.log("GITPOD")
-        url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu117.gitpod.io/";
-    }
 
     const DATA = JSON.parse(document.getElementById('data').textContent);
     console.log("DATA = ", DATA)
@@ -40,10 +30,10 @@ $('document').ready(function () {
     })
 
     $('.datepicker').on("change", function () {
-        generateCharts()
+        fetchData()
     })
     $('.timepicker').on("change", function () {
-        generateCharts()
+        fetchData()
     })
     $('.checkbox').click(function () {
         if (this.name == "all") {
@@ -58,17 +48,23 @@ $('document').ready(function () {
         }
         generateCharts();
     })
+        
 
-
-
-    function generateCharts() {
-        // console.log("generateCharts")
+    function generateCharts(data) {
+        console.log("generateCharts data = ", data)
         // console.log("DATA = ", DATA)
+        if(data !== undefined) {
+            console.log("Yes not undefined")
+            orders = data;
+        }
+        else {
+            orders = DATA;
+        }
         var from_date = new Date($('#from_date').val());
         var to_date = new Date($('#to_date').val());
         to_date.setHours($('#to_time').val().split(':')[0])
         to_date.setMinutes($('#to_time').val().split(':')[1])
-        console.log("to_date = ", to_date)
+        // console.log("to_date = ", to_date)
 
         var selected_staff = $('#staff').find("input:checked").map(function () {
             return this.name;
@@ -91,10 +87,6 @@ $('document').ready(function () {
         var selected_transaction_type = $('#transaction_type').find("input:checked").map(function() {
             return this.name
         })
-
-        // console.log("selected_categories = ", selected_categories)
-        // console.log("selected_food = ", selected_food)
-        // console.log("selected_gifts = ", selected_gifts)
         
         let data_filtered = DATA.filter(item => 
             ((Date.parse(item.order_date_li) >= `${Date.parse(from_date)}`) 
@@ -102,21 +94,21 @@ $('document').ready(function () {
             && Object.values(selected_staff).includes(item.staff_member__name)
             && Object.values(selected_categories).includes(item.category)
             && Object.values(selected_sizes).includes(item.size)
-            && Object.values(selected_transaction_type).includes(item.payment_method))
+            && Object.values(selected_transaction_type).includes(item.grand_totals_id__payment_method))
             && ((Object.values(selected_drinks).includes(item.name) || (item.category == 'Open drink' && Object.values(selected_categories).includes(item.category)))
             || Object.values(selected_food).includes(item.name)
             || Object.values(selected_gifts).includes(item.name))
         );
         console.log("data_filtered = ", data_filtered);
-        // DATA.forEach(item => {
-        //     // console.log(item.name)
-        //     if(!data_filtered.includes(item))
-        //          {
-        //             console.log("YES")
-        //     }
-        //     else {
-        //         console.log(item.id)  
-        //     }
+        // data_filtered.forEach(item => {
+        //     console.log(item)
+        //     // if(!data_filtered.includes(item))
+        //     //      {
+        //     //         console.log("YES")
+        //     // }
+        //     // else {
+        //     //     console.log(item.id)  
+        //     // }
         // })
 
         var groups = [];
@@ -130,7 +122,7 @@ $('document').ready(function () {
         data_filtered.forEach(item => {
             var groupItem = groups.find(x => x.name == item.name && x.size == item.size);
             var groupItemIndex = groups.findIndex(x => x.name == item.name && x.size == item.size);
-            // console.log("groupItem = ", groupItem)
+            // console.log("Item.payment_method = ", item.grand_totals_id__payment_method)
             // console.log("groupItemIndex = ", groups[groupItemIndex])
             if(groupItem == undefined) {
                 groups.push({
@@ -146,8 +138,8 @@ $('document').ready(function () {
                 groups[groupItemIndex].total += Number(item.price_line_total);
             }
             
-            var transaction = transactions.find(x => x.id == item.grand_totals);
-            var transactionIndex = transactions.findIndex(x => x.id == item.grand_totals);
+            var transaction = transactions.find(x => x.id == item.grand_totals_id);
+            var transactionIndex = transactions.findIndex(x => x.id == item.grand_totals_id);
             var cashIncrement = 0;
             var cashTotalIncrement = 0;
             var cardIncrement = 0;
@@ -156,12 +148,12 @@ $('document').ready(function () {
             var wasteTotalIncrement = 0;
             var compIncrement = 0;
             var compTotalIncrement = 0;
-            switch (item.payment_method) {
+            switch (item.grand_totals_id__payment_method) {
                 case "Cash":
                     cashIncrement = 1;
                     cashTotalIncrement = Number(item.price_line_total);
                   break;
-                case "credit_card":
+                case "Credit Card":
                     cardIncrement = 1;
                     cardTotalIncrement = Number(item.price_line_total);
                   break;
@@ -193,21 +185,13 @@ $('document').ready(function () {
             }
             
            
-            // console.log("item.order_date_li = ", item.order_date_li);
-            // var dateTime = new Date(item.order_date_li);
-            // console.log("dateTime = ",dateTime);
-            // var date = new Date(item.order_date_li).toISOString().split('T')[0];
-            // var time = item.order_date_li.split('T')[1].slice(0,-5);
-            // xyValues.push({
-            //     x: date,
-            //     y: time
-            // })
-        })
-         revenue_total = cashTransactions.total + cardTransactions.total;
-        // console.log("cashTransactions = ", cashTransactions)
-        // console.log("cardTransactions = ", cardTransactions)
-        // console.log("wasteTransactions = ", wasteTransactions)
-        // console.log("compTransactions = ", compTransactions)
+            // console.log("cashTransactions = ", cashTransactions)
+            // console.log("cardTransactions = ", cardTransactions)
+            // console.log("wasteTransactions = ", wasteTransactions)
+            // console.log("compTransactions = ", compTransactions)
+            })
+            revenue_total = cashTransactions.total + cardTransactions.total;
+        
         $('#summary-table').empty()
         $('#summary-table').append(
             `<tr>
@@ -226,7 +210,7 @@ $('document').ready(function () {
 
 
         groups.sort((a,b) => a.name.localeCompare(b.name));
-        console.log("groups = ", groups);
+        // console.log("groups = ", groups);
         $('#group-table').empty();
         groups.forEach(item => {
             $('#group-table').append(
@@ -234,11 +218,38 @@ $('document').ready(function () {
                     <td>${item.name}</td>
                     <td>${item.size}</td>
                     <td>${item.quantity}</td>
-                    <td>€${item.total}</td>
+                    <td>€${item.total.toFixed(2)}</td>
                 </tr>`
             )
         })
 
     }
-    
+    function fetchData() {
+        from_time = $('#from_time').val()
+        from_date = new Date($('#from_date').val())
+        from_date.setHours(from_time.split(':')[0])
+        from_date.setMinutes(from_time.split(':')[1])
+        console.log("from_date = ", from_date)
+
+        to_time = $('#to_time').val()
+        to_date = new Date($('#to_date').val())
+        to_date.setHours(to_time.split(':')[0])
+        to_date.setMinutes(to_time.split(':')[1])
+        console.log("to_date = ", to_date)
+
+
+        fetch(`${url}?` + new URLSearchParams({
+            from_date: from_date.toUTCString(),
+            to_date: to_date.toUTCString()
+        }).toString())
+        .then(response => response.json())
+        .then(data => {
+            console.log("data = ", data)
+            orders = data.orders;
+            generateCharts(data.orders)
+            }
+        )
+        .catch(err => console.error(err));
+    }
+
 })

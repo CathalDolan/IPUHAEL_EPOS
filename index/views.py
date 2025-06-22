@@ -257,7 +257,7 @@ def takings(request):
 def reports(request):
     """ A view to return the past orders page """ 
     entries = LineItem.objects.all().values(
-        'id',
+        'grand_totals_id',
         'order_date_li',
         'grand_totals',
         'category',
@@ -267,7 +267,7 @@ def reports(request):
         'price_unit',
         'price_line_total',
         'discount',
-        'payment_method',
+        'grand_totals_id__payment_method',
         'payment_reason',
         'staff_member__name'
     )
@@ -280,10 +280,8 @@ def reports(request):
     payment = []
     for entry in entries:
         if not entry["staff_member__name"] in staff:
-            print("Yes")
             staff.append(entry["staff_member__name"])
         if not entry["category"] in categories:
-            print("category = ", entry["category"])
             categories.append(entry["category"])
         if not entry["name"] in drinks and not entry["category"] == "food" and not entry["category"] == "gifts":
             drinks.append(entry["name"])
@@ -293,8 +291,8 @@ def reports(request):
             gifts.append(entry["name"])
         if not entry["size"] in sizes:
             sizes.append(entry["size"])
-        if not entry["payment_method"] in payment:
-            payment.append(entry["payment_method"])
+        if not entry["grand_totals_id__payment_method"] in payment:
+            payment.append(entry["grand_totals_id__payment_method"])
     staff.sort()
     categories.sort()
     drinks.sort()
@@ -302,26 +300,52 @@ def reports(request):
     gifts.sort()
     sizes.sort()
     payment.sort()
-    earliest_date = entries.earliest('order_date_li')
-    latest_date = entries.latest('order_date_li')
+    # earliest_date = entries.earliest('order_date_li')
+    # latest_date = entries.latest('order_date_li')
     date_now = datetime.now()
     date_yesterday = datetime.now() + timedelta(days=-1)
-    
-    context = {
-        "data": list(entries),
-        "staff": staff,
-        "categories": categories,
-        "drinks": drinks,
-        "food": food,
-        "gifts": gifts,
-        "sizes": sizes,
-        "payment": payment,
-        "earliest_date": earliest_date,
-        "latest_date": latest_date,
-        "date_now": date_now,
-        "date_yesterday": date_yesterday
-    }
-    return render(request, 'index/reports.html' , context)
+
+    if request.GET:
+        print("YES GET")
+        from_date = datetime.strptime(request.GET['from_date'], "%a, %d %b %Y %H:%M:%S %Z")
+        to_date = datetime.strptime(request.GET['to_date'], "%a, %d %b %Y %H:%M:%S %Z")
+        print("from_date = ", from_date) 
+        print("to_date = ", to_date) 
+        entries.filter(order_date_li__gte=from_date).filter(order_date_li__lte=to_date)
+        return JsonResponse({"orders": list(entries)},
+                            safe=False)
+        
+    else:
+        latest_entry = LineItem.objects.latest('order_date_li')
+        latest_date = latest_entry.order_date_li
+        print("latest_date = ", latest_date)
+        if latest_date.hour < 10:
+            from_date = latest_date.replace(hour=10, minute=00, second=00) + timedelta(-1)
+            to_date = latest_date.replace(hour=2, minute=00, second=00)
+            print("from_date = ", from_date)
+            print("to_date = ", to_date) 
+        else:
+            from_date = latest_date.replace(hour=10, minute=00, second=00)  
+            to_date = latest_date.replace(hour=2, minute=00, second=00) + timedelta(1)
+            print("from_date = ", from_date)
+            print("to_date = ", to_date)
+        entries.filter(order_date_li__gte=from_date).filter(order_date_li__lte=to_date)
+        
+        context = {
+            "data": list(entries),
+            "staff": staff,
+            "categories": categories,
+            "drinks": drinks,
+            "food": food,
+            "gifts": gifts,
+            "sizes": sizes,
+            "payment": payment,
+            "earliest_date": from_date,
+            "latest_date": to_date,
+            "date_now": date_now,
+            "date_yesterday": date_yesterday
+        }
+        return render(request, 'index/reports.html' , context)
 
 def generate_report(request):
     print("generate_report")
