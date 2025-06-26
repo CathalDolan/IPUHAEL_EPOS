@@ -20,6 +20,10 @@ fetch(`${url}?` + new URLSearchParams({
 .then(response => response.json())
 .then(data => {
     console.log("data = ", data)
+    var highestId = Math.max.apply(null, data.map(function(e) {
+        return e.grand_totals;
+    }));
+    console.log("highestId = ", highestId)
     drawBarGraph(data)
     formatGroups(data)
 })
@@ -163,7 +167,7 @@ function drawMySunburst(groups) {
 
         // 1st iteration
     groups.forEach(item => {
-        console.log(item);
+        // console.log(item);
         var item_total = Number(item.total)
         if(item_name == item.name) {
             values[values.length-1] += item.total;
@@ -253,12 +257,12 @@ function drawMySunburst(groups) {
     values[1] = foodTotal;
     values[2] = giftsTotal;
 
-    for(i=0; i< ids.length; i++) {
-        console.log("id = ", ids[i])
-        console.log("labels = ", labels[i])
-        console.log("parents = ", parents[i])
-        console.log("values = ", values[i])
-    }
+    // for(i=0; i< ids.length; i++) {
+    //     console.log("id = ", ids[i])
+    //     console.log("labels = ", labels[i])
+    //     console.log("parents = ", parents[i])
+    //     console.log("values = ", values[i])
+    // }
 
     var data = [
         {

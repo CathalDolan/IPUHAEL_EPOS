@@ -54,7 +54,7 @@ $('document').ready(function () {
         var time = new Date()
         console.log(`time = ${time.getHours()<10?'0':''}${time.getHours()}:${time.getMinutes()<10?'0':''}${time.getMinutes()}:${time.getSeconds()<10?'0':''}${time.getSeconds()}`)
         
-        timeOut = setTimeout(fetchData, 60000)
+        // timeOut = setTimeout(fetchData, 60000)
 
         if(data !== undefined) {
             orders = data;
@@ -221,7 +221,7 @@ $('document').ready(function () {
                 </tr>`
             )
         })
-        drawMySunburst(groups)
+        // drawMySunburst(groups)
 
     }
     
@@ -236,7 +236,7 @@ $('document').ready(function () {
         to_date.setHours(to_time.split(':')[0])
         to_date.setMinutes(to_time.split(':')[1])
         
-        clearTimeout(timeOut)
+        // clearTimeout(timeOut)
 
         fetch(`${url}?` + new URLSearchParams({
             from_date: from_date.toUTCString(),

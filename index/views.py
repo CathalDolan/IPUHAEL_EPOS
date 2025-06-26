@@ -275,7 +275,7 @@ def test_page(request):
             'price_unit',
             'price_line_total')
 
-        print("lineItems = ", lineItems)
+        # print("lineItems = ", lineItems)
         for item in lineItems:
             print("item = ", item)
             current_items.append(
@@ -286,7 +286,7 @@ def test_page(request):
                 'price_line_total': item['price_line_total']})
         if i > 0:
             if order.order_date.strftime("%y-%m-%d %H:%M:%S") == prev_date and prev_items == current_items and order.staff_member == previous_order.staff_member and order.number_of_products == previous_order.number_of_products and order.pfand_buttons_total == previous_order.pfand_buttons_total and order.drinks_food_total == previous_order.drinks_food_total and order.pfand_total == previous_order.pfand_total and order.total_due == previous_order.total_due and order.tendered_amount == previous_order.tendered_amount and order.payment_method == previous_order.payment_method:
-                print("YES SAME DATETIME")
+                # print("YES SAME DATETIME")
                 duplicate_first_order = makeOrderDict(order, current_items)
                 duplicate_orders.append(duplicate_first_order)
                 duplicate_second_order = makeOrderDict(previous_order, prev_items)
@@ -297,8 +297,8 @@ def test_page(request):
         prev_date = (order.order_date).strftime("%y-%m-%d %H:%M:%S")
     
     duplicate_orders = sorted(duplicate_orders, key=lambda d: d['id'], reverse=True)
-    for order in duplicate_orders:
-        print("duplicate_orders = ", order)
+    # for order in duplicate_orders:
+    #     print("duplicate_orders = ", order)
     context = {
         "orders": duplicate_orders
     }
