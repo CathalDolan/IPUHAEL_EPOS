@@ -191,13 +191,14 @@ function getOrders() {
       var month = dateObject.getMonth()
       var year = dateObject.getFullYear()
       var hours = dateObject.getHours()
+      var seconds = dateObject.getSeconds()
       var minutes = dateObject.getMinutes()
       if(orders[i]['grand_totals_id'] != transaction_id) {
         transaction_counter++;
         $('table').append(
           `<tr class="content ${rowcolors[transaction_counter%2]}">
-              <td class="no-border-bottom left-align">${dayOfWeek[day].slice(0, 3)} ${date}/${month+1}/${String(year).substr(2)}</td>
-              <td class="no-border-bottom left-align">${hours}:${minutes<10?0:''}${minutes}</td>
+              <td class="no-border-bottom left-align">${date}/${month+1}/${String(year)}</td>
+              <td class="no-border-bottom left-align">${hours}:${minutes<10?0:''}${minutes}:${seconds<10?0:''}${seconds}</td>
               <td class="no-border-bottom left-align">${orders[i]['staff_member_id__name']}</td>
               <td class="no-border-bottom">€${orders[i]['grand_totals_id__pfand_total'] }</td>
               <td class="no-border-bottom">€${orders[i]['grand_totals_id__drinks_food_total'] }</td>
@@ -212,6 +213,7 @@ function getOrders() {
               <td class="">${orders[i]['quantity'] }</td>
               <td class="left-align">${orders[i]['size'] }</td>
               <td>€${orders[i]['price_unit'] }</td>
+              <td>€${orders[i]['price_line_total'] }</td>
               <td class="no-border-bottom" class="no-border-bottom">${orders[i]['grand_totals_id']}</td>
           </tr>`
         )
@@ -236,6 +238,7 @@ function getOrders() {
               <td class="">${orders[i]['quantity'] }</td>
               <td class="left-align">${orders[i]['size'] }</td>
               <td>€${orders[i]['price_unit'] }</td>
+              <td>€${orders[i]['price_line_total'] }</td>
               <td class="no-border-top no-border-bottom"></td>
           </tr>`
         )

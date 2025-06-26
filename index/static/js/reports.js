@@ -127,6 +127,7 @@ $('document').ready(function () {
                 groups.push({
                     // "staff": item.staff_member__name,
                     "name": item.name,
+                    "category": item.category,
                     "size": item.size,
                     "quantity": Number(item.quantity),
                     "total": Number(item.price_line_total)
@@ -213,12 +214,14 @@ $('document').ready(function () {
             $('#group-table').append(
                 `<tr>
                     <td>${item.name}</td>
+                    <td>${item.category}</td>
                     <td>${item.size}</td>
                     <td>${item.quantity}</td>
                     <td>€${item.total.toFixed(2)}</td>
                 </tr>`
             )
         })
+        drawMySunburst(groups)
 
     }
     
@@ -249,4 +252,148 @@ $('document').ready(function () {
         .catch(err => console.error(err));
     }
 
+
+    function drawMySunburst(groups) {
+        console.log("groups = ", groups)
+        var ids = ["Drinks", "Food", "Gifts"];
+        var labels = ["Drinks", "Food", "Gifts"];
+        var parents = ["", "", "",];
+        var drinksTotal = 0;
+        var foodTotal = 0;
+        var giftsTotal = 0;
+        var values = [drinksTotal, foodTotal, giftsTotal];
+        var item_name = "";
+
+        // 1st iteration
+        groups.forEach(item => {
+            console.log(item);
+            var item_total = Number(item.total)
+            if(item_name == item.name) {
+                values[values.length-1] += item.total;
+                if(item.category.includes("food")) {
+                    foodTotal += item.total
+                }
+                else if(item.category.includes("gift")) {
+                    giftsTotal += item.total
+                }
+                else {
+                    drinksTotal += item.total
+                }
+            } 
+            else {
+                if(item.category.includes("food")) {
+                    foodTotal += item.total;
+                    ids.push(`Food-${item.name}`)
+                    labels.push(item.name);
+                    parents.push(`Food`)
+                    values.push(item.total)
+                    // labels.push(item.size)
+                    // parents.push(`${item.name}`)
+                    // values.push(item.total)
+                }
+                else if(item.category.includes("gift")) {
+                    // console.log("GIFT")
+                    giftsTotal += item.total;
+                    ids.push(`Gifts-${item.name}`)
+                    labels.push(item.name);
+                    parents.push(`Gifts`)
+                    values.push(item.total)
+                    // labels.push(item.size)
+                    // parents.push(`${item.name}`)
+                    // values.push(item.total)
+                } 
+                else {
+                    // console.log("DRINK")
+                    drinksTotal += item.total;
+                    ids.push(`Drinks-${item.name}`)
+                    labels.push(item.name);
+                    parents.push(`Drinks`)
+                    values.push(item.total)
+                    // labels.push(item.size)
+                    // parents.push(`${item.name}`)
+                    // values.push(item.total)
+                }
+            }           
+            item_name = item.name;
+        })
+
+        // 2nd iteration
+        groups.forEach(item => {
+            if(item.category.includes("food")) {
+                // foodTotal += item.total;
+                // labels.push(item.name);
+                // parents.push(`Food`)
+                // values.push(item.total)
+                ids.push(`${item.name}-${item.size}`)
+                labels.push(`${item.size}`)
+                parents.push(`Food-${item.name}`)
+                values.push(item.total)
+            }
+            else if(item.category.includes("gift")) {
+                // console.log("GIFT")
+                // giftsTotal += item.total;
+                // labels.push(item.name);
+                // parents.push(`Gifts`)
+                // values.push(item.total)
+                ids.push(`${item.name}-${item.size}`)
+                labels.push(`${item.size}`)
+                parents.push(`Gifts-${item.name}`)
+                values.push(item.total)
+            } 
+            else {
+                // console.log("DRINK")
+                // drinksTotal += item.total;
+                // labels.push(item.name);
+                // parents.push(`Drinks`)
+                // values.push(item.total)
+                ids.push(`${item.name}-${item.size}`)
+                labels.push(`${item.size}`)
+                parents.push(`Drinks-${item.name}`)
+                values.push(item.total)
+            }
+        })
+        values[0] = drinksTotal;
+        values[1] = foodTotal;
+        values[2] = giftsTotal;
+
+        for(i=0; i< ids.length; i++) {
+            console.log("id = ", ids[i])
+            console.log("labels = ", labels[i])
+            console.log("parents = ", parents[i])
+            console.log("values = ", values[i])
+        }
+
+        var data = [
+                {
+                    type: "sunburst",
+                    // maxdepth: 3,
+                    ids:ids,
+                    labels: labels,
+                    parents: parents,
+                    values: values,
+                    branchvalues: 'total',
+                    textposition: 'inside',
+                    textcase: "word caps"
+                    // insidetextorientation: 'radial'
+                }
+            ];
+
+            var layout = {
+                margin: {l: 0, r: 0, b: 0, t:0},
+                sunburstcolorway:[
+                    "#636efa","#EF553B","#00cc96","#ab63fa","#19d3f3",
+                    "#e763fa", "#FECB52","#FFA15A","#FF6692","#B6E880"
+                ],
+                extendsunburstcolorway: true
+            };
+            console.log("data = ", data[0])
+            // for(i=0; i<data[0]['ids'].length; i++) {
+            //     console.log(`[i] = ${i}`)
+            //     console.log(`id = ${data[0]['ids'][i]}`)
+            //     console.log(`label = ${data[0]['labels'][i]}`)
+            //     console.log(`parent = ${data[0]['parents'][i]}`)
+            // }
+
+            Plotly.newPlot('sunburst', data, layout, {showSendToCloud: true});
+    }
 })

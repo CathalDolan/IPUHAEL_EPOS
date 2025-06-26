@@ -99,13 +99,14 @@
                         <th>Quantity</th>
                         <th>Size</th>
                         <th>Unit price</th>
+                        <th>Line Total</th>
                         <th>#</th>
                     </tr>
                     {% for order in orders %}
                     {% ifchanged order.grand_totals.id %}
                         <tr class="content {% cycle 'row1' 'row2' as rowcolors %}">
-                            <td class="no-border-bottom left-align">{{ order.order_date_li|date:"D j/m/y" }}</td>
-                            <td class="no-border-bottom left-align">{{ order.order_date_li|date:"G:i" }}</td>
+                            <td class="no-border-bottom left-align">{{ order.order_date_li|date:"j/m/Y" }}</td>
+                            <td class="no-border-bottom left-align">{{ order.order_date_li|date:"H:i:s" }}</td>
                             <td class="no-border-bottom left-align">{{ order.staff_member }}</td>
                             <td class="no-border-bottom">€{{ order.grand_totals.pfand_total }}</td>
                             <td class="no-border-bottom">€{{ order.grand_totals.drinks_food_total }}</td>
@@ -120,6 +121,7 @@
                             <td>{{ order.quantity }}</td>
                             <td class="left-align">{{ order.size }}</td>
                             <td>€{{ order.price_unit }}</td>
+                            <td>€{{ order.price_line_total }}</td>
                             <td class="no-border-bottom" class="no-border-bottom">{{ order.grand_totals.id }}</td>
                         </tr>
                     {% else %}
@@ -140,6 +142,7 @@
                             <td>{{ order.quantity }}</td>
                             <td class="left-align">{{ order.size }}</td>
                             <td>€{{ order.price_unit }}</td>
+                            <td>€{{ order.price_line_total }}</td>
                             <td class="no-border-top no-border-bottom"></td>
                         </tr>
                     {% endifchanged %}

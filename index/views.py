@@ -157,22 +157,6 @@ def index(request):
     return render(request, template, context)
 
 
-# def add_to_basket(request, item_id):
-
-#     quantity = int(request.POST.get('quantity'))
-#     redirect_url = request.POST.get('redirect_url')
-#     basket = request.session.get('basket', {})
-
-#     if item_id in list(basket.keys()):
-#         basket[item_id] += quantity
-#     else:
-#         basket[item_id] = quantity
-
-#     request.session['basket'] = basket
-#     print(request.session['basket'])
-#     return redirect(redirect_url)
-
-
 def past_orders(request):
     print("PAST_ORDERS!!")
     """ A view to return the past orders page """
@@ -201,7 +185,8 @@ def past_orders(request):
             'name',
             'quantity',
             'size',
-            'price_unit'
+            'price_unit',
+            'price_line_total'
         )
         
         
@@ -249,9 +234,96 @@ def past_orders(request):
         return render(request, template, context)
 
 
-def takings(request):
+def test_page(request):
     """ A view to return the past orders page """
-    return render(request, 'index/takings.html')
+    print("test_page")
+    date_from = datetime(2025, 6, 22)
+    date_to = date_from + timedelta(days=1)
+    orders = LineItem.objects.all().values(
+            'grand_totals_id',
+            'order_date_li',
+            'staff_member_id',
+            'staff_member_id__name',
+            'grand_totals_id__pfand_total',
+            'grand_totals_id__drinks_food_total',
+            'grand_totals_id__total_due',
+            'grand_totals_id__tendered_amount',
+            'grand_totals_id__change_due',
+            'grand_totals_id__payment_method',
+            'grand_totals_id__payment_reason',
+            'discount',
+            'grand_totals_id__number_of_products',
+            'name',
+            'quantity',
+            'size',
+            'price_unit',
+            'price_line_total'
+        )
+    # item = makeOrderDict('order', 'id')
+    # print("item = ", item)
+    grandTotals = GrandTotal.objects.all()
+    prev_date = ''
+    previous_order = ''
+    current_items = []
+    prev_items = []
+    duplicate_orders = []
+    for i, order in enumerate(grandTotals):
+        lineItems = LineItem.objects.filter(grand_totals_id=order.id).values(
+            'name',
+            'quantity',
+            'size',
+            'price_unit',
+            'price_line_total')
+
+        print("lineItems = ", lineItems)
+        for item in lineItems:
+            print("item = ", item)
+            current_items.append(
+                {'name': item["name"],
+                'quantity': item['quantity'],
+                'size': item['size'],
+                'price_unit': item['price_unit'],
+                'price_line_total': item['price_line_total']})
+        if i > 0:
+            if order.order_date.strftime("%y-%m-%d %H:%M:%S") == prev_date and prev_items == current_items and order.staff_member == previous_order.staff_member and order.number_of_products == previous_order.number_of_products and order.pfand_buttons_total == previous_order.pfand_buttons_total and order.drinks_food_total == previous_order.drinks_food_total and order.pfand_total == previous_order.pfand_total and order.total_due == previous_order.total_due and order.tendered_amount == previous_order.tendered_amount and order.payment_method == previous_order.payment_method:
+                print("YES SAME DATETIME")
+                duplicate_first_order = makeOrderDict(order, current_items)
+                duplicate_orders.append(duplicate_first_order)
+                duplicate_second_order = makeOrderDict(previous_order, prev_items)
+                duplicate_orders.append(duplicate_second_order)
+        prev_items = current_items
+        previous_order = order
+        current_items = []
+        prev_date = (order.order_date).strftime("%y-%m-%d %H:%M:%S")
+    
+    duplicate_orders = sorted(duplicate_orders, key=lambda d: d['id'], reverse=True)
+    for order in duplicate_orders:
+        print("duplicate_orders = ", order)
+    context = {
+        "orders": duplicate_orders
+    }
+      
+    return render(request, 'index/test_page.html', context)
+
+
+def makeOrderDict(order, items):
+    order = {
+        'id': order.id,
+        'date': order.order_date,
+        'staff_member': order.staff_member,
+        'pfand_total': order.pfand_total,
+        'drinks_food_total': order.drinks_food_total,
+        'total_due': order.total_due,
+        'tendered_amount': order.tendered_amount,
+        'change_due': order.change_due,
+        'payment_method': order.payment_method,
+        'payment_reason': order.payment_reason,
+        'discounts': order.discounts,
+        'number_of_products': order.number_of_products,
+        'items': items
+    }
+    return order
+    
 
 @login_required
 def reports(request):
@@ -347,7 +419,7 @@ def reports(request):
             "date_now": date_now,
             "date_yesterday": date_yesterday
         }
-        return render(request, 'index/reports.html' , context)
+        return render(request, 'index/reports.html', context)
 
 def generate_report(request):
     print("generate_report")
@@ -365,6 +437,6 @@ def generate_report(request):
         'payment_reason',
         'staff_member__name'
     )
-    print("entries = ", entries)
+    # print("entries = ", entries)
     return JsonResponse(list(entries),
                         safe=False)

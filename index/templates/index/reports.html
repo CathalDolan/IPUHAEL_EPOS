@@ -8,10 +8,12 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid heading-container">
+<div class="container-fluid heading-container text-center">
     <div class="row heading_row">
         <div class="col-3">
-
+            <a href="{% url 'test_page' %}"><button class="btn btn-primary" aria-label="Aria Previous orders">
+                    Test Page
+                </button></a>
         </div>
         <div class="col">
             <h1 class="">REPORTS</h1>
@@ -156,7 +158,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
 
         <div class="col-9">
@@ -167,6 +168,7 @@
                     <tr>
                         <!-- <th scope="col">Staff</th> -->
                         <th scope="col">Product</th>
+                        <th scope="col">Category</th>
                         <th scope="col">Size</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Total Price</th>
@@ -179,6 +181,8 @@
             </div>
         </div>
     </div>
+     <div id="sunburst"></div>
+   
 </div>
 
 
@@ -211,5 +215,10 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 <!-- dc charting library -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/3.2.1/dc.min.js"
     integrity="sha256-g36jGLL708D9oZr5QHvv1KB0lnMupwfKDFK2nTK+PD0=" crossorigin="anonymous"></script> -->
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/eurostat/d3.sunburst@0.9.9/d3-sunburst.js"></script>
+<script src='https://cdn.plot.ly/plotly-3.0.1.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
 <script src="{% static 'js/reports.js' %}"></script>
 {% endblock %}
