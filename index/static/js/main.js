@@ -8,7 +8,7 @@ if(host.includes("heroku")) {
 }
 else {
     console.log("GITPOD")
-    url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu120.gitpod.io/";
+    url = 'http://127.0.0.1:8000';
 }
 
 //SET TIME & DATE: Fn to set time and date.

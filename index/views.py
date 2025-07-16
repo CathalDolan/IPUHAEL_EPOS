@@ -1,12 +1,12 @@
-from django.shortcuts import render, redirect, reverse
-from django.contrib.auth.decorators import login_required
-from . models import Product, GrandTotal, LineItem, Staff
-from django.views.decorators.csrf import csrf_exempt, requires_csrf_token, ensure_csrf_cookie
-from django.http import JsonResponse
-from django.contrib import messages
 import json
 from datetime import datetime, timedelta
-import copy
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.contrib import messages
+from . models import Product, GrandTotal, LineItem, Staff
+# from django.views.decorators.csrf import csrf_exempt, requires_csrf_token
+
 
 # @ensure_csrf_cookie
 # @login_required
@@ -27,7 +27,9 @@ def index(request):
             print("Data 0", data[0])
             print("Data 1 = ", data[1])
             print("Data 2", data[2])
-            staff_member = Staff.objects.get(id=data[1]['Grand_Total']["staff_member"])
+            staff_member = Staff.objects.get(
+                id=data[1]['Grand_Total']["staff_member"]
+            )
             for v in data[1].values():
                 # print("v = ", v)
                 new_grand_total = GrandTotal(
@@ -44,7 +46,7 @@ def index(request):
                     payment_reason=v["payment_reason"],
                 )
                 new_grand_total.save()
-            discount = data[2]
+            # discount = data[2]
             # print("discount = ", discount)
             # print("discount_type = ", discount[0])
             for k, v in data[0].items():
@@ -286,7 +288,7 @@ def test_page(request):
                 'price_line_total': item['price_line_total']})
         if i > 0:
             if order.order_date.strftime("%y-%m-%d %H:%M:%S") == prev_date and prev_items == current_items and order.staff_member == previous_order.staff_member and order.number_of_products == previous_order.number_of_products and order.pfand_buttons_total == previous_order.pfand_buttons_total and order.drinks_food_total == previous_order.drinks_food_total and order.pfand_total == previous_order.pfand_total and order.total_due == previous_order.total_due and order.tendered_amount == previous_order.tendered_amount and order.payment_method == previous_order.payment_method:
-                # print("YES SAME DATETIME")
+                print("YES SAME DATETIME")
                 duplicate_first_order = makeOrderDict(order, current_items)
                 duplicate_orders.append(duplicate_first_order)
                 duplicate_second_order = makeOrderDict(previous_order, prev_items)
@@ -297,8 +299,8 @@ def test_page(request):
         prev_date = (order.order_date).strftime("%y-%m-%d %H:%M:%S")
     
     duplicate_orders = sorted(duplicate_orders, key=lambda d: d['id'], reverse=True)
-    # for order in duplicate_orders:
-    #     print("duplicate_orders = ", order)
+
+    print("duplicate_orders = ", duplicate_orders)
     context = {
         "orders": duplicate_orders
     }

@@ -7,7 +7,7 @@ if (host.includes("heroku")) {
     url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/generate_report"
 } else {
     console.log("GITPOD")
-    url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu120.gitpod.io/generate_report";
+    url = 'http://127.0.0.1:8000/generate_report';
 }
 
 var xArray = [];
