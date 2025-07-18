@@ -53,11 +53,12 @@ def index(request):
                 for x in v:
                     # print("x = ", x)
                     if x['qty'] != 0:
-                        # product = Product.objects.get(name=x["name"])
+                        product = Product.objects.get(name=x["name"])
+                        print("product = ", product)
                         new_line_items = LineItem(
                             grand_totals=new_grand_total,
                             category=x["category"],
-                            name=x["name"],
+                            name=product,
                             quantity=int(x["qty"]),
                             size=x["size"],
                             price_unit=float(x["price"]),
@@ -358,11 +359,11 @@ def reports(request):
             staff.append(entry["staff_member__name"])
         if not entry["category"] in categories:
             categories.append(entry["category"])
-        if not entry["name"] in drinks and not entry["category"] == "food" and not entry["category"] == "gifts":
+        if not entry["name"] in drinks and not "food" in entry["category"] and not "gifts" in entry["category"]:
             drinks.append(entry["name"])
-        if entry["category"] == "food" and not entry["name"] in food:
+        if "food" in entry["category"] and not entry["name"] in food:
             food.append(entry["name"])
-        if entry["category"] == "gifts" and not entry["name"] in gifts:
+        if "gifts" in entry["category"] and not entry["name"] in gifts:
             gifts.append(entry["name"])
         if not entry["size"] in sizes:
             sizes.append(entry["size"])

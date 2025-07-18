@@ -7,7 +7,7 @@ if(host.includes("heroku")) {
 }
 else {
     console.log("GITPOD")
-    url = "https://8000-cathaldolan-ipuhaelepos-ttnjevm7y7g.ws-eu120.gitpod.io/past_orders";
+    url = "http://127.0.0.1:8000/past_orders";
 }
 const calendarDates = document.querySelector('.calendar-dates');
 const monthYear = document.getElementById('month-year');

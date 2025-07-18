@@ -7,7 +7,7 @@ if (host.includes("heroku")) {
     url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/reports"
 } else {
     console.log("GITPOD")
-    url = 'http://127.0.0.1:8000';
+    url = 'http://127.0.0.1:8000/reports';
 }
 
 $('document').ready(function () {
@@ -15,7 +15,11 @@ $('document').ready(function () {
     const DATA = JSON.parse(document.getElementById('data').textContent);
     console.log("DATA = ", DATA)
     console.log("DATA = ", DATA.length)
-
+    const ndx = crossfilter(DATA);
+    const all = ndx.groupAll();
+    
+    console.log("ndx = ", ndx)
+    console.log("all = ", all)
     generateCharts()
 
     // Function to display the filter dropdown lists when clicked
@@ -50,11 +54,8 @@ $('document').ready(function () {
         
     var timeOut;
     function generateCharts(data) {
-        console.log("generateCharts data = ", data)
+        // console.log("generateCharts data = ", data)
         var time = new Date()
-        console.log(`time = ${time.getHours()<10?'0':''}${time.getHours()}:${time.getMinutes()<10?'0':''}${time.getMinutes()}:${time.getSeconds()<10?'0':''}${time.getSeconds()}`)
-        
-        // timeOut = setTimeout(fetchData, 60000)
 
         if(data !== undefined) {
             orders = data;
@@ -62,6 +63,7 @@ $('document').ready(function () {
         else {
             orders = DATA;
         }
+        // console.log("orders = ", orders)
         var from_date = new Date($('#from_date').val());
         var to_date = new Date($('#to_date').val());
         to_date.setHours($('#to_time').val().split(':')[0])
@@ -88,7 +90,13 @@ $('document').ready(function () {
         var selected_transaction_type = $('#transaction_type').find("input:checked").map(function() {
             return this.name
         })
-        
+        // console.log("selected_staff = ", selected_staff)
+        // console.log("selected_categories = ", selected_categories)
+        // console.log("selected_drinks = ", selected_drinks)
+        // console.log("selected_food = ", selected_food)
+        // console.log("selected_gifts = ", selected_gifts)
+        // console.log("selected_sizes = ", selected_sizes)
+        // console.log("selected_transaction_type = ", selected_transaction_type)
         let data_filtered = orders.filter(item => 
             ((Date.parse(item.order_date_li) >= `${Date.parse(from_date)}`) 
             && (Date.parse(item.order_date_li) <= `${Date.parse(to_date)}`) 
@@ -100,18 +108,8 @@ $('document').ready(function () {
             || Object.values(selected_food).includes(item.name)
             || Object.values(selected_gifts).includes(item.name))
         );
-        console.log("data_filtered = ", data_filtered);
-        // data_filtered.forEach(item => {
-        //     console.log(item)
-        //     // if(!data_filtered.includes(item))
-        //     //      {
-        //     //         console.log("YES")
-        //     // }
-        //     // else {
-        //     //     console.log(item.id)  
-        //     // }
-        // })
-
+        // console.log("data_filtered = ", data_filtered);
+        
         var groups = [];
         var transactions = [];
         var cashTransactions = {"number": 0, "total": 0};
@@ -131,7 +129,7 @@ $('document').ready(function () {
                     "size": item.size,
                     "quantity": Number(item.quantity),
                     "total": Number(item.price_line_total)
-                    })
+                })
             }
             else {
                 groups[groupItemIndex].quantity += Number(item.quantity);
@@ -187,8 +185,8 @@ $('document').ready(function () {
             // console.log("cardTransactions = ", cardTransactions)
             // console.log("wasteTransactions = ", wasteTransactions)
             // console.log("compTransactions = ", compTransactions)
-            })
-            revenue_total = cashTransactions.total + cardTransactions.total;
+        })
+        revenue_total = cashTransactions.total + cardTransactions.total;
         
         $('#summary-table').empty()
         $('#summary-table').append(
