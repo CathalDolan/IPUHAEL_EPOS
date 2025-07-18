@@ -84,13 +84,9 @@
                         <span class="anchor">Select Category</span>
                         <ul class="items">
                             <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
-                            <li><input class="checkbox" type="checkbox" name="drink" checked/><span>All</span></li>
-                            <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
-                            <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
-
-                            {% comment %} {% for item in categories %}
+                            {% for item in categories %}
                                 <li><input class="checkbox" type="checkbox" name="{{ item }}" checked/><span>{{ item }}</span></li>
-                            {% endfor %} {% endcomment %}
+                            {% endfor %}
                             <li><input class="checkbox" type="checkbox" name="Open drink" checked/><span>Open Drink</span></li>
                         </ul>
                     </div>
