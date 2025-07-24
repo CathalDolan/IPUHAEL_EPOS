@@ -12,3 +12,7 @@ cloudinary_python.txt
 *.pyc 
 .env
 autoPopulate.js
+.prettierignore
+.prettierrc
+package-lock.json
+package.json

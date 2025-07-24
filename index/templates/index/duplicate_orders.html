@@ -4,7 +4,7 @@
 <!-- dc CSS -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.min.css" type="text/css" /> -->
 <!--My CSS stylesheet-->
-<link rel="stylesheet" href="{% static 'css/test_page.css' %}">
+<link rel="stylesheet" href="{% static 'css/duplicate_orders.css' %}">
 {% endblock %}
 {% block content %}
     <div class="container-fluid">
@@ -13,7 +13,7 @@
 
         </div>
         <div class="col">
-            <h1 class="">TEST PAGE</h1>
+            <h1 class="">DUPLICATE ORDERS</h1>
         </div>
         <div class="col-3">
             <a href="{% url 'index' %}"><button type="button" class="btn btn-primary">Back to site</button></a>
@@ -139,5 +139,5 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 <script src="https://cdn.jsdelivr.net/gh/eurostat/d3.sunburst@0.9.9/d3-sunburst.js"></script>
 <script src='https://cdn.plot.ly/plotly-3.0.1.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
-<script src="{% static 'js/test_page.js' %}"></script>
+<script src="{% static 'js/duplicate_orders.js' %}"></script>
 {% endblock %}

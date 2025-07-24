@@ -237,9 +237,9 @@ def past_orders(request):
         return render(request, template, context)
 
 
-def test_page(request):
+def duplicate_orders(request):
     """ A view to return the past orders page """
-    print("test_page")
+    print("duplicate_orders")
     date_from = datetime(2025, 6, 22)
     date_to = date_from + timedelta(days=1)
     orders = LineItem.objects.all().values(
@@ -306,7 +306,7 @@ def test_page(request):
         "orders": duplicate_orders
     }
       
-    return render(request, 'index/test_page.html', context)
+    return render(request, 'index/duplicate_orders.html', context)
 
 
 def makeOrderDict(order, items):

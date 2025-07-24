@@ -1,11 +1,8 @@
-{% extends "base.html" %}
-{% load static %}
-{% block extra_css %}
+{% extends "base.html" %} {% load static %} {% block extra_css %}
 <!--My CSS stylesheet-->
-<link rel="stylesheet" href="{% static 'css/main.css' %}">
-<link rel="stylesheet" href="{% static 'css/circular_progress.css' %}">
-{% endblock %}
-{% block content %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}" />
+<link rel="stylesheet" href="{% static 'css/circular_progress.css' %}" />
+{% endblock %} {% block content %}
 <!-- The Staff Modal -->
 <div class="modal" id="staff_modal">
     <div class="modal-dialog" aria-label="Aria Staff modal">
@@ -13,10 +10,14 @@
             <!-- Modal body -->
             <div class="modal-body">
                 {% for member in staff %}
-                <div class="staff-name" data-member_id="{{ member.id }}" aria-label="Aria Staff {{ member }}"><p>{{ member }}</p></div>
+                <div
+                    class="staff-name"
+                    data-member_id="{{ member.id }}"
+                    aria-label="Aria Staff {{ member }}">
+                    <p>{{ member }}</p>
+                </div>
                 {% endfor %}
             </div>
-
         </div>
     </div>
 </div>
@@ -24,82 +25,133 @@
 <div class="modal" id="open_drink_modal">
     <div class="modal-dialog" aria-label="Aria Open drink modal">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Open Drink</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Aria modal close"></button>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Aria modal close"></button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                    <div class="row" id="measurement_row">
-                        <div class="col">
-                            <button class="btn drink measure_button price_sgle" id="single_button" data-price="price_sgle" aria-label="Aria Single measure">
-                                Single
-                            </button>
-                        </div>
-                        <div class="col">
-                            <button class="btn drink measure_button price_dble" id="double_button" data-price="price_dble" aria-label="Aria Double measure">
-                                Double
-                            </button>
-                        </div>
-                        <div class="col">
-                            <button class="btn drink measure_button price_dash" id="dash_button" data-price="price_dash" aria-label="Aria Dash measure">
-                                Dash
-                            </button>
-                        </div>
-                        <div class="col">
-                            <button class="btn drink measure_button price_03" id="03_button" data-price="price_03" aria-label="Aria 03 measure">
-                                0.3
-                            </button>
-                        </div>
-                        <div class="col">
-                            <button class="btn drink measure_button price_04" id="04_button" data-price="price_04" aria-label="Aria 04 measure">
-                                0.4
-                            </button>
-                        </div>
-                        <div class="col">
-                            <button class="btn drink measure_button price_pint selected" id="pint_button" data-price="price_pint" aria-label="Aria Pint measure">
-                                Pint
-                            </button>
-                        </div>
-                        <div class="col">
-                            <button class="btn drink measure_button price_btle" id="bottle_button" data-price="price_btle" aria-label="Aria Bottle measure">
-                                Bottle
-                            </button>
-                        </div>
+                <div class="row" id="measurement_row">
+                    <div class="col">
+                        <button
+                            class="btn drink measure_button price_sgle"
+                            id="single_button"
+                            data-price="price_sgle"
+                            aria-label="Aria Single measure">
+                            Single
+                        </button>
                     </div>
-                    <div class="row">
-                        <div class="col p-1">
-                            <input class="open-drink-input" name="quantity" type="number" placeholder="Qty*" min="1" value="1"></input>
-                            <p class="field-error"></p>
-                        </div>
-                        <div class="col-7 p-1">
-                            <input class="open-drink-input" name="drink-name" type="text" placeholder="Drink name*"></input>
-                            <p class="field-error"></p>
-                        </div>
-                        <div class="col-2 p-1">
-                            <input class="open-drink-input" name="price" type="number" placeholder="Price*" min="0"></input>
-                            <p class="field-error"></p>
-                        </div>
-                        <div class="col-1 p-1">
-                            <label for="pfand">Pfand</label>
-                            <input class="open-drink-input checkbox" name="pfand" type="checkbox" checked></input>
-                        </div>
+                    <div class="col">
+                        <button
+                            class="btn drink measure_button price_dble"
+                            id="double_button"
+                            data-price="price_dble"
+                            aria-label="Aria Double measure">
+                            Double
+                        </button>
                     </div>
-                    <div class="row">
-                        <div class="col p-1">
-                            <button class="btn open-drink-submit" type="submit">Save</button>
-                        </div>
+                    <div class="col">
+                        <button
+                            class="btn drink measure_button price_dash"
+                            id="dash_button"
+                            data-price="price_dash"
+                            aria-label="Aria Dash measure">
+                            Dash
+                        </button>
                     </div>
+                    <div class="col">
+                        <button
+                            class="btn drink measure_button price_03"
+                            id="03_button"
+                            data-price="price_03"
+                            aria-label="Aria 03 measure">
+                            0.3
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button
+                            class="btn drink measure_button price_04"
+                            id="04_button"
+                            data-price="price_04"
+                            aria-label="Aria 04 measure">
+                            0.4
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button
+                            class="btn drink measure_button price_pint selected"
+                            id="pint_button"
+                            data-price="price_pint"
+                            aria-label="Aria Pint measure">
+                            Pint
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button
+                            class="btn drink measure_button price_btle"
+                            id="bottle_button"
+                            data-price="price_btle"
+                            aria-label="Aria Bottle measure">
+                            Bottle
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col p-1">
+                        <input
+                            class="open-drink-input"
+                            name="quantity"
+                            type="number"
+                            placeholder="Qty*"
+                            min="1"
+                            value="1" />
+                        <p class="field-error"></p>
+                    </div>
+                    <div class="col-7 p-1">
+                        <input
+                            class="open-drink-input"
+                            name="drink-name"
+                            type="text"
+                            placeholder="Drink name*" />
+                        <p class="field-error"></p>
+                    </div>
+                    <div class="col-2 p-1">
+                        <input
+                            class="open-drink-input"
+                            name="price"
+                            type="number"
+                            placeholder="Price*"
+                            min="0" />
+                        <p class="field-error"></p>
+                    </div>
+                    <div class="col-1 p-1">
+                        <label for="pfand">Pfand</label>
+                        <input
+                            class="open-drink-input checkbox"
+                            name="pfand"
+                            type="checkbox"
+                            checked />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col p-1">
+                        <button class="btn open-drink-submit" type="submit">
+                            Save
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- Modal footer -->
             <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             </div> -->
-
         </div>
     </div>
 </div>
@@ -107,19 +159,29 @@
 <div class="modal" id="gifts_modal">
     <div class="modal-dialog" aria-label="Aria Gifts modal">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Gifts Selection</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Aria Modal close"></button>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Aria Modal close"></button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
                 {% for gift in gifts %}
-                <button class="btn {{gift.category}} product_button add_gift_button" id="{{gift.id}}" data-pfand="{{gift.pfand}}"
-                    data-category="{{gift.category}}" data-name="{{gift.name}}" data-abbr_name="{{ gift.abbr_name }}"
-                    data-price_default="{{gift.price_default}}" data-bs-dismiss="modal" aria-label="Aria {{gift.name}}">
+                <button
+                    class="btn {{gift.category}} product_button add_gift_button"
+                    id="{{gift.id}}"
+                    data-pfand="{{gift.pfand}}"
+                    data-category="{{gift.category}}"
+                    data-name="{{gift.name}}"
+                    data-abbr_name="{{ gift.abbr_name }}"
+                    data-price_default="{{gift.price_default}}"
+                    data-bs-dismiss="modal"
+                    aria-label="Aria {{gift.name}}">
                     {{gift.name}}
                 </button>
                 {% endfor %}
@@ -127,9 +189,14 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Aria Modal dismiss">Close</button>
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                    aria-label="Aria Modal dismiss">
+                    Close
+                </button>
             </div>
-
         </div>
     </div>
 </div>
@@ -139,37 +206,65 @@
         <!--  Drinks Sizes Buttons -->
         <div class="row" id="measurement_row">
             <div class="col">
-                <button class="btn drink measure_button price_sgle" id="single_button" data-price="price_sgle" aria-label="Aria Drink Single size">
+                <button
+                    class="btn drink measure_button price_sgle"
+                    id="single_button"
+                    data-price="price_sgle"
+                    aria-label="Aria Drink Single size">
                     Single
                 </button>
             </div>
             <div class="col">
-                <button class="btn drink measure_button price_dble" id="double_button" data-price="price_dble" aria-label="Aria Drink double size">
+                <button
+                    class="btn drink measure_button price_dble"
+                    id="double_button"
+                    data-price="price_dble"
+                    aria-label="Aria Drink double size">
                     Double
                 </button>
             </div>
             <div class="col">
-                <button class="btn drink measure_button price_dash" id="dash_button" data-price="price_dash" aria-label="Aria Drink dash size">
+                <button
+                    class="btn drink measure_button price_dash"
+                    id="dash_button"
+                    data-price="price_dash"
+                    aria-label="Aria Drink dash size">
                     Dash
                 </button>
             </div>
             <div class="col">
-                <button class="btn drink measure_button price_03" id="03_button" data-price="price_03" aria-label="Aria Drink 03 size">
+                <button
+                    class="btn drink measure_button price_03"
+                    id="03_button"
+                    data-price="price_03"
+                    aria-label="Aria Drink 03 size">
                     0.3
                 </button>
             </div>
             <div class="col">
-                <button class="btn drink measure_button price_04 " id="04_button" data-price="price_04" aria-label="Aria Drink 04 size">
+                <button
+                    class="btn drink measure_button price_04"
+                    id="04_button"
+                    data-price="price_04"
+                    aria-label="Aria Drink 04 size">
                     0.4
                 </button>
             </div>
             <div class="col">
-                <button class="btn drink measure_button selected price_pint" id="pint_button" data-price="price_pint" aria-label="Aria Drink pint size">
+                <button
+                    class="btn drink measure_button selected price_pint"
+                    id="pint_button"
+                    data-price="price_pint"
+                    aria-label="Aria Drink pint size">
                     Pint
                 </button>
             </div>
             <div class="col">
-                <button class="btn drink measure_button price_btle" id="bottle_button" data-price="price_btle" aria-label="Aria Drink bottle size">
+                <button
+                    class="btn drink measure_button price_btle"
+                    id="bottle_button"
+                    data-price="price_btle"
+                    aria-label="Aria Drink bottle size">
                     Bottle
                 </button>
             </div>
@@ -178,15 +273,19 @@
         <div class="row product_buttons_div drinks_row">
             {% for draught in draughts %}
             <div class="col-2">
-                <button class="btn {{draught.category}} drink product_button pfand_product" id="{{draught.id}}"
-                    data-pfand="{{draught.pfand}}" data-category="{{draught.category}}" data-name="{{draught.name}}" 
+                <button
+                    class="btn {{draught.category}} drink product_button pfand_product"
+                    id="{{draught.id}}"
+                    data-pfand="{{draught.pfand}}"
+                    data-category="{{draught.category}}"
+                    data-name="{{draught.name}}"
                     data-abbr_name="{{draught.abbr_name}}"
                     data-price_default="{{draught.price_default}}"
                     data-price_sgle="{{draught.price_sgle}}"
                     data-price_dble="{{draught.price_dble}}"
                     data-price_dash="{{draught.price_dash}}"
                     data-price_03="{{draught.price_03}}"
-                    data-price_04="{{draught.price_04}}" 
+                    data-price_04="{{draught.price_04}}"
                     data-price_pint="{{draught.price_pint}}"
                     data-price_btle="{{draught.price_btle}}"
                     data-bar_product="{{draught.bar_product}}"
@@ -195,18 +294,21 @@
                     {{draught.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for half_n_half in half_n_halfs %}
+            {% endfor %} {% for half_n_half in half_n_halfs %}
             <div class="col-2">
-                <button class="btn {{half_n_half.category}} drink product_button pfand_product" id="{{half_n_half.id}}"
-                    data-pfand="{{half_n_half.pfand}}" data-category="{{half_n_half.category}}" data-name="{{half_n_half.name}}" 
+                <button
+                    class="btn {{half_n_half.category}} drink product_button pfand_product"
+                    id="{{half_n_half.id}}"
+                    data-pfand="{{half_n_half.pfand}}"
+                    data-category="{{half_n_half.category}}"
+                    data-name="{{half_n_half.name}}"
                     data-abbr_name="{{half_n_half.abbr_name}}"
                     data-price_default="{{half_n_half.price_default}}"
                     data-price_sgle="{{half_n_half.price_sgle}}"
                     data-price_dble="{{half_n_half.price_dble}}"
                     data-price_dash="{{half_n_half.price_dash}}"
                     data-price_03="{{half_n_half.price_03}}"
-                    data-price_04="{{half_n_half.price_04}}" 
+                    data-price_04="{{half_n_half.price_04}}"
                     data-price_pint="{{half_n_half.price_pint}}"
                     data-price_btle="{{half_n_half.price_btle}}"
                     data-bar_product="{{half_n_half.bar_product}}"
@@ -215,18 +317,21 @@
                     {{half_n_half.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for shandy in shandys %}
+            {% endfor %} {% for shandy in shandys %}
             <div class="col-2">
-                <button class="btn {{shandy.category}} drink product_button pfand_product" id="{{shandy.id}}"
-                    data-pfand="{{shandy.pfand}}" data-category="{{shandy.category}}" data-name="{{shandy.name}}" 
+                <button
+                    class="btn {{shandy.category}} drink product_button pfand_product"
+                    id="{{shandy.id}}"
+                    data-pfand="{{shandy.pfand}}"
+                    data-category="{{shandy.category}}"
+                    data-name="{{shandy.name}}"
                     data-abbr_name="{{shandy.abbr_name}}"
                     data-price_default="{{shandy.price_default}}"
                     data-price_sgle="{{shandy.price_sgle}}"
                     data-price_dble="{{shandy.price_dble}}"
                     data-price_dash="{{shandy.price_dash}}"
                     data-price_03="{{shandy.price_03}}"
-                    data-price_04="{{shandy.price_04}}" 
+                    data-price_04="{{shandy.price_04}}"
                     data-price_pint="{{shandy.price_pint}}"
                     data-price_btle="{{shandy.price_btle}}"
                     data-bar_product="{{shandy.bar_product}}"
@@ -235,11 +340,13 @@
                     {{shandy.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for canandbottle in canandbottles %}
+            {% endfor %} {% for canandbottle in canandbottles %}
             <div class="col-2">
-                <button class="btn {{canandbottle.category}} drink product_button pfand_product" id="{{canandbottle.id}}"
-                    data-pfand="{{canandbottle.pfand}}" data-category="{{canandbottle.category}}"
+                <button
+                    class="btn {{canandbottle.category}} drink product_button pfand_product"
+                    id="{{canandbottle.id}}"
+                    data-pfand="{{canandbottle.pfand}}"
+                    data-category="{{canandbottle.category}}"
                     data-name="{{canandbottle.name}}"
                     data-abbr_name="{{canandbottle.abbr_name}}"
                     data-price_default="{{canandbottle.price_default}}"
@@ -247,7 +354,7 @@
                     data-price_dble="{{canandbottle.price_dble}}"
                     data-price_dash="{{canandbottle.price_dash}}"
                     data-price_03="{{canandbottle.price_03}}"
-                    data-price_04="{{canandbottle.price_04}}" 
+                    data-price_04="{{canandbottle.price_04}}"
                     data-price_pint="{{canandbottle.price_pint}}"
                     data-price_btle="{{canandbottle.price_btle}}"
                     data-bar_product="{{canandbottle.bar_product}}"
@@ -256,18 +363,21 @@
                     {{canandbottle.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for spirit in spirits %}
+            {% endfor %} {% for spirit in spirits %}
             <div class="col-2">
-                <button class="btn {{spirit.category}} drink product_button pfand_product" id="{{spirit.id}}"
-                    data-pfand="{{spirit.pfand}}" data-category="{{spirit.category}}" data-name="{{spirit.name}}"
+                <button
+                    class="btn {{spirit.category}} drink product_button pfand_product"
+                    id="{{spirit.id}}"
+                    data-pfand="{{spirit.pfand}}"
+                    data-category="{{spirit.category}}"
+                    data-name="{{spirit.name}}"
                     data-abbr_name="{{spirit.abbr_name}}"
                     data-price_default="{{spirit.price_default}}"
                     data-price_sgle="{{spirit.price_sgle}}"
                     data-price_dble="{{spirit.price_dble}}"
                     data-price_dash="{{spirit.price_dash}}"
                     data-price_03="{{spirit.price_03}}"
-                    data-price_04="{{spirit.price_04}}" 
+                    data-price_04="{{spirit.price_04}}"
                     data-price_pint="{{spirit.price_pint}}"
                     data-price_btle="{{spirit.price_btle}}"
                     data-bar_product="{{spirit.bar_product}}"
@@ -276,11 +386,13 @@
                     {{spirit.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for softdrink in softdrinks %}
+            {% endfor %} {% for softdrink in softdrinks %}
             <div class="col-2">
-                <button class="btn {{softdrink.category}} drink product_button pfand_product" id="{{softdrink.id}}"
-                    data-pfand="{{softdrink.pfand}}" data-category="{{softdrink.category}}"
+                <button
+                    class="btn {{softdrink.category}} drink product_button pfand_product"
+                    id="{{softdrink.id}}"
+                    data-pfand="{{softdrink.pfand}}"
+                    data-category="{{softdrink.category}}"
                     data-name="{{softdrink.name}}"
                     data-abbr_name="{{softdrink.abbr_name}}"
                     data-price_default="{{softdrink.price_default}}"
@@ -288,7 +400,7 @@
                     data-price_dble="{{softdrink.price_dble}}"
                     data-price_dash="{{softdrink.price_dash}}"
                     data-price_03="{{softdrink.price_03}}"
-                    data-price_04="{{softdrink.price_04}}" 
+                    data-price_04="{{softdrink.price_04}}"
                     data-price_pint="{{softdrink.price_pint}}"
                     data-price_btle="{{softdrink.price_btle}}"
                     data-bar_product="{{softdrink.bar_product}}"
@@ -297,11 +409,13 @@
                     {{softdrink.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for hotnonalcoholic in hotnonalcoholics %}
+            {% endfor %} {% for hotnonalcoholic in hotnonalcoholics %}
             <div class="col-2">
-                <button class="btn {{hotnonalcoholic.category}} drink product_button" id="{{hotnonalcoholic.id}}"
-                    data-pfand="{{hotnonalcoholic.pfand}}" data-category="{{hotnonalcoholic.category}}"
+                <button
+                    class="btn {{hotnonalcoholic.category}} drink product_button"
+                    id="{{hotnonalcoholic.id}}"
+                    data-pfand="{{hotnonalcoholic.pfand}}"
+                    data-category="{{hotnonalcoholic.category}}"
                     data-name="{{hotnonalcoholic.name}}"
                     data-abbr_name="{{hotnonalcoholic.abbr_name}}"
                     data-price_default="{{hotnonalcoholic.price_default}}"
@@ -309,7 +423,7 @@
                     data-price_dble="{{hotnonalcoholic.price_dble}}"
                     data-price_dash="{{hotnonalcoholic.price_dash}}"
                     data-price_03="{{hotnonalcoholic.price_03}}"
-                    data-price_04="{{hotnonalcoholic.price_04}}" 
+                    data-price_04="{{hotnonalcoholic.price_04}}"
                     data-price_pint="{{hotnonalcoholic.price_pint}}"
                     data-price_btle="{{hotnonalcoholic.price_btle}}"
                     data-bar_product="{{hotnonalcoholic.bar_product}}"
@@ -318,11 +432,13 @@
                     {{hotnonalcoholic.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for hotalcoholic in hotalcoholics %}
+            {% endfor %} {% for hotalcoholic in hotalcoholics %}
             <div class="col-2">
-                <button class="btn {{hotalcoholic.category}} drink product_button" id="{{hotalcoholic.id}}"
-                    data-pfand="{{hotalcoholic.pfand}}" data-category="{{hotalcoholic.category}}"
+                <button
+                    class="btn {{hotalcoholic.category}} drink product_button"
+                    id="{{hotalcoholic.id}}"
+                    data-pfand="{{hotalcoholic.pfand}}"
+                    data-category="{{hotalcoholic.category}}"
                     data-name="{{hotalcoholic.name}}"
                     data-abbr_name="{{hotalcoholic.abbr_name}}"
                     data-price_default="{{hotalcoholic.price_default}}"
@@ -330,7 +446,7 @@
                     data-price_dble="{{hotalcoholic.price_dble}}"
                     data-price_dash="{{hotalcoholic.price_dash}}"
                     data-price_03="{{hotalcoholic.price_03}}"
-                    data-price_04="{{hotalcoholic.price_04}}" 
+                    data-price_04="{{hotalcoholic.price_04}}"
                     data-price_pint="{{hotalcoholic.price_pint}}"
                     data-price_btle="{{hotalcoholic.price_btle}}"
                     data-bar_product="{{hotalcoholic.bar_product}}"
@@ -339,18 +455,21 @@
                     {{hotalcoholic.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for hottoddy in hottoddys %}
+            {% endfor %} {% for hottoddy in hottoddys %}
             <div class="col-2">
-                <button class="btn {{hottoddy.category}} drink product_button" id="{{hottoddy.id}}"
-                    data-pfand="{{hottoddy.pfand}}" data-category="{{hottoddy.category}}" data-name="{{hottoddy.name}}"
+                <button
+                    class="btn {{hottoddy.category}} drink product_button"
+                    id="{{hottoddy.id}}"
+                    data-pfand="{{hottoddy.pfand}}"
+                    data-category="{{hottoddy.category}}"
+                    data-name="{{hottoddy.name}}"
                     data-abbr_name="{{hottoddy.abbr_name}}"
                     data-price_default="{{hottoddy.price_default}}"
                     data-price_sgle="{{hottoddy.price_sgle}}"
                     data-price_dble="{{hottoddy.price_dble}}"
                     data-price_dash="{{hottoddy.price_dash}}"
                     data-price_03="{{hottoddy.price_03}}"
-                    data-price_04="{{hottoddy.price_04}}" 
+                    data-price_04="{{hottoddy.price_04}}"
                     data-price_pint="{{hottoddy.price_pint}}"
                     data-price_btle="{{hottoddy.price_btle}}"
                     data-bar_product="{{hottoddy.bar_product}}"
@@ -359,18 +478,21 @@
                     {{hottoddy.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for cocktail in cocktails %}
+            {% endfor %} {% for cocktail in cocktails %}
             <div class="col-2">
-                <button class="btn {{cocktail.category}} drink product_button" id="{{cocktail.id}}"
-                    data-pfand="{{cocktail.pfand}}" data-category="{{cocktail.category}}" data-name="{{cocktail.name}}"
+                <button
+                    class="btn {{cocktail.category}} drink product_button"
+                    id="{{cocktail.id}}"
+                    data-pfand="{{cocktail.pfand}}"
+                    data-category="{{cocktail.category}}"
+                    data-name="{{cocktail.name}}"
                     data-abbr_name="{{cocktail.abbr_name}}"
                     data-price_default="{{cocktail.price_default}}"
                     data-price_sgle="{{cocktail.price_sgle}}"
                     data-price_dble="{{cocktail.price_dble}}"
                     data-price_dash="{{cocktail.price_dash}}"
                     data-price_03="{{cocktail.price_03}}"
-                    data-price_04="{{cocktail.price_04}}" 
+                    data-price_04="{{cocktail.price_04}}"
                     data-price_pint="{{cocktail.price_pint}}"
                     data-price_btle="{{cocktail.price_btle}}"
                     data-bar_product="{{cocktail.bar_product}}"
@@ -379,18 +501,21 @@
                     {{cocktail.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for shot in shots %}
+            {% endfor %} {% for shot in shots %}
             <div class="col-2">
-                <button class="btn {{shot.category}} drink product_button" id="{{shot.id}}" data-pfand="{{shot.pfand}}"
-                    data-category="{{shot.category}}" data-name="{{shot.name}}"
+                <button
+                    class="btn {{shot.category}} drink product_button"
+                    id="{{shot.id}}"
+                    data-pfand="{{shot.pfand}}"
+                    data-category="{{shot.category}}"
+                    data-name="{{shot.name}}"
                     data-abbr_name="{{shot.abbr_name}}"
                     data-price_default="{{shot.price_default}}"
                     data-price_sgle="{{shot.price_sgle}}"
                     data-price_dble="{{shot.price_dble}}"
                     data-price_dash="{{shot.price_dash}}"
                     data-price_03="{{shot.price_03}}"
-                    data-price_04="{{shot.price_04}}" 
+                    data-price_04="{{shot.price_04}}"
                     data-price_pint="{{shot.price_pint}}"
                     data-price_btle="{{shot.price_btle}}"
                     data-bar_product="{{shot.bar_product}}"
@@ -401,21 +526,25 @@
             </div>
             {% endfor %}
             <div class="col-2">
-                <button class="btn open_drink product_button pfand_product" data-pfand="true" data-bs-toggle="modal"
-                    data-bs-target="#open_drink_modal" data-value="0"
+                <button
+                    class="btn open_drink product_button pfand_product"
+                    data-pfand="true"
+                    data-bs-toggle="modal"
+                    data-bs-target="#open_drink_modal"
+                    data-value="0"
                     data-bar_product="True"
                     data-kitchen_product="False"
                     aria-label="Aria Open open drink modal">
                     Open Drink
                 </button>
             </div>
-            
         </div>
         <!-- Food measurement buttons-->
         <div class="row food_row">
             <!-- Small Size Button -->
             <div class="col-2">
-                <button class="btn food measure_button"
+                <button
+                    class="btn food measure_button"
                     data-price="price_sml"
                     data-bar_product="False"
                     data-kitchen_product="True"
@@ -425,7 +554,8 @@
             </div>
             <!-- Regular Size Button -->
             <div class="col-2">
-                <button class="btn food measure_button selected"
+                <button
+                    class="btn food measure_button selected"
                     data-price="price_reg"
                     data-bar_product="False"
                     data-kitchen_product="True"
@@ -455,10 +585,15 @@
         <div class="row food_row">
             {% for food in foods %}
             <div class="col-2">
-                <button class="btn {{food.category}} food product_button" id="{{food.id}}" data-pfand="{{food.pfand}}"
-                    data-category="{{food.category}}" data-name="{{food.name}}"
+                <button
+                    class="btn {{food.category}} food product_button"
+                    id="{{food.id}}"
+                    data-pfand="{{food.pfand}}"
+                    data-category="{{food.category}}"
+                    data-name="{{food.name}}"
                     data-abbr_name="{{food.abbr_name}}"
-                    data-price_default="{{food.price_default}}" data-price_sml="{{food.price_small}}"
+                    data-price_default="{{food.price_default}}"
+                    data-price_sml="{{food.price_small}}"
                     data-price_reg="{{food.price_regular}}"
                     data-price_jum="{{food.price_jumbo}}"
                     data-bar_product="{{food.bar_product}}"
@@ -467,13 +602,17 @@
                     {{food.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in food_extra_cheese %}
+            {% endfor %} {% for item in food_extra_cheese %}
             <div class="col-2">
-                <button class="btn {{item.category}} food product_button" id="{{item.id}}" data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" data-name="{{item.name}}"
+                <button
+                    class="btn {{item.category}} food product_button"
+                    id="{{item.id}}"
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{item.abbr_name}}"
-                    data-price_default="{{item.price_default}}" data-price_sml="{{item.price_small}}"
+                    data-price_default="{{item.price_default}}"
+                    data-price_sml="{{item.price_small}}"
                     data-price_reg="{{item.price_regular}}"
                     data-price_jum="{{item.price_jumbo}}"
                     data-bar_product="{{item.bar_product}}"
@@ -482,13 +621,17 @@
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in food_extra_meat %}
+            {% endfor %} {% for item in food_extra_meat %}
             <div class="col-2">
-                <button class="btn {{item.category}} food product_button" id="{{item.id}}" data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" data-name="{{item.name}}"
+                <button
+                    class="btn {{item.category}} food product_button"
+                    id="{{item.id}}"
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{item.abbr_name}}"
-                    data-price_default="{{item.price_default}}" data-price_sml="{{item.price_small}}"
+                    data-price_default="{{item.price_default}}"
+                    data-price_sml="{{item.price_small}}"
                     data-price_reg="{{item.price_regular}}"
                     data-price_jum="{{item.price_jumbo}}"
                     data-bar_product="{{item.bar_product}}"
@@ -497,13 +640,17 @@
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in food_extra_sauce %}
+            {% endfor %} {% for item in food_extra_sauce %}
             <div class="col-2">
-                <button class="btn {{item.category}} food product_button" id="{{item.id}}" data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" data-name="{{item.name}}"
+                <button
+                    class="btn {{item.category}} food product_button"
+                    id="{{item.id}}"
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{item.abbr_name}}"
-                    data-price_default="{{item.price_default}}" data-price_sml="{{item.price_small}}"
+                    data-price_default="{{item.price_default}}"
+                    data-price_sml="{{item.price_small}}"
                     data-price_reg="{{item.price_regular}}"
                     data-price_jum="{{item.price_jumbo}}"
                     data-bar_product="{{item.bar_product}}"
@@ -512,13 +659,17 @@
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in food_extra_veg %}
+            {% endfor %} {% for item in food_extra_veg %}
             <div class="col-2">
-                <button class="btn {{item.category}} food product_button" id="{{item.id}}" data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" data-name="{{item.name}}"
+                <button
+                    class="btn {{item.category}} food product_button"
+                    id="{{item.id}}"
+                    data-pfand="{{item.pfand}}"
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{item.abbr_name}}"
-                    data-price_default="{{item.price_default}}" data-price_sml="{{item.price_small}}"
+                    data-price_default="{{item.price_default}}"
+                    data-price_sml="{{item.price_small}}"
                     data-price_reg="{{item.price_regular}}"
                     data-price_jum="{{item.price_jumbo}}"
                     data-bar_product="{{item.bar_product}}"
@@ -532,138 +683,149 @@
         <div class="row gifts_row">
             {% for item in gifts %}
             <div class="col-2">
-                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                <button
+                    class="btn {{item.category}} product_button add_gift_button enabled"
+                    id="{{item.id}}"
                     data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" 
-                    data-name="{{item.name}}" 
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{ item.abbr_name }}"
-                    data-price_default="{{item.price_default}}" 
+                    data-price_default="{{item.price_default}}"
                     data-gift_product="True"
                     aria-label="Aria {{item.name}}">
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in gifts_caps %}
+            {% endfor %} {% for item in gifts_caps %}
             <div class="col-2">
-                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                <button
+                    class="btn {{item.category}} product_button add_gift_button enabled"
+                    id="{{item.id}}"
                     data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" 
-                    data-name="{{item.name}}" 
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{ item.abbr_name }}"
-                    data-price_default="{{item.price_default}}" 
+                    data-price_default="{{item.price_default}}"
                     data-gift_product="True"
                     aria-label="Aria {{item.name}}">
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in gifts_decoration %}
+            {% endfor %} {% for item in gifts_decoration %}
             <div class="col-2">
-                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                <button
+                    class="btn {{item.category}} product_button add_gift_button enabled"
+                    id="{{item.id}}"
                     data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" 
-                    data-name="{{item.name}}" 
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{ item.abbr_name }}"
-                    data-price_default="{{item.price_default}}" 
+                    data-price_default="{{item.price_default}}"
                     data-gift_product="True"
                     aria-label="Aria {{item.name}}">
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in gifts_food %}
+            {% endfor %} {% for item in gifts_food %}
             <div class="col-2">
-                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                <button
+                    class="btn {{item.category}} product_button add_gift_button enabled"
+                    id="{{item.id}}"
                     data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" 
-                    data-name="{{item.name}}" 
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{ item.abbr_name }}"
-                    data-price_default="{{item.price_default}}" 
+                    data-price_default="{{item.price_default}}"
                     data-gift_product="True"
                     aria-label="Aria {{item.name}}">
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in gifts_glasses %}
+            {% endfor %} {% for item in gifts_glasses %}
             <div class="col-2">
-                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                <button
+                    class="btn {{item.category}} product_button add_gift_button enabled"
+                    id="{{item.id}}"
                     data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" 
-                    data-name="{{item.name}}" 
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{ item.abbr_name }}"
-                    data-price_default="{{item.price_default}}" 
+                    data-price_default="{{item.price_default}}"
                     data-gift_product="True"
                     aria-label="Aria {{item.name}}">
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in gifts_magnets %}
+            {% endfor %} {% for item in gifts_magnets %}
             <div class="col-2">
-                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                <button
+                    class="btn {{item.category}} product_button add_gift_button enabled"
+                    id="{{item.id}}"
                     data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" 
-                    data-name="{{item.name}}" 
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{ item.abbr_name }}"
-                    data-price_default="{{item.price_default}}" 
+                    data-price_default="{{item.price_default}}"
                     data-gift_product="True"
                     aria-label="Aria {{item.name}}">
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in gifts_small %}
+            {% endfor %} {% for item in gifts_small %}
             <div class="col-2">
-                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                <button
+                    class="btn {{item.category}} product_button add_gift_button enabled"
+                    id="{{item.id}}"
                     data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" 
-                    data-name="{{item.name}}" 
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{ item.abbr_name }}"
-                    data-price_default="{{item.price_default}}" 
+                    data-price_default="{{item.price_default}}"
                     data-gift_product="True"
                     aria-label="Aria {{item.name}}">
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in gifts_medium %}
+            {% endfor %} {% for item in gifts_medium %}
             <div class="col-2">
-                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                <button
+                    class="btn {{item.category}} product_button add_gift_button enabled"
+                    id="{{item.id}}"
                     data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" 
-                    data-name="{{item.name}}" 
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{ item.abbr_name }}"
-                    data-price_default="{{item.price_default}}" 
+                    data-price_default="{{item.price_default}}"
                     data-gift_product="True"
                     aria-label="Aria {{item.name}}">
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in gifts_sweats %}
+            {% endfor %} {% for item in gifts_sweats %}
             <div class="col-2">
-                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                <button
+                    class="btn {{item.category}} product_button add_gift_button enabled"
+                    id="{{item.id}}"
                     data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" 
-                    data-name="{{item.name}}" 
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{ item.abbr_name }}"
-                    data-price_default="{{item.price_default}}" 
+                    data-price_default="{{item.price_default}}"
                     data-gift_product="True"
                     aria-label="Aria {{item.name}}">
                     {{item.name}}
                 </button>
             </div>
-            {% endfor %}
-            {% for item in gifts_tshirts %}
+            {% endfor %} {% for item in gifts_tshirts %}
             <div class="col-2">
-                <button class="btn {{item.category}} product_button add_gift_button enabled" id="{{item.id}}" 
+                <button
+                    class="btn {{item.category}} product_button add_gift_button enabled"
+                    id="{{item.id}}"
                     data-pfand="{{item.pfand}}"
-                    data-category="{{item.category}}" 
-                    data-name="{{item.name}}" 
+                    data-category="{{item.category}}"
+                    data-name="{{item.name}}"
                     data-abbr_name="{{ item.abbr_name }}"
-                    data-price_default="{{item.price_default}}" 
+                    data-price_default="{{item.price_default}}"
                     data-gift_product="True"
                     aria-label="Aria {{item.name}}">
                     {{item.name}}
@@ -672,67 +834,88 @@
             {% endfor %}
         </div>
 
-
-
-
-        
         <!--  Food Sizes, Gifts, Admin & Previous Drinks Buttons  -->
-        <div class="row global_buttons">  
+        <div class="row global_buttons">
             <!-- Empty Button -->
             <div class="col-2">
-                <button id="bar_product" class="btn product_selection" aria-label="Aria Select bar products">Bar Products</button>
+                <button
+                    id="bar_product"
+                    class="btn product_selection"
+                    aria-label="Aria Select bar products">
+                    Bar Products
+                </button>
             </div>
             <div class="col-2">
-                <button id="kitchen_product" class="btn product_selection" aria-label="Aria Select Kitchen products">Kitchen Products</button>
+                <button
+                    id="kitchen_product"
+                    class="btn product_selection"
+                    aria-label="Aria Select Kitchen products">
+                    Kitchen Products
+                </button>
             </div>
             <!-- Gifts Button -->
             <div class="col-2">
-                <button id="gift_product" class="btn product_selection" aria-label="Aria Select Gift products">
+                <button
+                    id="gift_product"
+                    class="btn product_selection"
+                    aria-label="Aria Select Gift products">
                     Gifts
                 </button>
             </div>
             <!-- Admin Button -->
-             {% if request.user.is_superuser %} 
+            {% if request.user.is_superuser %}
             <div class="col-2">
-                <a href="{% url 'admin:index' %}"><button class="btn admin_button" aria-label="Aria Admin">
-                    Admin
-                </button></a>
+                <a href="{% url 'admin:index' %}"
+                    ><button class="btn admin_button" aria-label="Aria Admin">
+                        Admin
+                    </button></a
+                >
             </div>
             {% endif %}
             <!-- Previous Orders Button -->
             <div class="col-2">
-                <a href="{% url 'past_orders' %}"><button class="btn previous_orders_button" aria-label="Aria Previous orders">
-                    Previous Orders
-                </button></a>
+                <a href="{% url 'past_orders' %}"
+                    ><button
+                        class="btn previous_orders_button"
+                        aria-label="Aria Previous orders">
+                        Previous Orders
+                    </button></a
+                >
             </div>
             <!-- Reports Button -->
-             {% if request.user.is_superuser %} 
+            {% if request.user.is_superuser %}
             <div class="col-2">
-                <a href="{% url 'reports' %}"><button class="btn previous_orders_button" aria-label="Aria Previous orders">
-                    Reports
-                </button></a>
+                <a href="{% url 'reports' %}"
+                    ><button
+                        class="btn previous_orders_button"
+                        aria-label="Aria Previous orders">
+                        Reports
+                    </button></a
+                >
             </div>
             {% endif %}
         </div>
-        <input type="hidden" name="redirect_url" value="{{ request.path}}">
+        <input type="hidden" name="redirect_url" value="{{ request.path}}" />
     </div>
 
     <!--  Right Side of till with totals  -->
     <div class="col-5 till-right-side">
         <p class="header-info">
-            <i class="fa-solid fa-maximize" id="fullscreen_button" onclick="openFullscreen();"></i>
+            <i
+                class="fa-solid fa-maximize"
+                id="fullscreen_button"
+                onclick="openFullscreen();"></i>
             <!--  onclick="openFullscreen();" -->
             <i class="fa-solid fa-minimize" onclick="closeFullscreen();"></i>
             <span id="time_and_date"></span>
             <span class="logged_in_as text-end">
                 {% if request.user.is_authenticated %} 
-                    {% if request.user.is_superuser %} 
-                        SUPERADMIN
-                    {% else %}
-                        KiWo2024
-                    {% endif %}
-                {% else %} <a href="/admin/" aria-label="Aria Admin login">Login</a> 
-                {% endif %}</span>
+                {% if request.user.is_superuser %} SUPERADMIN {% else %} KiWo2024 
+                {% endif %} 
+                {% else %}
+                <a href="/admin/" aria-label="Aria Admin login">Login</a> 
+                {% endif %}</span
+            >
             <span class="staff-user"></span>
         </p>
         <!--  Pfand Buttons  -->
@@ -742,40 +925,62 @@
                 
             </div> -->
             <div class="col">
-                <button class="pfand_button activate" data-value="1" aria-label="Aria pfand return 1">
+                <button
+                    class="pfand_button activate"
+                    data-value="1"
+                    aria-label="Aria pfand return 1">
                     1
                 </button>
             </div>
             <div class="col">
-                <button class="pfand_button activate" data-value="2" aria-label="Aria pfand return 2">
+                <button
+                    class="pfand_button activate"
+                    data-value="2"
+                    aria-label="Aria pfand return 2">
                     2
                 </button>
             </div>
             <div class="col">
-                <button class="pfand_button activate" data-value="3" aria-label="Aria pfand return 3">
+                <button
+                    class="pfand_button activate"
+                    data-value="3"
+                    aria-label="Aria pfand return 3">
                     3
                 </button>
             </div>
             <div class="col">
-                <button class="pfand_button activate" data-value="4" aria-label="Aria pfand return 4">
+                <button
+                    class="pfand_button activate"
+                    data-value="4"
+                    aria-label="Aria pfand return 4">
                     4
                 </button>
             </div>
             <div class="col">
-                <button class="pfand_button five_plus" data-bs-toggle="modal" data-bs-target="#pfand_modal"
-                    data-value="5+" aria-label="Aria pfand return 5+">
+                <button
+                    class="pfand_button five_plus"
+                    data-bs-toggle="modal"
+                    data-bs-target="#pfand_modal"
+                    data-value="5+"
+                    aria-label="Aria pfand return 5+">
                     5+
                 </button>
-                
             </div>
-            
+
             <div class="col">
-                <button class="pfand_button activate" data-value="0" aria-label="Aria pfand reset">
+                <button
+                    class="pfand_button activate"
+                    data-value="0"
+                    aria-label="Aria pfand reset">
                     Reset
                 </button>
             </div>
             <div class="col">
-                <button class="pfand_button activate" id="none" data-value="no-pfand" aria-label="Aria pfand return 0">
+                <button
+                    class="pfand_button activate"
+                    id="none"
+                    data-value="no-pfand"
+                    aria-label="Aria pfand return 0">
                     No pfand
                 </button>
             </div>
@@ -783,112 +988,185 @@
             <div class="modal" id="pfand_modal">
                 <div class="modal-dialog" aria-label="Aria pfand modal">
                     <div class="modal-content">
-
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">Number of Items Returned</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Aria modal dismiss"></button>
+                            <h4 class="modal-title">
+                                Number of Items Returned
+                            </h4>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Aria modal dismiss"></button>
                         </div>
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="5" aria-label="Aria pfand return 5">
-                                    5
-                                    </button>
-                            
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="6" aria-label="Aria pfand return 6">
-                                    6
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="7" aria-label="Aria pfand return 7">
-                                    7
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="8" aria-label="Aria pfand return 8">
-                                    8
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="9" aria-label="Aria pfand return 9">
-                                    9
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="10" aria-label="Aria pfand return 10">
-                                    10
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="11" aria-label="Aria pfand return 11">
-                                    11
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="12" aria-label="Aria pfand return 12">
-                                    12
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="13" aria-label="Aria pfand return 13">
-                                    13
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="14" aria-label="Aria pfand return 14">
-                                    14
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="15" aria-label="Aria pfand return 15">
-                                    15
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="16" aria-label="Aria pfand return 16">
-                                    16
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="17" aria-label="Aria pfand return 17">
-                                    17
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="18" aria-label="Aria pfand return 18">
-                                    18
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="19" aria-label="Aria pfand return 19">
-                                    19
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="20" aria-label="Aria pfand return 20">
-                                    20
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="21" aria-label="Aria pfand return 21">
-                                    21
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="22" aria-label="Aria pfand return 22">
-                                    22
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="23" aria-label="Aria pfand return 23">
-                                    23
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="24" aria-label="Aria pfand return 24">
-                                    24
-                                    </button>
-                                    <button class="btn pfand_button activate pfand_modal_button" data-bs-dismiss="modal"
-                                    data-value="25" aria-label="Aria pfand return 25">
-                                    25
-                                    </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="5"
+                                aria-label="Aria pfand return 5">
+                                5
+                            </button>
+
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="6"
+                                aria-label="Aria pfand return 6">
+                                6
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="7"
+                                aria-label="Aria pfand return 7">
+                                7
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="8"
+                                aria-label="Aria pfand return 8">
+                                8
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="9"
+                                aria-label="Aria pfand return 9">
+                                9
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="10"
+                                aria-label="Aria pfand return 10">
+                                10
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="11"
+                                aria-label="Aria pfand return 11">
+                                11
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="12"
+                                aria-label="Aria pfand return 12">
+                                12
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="13"
+                                aria-label="Aria pfand return 13">
+                                13
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="14"
+                                aria-label="Aria pfand return 14">
+                                14
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="15"
+                                aria-label="Aria pfand return 15">
+                                15
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="16"
+                                aria-label="Aria pfand return 16">
+                                16
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="17"
+                                aria-label="Aria pfand return 17">
+                                17
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="18"
+                                aria-label="Aria pfand return 18">
+                                18
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="19"
+                                aria-label="Aria pfand return 19">
+                                19
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="20"
+                                aria-label="Aria pfand return 20">
+                                20
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="21"
+                                aria-label="Aria pfand return 21">
+                                21
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="22"
+                                aria-label="Aria pfand return 22">
+                                22
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="23"
+                                aria-label="Aria pfand return 23">
+                                23
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="24"
+                                aria-label="Aria pfand return 24">
+                                24
+                            </button>
+                            <button
+                                class="btn pfand_button activate pfand_modal_button"
+                                data-bs-dismiss="modal"
+                                data-value="25"
+                                aria-label="Aria pfand return 25">
+                                25
+                            </button>
                         </div>
 
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Aria modal close">Close</button>
+                            <button
+                                type="button"
+                                class="btn btn-danger"
+                                data-bs-dismiss="modal"
+                                aria-label="Aria modal close">
+                                Close
+                            </button>
                         </div>
-
                     </div>
                 </div>
             </div>
-            
         </div>
+        
         <div class="row product_row" id="product_headings_row">
             <div class="col-3">
                 <h6>Product</h6>
@@ -915,9 +1193,7 @@
                 <h6>Del</h6>
             </div>
         </div>
-        <div class="products_rows_div">
-            
-        </div>
+        <div class="products_rows_div"></div>
         <!-- Basket Div -->
         <div class="basket_div">
             <!-- Line Items -->
@@ -927,25 +1203,27 @@
                 <button id="increment">+</button>
             </div> -->
             <!-- Message Container -->
+            
             <div class="message-container">
-                {% if messages %}
-                {% for message in messages %}
-                {% with message.level as level %}
-                {% if level == 40 %}
-                {% include 'includes/toasts/toast_error.html' %}
-                {% elif level == 30 %}
-                {% include 'includes/toasts/toast_warning.html' %}
-                {% elif level == 25 %}
-                {% include 'includes/toasts/toast_success.html' %}
-                {% else %}
-                {% include 'includes/toasts/toast_info.html' %}
-                {% endif %}
-                {% endwith %}
-                {% endfor %}
+                
+                {% if messages %} 
+                  {% for message in messages %} 
+                    {% with message.level as level %} 
+                      {% if level == 40 %} 
+                        {% include 'includes/toasts/toast_error.html' %} 
+                      {% elif level == 30 %} 
+                        {% include 'includes/toasts/toast_warning.html' %} 
+                      {% elif level == 25 %} 
+                        {% include 'includes/toasts/toast_success.html' %} 
+                      {% else %} 
+                        {% include 'includes/toasts/toast_info.html' %} 
+                      {% endif %}
+                    {% endwith %} 
+                  {% endfor %} 
                 {% endif %}
             </div>
 
-            <hr>
+            <hr />
             <!-- Grand Totals Rows -->
             <div class="row">
                 <div class="col-9 px-0">
@@ -955,89 +1233,168 @@
                             <!-- <p class="grand_totals_row grand_totals_row_label">Drinks / Food Sub-Total:</p> -->
                             <!-- <p class="grand_totals_row grand_totals_row_label">Drinks / Food Discount:</p> -->
                             <!-- <p class="grand_totals_row grand_totals_row_label d-none">Drinks / Food Grand Total:</p> -->
-                            <p class="grand_totals_row grand_totals_row_label">Pfand Total:</p>
-                            <p class="grand_totals_row grand_totals_row_label">Total Due:</p>
-                            <p class="grand_totals_row grand_totals_row_label">Tendered Amount:</p>
-                            <p class="grand_totals_row grand_totals_row_label" id="change_due_label">Change Due:</p>
+                            <p class="grand_totals_row grand_totals_row_label">
+                                Pfand Total:
+                            </p>
+                            <p class="grand_totals_row grand_totals_row_label">
+                                Total Due:
+                            </p>
+                            <p class="grand_totals_row grand_totals_row_label">
+                                Tendered Amount:
+                            </p>
+                            <p
+                                class="grand_totals_row grand_totals_row_label"
+                                id="change_due_label">
+                                Change Due:
+                            </p>
                         </div>
                         <div class="col-4">
-                            <p class="grand_totals_row grand_totals_figure d-none" id="total_number_of_products"># Products</p>
+                            <p
+                                class="grand_totals_row grand_totals_figure d-none"
+                                id="total_number_of_products">
+                                # Products
+                            </p>
                             <!-- <p class="grand_totals_row grand_totals_figure" id="food_subtotal">€</p> -->
                             <!-- <p class="grand_totals_row grand_totals_figure" id="food_discount">€</p> -->
                             <!-- <p class="grand_totals_row grand_totals_figure d-none" id="food_grand_total">€</p> -->
-                            <p class="grand_totals_row grand_totals_figure" id="pfand_total">€</p>
-                            <p class="grand_totals_row grand_totals_figure" id="total_due">€</p>
-                            <span class="euro_symbol" id="amount_tendered_span">€
-                                <input type="number" class="grand_totals_row grand_totals_figure" id="amount_tendered" value=0>
+                            <p
+                                class="grand_totals_row grand_totals_figure"
+                                id="pfand_total">
+                                €
+                            </p>
+                            <p
+                                class="grand_totals_row grand_totals_figure"
+                                id="total_due">
+                                €
+                            </p>
+                            <span class="euro_symbol" id="amount_tendered_span"
+                                >€
+                                <input
+                                    type="number"
+                                    class="grand_totals_row grand_totals_figure"
+                                    id="amount_tendered"
+                                    value="0" />
                             </span>
-                            <p class="grand_totals_row grand_totals_figure" id="change_due">€</p>
+                            <p
+                                class="grand_totals_row grand_totals_figure"
+                                id="change_due">
+                                €
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-3 checkout-timer-wrapper">  
+                <div class="col-3 checkout-timer-wrapper">
                     <div class="checkout-timer">
-                         <p>CHECKOUT</p>
-                        <svg class="circular-progress" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                        <p>CHECKOUT</p>
+                        <svg
+                            class="circular-progress"
+                            viewBox="0 0 50 50"
+                            xmlns="http://www.w3.org/2000/svg">
                             <circle class="bg"></circle>
-                            <circle class="fg" stroke-dasharray="100" stroke-dashoffset="100" pathLength="100"/>
+                            <circle
+                                class="fg"
+                                stroke-dasharray="100"
+                                stroke-dashoffset="100"
+                                pathLength="100" />
                             <text id="countdown" x="20" y="30"></text>
                             <!-- <text id="stopped" x="0" y="30">Stopped</text> -->
                         </svg>
-                        <button class="btn pause-button" aria-label="Aria pause checkout timer">Pause</button> 
+                        <button
+                            class="btn pause-button"
+                            aria-label="Aria pause checkout timer">
+                            Pause
+                        </button>
                     </div>
-                   
-                    
                 </div>
             </div>
             <!-- <button class="btn test_button">
                     test button
                 </button> -->
-            
+
             <!-- € Notes and Finish Buttons Row -->
             <div class="row €_notes_row">
                 <div class="col-3">
-                    <button class="btn €_notes_button pay_method_button" data-value="10" data-payment_method="Cash" aria-label="Aria €10 note">
-                        <img src="{% static 'images/€10_note.png' %}" alt="€10 note">
+                    <button
+                        class="btn €_notes_button pay_method_button"
+                        data-value="10"
+                        data-payment_method="Cash"
+                        aria-label="Aria €10 note">
+                        <img
+                            src="{% static 'images/€10_note.png' %}"
+                            alt="€10 note" />
                     </button>
                 </div>
                 <div class="col-3">
-                    <button class="btn €_notes_button pay_method_button" data-value="20" data-payment_method="Cash" aria-label="Aria €20 note">
-                        <img src="{% static 'images/€20_note.png' %}" alt="€20 note">
+                    <button
+                        class="btn €_notes_button pay_method_button"
+                        data-value="20"
+                        data-payment_method="Cash"
+                        aria-label="Aria €20 note">
+                        <img
+                            src="{% static 'images/€20_note.png' %}"
+                            alt="€20 note" />
                     </button>
                 </div>
-                
+
                 <div class="col-3">
-                    <button class="btn €_notes_button pay_method_button" data-value="50" data-payment_method="Cash" aria-label="Aria €50 note">
-                        <img src="{% static 'images/€50_note.png' %}" alt="€50 note">
+                    <button
+                        class="btn €_notes_button pay_method_button"
+                        data-value="50"
+                        data-payment_method="Cash"
+                        aria-label="Aria €50 note">
+                        <img
+                            src="{% static 'images/€50_note.png' %}"
+                            alt="€50 note" />
                     </button>
                 </div>
                 <div class="col-3">
-                    <button class="btn €_notes_button pay_method_button" data-value="100" data-payment_method="Cash" aria-label="Aria €100 note">
-                        <img src="{% static 'images/€100_note.png' %}" alt="€100 note">
+                    <button
+                        class="btn €_notes_button pay_method_button"
+                        data-value="100"
+                        data-payment_method="Cash"
+                        aria-label="Aria €100 note">
+                        <img
+                            src="{% static 'images/€100_note.png' %}"
+                            alt="€100 note" />
                     </button>
                 </div>
                 <div class="col-3">
-                    <button class="btn pay_method_button" id="credit_card_button" data-payment_method="Credit Card" aria-label="Aria credit card">
-                        <img src="{% static 'images/credit_card_icon.png' %}" alt="Credit card">
+                    <button
+                        class="btn pay_method_button"
+                        id="credit_card_button"
+                        data-payment_method="Credit Card"
+                        aria-label="Aria credit card">
+                        <img
+                            src="{% static 'images/credit_card_icon.png' %}"
+                            alt="Credit card" />
                     </button>
                 </div>
                 <div class="col-3">
-                    <button class="btn exact_tendered" data-payment_method="Cash" aria-label="Aria exact tendered">
+                    <button
+                        class="btn exact_tendered"
+                        data-payment_method="Cash"
+                        aria-label="Aria exact tendered">
                         Exact Tendered
                     </button>
                 </div>
-                
-                
+
                 <div class="col-3">
-                    <button class="btn oap-students specials_option" data-special="oap-students" aria-label="Aria student discount">
+                    <button
+                        class="btn oap-students specials_option"
+                        data-special="oap-students"
+                        aria-label="Aria student discount">
                         OAP/Student Discount
                     </button>
                 </div>
                 <!-- The Specials Button -->
                 <div class="col-3">
-                    <button class="btn specials_button" type="button" data-bs-toggle="modal"
-                        data-bs-target="#specialsModal" aria-label="Aria Specials modal open">
+                    <button
+                        class="btn specials_button"
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#specialsModal"
+                        aria-label="Aria Specials modal open">
                         Discount Specials
                     </button>
                 </div>
@@ -1045,40 +1402,72 @@
                 <div class="modal" id="specialsModal">
                     <div class="modal-dialog" aria-label="Aria Specials modal">
                         <div class="modal-content">
-
                             <!-- Modal Header -->
                             <div class="modal-header">
                                 <h4 class="modal-title">Specials</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Aria modal dismiss"></button>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria modal dismiss"></button>
                             </div>
 
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <button class="btn specials_button specials_option" data-special="2 for 1"
-                                    data-bs-dismiss="modal" aria-label="Aria 2 for 1 special">2 for 1</button>
-                                <button class="btn specials_button specials_option" data-special="20% off"
-                                    data-bs-dismiss="modal" aria-label="Aria 20% off special">20% Off</button>
-                                <button class="btn specials_button specials_option" data-special="10 for 11"
-                                    data-bs-dismiss="modal" aria-label="Aria Buy 10 Get 11th
-                                    Free">Buy 10 Get 11th
-                                    Free</button>
-                                <button class="btn specials_button specials_option" data-special="six shot special"
-                                    data-bs-dismiss="modal" aria-label="Aria 6 Shot Special">6 Shot Special</button>
+                                <button
+                                    class="btn specials_button specials_option"
+                                    data-special="2 for 1"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria 2 for 1 special">
+                                    2 for 1
+                                </button>
+                                <button
+                                    class="btn specials_button specials_option"
+                                    data-special="20% off"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria 20% off special">
+                                    20% Off
+                                </button>
+                                <button
+                                    class="btn specials_button specials_option"
+                                    data-special="10 for 11"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria Buy 10 Get 11th
+                                    Free">
+                                    Buy 10 Get 11th Free
+                                </button>
+                                <button
+                                    class="btn specials_button specials_option"
+                                    data-special="six shot special"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria 6 Shot Special">
+                                    6 Shot Special
+                                </button>
                                 <!-- This better done in calculations -->
-                                <button class="btn specials_button specials_option" data-special="city voucher"
-                                    data-bs-dismiss="modal" aria-label="Aria €5 City Voucher special">€5 City Voucher</button>
+                                <button
+                                    class="btn specials_button specials_option"
+                                    data-special="city voucher"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria €5 City Voucher special">
+                                    €5 City Voucher
+                                </button>
                                 <!-- <button class="btn specials_button €_notes_button pay_method_button" data-value="5" data-payment_method="Cash" data-bs-dismiss="modal">€5 City Voucher</button> -->
                             </div>
 
                             <!-- Modal footer -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Aria modal close">Close</button>
+                                <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria modal close">
+                                    Close
+                                </button>
                             </div>
-
                         </div>
                     </div>
                 </div>
-               
+
                 <!-- Finish Button -->
                 <div class="col-3">
                     <button class="btn finish_button" aria-label="Aria Finish">
@@ -1090,9 +1479,14 @@
                         Cancel
                     </button>
                 </div>
-                 <!-- The Unpaid Button -->
-                 <div class="col-3">
-                    <button class="btn unpaid_button" data-bs-toggle="modal" data-bs-target="#unpaidModal" aria-label="Aria Unpaid modal open">
+
+                <!-- The Unpaid Button -->
+                <div class="col-3">
+                    <button
+                        class="btn unpaid_button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#unpaidModal"
+                        aria-label="Aria Unpaid modal open">
                         Unpaid
                     </button>
                 </div>
@@ -1100,106 +1494,131 @@
                 <div class="modal" id="unpaidModal">
                     <div class="modal-dialog" aria-label="Aria Unpaid modal">
                         <div class="modal-content">
-
                             <!-- Modal Header -->
                             <div class="modal-header">
                                 <h4 class="modal-title">Unpaid Reason</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Aria Unpaid modal dismiss"></button>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria Unpaid modal dismiss"></button>
                             </div>
 
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <button class="btn btn-primary unpaid_button payment_button"
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
                                     data-payment_method="Complimentary"
-                                    data-payment_reason="Kalle Comp" 
+                                    data-payment_reason="Kalle Comp"
                                     aria-label="Aria Unpaid Kalle Complimentary">
                                     Kalle Comp
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
                                     data-payment_method="Complimentary"
                                     data-payment_reason="Cathal Comp"
                                     aria-label="Aria Unpaid Cathal Complimentary">
                                     Cathal Comp
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
                                     data-payment_method="Complimentary"
                                     data-payment_reason="Sascha Comp"
                                     aria-label="Aria Unpaid Sascha Complimentary">
                                     Sascha Comp
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
-                                    data-payment_method="Complimentary" 
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
+                                    data-payment_method="Complimentary"
                                     data-payment_reason="Stephen Comp"
                                     aria-label="Aria Unpaid Stephen Complimentary">
                                     Stephen Comp
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
                                     data-payment_method="Complimentary"
                                     data-payment_reason="Lukas Comp"
                                     aria-label="Aria Unpaid Lukas Complimentary">
                                     Lukas Comp
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
-                                    data-payment_method="Complimentary" 
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
+                                    data-payment_method="Complimentary"
                                     data-payment_reason="Cillian/Meadbh Comp"
                                     aria-label="Aria Unpaid Cillian/Meadbh Complimentary">
                                     Cillian/Meadbh Comp
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
-                                    data-payment_method="Complimentary" 
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
+                                    data-payment_method="Complimentary"
                                     data-payment_reason="Free Shot Voucher"
                                     aria-label="Aria Unpaid Free Shot Voucher">
                                     Free Shot Voucher
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
-                                    data-payment_method="Complimentary" 
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
+                                    data-payment_method="Complimentary"
                                     data-payment_reason="12 Free Shots Voucher"
                                     aria-label="Aria Unpaid 12 Free Shots Voucher">
                                     12 Free Shots Voucher
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
-                                    data-payment_method="Complimentary" 
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
+                                    data-payment_method="Complimentary"
                                     data-payment_reason="Staff Drink"
                                     aria-label="Aria Unpaid Staff Drink">
                                     Staff Drink
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
-                                    data-payment_method="Complimentary" 
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
+                                    data-payment_method="Complimentary"
                                     data-payment_reason="kitchenProduct"
                                     aria-label="Aria Unpaid Kitchen Product">
                                     Kitchen Product
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
-                                    data-payment_method="Complimentary" 
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
+                                    data-payment_method="Complimentary"
                                     data-payment_reason="Musicians"
                                     aria-label="Aria Unpaid Musicians">
                                     Musicians
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
-                                    data-payment_method="Complimentary" 
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
+                                    data-payment_method="Complimentary"
                                     data-payment_reason="Neighbour"
                                     aria-label="Aria Unpaid Neighbour">
-                                    Neighbour 
+                                    Neighbour
                                 </button>
-                                <button class="btn btn-primary unpaid_button payment_button"
-                                    data-payment_method="Complimentary" 
+                                <button
+                                    class="btn btn-primary unpaid_button payment_button"
+                                    data-payment_method="Complimentary"
                                     data-payment_reason="Om India"
                                     aria-label="Aria Unpaid Om India">
-                                    Om India 
+                                    Om India
                                 </button>
                             </div>
 
                             <!-- Modal footer -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Aria Unpaid modal close">Close</button>
+                                <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria Unpaid modal close">
+                                    Close
+                                </button>
                             </div>
-
                         </div>
                     </div>
                 </div>
                 <!-- The Waste Button -->
                 <div class="col-3">
-                    <button class="btn waste_button" data-bs-toggle="modal" data-bs-target="#wasteModal" aria-label="Aria Waste modal open">
+                    <button
+                        class="btn waste_button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#wasteModal"
+                        aria-label="Aria Waste modal open">
                         Waste
                     </button>
                 </div>
@@ -1207,60 +1626,71 @@
                 <div class="modal" id="wasteModal">
                     <div class="modal-dialog" aria-label="Aria Waste modal">
                         <div class="modal-content">
-
                             <!-- Modal Header -->
                             <div class="modal-header">
                                 <h4 class="modal-title">Waste Reason</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Aria Waste modal dismiss"></button>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria Waste modal dismiss"></button>
                             </div>
 
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method="Waste" 
+                                <button
+                                    class="btn btn-primary waste_button payment_button"
+                                    data-payment_method="Waste"
                                     data-payment_reason="Waste Spilled"
                                     aria-label="Aria Waste Spilled">
                                     Waste Spilled
                                 </button>
-                                <button class="btn btn-primary waste_button payment_button"
+                                <button
+                                    class="btn btn-primary waste_button payment_button"
                                     data-payment_method="Waste"
                                     data-payment_reason="Set-Up Line Cleaning"
                                     aria-label="Aria Waste Spilled">
                                     Waste Set-Up / Line Cleaning
                                 </button>
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method="Waste" 
+                                <button
+                                    class="btn btn-primary waste_button payment_button"
+                                    data-payment_method="Waste"
                                     data-payment_reason="Waste Other"
                                     aria-label="Aria Waste Spilled">
                                     Waste Other
                                 </button>
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method="Waste" 
+                                <button
+                                    class="btn btn-primary waste_button payment_button"
+                                    data-payment_method="Waste"
                                     data-payment_reason="Customer Return Warm"
                                     aria-label="Aria Waste Spilled"
                                     aria-label="Aria Waste Customer Return - Warm">
                                     Customer Return - Warm
                                 </button>
-                                <button class="btn btn-primary waste_button payment_button"
+                                <button
+                                    class="btn btn-primary waste_button payment_button"
                                     data-payment_method="Waste"
                                     data-payment_reason="Cutomer Return Cold"
                                     aria-label="Aria Waste Cutomer Return - Cold">
                                     Cutomer Return - Cold
                                 </button>
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method="Waste" 
+                                <button
+                                    class="btn btn-primary waste_button payment_button"
+                                    data-payment_method="Waste"
                                     data-payment_reason="Customer Return Taste"
                                     aria-label="Aria Waste Customer Return - Taste">
                                     Customer Return - Taste
                                 </button>
-                                <button class="btn btn-primary waste_button payment_button"
+                                <button
+                                    class="btn btn-primary waste_button payment_button"
                                     data-payment_method="Waste"
                                     data-payment_reason="Customer Return Glass Issue"
                                     aria-label="Aria Waste Customer Return - Glass Issue">
                                     Customer Return - Glass Issue
                                 </button>
-                                <button class="btn btn-primary waste_button payment_button"
-                                    data-payment_method="Waste" 
+                                <button
+                                    class="btn btn-primary waste_button payment_button"
+                                    data-payment_method="Waste"
                                     data-payment_reason="Customer Return Other"
                                     aria-label="Aria Waste Customer Return - Other">
                                     Customer Return - Other
@@ -1269,9 +1699,14 @@
 
                             <!-- Modal footer -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Aria Waste modal close">Close</button>
+                                <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria Waste modal close">
+                                    Close
+                                </button>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -1279,13 +1714,15 @@
         </div>
     </div>
 </div>
-{% endblock %}
-{% block post_load_js %}
-{{ block.super }}
+{% endblock %} {% block post_load_js %} {{ block.super }}
 <script>
-    var staff_modal = new bootstrap.Modal(document.getElementById('staff_modal'), {})
-    staff_modal.show()
+    var staff_modal = new bootstrap.Modal(
+        document.getElementById("staff_modal"),
+        {}
+    );
+    staff_modal.show();
 </script>
 <script src="{% static 'js/main.js' %}"></script>
-{% comment %} <script src="{% static 'js/autoPopulate.js' %}"></script> {% endcomment %}
-{% endblock %}
+{% comment %}
+<script src="{% static 'js/autoPopulate.js' %}"></script>
+{% endcomment %} {% endblock %}

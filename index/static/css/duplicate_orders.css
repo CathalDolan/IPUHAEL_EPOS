@@ -1,14 +1,14 @@
 body {
-	background-color: antiquewhite;
-	padding: 0;
-	margin: 0;
+    background-color: antiquewhite;
+    padding: 0;
+    margin: 0;
 }
 
 .heading_row {
     display: flex;
     align-items: center;
     justify-content: center;
-	background-color: #fff;
+    background-color: #fff;
 }
 
 h1 {
@@ -18,13 +18,14 @@ h1 {
 }
 
 h4 {
-	text-align: center;
-	/* background-color: antiquewhite;
+    text-align: center;
+    /* background-color: antiquewhite;
 	width: 100%;
 	padding: 25px 0; */
 }
 
-th, tr {
+th,
+tr {
     text-align: center;
 }
 
@@ -36,7 +37,8 @@ th {
     border: 1px solid grey;
 }
 
-th, td {
+th,
+td {
     padding: 0 2px;
     font-size: small;
     font-family: "Roboto", sans-serif;
@@ -45,16 +47,17 @@ th, td {
 table {
     width: 100%;
     position: relative;
-	margin-bottom: 120px;
+    margin-bottom: 120px;
 }
 
 .left-align {
     text-align: left;
 }
 
-table, td {
-  border: 1px solid grey;
-  border-collapse: collapse;
+table,
+td {
+    border: 1px solid grey;
+    border-collapse: collapse;
 }
 
 .no-border-bottom {
