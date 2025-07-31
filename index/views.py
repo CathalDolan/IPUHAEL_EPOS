@@ -8,6 +8,22 @@ from . models import Product, GrandTotal, LineItem, Staff
 # from django.views.decorators.csrf import csrf_exempt, requires_csrf_token
 
 
+def product_admin(request):
+    grandTotals = GrandTotal.objects.all()
+    lineItems = LineItem.objects.all()
+    if "task" in request.GET:
+        print("YES GET")
+        for item in grandTotals:
+            item.delete()
+    context = {
+        "grandTotals": grandTotals.count(),
+        "lineItems": lineItems.count()
+    }
+    template = 'index/product_admin.html'
+    # print("Index View print")
+    return render(request, template, context)
+
+
 # @ensure_csrf_cookie
 # @login_required
 def index(request):
@@ -24,9 +40,9 @@ def index(request):
             return JsonResponse({'status': 'Checkout Complete'}, status=200)
         elif request.method == 'POST':
             data = json.load(request)
-            print("Data 0", data[0])
+            print("Data 0 = ", data[0])
             print("Data 1 = ", data[1])
-            print("Data 2", data[2])
+            print("Data 2 = ", data[2])
             staff_member = Staff.objects.get(
                 id=data[1]['Grand_Total']["staff_member"]
             )
@@ -443,3 +459,10 @@ def generate_report(request):
     # print("entries = ", entries)
     return JsonResponse(list(entries),
                         safe=False)
+
+def charts(request):
+    print("CHARTS")
+    context = {
+    }
+    return render(request, 'index/charts.html', context)
+        

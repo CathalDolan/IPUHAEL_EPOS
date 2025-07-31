@@ -443,7 +443,7 @@ form {
 }
 
 .invalid {
-    border: 1px solid red;
+    border: 1px solid red!important;
     margin-bottom: 2px!important;
 }
 

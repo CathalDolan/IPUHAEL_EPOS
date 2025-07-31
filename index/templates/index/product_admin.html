@@ -1,0 +1,17 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block extra_css %}
+<!--My CSS stylesheet-->
+{% endblock %} 
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Product Admin</h1>
+            <p>grandTotals: {{ grandTotals }}</p>
+            <p>lineItems: {{ lineItems }}</p>
+            <a href="{% url 'product_admin' %}?task=delete_all_products"><button type="button" class="btn btn-danger">Delete</button></a>
+        </div>
+    </div>
+</div>
+{% endblock %}
