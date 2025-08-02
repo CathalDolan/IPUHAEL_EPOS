@@ -63,7 +63,7 @@ function drawBarGraph(entries) {
         orientation:"v",
         marker: {color:"rgba(0,0,255)"}
     }];
-    const layout = {title:"World Wide Wine Production"};
+    const layout = {title:"Sales per hour"};
     Plotly.newPlot("barPlot", data, layout);
 }
 
@@ -168,48 +168,48 @@ function drawMySunburst(groups) {
         // 1st iteration
     groups.forEach(item => {
         // console.log(item);
-        var item_total = Number(item.total)
+        var item_total = Number(item.quantity)
         if(item_name == item.name) {
-            values[values.length-1] += item.total;
+            values[values.length-1] += item.quantity;
             if(item.category.includes("food")) {
-                foodTotal += item.total
+                foodTotal += item.quantity
             }
             else if(item.category.includes("gift")) {
-                giftsTotal += item.total
+                giftsTotal += item.quantity
             }
             else {
-                drinksTotal += item.total
+                drinksTotal += item.quantity
             }
         } 
         else {
             if(item.category.includes("food")) {
-                foodTotal += item.total;
+                foodTotal += item.quantity;
                 ids.push(`Food-${item.name}`)
-                labels.push(item.name);
+                labels.push(`${item.name} (${item.quantity})`);
                 parents.push(`Food`)
-                values.push(item.total)
+                values.push(item.quantity)
                 // labels.push(item.size)
                 // parents.push(`${item.name}`)
                 // values.push(item.total)
             }
             else if(item.category.includes("gift")) {
                 // console.log("GIFT")
-                giftsTotal += item.total;
+                giftsTotal += item.quantity;
                 ids.push(`Gifts-${item.name}`)
-                labels.push(item.name);
+                labels.push(`${item.name} (${item.quantity})`);
                 parents.push(`Gifts`)
-                values.push(item.total)
+                values.push(item.quantity)
                 // labels.push(item.size)
                 // parents.push(`${item.name}`)
                 // values.push(item.total)
             } 
             else {
                 // console.log("DRINK")
-                drinksTotal += item.total;
+                drinksTotal += item.quantity;
                 ids.push(`Drinks-${item.name}`)
-                labels.push(item.name);
+                labels.push(`${item.name} (${item.quantity})`);
                 parents.push(`Drinks`)
-                values.push(item.total)
+                values.push(item.quantity)
                 // labels.push(item.size)
                 // parents.push(`${item.name}`)
                 // values.push(item.total)
@@ -226,9 +226,9 @@ function drawMySunburst(groups) {
             // parents.push(`Food`)
             // values.push(item.total)
             ids.push(`${item.name}-${item.size}`)
-            labels.push(`${item.size}`)
+            labels.push(`${item.size} (${item.quantity})`)
             parents.push(`Food-${item.name}`)
-            values.push(item.total)
+            values.push(item.quantity)
         }
         else if(item.category.includes("gift")) {
             // console.log("GIFT")
@@ -237,9 +237,9 @@ function drawMySunburst(groups) {
             // parents.push(`Gifts`)
             // values.push(item.total)
             ids.push(`${item.name}-${item.size}`)
-            labels.push(`${item.size}`)
+            labels.push(`${item.size} (${item.quantity})`)
             parents.push(`Gifts-${item.name}`)
-            values.push(item.total)
+            values.push(item.quantity)
         } 
         else {
             // console.log("DRINK")
@@ -248,15 +248,17 @@ function drawMySunburst(groups) {
             // parents.push(`Drinks`)
             // values.push(item.total)
             ids.push(`${item.name}-${item.size}`)
-            labels.push(`${item.size}`)
+            labels.push(`${item.size} (${item.quantity})`)
             parents.push(`Drinks-${item.name}`)
-            values.push(item.total)
+            values.push(item.quantity)
         }
     })
     values[0] = drinksTotal;
     values[1] = foodTotal;
     values[2] = giftsTotal;
-
+    labels[0] = `Drinks (${drinksTotal})`
+    labels[1] = `Food (${foodTotal})`
+    labels[2] = `Gifts (${giftsTotal})`
     // for(i=0; i< ids.length; i++) {
     //     console.log("id = ", ids[i])
     //     console.log("labels = ", labels[i])

@@ -166,6 +166,7 @@ var NEW_BASKET = [];
 var VOUCHERS = [];
 var GLASSES_RETURNED = 0;
 var STAFF_ID = "";
+var allowCheckout = true;
 
 $(document).ready(function () {
     $(".drinks_row")
@@ -1005,7 +1006,10 @@ $(".exact_tendered").click(function () {
     resetCheckoutTimer();
     var valid = validate();
     if (valid === true) {
-        checkout();
+        if(allowCheckout == true) {
+            checkout();
+        }
+        
     }
 });
 
@@ -1019,7 +1023,9 @@ $("#credit_card_button").click(function () {
     resetCheckoutTimer();
     var valid = validate();
     if (valid === true) {
-        checkout();
+        if(allowCheckout == true) {
+            checkout();
+        }
     }
 });
 
@@ -1069,7 +1075,9 @@ $(".finish_button").click(function () {
     resetCheckoutTimer();
     var valid = validate();
     if (valid === true) {
-        checkout();
+        if(allowCheckout == true) {
+            checkout();
+        }
     }
 });
 
@@ -1077,7 +1085,10 @@ $(".payment_button").click(function () {
     let payment_method = $(this).attr("data-payment_method");
     let payment_reason = $(this).attr("data-payment_reason");
     // console.log("payment_method = ", payment_method);
-    checkout(payment_method, payment_reason);
+    if(allowCheckout == true) {
+        checkout(payment_method, payment_reason);
+    }
+    
 });
 
 function validate() {
@@ -1127,6 +1138,7 @@ function validate() {
 }
 
 function checkout(payment_method, payment_reason) {
+    allowCheckout = false;
     if (payment_reason == undefined) {
         payment_reason = "";
     }
@@ -1168,6 +1180,7 @@ function checkout(payment_method, payment_reason) {
     Grand_Total.staff_member = STAFF_ID;
 
     let sub_amount = Amount_Tendered - Total_Due;
+
     fetch(url, {
         method: "POST",
         credentials: "same-origin",
