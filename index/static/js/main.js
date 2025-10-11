@@ -936,9 +936,9 @@ function basketGrandTotals() {
         // Calculates Pfand Amount Due
         if (this.pfand_payable == "True" && pfand_applicable == true) {
             if (this.name == "Whiskey Platter") {
-                Pfand_Total += this.qty * 2 * 6;
+                Pfand_Total += this.qty * 2.5 * 6;
             } else {
-                Pfand_Total += this.qty * 2;
+                Pfand_Total += this.qty * 2.5;
             }
         }
     });
@@ -946,7 +946,7 @@ function basketGrandTotals() {
     if (GLASSES_RETURNED == "no-pfand") {
         Pfand_Total = 0;
     } else {
-        Pfand_Total = Pfand_Total - Number(GLASSES_RETURNED) * 2;
+        Pfand_Total = Pfand_Total - Number(GLASSES_RETURNED) * 2.5;
     }
 
     $(NEW_BASKET).each(function () {
