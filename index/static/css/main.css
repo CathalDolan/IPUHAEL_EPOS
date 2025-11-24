@@ -161,6 +161,7 @@ body {
     border-right: 4px solid #000;
     border-top: 1px solid #000;
     font-weight: 700;
+    margin-left: auto;
 }
 
 .open-drink-input:not(.checkbox) {
@@ -177,14 +178,15 @@ body {
     height: 50%;
 }
 
-.open_drink {
-    margin-left: auto;
-}
-
-.open-drink-submit {
+.open-drink-submit,.fudge-submit {
     background-color: aqua;
     font-weight: 700;
     color: #000;
+}
+
+.fudge-modal-input {
+    max-width: 100%;
+    height: 100%;
 }
 
 #kitchen_product,

@@ -515,6 +515,7 @@ $(".open-drink-submit").click(() => {
     let product_name = $('input[name="drink-name"]').val();
     let abbr_name = $('input[name="drink-name"]').val();
     let product_price = Number($('input[name="price"]').val());
+    console.log("product_price = ", product_price)
     let pfand_payable = $('input[name="pfand"]').prop("checked");
     if (product_qty == "") {
         $('input[name="quantity"]').next("p").text("Required");
@@ -555,6 +556,30 @@ $(".open-drink-submit").click(() => {
     apply_specials();
 });
 
+$(".fudge-submit").click(()=>{
+    let product_price = Number($('input[name="fudge-price"]').val());
+    console.log("product_price = ", product_price)
+    if (product_price == "") {
+        $('input[name="price"]').next("p").text("Required");
+        return;
+    } else {
+        $('input[name="price"]').next("p").text("");
+    }
+    product = {
+        category: "Gifts",
+        name: "Fudge",
+        abbr_name: "Fudge",
+        size: "",
+        qty: 1,
+        price: product_price,
+        line_total: product_price,
+        pfand_payable: "False",
+        discount_applied: "",
+    };
+    $("#open_fudge_modal").modal("hide");
+    ALL_PRODUCTS.push(product);
+    apply_specials();
+})
 // Function run when a specials option is selected from the modal
 $(document).on("click", ".specials_option", function () {
     let special = $(this).attr("data-special");

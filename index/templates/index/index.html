@@ -200,6 +200,48 @@
         </div>
     </div>
 </div>
+<!--Fudge by weight modal-->
+<div class="modal" id="open_fudge_modal">
+    <div class="modal-dialog" aria-label="Aria open fudge by weight modal">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Fudge</h4>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Aria modal close"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">               
+                <div class="row pb-3">
+                    <div class="col-6">
+                        <input
+                            class="fudge-modal-input"
+                            name="fudge-price"
+                            type="number"
+                            placeholder="Price*"
+                            min="0" />
+                        <p class="field-error"></p>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn fudge-submit" type="submit">
+                            Add Item
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <!--  Left Side of till with product buttons  -->
     <div class="col-7 till-left-side">
@@ -832,6 +874,20 @@
                 </button>
             </div>
             {% endfor %}
+            <div class="col-2">
+                <button
+                    class="btn open_drink product_button enabled"
+                    data-pfand="false"
+                    data-bs-toggle="modal"
+                    data-bs-target="#open_fudge_modal"
+                    data-value="0"
+                    data-bar_product="False"
+                    data-kitchen_product="False"
+                    data-gift_product="True"
+                    aria-label="Aria Open open fudge modal">
+                    Fudge Weight
+                </button>
+            </div>
         </div>
 
         <!--  Food Sizes, Gifts, Admin & Previous Drinks Buttons  -->
