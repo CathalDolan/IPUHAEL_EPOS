@@ -139,11 +139,11 @@ function closeFullscreen() {
 $("#open_drink_modal").on("shown.bs.modal", function () {
     // console.log("open drink modal triggered");
     $('input[name="quantity"]').val(1);
-    $('input[name="drink-name"]').val("");
+    $('input[name="drink-name"]').val("").focus();
     $('input[name="price"]').val(null);
     $('input[name="pfand"]').prop("checked", true);
     $(".field-error").text("");
-    $("#open_drink_modal").find("[name=price").focus();
+    $("#open_drink_modal").find("[name=price");
 });
 
 let Buttons = document.querySelectorAll(".product_button"); // Used anywhere?
@@ -540,8 +540,8 @@ $(".open-drink-submit").click(() => {
     let line_total = product_qty * product_price;
 
     product = {
-        category: "Open drink",
-        name: product_name,
+        category: product_name,
+        name: "Open Drink",
         abbr_name: abbr_name,
         size: abbrv_size,
         qty: product_qty,
