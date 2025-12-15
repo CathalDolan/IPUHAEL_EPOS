@@ -1019,7 +1019,7 @@ $(".€_notes_button").click(function () {
     Payment_Method = $(this).attr("data-payment_method");
     // Call recalculate change due function
     recalculate_change_due();
-    // checkoutTimer();
+    checkoutTimer();
 });
 
 $(".exact_tendered").click(function () {
