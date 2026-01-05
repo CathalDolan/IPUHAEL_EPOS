@@ -375,11 +375,11 @@ def reports(request):
             staff.append(entry["staff_member__name"])
         if not entry["category"] in categories:
             categories.append(entry["category"])
-        if not entry["name"] in drinks and not "food" in entry["category"] and not "gifts" in entry["category"]:
+        if not entry["name"] in drinks and not "food" in entry["category"].lower() and not "gifts" in entry["category"].lower():
             drinks.append(entry["name"])
-        if "food" in entry["category"] and not entry["name"] in food:
+        if "food" in entry["category"].lower():
             food.append(entry["name"])
-        if "gifts" in entry["category"] and not entry["name"] in gifts:
+        if "gifts" in entry["category"].lower():
             gifts.append(entry["name"])
         if not entry["size"] in sizes:
             sizes.append(entry["size"])
