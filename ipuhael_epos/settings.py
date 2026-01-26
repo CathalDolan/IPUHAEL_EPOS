@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'import_export',
     'index',
+    'version_2',
 ]
 
 MIDDLEWARE = [
@@ -172,7 +173,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 # Configure Django App for Heroku.
 import django_on_heroku
 django_on_heroku.settings(locals())
