@@ -249,7 +249,7 @@
         <div class="row" id="measurement_row">
             <div class="col">
                 <button
-                    class="btn drink measure_button price_sgle"
+                    class="btn measure_button price_sgle"
                     id="single_button"
                     data-price="price_sgle"
                     aria-label="Aria Drink Single size">
@@ -317,7 +317,6 @@
             <div class="col-2">
                 <button
                     class="btn {{draught.category}} drink product_button pfand_product"
-                    id="{{draught.id}}"
                     data-pfand="{{draught.pfand}}"
                     data-category="{{draught.category}}"
                     data-name="{{draught.name}}"
@@ -567,6 +566,7 @@
                 </button>
             </div>
             {% endfor %}
+            <!--Dummy comment-->
             <div class="col-2">
                 <button
                     class="btn open_drink product_button pfand_product"
@@ -950,6 +950,15 @@
                 >
             </div>
             {% endif %}
+            <div class="col-2">
+                <a href="{% url 'index_v2' %}"
+                    ><button
+                        class="btn previous_orders_button"
+                        aria-label="Aria Previous orders">
+                        Version 2
+                    </button></a
+                >
+            </div>
         </div>
         <input type="hidden" name="redirect_url" value="{{ request.path}}" />
     </div>
