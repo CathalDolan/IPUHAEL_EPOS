@@ -1,0 +1,120 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block extra_css %}
+    <!--My CSS stylesheet-->
+    <link rel="stylesheet" href="{% static 'css/main_v2.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/circular_progress.css' %}" />
+{% endblock %} 
+
+{% block content %}
+<div class="container-fluid main-container">
+    <div class="row">
+        <!--  Left Side of till with product buttons  -->
+        <div class="col-7">
+            <!--  Drinks Sizes Buttons -->
+            <div class="row" id="drinks-measurement-row">
+                <div class="col">
+                    <button
+                        class="btn drinks-measure-button"
+                        data-size="single"
+                        aria-label="Aria Drink Single size">
+                        Single
+                    </button>
+                </div>
+                <div class="col">
+                    <button
+                        class="btn drinks-measure-button"
+                        data-size="double"
+                        aria-label="Aria Drink double size">
+                        Double
+                    </button>
+                </div>
+                <div class="col">
+                    <button
+                        class="btn drinks-measure-button"
+                        data-size="dash"
+                        aria-label="Aria Drink dash size">
+                        Dash
+                    </button>
+                </div>
+                <div class="col">
+                    <button
+                        class="btn drinks-measure-button selected"
+                        data-size="03"
+                        aria-label="Aria Drink 03 size">
+                        0.3
+                    </button>
+                </div>
+                <div class="col">
+                    <button
+                        class="btn drinks-measure-button"
+                        data-size="04"
+                        aria-label="Aria Drink 04 size">
+                        0.4
+                    </button>
+                </div>
+                <div class="col">
+                    <button
+                        class="btn drinks-measure-button"
+                        data-size="pint"
+                        aria-label="Aria Drink pint size">
+                        Pint
+                    </button>
+                </div>
+                <div class="col">
+                    <button
+                        class="btn drinks-measure-button"
+                        data-size="bottle"
+                        aria-label="Aria Drink bottle size">
+                        Bottle
+                    </button>
+                </div>
+            </div>
+            <!--  Products Buttons  -->
+            <div class="row products-row">
+                {% for draught in draughts %}
+                    <div class="col-2">
+                        <button>
+                            class="btn {{draught.category}} drink product_button pfand_product"
+                            id="{{draught.id}}"
+                            data-pfand="{{draught.pfand}}"
+                            data-category="{{draught.category}}"
+                            data-name="{{draught.name}}"
+                            data-abbr_name="{{draught.abbr_name}}"
+                            data-price_default="{{draught.price_default}}"
+                            data-price_sgle="{{draught.price_sgle}}"
+                            data-price_dble="{{draught.price_dble}}"
+                            data-price_dash="{{draught.price_dash}}"
+                            data-price_03="{{draught.price_03}}"
+                            data-price_04="{{draught.price_04}}"
+                            data-price_pint="{{draught.price_pint}}"
+                            data-price_btle="{{draught.price_btle}}"
+                            data-bar_product="{{draught.bar_product}}"
+                            data-kitchen_product="{{draught.kitchen_product}}"
+                            aria-label="Aria {{draught.name}}">
+                            {{draught.name}}
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!--  Right Side of till with product buttons  -->
+        <div class="col-5">
+
+        </div>
+    </div>
+</div>
+
+{% endblock %} 
+
+{% block post_load_js %} 
+{{ block.super }}
+{% comment %} <script>
+    var staff_modal = new bootstrap.Modal(
+        document.getElementById("staff_modal"),
+        {}
+    );
+    staff_modal.show();
+</script> {% endcomment %}
+{% comment %} <script src="{% static 'js/main.js' %}"></script> {% endcomment %}
+ {% endblock %}
