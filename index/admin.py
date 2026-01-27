@@ -28,7 +28,7 @@ class ProductAdmin(ExportActionMixin, admin.ModelAdmin):
         'kitchen_product',
     )
     ordering = (
-        'id',
+        'category',
     )
 
 
