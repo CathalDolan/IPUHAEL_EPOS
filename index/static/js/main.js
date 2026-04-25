@@ -146,7 +146,6 @@ $("#open_drink_modal").on("shown.bs.modal", function () {
     $("#open_drink_modal").find("[name=price");
 });
 
-let Buttons = document.querySelectorAll(".product_button"); // Used anywhere?
 let ALL_PRODUCTS = [];
 let Product_Details = {}; // Used anywhere?
 let Product_Size = "";
@@ -167,6 +166,7 @@ var VOUCHERS = [];
 var GLASSES_RETURNED = 0;
 var STAFF_ID = "";
 var allowCheckout = true;
+var PFAND = 2;
 
 $(document).ready(function () {
     $(".drinks_row")
@@ -229,6 +229,7 @@ $(".product_selection").click(function () {
 $(".drink.measure_button").click(function () {
     // Extracts the sizes for each product when button is clicked
     let size = $(this).attr("data-price");
+    console.log("size = ", size)
     $(".drink.measure_button").removeClass("selected");
     $(`.drink.measure_button[data-price=${size}]`).addClass("selected");
     $(".drinks_row")
@@ -678,9 +679,8 @@ function apply_specials() {
         }
     }
 
-    // The 2nd check is to apply the 2 for 1 special
+    // The next check is to apply the 2 for 1 special
     // TWO FOR ONE SPECIAL
-
     var single_items = [];
     if (VOUCHERS.includes("2 for 1")) {
         var double_item = false;
@@ -961,9 +961,9 @@ function basketGrandTotals() {
         // Calculates Pfand Amount Due
         if (this.pfand_payable == "True" && pfand_applicable == true) {
             if (this.name == "Whiskey Platter") {
-                Pfand_Total += this.qty * 2.5 * 6;
+                Pfand_Total += this.qty * PFAND * 6;
             } else {
-                Pfand_Total += this.qty * 2.5;
+                Pfand_Total += this.qty * PFAND;
             }
         }
     });
@@ -971,7 +971,7 @@ function basketGrandTotals() {
     if (GLASSES_RETURNED == "no-pfand") {
         Pfand_Total = 0;
     } else {
-        Pfand_Total = Pfand_Total - Number(GLASSES_RETURNED) * 2.5;
+        Pfand_Total = Pfand_Total - Number(GLASSES_RETURNED) * PFAND;
     }
 
     $(NEW_BASKET).each(function () {
@@ -1106,6 +1106,7 @@ $(".finish_button").click(function () {
     }
 });
 
+// Used for Waste and complimentary transactions
 $(".payment_button").click(function () {
     let payment_method = $(this).attr("data-payment_method");
     let payment_reason = $(this).attr("data-payment_reason");
