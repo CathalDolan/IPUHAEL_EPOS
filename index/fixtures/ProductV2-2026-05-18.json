@@ -1,7 +1,7 @@
 [
     {
         "model": "version_2.ProductV2",
-        "pk": "1",
+        "pk": 1,
         "fields": {
             "name": "Bitburger 0",
             "abbr_name": "Bitburger 0",
@@ -38,7 +38,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "2",
+        "pk": 2,
         "fields": {
             "name": "Guinness 0.0",
             "abbr_name": "Guinness 0.0",
@@ -75,7 +75,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "3",
+        "pk": 3,
         "fields": {
             "name": "Guinness 0.0 x 24",
             "abbr_name": "Guinness 0.0 x 24",
@@ -112,7 +112,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "4",
+        "pk": 4,
         "fields": {
             "name": "Guinness 0.0 x 8",
             "abbr_name": "Guinness 0.0 x 8",
@@ -149,7 +149,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "5",
+        "pk": 5,
         "fields": {
             "name": "Guinness 0.0 x 4",
             "abbr_name": "Guinness 0.0 x 4",
@@ -186,7 +186,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "6",
+        "pk": 6,
         "fields": {
             "name": "Baby Guinness",
             "abbr_name": "Baby Guinness",
@@ -223,7 +223,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "7",
+        "pk": 7,
         "fields": {
             "name": "Irish Flag",
             "abbr_name": "Irish Flag",
@@ -260,7 +260,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "8",
+        "pk": 8,
         "fields": {
             "name": "German Flag",
             "abbr_name": "German Flag",
@@ -297,7 +297,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "9",
+        "pk": 9,
         "fields": {
             "name": "Capugino",
             "abbr_name": "Capugino",
@@ -334,7 +334,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "10",
+        "pk": 10,
         "fields": {
             "name": "Thin Lizzy",
             "abbr_name": "Thin Lizzy",
@@ -371,7 +371,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "11",
+        "pk": 11,
         "fields": {
             "name": "Paddy Bear",
             "abbr_name": "Paddy Bear",
@@ -408,7 +408,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "12",
+        "pk": 12,
         "fields": {
             "name": "Apferol Spritz",
             "abbr_name": "Apferol Spritz",
@@ -445,7 +445,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "13",
+        "pk": 13,
         "fields": {
             "name": "Black N\u0027Tan",
             "abbr_name": "Black N\u0027Tan",
@@ -482,7 +482,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "14",
+        "pk": 14,
         "fields": {
             "name": "Irish Car Bomb",
             "abbr_name": "Irish Car Bomb",
@@ -519,7 +519,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "15",
+        "pk": 15,
         "fields": {
             "name": "Snake Bite",
             "abbr_name": "Snake Bite",
@@ -556,7 +556,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "16",
+        "pk": 16,
         "fields": {
             "name": "Black Velvet",
             "abbr_name": "Black Velvet",
@@ -593,7 +593,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "17",
+        "pk": 17,
         "fields": {
             "name": "Blacksmith",
             "abbr_name": "Blacksmith",
@@ -667,7 +667,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "19",
+        "pk": 19,
         "fields": {
             "name": "Kilkenny Shandy",
             "abbr_name": "Kilkenny Shandy",
@@ -704,7 +704,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "20",
+        "pk": 20,
         "fields": {
             "name": "Hop House 13 Shandy",
             "abbr_name": "Hop House 13 Shandy",
@@ -741,7 +741,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "21",
+        "pk": 21,
         "fields": {
             "name": "Stowford Shandy",
             "abbr_name": "Stowford Shandy",
@@ -778,7 +778,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "22",
+        "pk": 22,
         "fields": {
             "name": "Guinness",
             "abbr_name": "Guinness",
@@ -815,7 +815,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "23",
+        "pk": 23,
         "fields": {
             "name": "Kilkenny",
             "abbr_name": "Kilkenny",
@@ -852,7 +852,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "24",
+        "pk": 24,
         "fields": {
             "name": "Hop House 13",
             "abbr_name": "Hop House 13",
@@ -889,7 +889,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "25",
+        "pk": 25,
         "fields": {
             "name": "Stowford",
             "abbr_name": "Stowford",
@@ -926,7 +926,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "26",
+        "pk": 26,
         "fields": {
             "name": "Irish Coffee",
             "abbr_name": "Irish Coffee",
@@ -963,7 +963,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "27",
+        "pk": 27,
         "fields": {
             "name": "Baileys Coffee",
             "abbr_name": "Baileys Coffee",
@@ -1000,7 +1000,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "28",
+        "pk": 28,
         "fields": {
             "name": "Jamaican Coffee",
             "abbr_name": "Jamaican Coffee",
@@ -1037,7 +1037,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "29",
+        "pk": 29,
         "fields": {
             "name": "Carribean Coffee",
             "abbr_name": "Carribean Coffee",
@@ -1074,7 +1074,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "30",
+        "pk": 30,
         "fields": {
             "name": "English Coffee",
             "abbr_name": "English Coffee",
@@ -1111,7 +1111,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "31",
+        "pk": 31,
         "fields": {
             "name": "Iced Irish Coffee",
             "abbr_name": "Iced Irish Coffee",
@@ -1148,7 +1148,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "32",
+        "pk": 32,
         "fields": {
             "name": "Baileys Hot Chocolate",
             "abbr_name": "Baileys Hot Chocolate",
@@ -1185,7 +1185,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "33",
+        "pk": 33,
         "fields": {
             "name": "Minty Hot Chocolate",
             "abbr_name": "Minty Hot Chocolate",
@@ -1222,7 +1222,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "34",
+        "pk": 34,
         "fields": {
             "name": "Gluhcider",
             "abbr_name": "Gluhcider",
@@ -1259,7 +1259,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "35",
+        "pk": 35,
         "fields": {
             "name": "Gluhwein White",
             "abbr_name": "Gluhwein White",
@@ -1296,7 +1296,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "36",
+        "pk": 36,
         "fields": {
             "name": "Gluhwein Red",
             "abbr_name": "Gluhwein Red",
@@ -1333,7 +1333,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "37",
+        "pk": 37,
         "fields": {
             "name": "Coffee",
             "abbr_name": "Coffee",
@@ -1370,7 +1370,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "38",
+        "pk": 38,
         "fields": {
             "name": "Coffee \u0026 Cookies",
             "abbr_name": "Coffee \u0026 Cookies",
@@ -1407,7 +1407,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "39",
+        "pk": 39,
         "fields": {
             "name": "Hot Chocolate",
             "abbr_name": "Hot Chocolate",
@@ -1444,7 +1444,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "40",
+        "pk": 40,
         "fields": {
             "name": "Kinder Punsch",
             "abbr_name": "Kinder Punsch",
@@ -1481,7 +1481,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "41",
+        "pk": 41,
         "fields": {
             "name": "Tea",
             "abbr_name": "Tea",
@@ -1518,7 +1518,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "42",
+        "pk": 42,
         "fields": {
             "name": "Hot Whiskey",
             "abbr_name": "Hot Whiskey",
@@ -1555,7 +1555,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "43",
+        "pk": 43,
         "fields": {
             "name": "Hot Grog (Rum)",
             "abbr_name": "Hot Grog (Rum)",
@@ -1592,7 +1592,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "44",
+        "pk": 44,
         "fields": {
             "name": "Hot Englishman",
             "abbr_name": "Hot Englishman",
@@ -1629,7 +1629,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "45",
+        "pk": 45,
         "fields": {
             "name": "Hot Jamaican",
             "abbr_name": "Hot Jamaican",
@@ -1666,7 +1666,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "46",
+        "pk": 46,
         "fields": {
             "name": "Hot Portuguese",
             "abbr_name": "Hot Portuguese",
@@ -1703,7 +1703,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "47",
+        "pk": 47,
         "fields": {
             "name": "Open Drink",
             "abbr_name": "Open Drink",
@@ -1740,7 +1740,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "48",
+        "pk": 48,
         "fields": {
             "name": "Cola",
             "abbr_name": "Cola",
@@ -1777,7 +1777,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "49",
+        "pk": 49,
         "fields": {
             "name": "Cola Light",
             "abbr_name": "Cola Light",
@@ -1814,7 +1814,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "50",
+        "pk": 50,
         "fields": {
             "name": "Orange",
             "abbr_name": "Orange",
@@ -1851,7 +1851,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "51",
+        "pk": 51,
         "fields": {
             "name": "Lemonade / Sprite",
             "abbr_name": "Lemonade / Sprite",
@@ -1888,7 +1888,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "52",
+        "pk": 52,
         "fields": {
             "name": "Tonic Water",
             "abbr_name": "Tonic Water",
@@ -1925,7 +1925,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "53",
+        "pk": 53,
         "fields": {
             "name": "Ginger Ale",
             "abbr_name": "Ginger Ale",
@@ -1962,7 +1962,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "54",
+        "pk": 54,
         "fields": {
             "name": "Sparking Water",
             "abbr_name": "Sparking Water",
@@ -1999,7 +1999,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "55",
+        "pk": 55,
         "fields": {
             "name": "Still Water",
             "abbr_name": "Still Water",
@@ -2036,7 +2036,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "56",
+        "pk": 56,
         "fields": {
             "name": "Tullamore Gift Set",
             "abbr_name": "Tullamore Gift Set",
@@ -2073,7 +2073,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "57",
+        "pk": 57,
         "fields": {
             "name": "Baileys",
             "abbr_name": "Baileys",
@@ -2110,7 +2110,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "58",
+        "pk": 58,
         "fields": {
             "name": "Kahlua",
             "abbr_name": "Kahlua",
@@ -2147,7 +2147,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "59",
+        "pk": 59,
         "fields": {
             "name": "Tullamore Original",
             "abbr_name": "Tullamore Original",
@@ -2184,7 +2184,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "60",
+        "pk": 60,
         "fields": {
             "name": "Tullamore Honey",
             "abbr_name": "Tullamore Honey",
@@ -2221,7 +2221,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "61",
+        "pk": 61,
         "fields": {
             "name": "Tullamore Cider Cask",
             "abbr_name": "Tullamore Cider Cask",
@@ -2258,7 +2258,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "62",
+        "pk": 62,
         "fields": {
             "name": "Tullamore Rum Cask",
             "abbr_name": "Tullamore Rum Cask",
@@ -2295,7 +2295,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "63",
+        "pk": 63,
         "fields": {
             "name": "Tullamore 12 y.o.",
             "abbr_name": "Tullamore 12 y.o.",
@@ -2332,7 +2332,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "64",
+        "pk": 64,
         "fields": {
             "name": "Tullamore 14y.o.",
             "abbr_name": "Tullamore 14y.o.",
@@ -2369,7 +2369,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "65",
+        "pk": 65,
         "fields": {
             "name": "Whiskey Platter",
             "abbr_name": "Whiskey Platter",
@@ -2406,7 +2406,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "66",
+        "pk": 66,
         "fields": {
             "name": "Garnish Island Gin",
             "abbr_name": "Garnish Island Gin",
@@ -2443,7 +2443,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "67",
+        "pk": 67,
         "fields": {
             "name": "Gunpowder Gin",
             "abbr_name": "Gunpowder Gin",
@@ -2480,7 +2480,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "68",
+        "pk": 68,
         "fields": {
             "name": "Gin 0.0 Alcohol",
             "abbr_name": "Gin 0.0 Alcohol",
@@ -2517,7 +2517,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "69",
+        "pk": 69,
         "fields": {
             "name": "Vodka",
             "abbr_name": "Vodka",
@@ -2554,7 +2554,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "70",
+        "pk": 70,
         "fields": {
             "name": "Rum",
             "abbr_name": "Rum",
@@ -2591,7 +2591,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "71",
+        "pk": 71,
         "fields": {
             "name": "Gluhwein 1L",
             "abbr_name": "Gluhwein 1L",
@@ -2628,7 +2628,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "72",
+        "pk": 72,
         "fields": {
             "name": "Red Wine",
             "abbr_name": "Red Wine",
@@ -2665,7 +2665,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "73",
+        "pk": 73,
         "fields": {
             "name": "Rose Wine",
             "abbr_name": "Rose Wine",
@@ -2702,7 +2702,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "74",
+        "pk": 74,
         "fields": {
             "name": "Sparkling Wine",
             "abbr_name": "Sparkling Wine",
@@ -2739,7 +2739,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "75",
+        "pk": 75,
         "fields": {
             "name": "White Wine",
             "abbr_name": "White Wine",
@@ -2776,7 +2776,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "76",
+        "pk": 76,
         "fields": {
             "name": "Port",
             "abbr_name": "Port",
@@ -2813,7 +2813,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "77",
+        "pk": 77,
         "fields": {
             "name": "Extra Blue Cheese",
             "abbr_name": "Extra Blue Cheese",
@@ -2850,7 +2850,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "78",
+        "pk": 78,
         "fields": {
             "name": "Extra Liquid Cheese",
             "abbr_name": "Extra Lqd Cheese",
@@ -2887,7 +2887,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "79",
+        "pk": 79,
         "fields": {
             "name": "Extra Cheese",
             "abbr_name": "Extra Cheese",
@@ -2924,7 +2924,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "80",
+        "pk": 80,
         "fields": {
             "name": "Extra Stew",
             "abbr_name": "Extra Stew",
@@ -2961,7 +2961,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "81",
+        "pk": 81,
         "fields": {
             "name": "Extra Taco",
             "abbr_name": "Extra Taco",
@@ -2998,7 +2998,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "82",
+        "pk": 82,
         "fields": {
             "name": "Extra Bacon",
             "abbr_name": "Extra Bacon",
@@ -3035,7 +3035,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "83",
+        "pk": 83,
         "fields": {
             "name": "Garlic Mayo",
             "abbr_name": "Garlic Mayo",
@@ -3072,7 +3072,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "84",
+        "pk": 84,
         "fields": {
             "name": "Mayo",
             "abbr_name": "Mayo",
@@ -3109,7 +3109,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "85",
+        "pk": 85,
         "fields": {
             "name": "BBQ Sauce",
             "abbr_name": "BBQ Sauce",
@@ -3146,7 +3146,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "86",
+        "pk": 86,
         "fields": {
             "name": "Ketchup",
             "abbr_name": "Ketchup",
@@ -3183,7 +3183,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "87",
+        "pk": 87,
         "fields": {
             "name": "Gerkins",
             "abbr_name": "Gerkins",
@@ -3220,7 +3220,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "88",
+        "pk": 88,
         "fields": {
             "name": "Crunchy Onions",
             "abbr_name": "Crunchy Onions",
@@ -3257,7 +3257,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "89",
+        "pk": 89,
         "fields": {
             "name": "Extra Jalapenos",
             "abbr_name": "Extra Jalapenos",
@@ -3294,7 +3294,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "90",
+        "pk": 90,
         "fields": {
             "name": "Burger",
             "abbr_name": "Burger",
@@ -3331,7 +3331,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "91",
+        "pk": 91,
         "fields": {
             "name": "Seafood Chowder",
             "abbr_name": "Seafood Chowder",
@@ -3368,7 +3368,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "92",
+        "pk": 92,
         "fields": {
             "name": "Paddy\u0027s Chili Beef",
             "abbr_name": "Paddy\u0027s Chili Beef",
@@ -3405,7 +3405,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "93",
+        "pk": 93,
         "fields": {
             "name": "Irish Stew",
             "abbr_name": "Irish Stew",
@@ -3442,7 +3442,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "94",
+        "pk": 94,
         "fields": {
             "name": "Open Food",
             "abbr_name": "Open Food",
@@ -3479,7 +3479,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "95",
+        "pk": 95,
         "fields": {
             "name": "Spudato Tornado",
             "abbr_name": "Spudato Tornado",
@@ -3516,7 +3516,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "96",
+        "pk": 96,
         "fields": {
             "name": "Fries",
             "abbr_name": "Fries",
@@ -3553,7 +3553,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "97",
+        "pk": 97,
         "fields": {
             "name": "Wedges - Stew",
             "abbr_name": "Wedges - Stew",
@@ -3590,7 +3590,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "98",
+        "pk": 98,
         "fields": {
             "name": "Wedges - Pulled Pork",
             "abbr_name": "Wedges - Pulled Pork",
@@ -3627,7 +3627,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "99",
+        "pk": 99,
         "fields": {
             "name": "Wedges - Paddy\u0027s Chilli",
             "abbr_name": "Wedges - Paddy\u0027s Chilli",
@@ -3664,7 +3664,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "100",
+        "pk": 100,
         "fields": {
             "name": "Wedges - BBQ",
             "abbr_name": "Wedges - BBQ",
@@ -3701,7 +3701,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "101",
+        "pk": 101,
         "fields": {
             "name": "Wedges - Cheese \u0026 Garlic",
             "abbr_name": "Wedges - Cheese \u0026 Garlic",
@@ -3738,7 +3738,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "102",
+        "pk": 102,
         "fields": {
             "name": "Cheesey Wedges",
             "abbr_name": "Cheesey Wedges",
@@ -3775,7 +3775,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "103",
+        "pk": 103,
         "fields": {
             "name": "Wedges - Garlic",
             "abbr_name": "Wedges - Garlic",
@@ -3812,7 +3812,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "104",
+        "pk": 104,
         "fields": {
             "name": "Vegan Sausage",
             "abbr_name": "Vegan Sausage",
@@ -3849,7 +3849,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "105",
+        "pk": 105,
         "fields": {
             "name": "Irish Bratwurst",
             "abbr_name": "Irish Bratwurst",
@@ -3886,7 +3886,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "106",
+        "pk": 106,
         "fields": {
             "name": "Pulled Pork Bap",
             "abbr_name": "Pulled Pork Bap",
@@ -3923,7 +3923,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "107",
+        "pk": 107,
         "fields": {
             "name": "Crisps",
             "abbr_name": "Crisps",
@@ -3960,7 +3960,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "108",
+        "pk": 108,
         "fields": {
             "name": "Cookies",
             "abbr_name": "Cookies",
@@ -3997,7 +3997,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "109",
+        "pk": 109,
         "fields": {
             "name": "Aprons",
             "abbr_name": "Aprons",
@@ -4034,7 +4034,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "110",
+        "pk": 110,
         "fields": {
             "name": "Shamrock Boxers",
             "abbr_name": "Shamrock Boxers",
@@ -4071,7 +4071,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "111",
+        "pk": 111,
         "fields": {
             "name": "Guinness Gloves \u0026 Scarf Set",
             "abbr_name": "Guinness Glvs \u0026 Scrf",
@@ -4108,7 +4108,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "112",
+        "pk": 112,
         "fields": {
             "name": "Tullamore Socks 3 Pairs",
             "abbr_name": "Tullamore Socks 3x",
@@ -4145,7 +4145,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "113",
+        "pk": 113,
         "fields": {
             "name": "Tullamore Socks",
             "abbr_name": "Tullamore Socks",
@@ -4182,7 +4182,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "114",
+        "pk": 114,
         "fields": {
             "name": "Guinness Socks Compressed",
             "abbr_name": "Guinness Socks Cmpr",
@@ -4219,7 +4219,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "115",
+        "pk": 115,
         "fields": {
             "name": "Ireland Hoodies",
             "abbr_name": "Ireland Hoodies",
@@ -4256,7 +4256,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "116",
+        "pk": 116,
         "fields": {
             "name": "Guinness Green Jumper",
             "abbr_name": "Guinness Green Jmpr",
@@ -4293,7 +4293,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "117",
+        "pk": 117,
         "fields": {
             "name": "Guinness Black Hoodie",
             "abbr_name": "Guinn Black Hood",
@@ -4330,7 +4330,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "118",
+        "pk": 118,
         "fields": {
             "name": "Tullamore Hoodie",
             "abbr_name": "Tullamore Hoodie",
@@ -4367,7 +4367,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "119",
+        "pk": 119,
         "fields": {
             "name": "Guinness Green Hoodie",
             "abbr_name": "Guinness Green Hood",
@@ -4404,7 +4404,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "120",
+        "pk": 120,
         "fields": {
             "name": "Guinness Christmas Jumper",
             "abbr_name": "Guinness Xmas Jumper",
@@ -4441,7 +4441,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "121",
+        "pk": 121,
         "fields": {
             "name": "His \u0026 Hers T-Shirts",
             "abbr_name": "His \u0026 Hers T-Shirts",
@@ -4478,7 +4478,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "122",
+        "pk": 122,
         "fields": {
             "name": "Guinness T-shirts",
             "abbr_name": "Guinness T-shirts",
@@ -4515,7 +4515,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "123",
+        "pk": 123,
         "fields": {
             "name": "Ireland T-shirts",
             "abbr_name": "Ireland T-shirts",
@@ -4552,7 +4552,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "124",
+        "pk": 124,
         "fields": {
             "name": "Tullamore T-shirt",
             "abbr_name": "Tullamore T-shirt",
@@ -4589,7 +4589,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "125",
+        "pk": 125,
         "fields": {
             "name": "Discount Tee",
             "abbr_name": "Discount Tee",
@@ -4626,7 +4626,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "126",
+        "pk": 126,
         "fields": {
             "name": "Guinness Black T-Shirt",
             "abbr_name": "Guinness Black T-S",
@@ -4663,7 +4663,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "127",
+        "pk": 127,
         "fields": {
             "name": "Tullamore T-shirt",
             "abbr_name": "Tullamore T-shirt",
@@ -4700,7 +4700,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "128",
+        "pk": 128,
         "fields": {
             "name": "Guinness Polo Shirt",
             "abbr_name": "Guinness Polo Shirt",
@@ -4737,7 +4737,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "129",
+        "pk": 129,
         "fields": {
             "name": "Guinness Green T-Shirt",
             "abbr_name": "Guinness Green T-S",
@@ -4774,7 +4774,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "130",
+        "pk": 130,
         "fields": {
             "name": "Guinness Discount Tee",
             "abbr_name": "Guinness Discount Tee",
@@ -4811,7 +4811,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "131",
+        "pk": 131,
         "fields": {
             "name": "Tullamore Tasting Box",
             "abbr_name": "Tullamore Tasting Box",
@@ -4848,7 +4848,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "132",
+        "pk": 132,
         "fields": {
             "name": "Fudge",
             "abbr_name": "Fudge",
@@ -4885,7 +4885,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "133",
+        "pk": 133,
         "fields": {
             "name": "Galway Crystal Pair",
             "abbr_name": "Gal Crys Pair",
@@ -4922,7 +4922,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "134",
+        "pk": 134,
         "fields": {
             "name": "Galway Crystal Whiskey Glasses",
             "abbr_name": "Gal Crys Whiskey Gl",
@@ -4959,7 +4959,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "135",
+        "pk": 135,
         "fields": {
             "name": "Umbrella",
             "abbr_name": "Umbrella",
@@ -4996,7 +4996,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "136",
+        "pk": 136,
         "fields": {
             "name": "Ireland Flag",
             "abbr_name": "Ireland Flag",
@@ -5033,7 +5033,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "137",
+        "pk": 137,
         "fields": {
             "name": "Ireland Caps",
             "abbr_name": "Ireland Caps",
@@ -5070,7 +5070,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "138",
+        "pk": 138,
         "fields": {
             "name": "Ireland Deluxe Caps",
             "abbr_name": "Ireland Deluxe Caps",
@@ -5107,7 +5107,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "139",
+        "pk": 139,
         "fields": {
             "name": "Ireland Printed Caps",
             "abbr_name": "Ireland Print Caps",
@@ -5144,7 +5144,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "140",
+        "pk": 140,
         "fields": {
             "name": "Guinness Deluxe B\u0027ball Cap",
             "abbr_name": "Guinness Deluxe B\u0027ball Cap",
@@ -5181,7 +5181,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "141",
+        "pk": 141,
         "fields": {
             "name": "Guinness Plain B\u0027ball Cap",
             "abbr_name": "Guinness Plain B\u0027ball Cap",
@@ -5218,7 +5218,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "142",
+        "pk": 142,
         "fields": {
             "name": "Guinness Beanie",
             "abbr_name": "Guinness Beanie",
@@ -5255,7 +5255,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "143",
+        "pk": 143,
         "fields": {
             "name": "Beanies",
             "abbr_name": "Beanies",
@@ -5292,7 +5292,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "144",
+        "pk": 144,
         "fields": {
             "name": "Guinness Flat Cap",
             "abbr_name": "Guinness Flat Cap",
@@ -5329,7 +5329,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "145",
+        "pk": 145,
         "fields": {
             "name": "Flat Cap",
             "abbr_name": "Flat Cap",
@@ -5366,7 +5366,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "146",
+        "pk": 146,
         "fields": {
             "name": "Personalised 0.5 Glass",
             "abbr_name": "Personal 0.5 Glass",
@@ -5403,7 +5403,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "147",
+        "pk": 147,
         "fields": {
             "name": "Plain Pint Glass",
             "abbr_name": "Plain Pint Glass",
@@ -5440,7 +5440,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "148",
+        "pk": 148,
         "fields": {
             "name": "Personalised Tully Irish Coffee x 2",
             "abbr_name": "Pers Tully Coffee x 2",
@@ -5477,7 +5477,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "149",
+        "pk": 149,
         "fields": {
             "name": "Personalised Tully Glass",
             "abbr_name": "Personal Tully Glass",
@@ -5514,7 +5514,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "150",
+        "pk": 150,
         "fields": {
             "name": "Personalised 0.3 Glass",
             "abbr_name": "Personal 0.3 Glass",
@@ -5551,7 +5551,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "151",
+        "pk": 151,
         "fields": {
             "name": "Personalised 0.4 Glass",
             "abbr_name": "Personal 0.4 Glass",
@@ -5588,7 +5588,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "152",
+        "pk": 152,
         "fields": {
             "name": "Personalised Pint Glass",
             "abbr_name": "Personal Pint Glass",
@@ -5625,7 +5625,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "153",
+        "pk": 153,
         "fields": {
             "name": "Tree Decoration",
             "abbr_name": "Tree Decoration",
@@ -5662,7 +5662,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "154",
+        "pk": 154,
         "fields": {
             "name": "Bauble",
             "abbr_name": "Bauble",
@@ -5699,7 +5699,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "155",
+        "pk": 155,
         "fields": {
             "name": "Bottle Men",
             "abbr_name": "Bottle Men",
@@ -5736,7 +5736,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "156",
+        "pk": 156,
         "fields": {
             "name": "Frame",
             "abbr_name": "Frame",
@@ -5773,7 +5773,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "157",
+        "pk": 157,
         "fields": {
             "name": "Keyring",
             "abbr_name": "Keyring",
@@ -5810,7 +5810,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "158",
+        "pk": 158,
         "fields": {
             "name": "Small Magnet",
             "abbr_name": "Small Magnet",
@@ -5847,7 +5847,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "159",
+        "pk": 159,
         "fields": {
             "name": "Guinness Magnet",
             "abbr_name": "Guinness Magnet",
@@ -5884,7 +5884,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "160",
+        "pk": 160,
         "fields": {
             "name": "Fridge Magnet",
             "abbr_name": "Fridge Magnet",
@@ -5921,7 +5921,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "161",
+        "pk": 161,
         "fields": {
             "name": "Bottle Opener Magnet",
             "abbr_name": "Bttl Open Magnet",
@@ -5958,7 +5958,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "162",
+        "pk": 162,
         "fields": {
             "name": "Bar Runner",
             "abbr_name": "Bar Runner",
@@ -6032,7 +6032,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "164",
+        "pk": 164,
         "fields": {
             "name": "Bookmark",
             "abbr_name": "Bookmark",
@@ -6069,7 +6069,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "165",
+        "pk": 165,
         "fields": {
             "name": "Postcards",
             "abbr_name": "Postcards",
@@ -6106,7 +6106,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "166",
+        "pk": 166,
         "fields": {
             "name": "Tullamore Ceramic Cup",
             "abbr_name": "Tully Cup Ceramic",
@@ -6143,7 +6143,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "167",
+        "pk": 167,
         "fields": {
             "name": "Pin Badge",
             "abbr_name": "Pin Badge",
@@ -6180,7 +6180,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "168",
+        "pk": 168,
         "fields": {
             "name": "Shamrock Patch",
             "abbr_name": "Shamrock Patch",
@@ -6217,7 +6217,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "169",
+        "pk": 169,
         "fields": {
             "name": "Lanyard",
             "abbr_name": "Lanyard",
@@ -6254,7 +6254,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "170",
+        "pk": 170,
         "fields": {
             "name": "Pencils",
             "abbr_name": "Pencils",
@@ -6291,7 +6291,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "172",
+        "pk": 171,
         "fields": {
             "name": "Pfand Shot",
             "abbr_name": "Pfand Shot",
@@ -6328,7 +6328,7 @@
     },
     {
         "model": "version_2.ProductV2",
-        "pk": "173",
+        "pk": 172,
         "fields": {
             "name": "5 Shot Special",
             "abbr_name": "5 Shot Special",
