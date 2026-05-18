@@ -249,7 +249,7 @@
         <div class="row" id="measurement_row">
             <div class="col">
                 <button
-                    class="btn measure_button price_sgle"
+                    class="btn drink measure_button price_sgle"
                     id="single_button"
                     data-price="price_sgle"
                     aria-label="Aria Drink Single size">
@@ -317,6 +317,7 @@
             <div class="col-2">
                 <button
                     class="btn {{draught.category}} drink product_button pfand_product"
+                    id="{{draught.id}}"
                     data-pfand="{{draught.pfand}}"
                     data-category="{{draught.category}}"
                     data-name="{{draught.name}}"
@@ -335,7 +336,8 @@
                     {{draught.name}}
                 </button>
             </div>
-            {% endfor %} {% for half_n_half in half_n_halfs %}
+            {% endfor %} 
+            {% for half_n_half in half_n_halfs %}
             <div class="col-2">
                 <button
                     class="btn {{half_n_half.category}} drink product_button pfand_product"
@@ -358,7 +360,8 @@
                     {{half_n_half.name}}
                 </button>
             </div>
-            {% endfor %} {% for shandy in shandys %}
+            {% endfor %}
+            {% for shandy in shandys %}
             <div class="col-2">
                 <button
                     class="btn {{shandy.category}} drink product_button pfand_product"
@@ -381,7 +384,8 @@
                     {{shandy.name}}
                 </button>
             </div>
-            {% endfor %} {% for canandbottle in canandbottles %}
+            {% endfor %} 
+            {% for canandbottle in canandbottles %}
             <div class="col-2">
                 <button
                     class="btn {{canandbottle.category}} drink product_button pfand_product"
@@ -519,30 +523,32 @@
                     {{hottoddy.name}}
                 </button>
             </div>
-            {% endfor %} {% for cocktail in cocktails %}
-            <div class="col-2">
-                <button
-                    class="btn {{cocktail.category}} drink product_button"
-                    id="{{cocktail.id}}"
-                    data-pfand="{{cocktail.pfand}}"
-                    data-category="{{cocktail.category}}"
-                    data-name="{{cocktail.name}}"
-                    data-abbr_name="{{cocktail.abbr_name}}"
-                    data-price_default="{{cocktail.price_default}}"
-                    data-price_sgle="{{cocktail.price_sgle}}"
-                    data-price_dble="{{cocktail.price_dble}}"
-                    data-price_dash="{{cocktail.price_dash}}"
-                    data-price_03="{{cocktail.price_03}}"
-                    data-price_04="{{cocktail.price_04}}"
-                    data-price_pint="{{cocktail.price_pint}}"
-                    data-price_btle="{{cocktail.price_btle}}"
-                    data-bar_product="{{cocktail.bar_product}}"
-                    data-kitchen_product="{{cocktail.kitchen_product}}"
-                    aria-label="Aria {{cocktail.name}}">
-                    {{cocktail.name}}
-                </button>
-            </div>
-            {% endfor %} {% for shot in shots %}
+            {% endfor %} 
+            {% for cocktail in cocktails %}
+                <div class="col-2">
+                    <button
+                        class="btn {{cocktail.category}} drink product_button"
+                        id="{{cocktail.id}}"
+                        data-pfand="{{cocktail.pfand}}"
+                        data-category="{{cocktail.category}}"
+                        data-name="{{cocktail.name}}"
+                        data-abbr_name="{{cocktail.abbr_name}}"
+                        data-price_default="{{cocktail.price_default}}"
+                        data-price_sgle="{{cocktail.price_sgle}}"
+                        data-price_dble="{{cocktail.price_dble}}"
+                        data-price_dash="{{cocktail.price_dash}}"
+                        data-price_03="{{cocktail.price_03}}"
+                        data-price_04="{{cocktail.price_04}}"
+                        data-price_pint="{{cocktail.price_pint}}"
+                        data-price_btle="{{cocktail.price_btle}}"
+                        data-bar_product="{{cocktail.bar_product}}"
+                        data-kitchen_product="{{cocktail.kitchen_product}}"
+                        aria-label="Aria {{cocktail.name}}">
+                        {{cocktail.name}}
+                    </button>
+                </div>
+            {% endfor %} 
+            {% for shot in shots %}
             <div class="col-2">
                 <button
                     class="btn {{shot.category}} drink product_button"
@@ -566,7 +572,6 @@
                 </button>
             </div>
             {% endfor %}
-            <!--Dummy comment-->
             <div class="col-2">
                 <button
                     class="btn open_drink product_button pfand_product"
@@ -985,10 +990,6 @@
         </p>
         <!--  Pfand Buttons  -->
         <div class="row pfand_button_row">
-            <!-- <div class="col">
-                <p class="pfand-return-title">Pfand return</p>
-                
-            </div> -->
             <div class="col">
                 <button
                     class="pfand_button activate"
@@ -1270,7 +1271,6 @@
             <!-- Message Container -->
             
             <div class="message-container">
-                
                 {% if messages %} 
                   {% for message in messages %} 
                     {% with message.level as level %} 

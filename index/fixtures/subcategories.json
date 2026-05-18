@@ -1,0 +1,170 @@
+[
+    {
+        "model": "version_2.SubCategory",
+        "pk": 1,
+        "fields": {
+            "name": "cans_and_bottles",
+            "default_size": 8
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 2,
+        "fields": {
+            "name": "cocktails",
+            "default_size": 3
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 3,
+        "fields": {
+            "name": "draught",
+            "default_size": 8
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 4,
+        "fields": {
+            "name": "hot_alcoholics",
+            "default_size": 6
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 5,
+        "fields": {
+            "name": "hot_nonalcoholics",
+            "default_size": 6
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 6,
+        "fields": {
+            "name": "hot_toddy",
+            "default_size": 6
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 7,
+        "fields": {
+            "name": "miscellaneous",
+            "default_size": 13
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 8,
+        "fields": {
+            "name": "non_alcoholic",
+            "default_size": 6
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 9,
+        "fields": {
+            "name": "open_drink",
+            "default_size": 13
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 10,
+        "fields": {
+            "name": "spirits_and_liquers",
+            "default_size": 3
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 11,
+        "fields": {
+            "name": "wine",
+            "default_size": 3
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 12,
+        "fields": {
+            "name": "extra_serving",
+            "default_size": 13
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 13,
+        "fields": {
+            "name": "mains",
+            "default_size": 13
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 14,
+        "fields": {
+            "name": "potatoes",
+            "default_size": 13
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 15,
+        "fields": {
+            "name": "snack",
+            "default_size": 13
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 16,
+        "fields": {
+            "name": "clothing",
+            "default_size": 13
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 17,
+        "fields": {
+            "name": "food_and_drink",
+            "default_size": 13
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 18,
+        "fields": {
+            "name": "medium_gifts",
+            "default_size": 13
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 19,
+        "fields": {
+            "name": "headwear",
+            "default_size": 13
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 20,
+        "fields": {
+            "name": "personalised",
+            "default_size": 13
+        }
+    },
+    {
+        "model": "version_2.SubCategory",
+        "pk": 21,
+        "fields": {
+            "name": "small_gifts",
+            "default_size": 13
+        }
+    }
+]

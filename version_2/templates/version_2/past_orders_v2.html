@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<!-- dc CSS -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.min.css" type="text/css" /> -->
+<!--My CSS stylesheet-->
+<link rel="stylesheet" href="{% static 'version_2/css/previous_orders_v2.css' %}">
+<link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<!-- <div class="container test">
+    <div class="row">
+        <div>
+            <svg id="prevDayBtn" class="vert-svg" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="50, 0 10, 50 90, 50 "/>
+                <text class="symbol" x="10" y="60">-</text>
+                <text class="" x="40" y="40">Month</text>
+            </svg>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col test-navBtn">
+            <svg id="prevDayBtn" class="horz-svg" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="0, 50 50, 10 50, 90 "/>
+                <text class="symbol" x="10" y="57">-</text>
+                <text class="vertical-text" x="40" y="40">D</text>
+                <text class="vertical-text" x="40" y="55">a</text>
+                <text class="vertical-text" x="40" y="70">y</text>
+            </svg>
+        </div>
+        <div class="col-2 icon">
+            <div id="calendar-header" class="icon-header">
+                <script>
+                    var	month = new Date().getMonth();
+                        months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+                    document.write(months[month]);
+                </script>
+            </div>
+            <div id="calendar-body" class="icon-body">
+                <script>
+                    document.write(new Date().getDate());
+                </script>
+            </div>
+            <div id="calendar-footer" class="icon-footer">
+                <script>
+                    var	day = new Date().getDay();
+                    var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday',   'Wednesday', 'Thursday', 'Friday', 'Saturday');
+                    document.write(dayOfWeek[day]);
+                </script>
+            </div>
+        </div>
+        <div class="col test-navBtn">
+            <svg id="nextDayBtn" class="horz-svg" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="50, 50 0, 10 0, 90"/>
+            <text x="25" y="57">+</text>
+            <text class="vertical-text" x="10" y="40">D</text>
+            <text class="vertical-text" x="10" y="55">a</text>
+            <text class="vertical-text" x="10" y="70">y</text>
+        </svg>
+        </div>
+    </div>
+    <div class="row">
+        <div>prev month</div>
+    </div>
+</div> -->
+<div class="container-fluid heading-container">
+    <div class="row heading_row">
+        <div class="col-3">
+            <a href="{% url 'export_data' %}"><button type="button" class="btn btn-primary">Export</button></a>
+        </div>
+        <div class="col">
+            <h1 class="">Previous Orders</h1>
+        </div>
+        <div class="col-3">
+            <a href="{% url 'index_v2' %}"><button type="button" class="btn btn-primary">Back to site</button></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col px-0">
+            <div class="main-section">
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Staff</th>
+                        <th>Pfand Due</th>
+                        <th>Drinks/Food Total</th>
+                        <th>Total Due</th>
+                        <th>Amount Tendered</th>
+                        <th>Change </th>
+                        <th>Payment Method</th>
+                        <th>Payment Reason</th>
+                        <th>Comp/Disc</th>
+                        <th># Products</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Size</th>
+                        <th>Unit price</th>
+                        <th>Line Total</th>
+                        <th>Transaction Number</th>
+                    </tr>
+                    {% for order in orders %}
+                    {% comment %} {{ order.transaction.transaction_number }} {% endcomment %}
+                    {% ifchanged order.transaction.transaction_number %}
+                        <tr class="content {% cycle 'row1' 'row2' as rowcolors %}">
+                            <td class="no-border-bottom left-align">{{ order.transaction.order_date|date:"j/m/Y" }}</td>
+                            <td class="no-border-bottom left-align">{{ order.transaction.order_date|date:"H:i:s" }}</td>
+                            <td class="no-border-bottom left-align">{{ order.transaction.staff_member }}</td>
+                            <td class="no-border-bottom">€{{ order.transaction.pfand_total }}</td>
+                            <td class="no-border-bottom">€{{ order.transaction.drinks_food_total }}</td>
+                            <td class="no-border-bottom">€{{ order.transaction.total_due }}</td>
+                            <td class="no-border-bottom">€{{ order.transaction.tendered_amount }}</td>
+                            <td class="no-border-bottom">€{{ order.transaction.change_due }}</td>
+                            <td class="no-border-bottom left-align">{{ order.transaction.payment_method }}</td>
+                            <td class="no-border-bottom left-align">{{ order.transaction.payment_reason }}</td>
+                            <td class="no-border-bottom">{{ order.discount }}</td>
+                            <td class="no-border-bottom">{{ order.transaction.number_of_products }}</td>
+                            <td class="left-align">{{ order.name }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td class="left-align">{{ order.size }}</td>
+                            <td>€{{ order.price_unit }}</td>
+                            <td>€{{ order.price_line_total }}</td>
+                            <td class="no-border-bottom">{{ order.transaction.transaction_number }}</td>
+                        </tr>
+                    {% else %}
+                        <tr class="content {{ rowcolors }}">
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="no-border-top no-border-bottom"></td>
+                            <td class="left-align">{{ order.name }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td class="left-align">{{ order.size }}</td>
+                            <td>€{{ order.price_unit }}</td>
+                            <td>€{{ order.price_line_total }}</td>
+                            <td class="no-border-top no-border-bottom"></td>
+                        </tr>
+                    {% endifchanged %}
+                    
+                    {% endfor %}
+                </table>
+                
+                <div class="no-entries">
+                    {% if not orders %}
+                        <h4>No Entries Found For Today</h4>
+                    {% endif %}
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="icons-container">
+    <div id="staff-picker" class="icon">
+        <div class="icon-header">
+            STAFF
+        </div>
+        <div class="icon-body">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <div id="staff-footer" class="icon-footer">
+            All
+        </div>
+    </div>
+    <div class="staff-list-container">
+        <div class="staff-list-header">STAFF LIST</div>
+        <div class="staff-list-body">
+            {% for item in staff_list %} 
+                {% if item.staffId == 0 %}  
+                    <p data-staffId="{{item.staffId }}" class="staff-list-item selected-staff">{{item.name }}</p>
+                {% else %}
+                    <p data-staffId="{{item.staffId }}" class="staff-list-item">{{item.name }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="calendar-container">
+        <svg id="prevDayBtn" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="0, 50 40, 10 40, 90 "/>
+            <text x="20" y="55">-</text>
+        </svg>
+        <div id="datepicker" class="icon">
+            <div id="calendar-header" class="icon-header">
+                <script>
+                    var	month = new Date().getMonth();
+                        months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+                    document.write(months[month]);
+                </script>
+            </div>
+            <div id="calendar-body" class="icon-body">
+                <script>
+                    document.write(new Date().getDate());
+                </script>
+            </div>
+            <div id="calendar-footer" class="icon-footer">
+                <script>
+                    var	day = new Date().getDay();
+                    var dayOfWeek = new Array('Sunday', 'Monday', 'Tuesday',   'Wednesday', 'Thursday', 'Friday', 'Saturday');
+                    document.write(dayOfWeek[day]);
+                </script>
+            </div>
+        </div>
+        <svg id="nextDayBtn" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="40, 50 0, 10 0, 90"/>
+            <text x="5" y="60">+</text>
+        </svg>
+        
+        <div class="calendar">
+            <div class="calendar-header">
+            <button id="prev-month">‹‹‹‹‹</button>
+            <div id="month-year"></div>
+            <button id="next-month">›››››</button>
+            </div>
+            <div class="calendar-body">
+                <div class="calendar-weekdays">
+                    <!-- Weekday Names -->
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="calendar-dates">
+                <!-- Dates will be populated here -->
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+{% endblock %}
+{% block post_load_js %}
+{{ block.super }}
+<script src="{% static 'version_2/js/previous_orders_v2.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,352 @@
+[
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 1,
+        "fields": {
+            "name": "bottles"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 2,
+        "fields": {
+            "name": "cans"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 3,
+        "fields": {
+            "name": "mixed_cocktail"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 4,
+        "fields": {
+            "name": "shots"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 5,
+        "fields": {
+            "name": "half_n_half"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 6,
+        "fields": {
+            "name": "shandy"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 7,
+        "fields": {
+            "name": "coffee"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 8,
+        "fields": {
+            "name": "hot_chocolate"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 9,
+        "fields": {
+            "name": "mulled"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 10,
+        "fields": {
+            "name": "softdrinks"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 11,
+        "fields": {
+            "name": "tea"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 12,
+        "fields": {
+            "name": "water"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 13,
+        "fields": {
+            "name": "liquer"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 14,
+        "fields": {
+            "name": "spirit"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 15,
+        "fields": {
+            "name": "fortified_wines"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 16,
+        "fields": {
+            "name": "red_wine"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 17,
+        "fields": {
+            "name": "rose_wine"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 18,
+        "fields": {
+            "name": "sparkling_wine"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 19,
+        "fields": {
+            "name": "white_wine"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 20,
+        "fields": {
+            "name": "cheese"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 21,
+        "fields": {
+            "name": "meat"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 22,
+        "fields": {
+            "name": "sauce"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 23,
+        "fields": {
+            "name": "vegetables"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 24,
+        "fields": {
+            "name": "burger"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 25,
+        "fields": {
+            "name": "soup"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 26,
+        "fields": {
+            "name": "stew"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 27,
+        "fields": {
+            "name": "fries"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 28,
+        "fields": {
+            "name": "loaded_fries"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 29,
+        "fields": {
+            "name": "snack"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 30,
+        "fields": {
+            "name": "medium"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 31,
+        "fields": {
+            "name": "small"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 32,
+        "fields": {
+            "name": "aprons"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 33,
+        "fields": {
+            "name": "boxers"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 34,
+        "fields": {
+            "name": "misc"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 35,
+        "fields": {
+            "name": "socks"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 36,
+        "fields": {
+            "name": "sweats"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 37,
+        "fields": {
+            "name": "tshirts"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 38,
+        "fields": {
+            "name": "drinks"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 39,
+        "fields": {
+            "name": "food"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 40,
+        "fields": {
+            "name": "gifts"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 41,
+        "fields": {
+            "name": "baseball_caps"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 42,
+        "fields": {
+            "name": "beanies"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 43,
+        "fields": {
+            "name": "flat_caps"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 44,
+        "fields": {
+            "name": "glasses"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 45,
+        "fields": {
+            "name": "decorations"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 46,
+        "fields": {
+            "name": "keyrings"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 47,
+        "fields": {
+            "name": "magnets"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 48,
+        "fields": {
+            "name": "wearable"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 49,
+        "fields": {
+            "name": "writing"
+        }
+    },
+    {
+        "model": "version_2.SubSubCategory",
+        "pk": 50,
+        "fields": {
+            "name": "full_draught"
+        }
+    }
+]

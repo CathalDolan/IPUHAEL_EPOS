@@ -1,0 +1,23 @@
+[
+    {
+        "model":"version_2.Category",
+        "pk": 1,
+        "fields": {
+            "name": "Drink"
+        }
+    },
+    {
+        "model":"version_2.Category",
+        "pk": 2,
+        "fields": {
+            "name": "Food"
+        }
+    },
+    {
+        "model":"version_2.Category",
+        "pk": 3,
+        "fields": {
+            "name": "Gift"
+        }
+    }
+]

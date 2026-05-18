@@ -1,0 +1,27 @@
+id,order_date_li,grand_totals,category,name,quantity,size,price_unit,price_line_total,discount,payment_method,payment_reason,staff_member
+42590,2025-07-08 17:08:51,30304,draught,Kilkenny,4,pint,7.50,30.00,,Waste,Set-Up Line Cleaning,27
+42589,2025-07-08 17:08:51,30304,draught,Hop House 13,4,pint,7.50,30.00,,Waste,Set-Up Line Cleaning,27
+42588,2025-07-08 17:08:51,30304,draught,Stowford,4,pint,7.50,30.00,,Waste,Set-Up Line Cleaning,27
+42587,2025-07-08 17:08:51,30304,draught,Guinness,8,pint,7.50,60.00,,Waste,Set-Up Line Cleaning,27
+42586,2025-07-08 16:44:44,30303,draught,Kilkenny,1,pint,7.50,7.50,,Cash,,23
+42585,2025-07-08 16:31:25,30302,draught,Kilkenny,1,pint,7.50,7.50,,Complimentary,Cathal Comp,23
+42584,2025-07-08 16:31:25,30302,draught,Guinness,1,pint,7.50,7.50,,Complimentary,Cathal Comp,23
+42583,2025-07-08 16:25:48,30301,draught,Hop House 13,1,pint,7.50,7.50,,Cash,,23
+42582,2025-07-08 16:25:48,30301,draught,Guinness,1,pint,7.50,7.50,,Cash,,23
+42581,2025-07-08 16:22:41,30300,draught,Guinness,1,pint,7.50,7.50,,Cash,,23
+42580,2025-07-08 16:22:41,30300,draught,Kilkenny,1,pint,7.50,7.50,,Cash,,23
+42579,2025-07-08 15:58:05,30299,draught,Kilkenny,1,pint,7.50,7.50,,Cash,,23
+42578,2025-07-08 15:58:05,30299,draught,Guinness,1,pint,7.50,7.50,,Cash,,23
+42577,2025-07-08 15:47:45,30298,draught,Kilkenny,1,pint,7.50,7.50,,Complimentary,Staff Drink,23
+42576,2025-07-08 15:40:32,30297,draught,Guinness,1,pint,7.50,7.50,,Cash,,1
+42575,2025-07-08 15:40:32,30297,draught,Kilkenny,1,pint,7.50,7.50,,Cash,,1
+42574,2025-07-08 14:00:52,30296,draught,Guinness,1,pint,7.50,7.50,,Cash,,23
+42573,2025-07-08 13:31:44,30295,draught,Hop House 13,1,pint,7.50,7.50,,Cash,,23
+42572,2025-07-08 13:31:44,30295,draught,Guinness,1,pint,7.50,7.50,,Cash,,23
+42571,2025-07-08 12:53:15,30294,draught,Hop House 13,2,03,5.50,11.00,,Cash,,23
+42570,2025-07-07 22:25:38,30293,draught,Kilkenny,1,pint,7.50,7.50,,Complimentary,Cathal Comp,23
+42569,2025-07-07 21:58:16,30292,draught,Guinness,1,pint,7.50,7.50,,Complimentary,Cathal Comp,23
+42568,2025-07-07 21:58:03,30291,spirits_and_liquers,Tullamore Honey,1,dble,4.80,4.80,20% off,Cash,,23
+42567,2025-07-07 21:33:59,30290,draught,Guinness,1,pint,6.00,6.00,20% off,Cash,,23
+42566,2025-07-07 21:30:31,30289,spirits_and_liquers,Tullamore Honey,4,sgle,2.80,11.20,20% off,Cash,,23
+42565,2025-07-07 21:22:59,30288,draught,Kilkenny,1,pint,7.50,7.50,,Complimentary,Staff Drink,23

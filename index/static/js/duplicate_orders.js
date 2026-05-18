@@ -188,9 +188,6 @@ function drawMySunburst(groups) {
                 labels.push(`${item.name} (${item.quantity})`);
                 parents.push(`Food`)
                 values.push(item.quantity)
-                // labels.push(item.size)
-                // parents.push(`${item.name}`)
-                // values.push(item.total)
             }
             else if(item.category.includes("gift")) {
                 // console.log("GIFT")
@@ -199,9 +196,6 @@ function drawMySunburst(groups) {
                 labels.push(`${item.name} (${item.quantity})`);
                 parents.push(`Gifts`)
                 values.push(item.quantity)
-                // labels.push(item.size)
-                // parents.push(`${item.name}`)
-                // values.push(item.total)
             } 
             else {
                 // console.log("DRINK")
@@ -210,9 +204,6 @@ function drawMySunburst(groups) {
                 labels.push(`${item.name} (${item.quantity})`);
                 parents.push(`Drinks`)
                 values.push(item.quantity)
-                // labels.push(item.size)
-                // parents.push(`${item.name}`)
-                // values.push(item.total)
             }
         }           
         item_name = item.name;

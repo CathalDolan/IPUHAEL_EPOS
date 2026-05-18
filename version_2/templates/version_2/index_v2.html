@@ -2,105 +2,1614 @@
 {% load static %} 
 {% block extra_css %}
     <!--My CSS stylesheet-->
-    <link rel="stylesheet" href="{% static 'css/main_v2.css' %}" />
+    <link rel="stylesheet" href="{% static 'version_2/css/main_v2.css' %}" />
     <link rel="stylesheet" href="{% static 'css/circular_progress.css' %}" />
 {% endblock %} 
 
 {% block content %}
+<div class="mask"></div>
+<div hidden id="default-drink-size" data-value="{{ miscellaneous_settings.0.default_drink_size }}"></div>
+<div hidden id="default-food-size" data-value="{{ miscellaneous_settings.0.default_food_size }}"></div>
+<div hidden id="pfand" data-value="{{ miscellaneous_settings.0.pfand}}"></div>
+
+<!-- The Unpaid Modal -->
+<div class="modal" id="unpaidModal">
+    <div class="modal-dialog" aria-label="Aria Unpaid modal">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Complimentary Reason</h5>
+                <div
+                    type="button"
+                    class=""
+                    data-bs-dismiss="modal"
+                    aria-label="Aria Unpaid modal dismiss">
+                    <i class="fa-solid fa-x"></i>
+                </div>
+                    
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    {% for item in complimentary_reasons %}
+                        <div class="col-6">
+                            <button
+                                class="button complimentary-button payment_button"
+                                data-payment_method="Complimentary"
+                                data-payment_reason="{{item.reason}}"
+                                aria-label="Aria Unpaid Kalle Complimentary">
+                                {{item.reason}}
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="button"
+                    data-bs-dismiss="modal"
+                    aria-label="Aria Unpaid modal close">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Waste Modal -->
+<div class="modal" id="wasteModal">
+    <div class="modal-dialog" aria-label="Aria Waste modal">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Waste Reason</h5>
+                <div
+                    type="button"
+                    class=""
+                    data-bs-dismiss="modal"
+                    aria-label="Aria Waste modal dismiss">
+                    <i class="fa-solid fa-x"></i>
+                </div>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    {% for item in waste_reasons %}
+                        <div class="col-6">
+                            <button
+                                class="button waste-button payment_button"
+                                data-payment_method="Waste"
+                                data-payment_reason="{{item.reason}}"
+                                aria-label="Aria {{item.reason}}">
+                                {{item.reason}}
+                        </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="button"
+                    data-bs-dismiss="modal"
+                    aria-label="Aria Waste modal close">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Open Drink Modal -->
+<div class="modal" id="open_drink_modal">
+    <div class="modal-dialog" aria-label="Aria Open drink modal">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Open Drink</h5>
+                <div
+                    type="button"
+                    class=""
+                    data-bs-dismiss="modal"
+                    aria-label="Aria Waste modal dismiss">
+                    <i class="fa-solid fa-x"></i>
+                </div>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row drinks-measurement-row">
+                    {% for item in drink_sizes %}
+                        {% if item.size != "50ml Taste" and item.size != "1/3 Shot" %}
+                            {% if item.size == open_drink.0.default_size|stringformat:"s" %}
+                                <div class="col">
+                                    <button
+                                        class="button drink modal-measure-button selected"
+                                        data-size="{{item.size}}"
+                                        {% comment %} data-bar_product="True" {% endcomment %}
+                                        aria-label="Aria Drink {{item.size}} size">
+                                        <span class="text">{{item.size}}</span>
+                                    </button>
+                                </div>
+                            {% else %}
+                                <div class="col">
+                                    <button
+                                        class="button drink modal-measure-button"
+                                        data-size="{{item.size}}"
+                                        {% comment %} data-bar_product="True" {% endcomment %}
+                                        aria-label="Aria Drink {{ item.size }} size">
+                                        <span class="text">{{item.size}}</span>
+                                    </button>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                </div>
+                <div class="row">
+                    <div class="col p-1">
+                        <input name="category" value="{{open_drink.0.category}}" hidden>
+                        <input name="subcategory" value="{{open_drink.0.subcategory}}" hidden>
+                        <input
+                            class="open-drink-input"
+                            name="quantity"
+                            type="number"
+                            placeholder="Qty*"
+                            min="1"
+                            value="1" />
+                        <p class="field-error"></p>
+                    </div>
+                    <div class="col-7 p-1">
+                        <input
+                            class="open-drink-input"
+                            name="drink-name"
+                            type="text"
+                            placeholder="Drink name*" />
+                        <p class="field-error"></p>
+                    </div>
+                    <div class="col-2 p-1">
+                        <input
+                            class="open-drink-input"
+                            name="price"
+                            type="number"
+                            placeholder="Price*"
+                            min="0" />
+                        <p class="field-error"></p>
+                    </div>
+                    <div class="col-1 p-1">
+                        <label for="pfand">Pfand</label>
+                        <input
+                            class="open-drink-input checkbox"
+                            name="pfand"
+                            type="checkbox"
+                            checked />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col p-1">
+                        <button class="button open-drink-submit" type="submit">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div> -->
+        </div>
+    </div>
+</div>
 <div class="container-fluid main-container">
     <div class="row">
         <!--  Left Side of till with product buttons  -->
-        <div class="col-7">
+        <div class="col-7 till-left-side">
             <!--  Drinks Sizes Buttons -->
-            <div class="row" id="drinks-measurement-row">
-                <div class="col">
-                    <button
-                        class="btn drinks-measure-button"
-                        data-size="single"
-                        aria-label="Aria Drink Single size">
-                        Single
-                    </button>
-                </div>
-                <div class="col">
-                    <button
-                        class="btn drinks-measure-button"
-                        data-size="double"
-                        aria-label="Aria Drink double size">
-                        Double
-                    </button>
-                </div>
-                <div class="col">
-                    <button
-                        class="btn drinks-measure-button"
-                        data-size="dash"
-                        aria-label="Aria Drink dash size">
-                        Dash
-                    </button>
-                </div>
-                <div class="col">
-                    <button
-                        class="btn drinks-measure-button selected"
-                        data-size="03"
-                        aria-label="Aria Drink 03 size">
-                        0.3
-                    </button>
-                </div>
-                <div class="col">
-                    <button
-                        class="btn drinks-measure-button"
-                        data-size="04"
-                        aria-label="Aria Drink 04 size">
-                        0.4
-                    </button>
-                </div>
-                <div class="col">
-                    <button
-                        class="btn drinks-measure-button"
-                        data-size="pint"
-                        aria-label="Aria Drink pint size">
-                        Pint
-                    </button>
-                </div>
-                <div class="col">
-                    <button
-                        class="btn drinks-measure-button"
-                        data-size="bottle"
-                        aria-label="Aria Drink bottle size">
-                        Bottle
-                    </button>
-                </div>
-            </div>
-            <!--  Products Buttons  -->
-            <div class="row products-row">
-                {% for draught in draughts %}
-                    <div class="col-2">
-                        <button>
-                            class="btn {{draught.category}} drink product_button pfand_product"
-                            id="{{draught.id}}"
-                            data-pfand="{{draught.pfand}}"
-                            data-category="{{draught.category}}"
-                            data-name="{{draught.name}}"
-                            data-abbr_name="{{draught.abbr_name}}"
-                            data-price_default="{{draught.price_default}}"
-                            data-price_sgle="{{draught.price_sgle}}"
-                            data-price_dble="{{draught.price_dble}}"
-                            data-price_dash="{{draught.price_dash}}"
-                            data-price_03="{{draught.price_03}}"
-                            data-price_04="{{draught.price_04}}"
-                            data-price_pint="{{draught.price_pint}}"
-                            data-price_btle="{{draught.price_btle}}"
-                            data-bar_product="{{draught.bar_product}}"
-                            data-kitchen_product="{{draught.kitchen_product}}"
-                            aria-label="Aria {{draught.name}}">
-                            {{draught.name}}
+            <div class="row drinks-measurement-row">
+                {% for item in drink_sizes %}
+                    <div class="col">
+                        <button
+                            class="button drinks-measure-button disabled"
+                            data-size="{{item.size}}"
+                            aria-label="Aria Drink {{ item.size }} size">
+                            <span class="text">{{ item.size }}</span>
                         </button>
                     </div>
                 {% endfor %}
             </div>
+            <!--  Products Buttons  -->
+            <div class="row drink-products-row">
+                {% for drink in fulldraughts %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subsubcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {% for drink in half_n_halfs %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subsubcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {% for drink in shandys %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subsubcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {% for drink in cans_and_bottles %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {% for drink in spirits_and_liquers %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for drink in non_alcoholic %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for drink in hot_nonalcoholics %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for drink in hot_alcoholics %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {% for drink in hot_toddy %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {% for drink in cocktails %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                {% for drink in wines %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for drink in miscellaneous_drinks %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for drink in specials %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button product-button"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                {% for drink in open_drink %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button"
+                            data-pfand="true"
+                            data-bs-toggle="modal"
+                            data-bs-target="#open_drink_modal"
+                            data-value="0"
+                            data-bar_product="True"
+                            data-kitchen_product="False"
+                            aria-label="Aria Open open drink modal">
+                            <span class="text">{{drink.name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <!-- Food measurement buttons-->
+            <div class="row food-measurement-row">
+                <!-- Small Size Button -->
+                 {% for item in food_sizes %}
+                <div class="col-2">
+                    <button
+                        class="button food food-measure-button disabled"
+                        data-size="{{item.size}}"
+                        aria-label="Aria Food {{item.size}} size">
+                        <span>{{item.size}}</span>
+                    </button>
+                </div>
+                {% endfor %}
+                <!-- <div class="col-2">
+                    <button class=" open_drink pfand_product" data-pfand="true" data-bs-toggle="modal"
+                        data-bs-target="#open_drink_modal" data-value="0"
+                        data-bar_product="False"
+                        data-kitchen_product="True">
+                        Open Drink
+                    </button>
+                </div> -->
+            </div>
+            <div class="row food-products-row">
+                {% for item in mains %}
+                    <div class="col-2">
+                        <button
+                            class=" {{item.subcategory}} button product-button"
+                            data-pfand="{{item.pfand}}"
+                            data-category="{{item.category}}"
+                            data-subcategory="{{item.subcategory}}"
+                            data-subsubcategory="{{item.subsubcategory}}"
+                            data-name="{{item.name}}"
+                            data-abbr_name="{{item.abbr_name}}"
+                            data-default_size="{{item.default_size}}"
+                            data-no_size="{{item.price_no_size}}"
+                            data-single="{{item.price_single}}"
+                            data-double="{{item.price_double}}"
+                            data-dash="{{item.price_dash}}"
+                            data-03="{{item.price_03}}"
+                            data-04="{{item.price_04}}"
+                            data-pint="{{item.price_pint}}"
+                            data-bottle="{{item.price_bottle}}"
+                            data-small="{{item.price_small}}"
+                            data-regular="{{item.price_regular}}"
+                            data-large="{{item.price_large}}"
+                            data-bar_product="{{item.bar_product}}"
+                            data-kitchen_product="{{item.kitchen_product}}"
+                            aria-label="Aria {{item.name}}">
+                            <span class="text">{{item.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %} 
+                {% for item in potatoes %}
+                    <div class="col-2">
+                        <button
+                            class=" {{item.subcategory}} button product-button"
+                            data-pfand="{{item.pfand}}"
+                            data-category="{{item.category}}"
+                            data-subcategory="{{item.subcategory}}"
+                            data-subsubcategory="{{item.subsubcategory}}"
+                            data-name="{{item.name}}"
+                            data-abbr_name="{{item.abbr_name}}"
+                            data-default_size="{{item.subcategory.default_size}}"
+                            data-no_size="{{item.price_no_size}}"
+                            data-single="{{item.price_single}}"
+                            data-double="{{item.price_double}}"
+                            data-dash="{{item.price_dash}}"
+                            data-03="{{item.price_03}}"
+                            data-04="{{item.price_04}}"
+                            data-pint="{{item.price_pint}}"
+                            data-bottle="{{item.price_bottle}}"
+                            data-small="{{item.price_small}}"
+                            data-regular="{{item.price_regular}}"
+                            data-large="{{item.price_large}}"
+                            data-bar_product="{{item.bar_product}}"
+                            data-kitchen_product="{{item.kitchen_product}}"
+                            aria-label="Aria {{item.name}}">
+                            <span class="text">{{item.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %} 
+                {% for item in extra_serving %}
+                <div class="col-2">
+                    <button
+                        class=" {{item.subcategory}} button product-button"
+                        data-pfand="{{item.pfand}}"
+                        data-category="{{item.category}}"
+                        data-subcategory="{{item.subcategory}}"
+                            data-subsubcategory="{{item.subsubcategory}}"
+                        data-name="{{item.name}}"
+                        data-abbr_name="{{item.abbr_name}}"
+                        data-default_size="{{item.subcategory.default_size}}"
+                        data-no_size="{{item.price_no_size}}"
+                        data-single="{{item.price_single}}"
+                        data-double="{{item.price_double}}"
+                        data-dash="{{item.price_dash}}"
+                        data-03="{{item.price_03}}"
+                        data-04="{{item.price_04}}"
+                        data-pint="{{item.price_pint}}"
+                        data-bottle="{{item.price_bottle}}"
+                        data-small="{{item.price_small}}"
+                        data-regular="{{item.price_regular}}"
+                        data-large="{{item.price_large}}"
+                        data-bar_product="{{item.bar_product}}"
+                        data-kitchen_product="{{item.kitchen_product}}"
+                        aria-label="Aria {{item.name}}">
+                        <span class="text">{{item.abbr_name}}</span>
+                    </button>
+                </div>
+                {% endfor %} 
+                {% for item in snack %}
+                    <div class="col-2">
+                        <button
+                            class=" {{item.subcategory}} button product-button"
+                            data-pfand="{{item.pfand}}"
+                            data-category="{{item.category}}"
+                            data-subcategory="{{item.subcategory}}"
+                            data-subsubcategory="{{item.subsubcategory}}"
+                            data-name="{{item.name}}"
+                            data-abbr_name="{{item.abbr_name}}"
+                            data-default_size="{{item.subcategory.default_size}}"
+                            data-no_size="{{item.price_no_size}}"
+                            data-single="{{item.price_single}}"
+                            data-double="{{item.price_double}}"
+                            data-dash="{{item.price_dash}}"
+                            data-03="{{item.price_03}}"
+                            data-04="{{item.price_04}}"
+                            data-pint="{{item.price_pint}}"
+                            data-bottle="{{item.price_bottle}}"
+                            data-small="{{item.price_small}}"
+                            data-regular="{{item.price_regular}}"
+                            data-large="{{item.price_large}}"
+                            data-bar_product="{{item.bar_product}}"
+                            data-kitchen_product="{{item.kitchen_product}}"
+                            aria-label="Aria {{item.name}}">
+                            <span class="text">{{item.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %} 
+            </div>
+            <!-- Clothes measurement buttons-->
+            <div class="row gift-measurement-row">
+                <!-- Small Size Button -->
+                 {% for item in gift_sizes %}
+                <div class="col">
+                    <button
+                        class="button food food-measure-button disabled"
+                        data-size="{{item.size}}"
+                        aria-label="Aria Food {{item.size}} size">
+                        <span>{{item.size}}</span>
+                    </button>
+                </div>
+                {% endfor %}
+                <!-- <div class="col-2">
+                    <button class=" open_drink pfand_product" data-pfand="true" data-bs-toggle="modal"
+                        data-bs-target="#open_drink_modal" data-value="0"
+                        data-bar_product="False"
+                        data-kitchen_product="True">
+                        Open Drink
+                    </button>
+                </div> -->
+            </div>
+            
+            <div class="row gift-products-row">
+                {% for item in gifts %}
+                    <div class="col-2">
+                        <button
+                            class="{{item.category}} {{item.subcategory}} button product-button"
+                            id="{{item.id}}"
+                            data-pfand="{{item.pfand}}"
+                            data-category="{{item.category}}"
+                            data-subcategory="{{item.subcategory}}"
+                            data-subsubcategory="{{item.subsubcategory}}"
+                            data-name="{{item.name}}"
+                            data-abbr_name="{{item.abbr_name}}"
+                            data-default_size="{{item.subcategory.default_size}}"
+                            data-no_size="{{item.price_no_size}}"
+                            data-cloth_xs="{{item.cloth_xs}}"
+                            data-cloth_s="{{item.cloth_s}}"
+                            data-cloth_m="{{item.cloth_m}}"
+                            data-cloth_l="{{item.cloth_l}}"
+                            data-cloth_xl="{{item.cloth_xl}}"
+                            data-cloth_2xl="{{item.cloth_2xl}}"
+                            data-bar_product="{{item.bar_product}}"
+                            data-kitchen_product="{{item.kitchen_product}}"
+                            data-gift_product="{{item.gift_product}}"
+                            aria-label="Aria {{item.name}}">
+                            <span class="text">{{item.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!--  Food Sizes, Gifts, Admin & Previous Drinks Buttons  -->
+            <div class="global-buttons">
+                <!-- Empty Button -->
+                 <div class="row product-selection-row">
+                    <div class="col-3">
+                        <button
+                            id="bar-products"
+                            class="button product-selection-button"
+                            data-products="bar"
+                            aria-label="Aria Select bar products">
+                            Bar Products
+                        </button>
+                    </div>
+                    <div class="col-3">
+                        <button
+                            id="kitchen-products"
+                            class="button product-selection-button"
+                            data-products="kitchen"
+                            aria-label="Aria Select Kitchen products">
+                            Kitchen Products
+                        </button>
+                    </div>
+                    <!-- Gifts Button -->
+                    <div class="col-3">
+                        <button
+                            id="gift-products"
+                            class="button product-selection-button"
+                            data-products="gift"
+                            aria-label="Aria Select Gift products">
+                            Gift Products
+                        </button>
+                    </div>
+                 </div>
+                 
+            </div>
+            
         </div>
         <!--  Right Side of till with product buttons  -->
-        <div class="col-5">
+        <div class="col-5 till-right-side">
+            <div class="status-bar">
+                <span class="clock">
+                    <span id="hours">{% now "G" %}</span>
+                    :
+                    <span id="minutes">{% now "i" %}</span>
+                    :
+                    <span id="seconds">{% now "s" %}</span> - 
+                    <span id="day">{% now "D" %}</span>
+                    , 
+                    <span id="month">{% now "M" %}</span>
+                    
+                    <span id="date">{% now "j" %}</span>
+                    
+                    
+                </span>
+                <span class="event-name">{{ event }}</span>
+                <span id="staff-user"></span>
+                {% if request.user.is_authenticated %}
+                <span class="active-indicator logged-in"></span>
+                <nav class="nav flex-column">
+                    <form class="" method="post" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                        {% endif %}
+                        <button class="nav-link" type="submit">Log out</button>
+                    </form>
+                    <a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">Admin</a>
+                    <a class="nav-link" href="{% url 'reports' %}">Reports</a>
+                    <a class="nav-link" href="{% url 'past_orders_v2' %}">Previous Orders</a>
+                    <a class="nav-link" href="{% url 'index_v2' %}">Version 2</a>
+                  </nav>
+                    {% comment %} <form method="post" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                        {% endif %}
+                        <button class="active-indicator logged-in" type="submit"></button>
+                    </form> {% endcomment %}
+                
+                {% else %}
+                    <span class="active-indicator"></span>
+                {% endif %}
+            </div>
+            <!--  Pfand Buttons  -->
+            <div class="row pfand-button-row">
+                {% comment %} <div class="col pfand-balance">
+                    <div>
+                        <i class="fa-solid fa-coins"></i>
+                        <div id="pfand-in">{{ pfand_balance.pfand_balance }}</div>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-beer-mug-empty"></i>
+                        <div id="glasses-out">{{ pfand_balance.glasses_balance }}</div>
+                    </div>
+                    <div class="free-return">
+                        <button class='button free-return-button'>+</button>
+                        <button class='button free-return-button'>-</button>
+                    </div>
+                </div> {% endcomment %}
+                
+                <div class="col">
+                    <button
+                        class="button pfand-button activate"
+                        data-value="1"
+                        aria-label="Aria pfand return 1">
+                        1
+                    </button>
+                </div>
+                <div class="col">
+                    <button
+                        class="button pfand-button activate"
+                        data-value="2"
+                        aria-label="Aria pfand return 2">
+                        2
+                    </button>
+                </div>
+                <div class="col">
+                    <button
+                        class="button pfand-button activate"
+                        data-value="3"
+                        aria-label="Aria pfand return 3">
+                        3
+                    </button>
+                </div>
+                <div class="col">
+                    <button
+                        class="button pfand-button activate"
+                        data-value="4"
+                        aria-label="Aria pfand return 4">
+                        4
+                    </button>
+                </div>
+                <div class="col">
+                    <button
+                        class="button pfand-button five_plus"
+                        data-bs-toggle="modal"
+                        data-bs-target="#pfand_modal"
+                        data-value="5+"
+                        aria-label="Aria pfand return 5+">
+                        5+
+                    </button>
+                </div>
 
+                <div class="col">
+                    <button
+                        class="button pfand-button activate"
+                        data-value="reset"
+                        aria-label="Aria pfand reset">
+                        Reset
+                    </button>
+                </div>
+                <div class="col">
+                    <button
+                        class="button pfand-button activate"
+                        id="none"
+                        data-value="no-pfand"
+                        aria-label="Aria pfand return 0">
+                        No pfand
+                    </button>
+                </div>
+                <!-- Pfand Modal -->
+                <div class="modal" id="pfand_modal">
+                    <div class="modal-dialog" aria-label="Aria pfand modal">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    NUMBER OF ITEMS RETURNED
+                                </h5>
+                                <div
+                                    type="button"
+                                    class=""
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria modal dismiss">
+                                    <i class="fa-solid fa-x"></i>
+                                </div>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="5"
+                                            aria-label="Aria pfand return 5">
+                                            5
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="6"
+                                            aria-label="Aria pfand return 6">
+                                            6
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="7"
+                                            aria-label="Aria pfand return 7">
+                                            7
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="8"
+                                            aria-label="Aria pfand return 8">
+                                            8
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="9"
+                                            aria-label="Aria pfand return 9">
+                                            9
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="10"
+                                            aria-label="Aria pfand return 10">
+                                            10
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="11"
+                                            aria-label="Aria pfand return 11">
+                                            11
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="12"
+                                            aria-label="Aria pfand return 12">
+                                            12
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="13"
+                                            aria-label="Aria pfand return 13">
+                                            13
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="14"
+                                            aria-label="Aria pfand return 14">
+                                            14
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="15"
+                                            aria-label="Aria pfand return 15">
+                                            15
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="16"
+                                            aria-label="Aria pfand return 16">
+                                            16
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="17"
+                                            aria-label="Aria pfand return 17">
+                                            17
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="18"
+                                            aria-label="Aria pfand return 18">
+                                            18
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="19"
+                                            aria-label="Aria pfand return 19">
+                                            19
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="20"
+                                            aria-label="Aria pfand return 20">
+                                            20
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="21"
+                                            aria-label="Aria pfand return 21">
+                                            21
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="22"
+                                            aria-label="Aria pfand return 22">
+                                            22
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="23"
+                                            aria-label="Aria pfand return 23">
+                                            23
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="24"
+                                            aria-label="Aria pfand return 24">
+                                            24
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="25"
+                                            aria-label="Aria pfand return 25">
+                                            25
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="26"
+                                            aria-label="Aria pfand return 26">
+                                            26
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="27"
+                                            aria-label="Aria pfand return 27">
+                                            27
+                                        </button>
+                                    </div>
+                                    <div class="col-2">
+                                        <button
+                                            class="button button pfand-button activate pfand-modal-button"
+                                            data-bs-dismiss="modal"
+                                            data-value="28"
+                                            aria-label="Aria pfand return 28">
+                                            28
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button
+                                    type="button"
+                                    class="button"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria modal close">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            {% if request.user.is_authenticated %}
+            <div class="table-wrapper">
+                <div class="staff-table">
+                    <table>
+                        <tr>
+                            <th>STAFF USER</th>
+                        </tr>
+                        {% for staff_member in staff %}
+                            <tr class="staff-member" data-name="{{ staff_member.name }}" data-id="{{ staff_member.id }}">
+                                <td>{{ staff_member.name }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="basket">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Size</th>
+                                <th>Qty</th>
+                                <th>Unit</th>
+                                <th>Total</th>
+                                <th>Add</th>
+                                <th>Sub</th>
+                                <th>Del</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        
+                        </tbody>
+                    </table>
+                </div>
+                <div class="discounts">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Size</th>
+                                <th>Qty</th>
+                                <th>Discount</th>
+                                <th>Special</th>
+                                <th>Status</th>
+                                <th>Del</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+            {% else %}
+            <div class="form-wrapper">
+                <h3>Login</h3>
+                <form class="login" method="POST" action="/accounts/login/">
+                    {% csrf_token %}
+                    <p><label for="id_login">Email:</label></p>
+                    <p><input type="email" name="login" placeholder="Email address" autocomplete="email" maxlength="320" required id="id_login"></p>
+                    
+                    <p><label for="id_password">Password:</label></p>
+                    <p><input type="password" name="password" placeholder="Password" autocomplete="current-password" required id="id_password"></p>
+                    
+                    <a class="secondaryAction" href="/accounts/password/reset/">Forgot Password?</a>
+                    <button class="button primaryAction" type="submit">Sign In</button>
+                </form>
+            </div>
+            {% endif %}
+            
+            <div class="message-container">
+                {% if messages %} 
+                  {% for message in messages %} 
+                    {% with message.level as level %} 
+                      {% if level == 40 %} 
+                        {% include 'includes/toasts/toast_error.html' %} 
+                      {% elif level == 30 %} 
+                        {% include 'includes/toasts/toast_warning.html' %} 
+                      {% elif level == 25 %} 
+                        {% include 'includes/toasts/toast_success.html' %} 
+                      {% else %} 
+                        {% include 'includes/toasts/toast_info.html' %} 
+                      {% endif %}
+                    {% endwith %} 
+                  {% endfor %} 
+                {% endif %}
+            </div>
+            <!-- Grand Totals Rows -->
+            <div class="row totals">
+                <div class="col-4 grand-totals-values">
+                    <p id="drink_food_total">€0.00</p>
+                    <p id="pfand_total">€0.00</p>
+                    <p class="highlight" id="total_due">€0.00</p>
+                    <p id="amount_tendered_span">€
+                        <input
+                            type="number"
+                            class="grand_totals_row grand_totals_figure"
+                            id="amount_tendered"
+                            value="0" />
+                    </p>
+                    <p class="highlight" id="change_due">€0.00</p>
+                </div>
+                <div class="col-4 grand-totals-labels">
+                    <p>  Drink / Food Total</p>
+                    <p>+ Pfand Total</p>
+                    <p class="highlight">= Total Due</p>
+                    <p>  Tendered Amount</p>
+                    <p class="highlight">  Change Due</p>
+                </div>
+                <div class="col-4 checkout-timer-wrapper">
+                    <div class="checkout-timer">
+                        <p>CHECKOUT</p>
+                        <svg
+                            class="circular-progress"
+                            viewBox="0 0 50 50"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle class="bg"></circle>
+                            <circle
+                                class="fg"
+                                stroke-dasharray="100"
+                                stroke-dashoffset="100"
+                                pathLength="100" />
+                            <text id="countdown" x="20" y="30"></text>
+                        </svg>
+                        <button
+                            class="button pause-button"
+                            aria-label="Aria pause checkout timer">
+                            Pause
+                        </button>
+                    </div>
+                </div>   
+            </div>
+
+            <!-- € Notes and Finish Buttons Row -->
+            <div class="row checkout">
+                <div class="col-3">
+                    <button
+                        class="button checkout-button cash-button ten-euro-button"
+                        data-value="10"
+                        data-payment_method="Cash"
+                        aria-label="Aria €10 note">
+                        <img
+                            src="{% static 'images/€10_note.png' %}"
+                            alt="€10 note" />
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button
+                        class="button checkout-button cash-button twenty-euro-button"
+                        data-value="20"
+                        data-payment_method="Cash"
+                        aria-label="Aria €20 note">
+                        <img
+                            src="{% static 'images/€20_note.png' %}"
+                            alt="€20 note" />
+                    </button>
+                </div>
+
+                <div class="col-3">
+                    <button
+                        class="button checkout-button cash-button fifty-euro-button"
+                        data-value="50"
+                        data-payment_method="Cash"
+                        aria-label="Aria €50 note">
+                        <img
+                            src="{% static 'images/€50_note.png' %}"
+                            alt="€50 note" />
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button
+                        class="button checkout-button cash-button hundred-euro-button"
+                        data-value="100"
+                        data-payment_method="Cash"
+                        aria-label="Aria €100 note">
+                        <img
+                            src="{% static 'images/€100_note.png' %}"
+                            alt="€100 note" />
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button
+                        class="button checkout-button"
+                        id="credit-card-button"
+                        data-payment_method="Credit Card"
+                        aria-label="Aria credit card">
+                        <img
+                            src="{% static 'images/credit_card_icon.png' %}"
+                            alt="Credit card" />
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button
+                        class="button checkout-button cash-button exact-tendered-button"
+                        data-payment_method="Cash"
+                        aria-label="Aria exact tendered">
+                        Exact Tendered
+                    </button>
+                </div>
+                <!-- Finish Button -->
+                <div class="col-3">
+                    <button class="button checkout-button finish-button" aria-label="Aria Finish">
+                        Finish
+                    </button>
+                </div>
+                <div class="col-3">
+                    <button class="button checkout-button cancel-button" aria-label="Aria Cancel">
+                        Cancel
+                    </button>
+                </div>
+                {% comment %} <div class="col-3">
+                    <button
+                        class="button checkout-button oap-students-button specials_option"
+                        data-special="oap-students"
+                        aria-label="Aria student discount">
+                        OAP/Stnt Discount
+                    </button>
+                </div> {% endcomment %}
+                <!-- The Specials Button -->
+                <div class="col-3">
+                    <button
+                        class="button checkout-button discount-specials-button specials_button"
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#specialsModal"
+                        aria-label="Aria Specials modal open">
+                        Discount Specials
+                    </button>
+                </div>
+                <!-- The Specials Modal -->
+                <div class="modal" id="specialsModal">
+                    <div class="modal-dialog" aria-label="Aria Specials modal">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h5 class="modal-title">Specials</h5>
+                                <div
+                                    type="button"
+                                    class=""
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria modal dismiss">
+                                    <i class="fa-solid fa-x"></i>
+                                </div>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button
+                                            class="button specials-button specials_option"
+                                            data-special="2 for 1"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Aria 2 for 1 special">
+                                            2 for 1
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button
+                                            class="button specials-button specials_option"
+                                            data-special="10 for 11"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Aria Buy 10 Get 11th
+                                            Free">
+                                            Buy 10 Get 11th Free
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button
+                                            class="button specials-button specials_option"
+                                            data-special="20% Off - Customer"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Aria 20% Off - Customer">
+                                            20% Off - Customer
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button
+                                            class="button specials-button specials_option"
+                                            data-special="20% Off - Austeller"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Aria 20% Off - Austeller">
+                                            20% Off - Austeller
+                                        </button>
+                                    </div>
+                                    
+                                    {% comment %} <div class="col-6">
+                                        <button
+                                            class="button specials-button specials_option"
+                                            data-special="six shot special"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Aria 6 Shot Special">
+                                            6 Shot Special
+                                        </button>
+                                    </div> {% endcomment %}
+                                    
+                                    <div class="col-6">
+                                        <button
+                                            class="button specials-button specials_option"
+                                            data-special="Student Discount"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Aria Student Discount">
+                                            Student Discount
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button
+                                            class="button specials-button specials_option"
+                                            data-special="OAP Discount"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Aria OAP Discount">
+                                            OAP Discount
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button
+                                            class="button specials-button specials_option"
+                                            data-special="city voucher"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Aria €5 City Voucher special">
+                                            €5 City Voucher
+                                        </button>
+                                    </div>
+                                    {% comment %} <div class="col-6">
+                                        <button
+                                            class="button specials-button specials_option"
+                                            data-special="4 x 0.3 for €20"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Aria 4 x 0.3 for €20">
+                                            4 x 0.3 for €20
+                                        </button>
+                                    </div> {% endcomment %}
+                                </div>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button
+                                    type="button"
+                                    class="button"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Aria modal close">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Unpaid Button -->
+                <div class="col-3">
+                    <button
+                        class="button checkout-button complimentary-button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#unpaidModal"
+                        aria-label="Aria Unpaid modal open">
+                        Complimentary
+                    </button>
+                </div>
+                
+                <!-- The Waste Button -->
+                <div class="col-3">
+                    <button
+                        class="button checkout-button waste-button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#wasteModal"
+                        aria-label="Aria Waste modal open">
+                        Waste
+                    </button>
+                </div>
+                
+            </div>
         </div>
     </div>
 </div>
@@ -109,6 +1618,7 @@
 
 {% block post_load_js %} 
 {{ block.super }}
+    <script src="{% static 'version_2/js/main_v2.js' %}"></script>
 {% comment %} <script>
     var staff_modal = new bootstrap.Modal(
         document.getElementById("staff_modal"),
