@@ -34,7 +34,7 @@ th {
     position: sticky;
     top: 0;
     color: gold;
-    /* background-color: gold; */
+    background-color: #000;
     border: 1px solid grey;
 }
 

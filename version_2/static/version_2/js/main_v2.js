@@ -34,7 +34,7 @@ window.onload = function () {
             $('.drinks-measurement-row').show()
         }
         if($(elem).attr('data-category') == "food") {
-            console.log("YES ", elem)
+            // console.log("YES ", elem)
             $('.food-measurement-row').show()
         }
         if($(elem).attr('data-category') == "gift") {
@@ -66,6 +66,11 @@ $('#open_drink_modal').on('hidden.bs.modal', function () {
     $('input[name="price"]').val()
     $('input[name="pfand"]').val($('input[name="pfand"]').is(':checked'))
 });
+
+$('.basket').on("click", 'td:first-child', function() {
+    $('.basket').toggleClass('magnify')
+    $('.mask').toggle()
+})
 
 
 // GLOBAL VARS----------------------------

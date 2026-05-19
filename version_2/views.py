@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib import messages
 from . models import ProductV2, ProductSizes, ComplimentaryReasons, WasteReasons, GrandTotalV2, PfandBalance, LineItemV2, Category, SubCategory, SubSubCategory, Events
@@ -11,6 +11,51 @@ import pandas as pd
 import io
 from uuid import UUID
 from django.http import HttpResponse
+
+from django.forms import modelformset_factory
+
+
+def bulk_edit_items(request):
+    # Automatically get all field names except the auto-incrementing ID
+    all_fields = [f.name for f in ProductV2._meta.fields if f.name != 'id']
+    
+    # Pass the dynamic list into the formset factory
+    ItemFormSet = modelformset_factory(ProductV2, fields=all_fields, extra=1)
+    
+    # 2. Get the sorting parameter from the URL (default to 'name')
+    order_by = request.GET.get('order_by', 'name')
+    print("request!!1", request.GET.get('order_by', 'name'))
+    # 3. Map URL triggers to specific related field names
+    sort_mapping = {
+        'name': 'name',
+        '-name': '-name',
+        'category': 'category__name',
+        '-category': '-category__name',
+        'subcategory': 'subcategory__name',
+        '-subcategory': '-subcategory__name',
+        'subsubcategory': 'subsubcategory__name',
+        '-subsubcategory': '-subsubcategory__name',
+    }
+    db_order_field = sort_mapping.get(order_by, 'name')
+    print("db_order_field", db_order_field)
+    # 4. Fetch the optimized and sorted dataset
+    queryset = ProductV2.objects.all().select_related(
+        'category', 
+        'subcategory', 
+        'subsubcategory'
+        ).order_by(db_order_field)
+    
+    if request.method == 'POST':
+        # 2. Bind the submitted POST data to the formset
+        formset = ItemFormSet(request.POST)
+        if formset.is_valid():
+            formset.save()  # Saves all changes to the database at once
+            return redirect(f"{request.path}?order_by={order_by}")  # Reloads the page to show updated data
+    else:
+        # 3. On a GET request, pull all records into the formset
+        formset = ItemFormSet(queryset=ProductV2.objects.all())
+        
+    return render(request, 'version_2/item_bulk_edit.html', {'formset': formset})
 
 # Create your views here.
 def index_v2(request):
@@ -157,7 +202,7 @@ def index_v2(request):
     miscellaneous_drinks = ProductV2.objects.all().filter(category__name="drink").filter(subcategory__name="miscellaneous").exclude(name="Open Drink").exclude(in_use=False).order_by("position_index")
     miscellaneous_food = ProductV2.objects.all().filter(category__name="food").filter(subcategory__name="miscellaneous").exclude(name="Open Food").exclude(in_use=False).order_by("position_index")
     open_drink = ProductV2.objects.all().filter(subcategory__name="open_drink").exclude(in_use=False)
-    specials = ProductV2.objects.all().filter(subcategory__name="special")
+    specials = ProductV2.objects.all().filter(subcategory__name="special").exclude(in_use=False)
     staff = Staff.objects.all().filter(on_duty=True).order_by("name")
     
     pfand_balance = PfandBalance.objects.all().last()

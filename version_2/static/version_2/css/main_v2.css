@@ -649,7 +649,7 @@ button:focus {
 
 
 .table-wrapper {
-    height: 250px;
+    height: 335px;
     width: 100%;
     z-index: 1;
     position: relative;
@@ -786,6 +786,25 @@ table {
     padding: 4px 0 4px 0px;
 }
 
+.basket.magnify {
+    transform: scale(2);
+    top: 50%;
+    right: 75%;
+    position: relative;
+    height: 100%;
+    background-color: #000;
+    border: 3px solid gold;
+
+}
+
+.basket .inputs {
+    margin-top: auto;
+}
+
+.inputs {
+    color: #fff;
+    font-style: italic;
+}
 .latest-product {
     border-bottom: 3px solid #fff;
     /* border-style: double; */
