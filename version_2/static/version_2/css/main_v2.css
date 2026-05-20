@@ -494,8 +494,12 @@ button:focus {
     text-align: end;
 }
 
-.active-indicator.logged-in {
+.active-indicator.admin {
     background-color: green;
+}
+
+.active-indicator.staff {
+    background-color: orange;
 }
 
 .nav {

@@ -35,21 +35,9 @@
                         <thead>
                             <tr>
                             {% for field in formset.forms.0.visible_fields %}
-                                {% if forloop.counter == 1 %}  
-                                <th>
-                                    <a href="?order_by={% if request.GET.order_by == 'name' %}-name{% else %}name{% endif %}">
-                                        {{ field.label }} {% if request.GET.order_by == 'name' %}▲{% elif request.GET.order_by == '-name' %}▼{% endif %}
-                                    </a>
-                                </th>
-                                {% elif forloop.counter == 3 %}  
-                                <!-- Sortable Category Header -->
-                                    <th>
-                                    <a href="?order_by={% if request.GET.order_by == 'category' %}-category{% else %}category{% endif %}">
-                                        Category {% if request.GET.order_by == 'category' %}▲{% elif request.GET.order_by == '-category' %}▼{% endif %}
-                                    </a>
-                                    </th>
-                                {% elif forloop.counter != 9 and forloop.counter != 10 %}
-                                    <th>{{ forloop.counter }} {{ field.label }}</th>
+                                
+                                {% if forloop.counter != 9 and forloop.counter != 10 %}
+                                    <th>{{ field.label }}</th>
                                 {% endif %}
                             {% endfor %}
                             
@@ -59,45 +47,18 @@
                             {% for form in formset %}
                             <tr>
                                 <!-- Hidden field to keep track of the row's database ID -->
-                                 <!--{% for field in form %}
+                                 {% for field in form %}
                                     {% if forloop.counter != 9 and forloop.counter != 10 %}
                                         <td>{{ field }}</td>
                                     {% endif %}
-                                {% endfor %}-->
-                                <!-- Enumeration tracking -->
-                                {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
+                                {% endfor %}
                                 
-                                <!-- Item Name Input Field -->
-                                <td>
-                                <!-- Include hidden form ID fields so Django can track records -->
-                                {{ form.id }} 
-                                {{ form.name }}
-                                {% if form.name.errors %}<span class="error">{{ form.name.errors }}</span>{% endif %}
-                                </td>
-                                
-                                <!-- Category Choice Field -->
-                                <td>
-                                {{ form.category }}
-                                {% if form.category.errors %}<span class="error">{{ form.category.errors }}</span>{% endif %}
-                                </td>
-                                
-                                <!-- Subcategory Choice Field -->
-                                <td>
-                                {{ form.subcategory }}
-                                {% if form.subcategory.errors %}<span class="error">{{ form.subcategory.errors }}</span>{% endif %}
-                                </td>
-                                
-                                <!-- Sub-subcategory Choice Field -->
-                                <td>
-                                {{ form.subsubcategory }}
-                                {% if form.subsubcategory.errors %}<span class="error">{{ form.subsubcategory.errors }}</span>{% endif %}
-                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
             
-                    <button type="submit" class="save-btn">Save All Changes</button>
+                    <button type="submit" class="button save-btn">Save All Changes</button>
                 </form>
                 
             </div>
@@ -105,3 +66,16 @@
     </div>
 </div>
 {% endblock %}
+
+{% block post_load_js %} 
+{{ block.super }}
+    <script src="{% static 'version_2/js/item_bulk_edit.js' %}"></script>
+{% comment %} <script>
+    var staff_modal = new bootstrap.Modal(
+        document.getElementById("staff_modal"),
+        {}
+    );
+    staff_modal.show();
+</script> {% endcomment %}
+{% comment %} <script src="{% static 'js/main.js' %}"></script> {% endcomment %}
+ {% endblock %}

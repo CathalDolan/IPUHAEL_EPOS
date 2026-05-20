@@ -73,6 +73,7 @@ $('.basket').on("click", 'td:first-child', function() {
 })
 
 
+
 // GLOBAL VARS----------------------------
 var STAFF_ID = "";
 var LATEST_PRODUCT_SELECTED = {};
@@ -200,7 +201,7 @@ $('.staff-member').click(function() {
     $('#staff-user').text(name);
 })
 
-$('.active-indicator.logged-in').click(() => {
+$('.active-indicator').click(() => {
     $('.nav').toggle(250)
 })
 

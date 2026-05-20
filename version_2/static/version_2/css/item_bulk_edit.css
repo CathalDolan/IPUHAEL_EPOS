@@ -4,6 +4,12 @@ body {
 	margin: 0;
 }
 
+/* .main-section {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+} */
+
 .heading_row {
     display: flex;
     align-items: center;
@@ -36,4 +42,103 @@ th, td {
     font-size: .75em;
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
+    border: 1px solid #000;
+    /* max-width: 50px; */
+}
+
+table {
+    /* position: relative; */
+    overflow: auto;
+    border: 1px solid black;
+    white-space: nowrap;
+    background-color: #fff;
+}
+
+th:first-child, td:first-child {
+    left: 0;
+    position: -webkit-sticky;
+    position: sticky;
+    background-color: red;
+}
+
+
+.button {
+    position: fixed;
+    height: 55px;
+    top: 0;
+    left: 50px;
+    touch-action: manipulation;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: green;
+    /* letter-spacing: 1.2px; */
+    border-bottom: 2px solid #fff;
+    border-radius: 0.75em;
+    padding: 0 5px;
+    transform-style: preserve-3d;
+    transition:
+        transform 150ms cubic-bezier(0, 0, 0.58, 1),
+        background 150ms cubic-bezier(0, 0, 0.58, 1);
+}
+
+.button::before {
+    position: absolute;
+    content: "";
+    /* width: 100%;
+    height: 100%; */
+    top: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: inherit;
+    border-radius: inherit;
+    transform: translate3d(0, 0.5em, -1em);
+    transition:
+        transform 150ms cubic-bezier(0, 0, 0.58, 1),
+        box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
+}
+
+button:active {
+    transform: translate(0em, 0.5em);
+}
+
+button:active::before {
+    transform: translate3d(0, 0, -1em);
+}
+
+.button.changed {
+    background-color: orange;
+}
+
+.button.changed::before {
+    background-color: orange;
+}
+
+/* input[type="checkbox"].changed-input {
+    outline: 3px solid red;
+}
+
+.changed-input {
+    background-color: pink;
+} */
+
+/* Red highlight for the changed field */
+td:has(.field-changed) {
+    background-color: #dc3545 !important; /* Red border */
+}
+
+.field-changed {
+    background-color: #dc3545 !important; /* Red border */
+    color: #fff;
+    box-shadow: 0 0 4px rgba(220, 53, 69, 0.5);
+    /* outline: 3px solid red; */
+}
+
+/* Pink background highlight for the entire row */
+tr.row-changed, 
+tr.row-changed input,
+tr.row-changed select {
+    background-color: pink; /* Soft, readable pink tint */
+    transition: background-color 0.2s ease; /* Smooth visual feedback */
 }
