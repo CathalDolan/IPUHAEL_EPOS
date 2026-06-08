@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #333333;
+    /* line-height: 1.5; */
+}
+
+.submission-meta p {
+    margin: 0;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.muted {
+    font-weight: lighter;
+    font-size: .9em;
+}
+
+.table-container {
+    /* max-width: 600px; */
+    margin-top: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    /* font-size: 14px; */
+}
+
+.table-name {
+    background-color: #1b3550;
+    color: #fafafa;
+    margin-bottom: 0;
+    padding: 3px 10px;
+    border-right: 2px solid #1b3550;
+    border-left: 2px solid #1b3550;
+    /* text-align: center; */
+    text-transform: uppercase;
+}
+
+th {
+    background-color: #2c3e50;
+    color: #ffffff;
+    text-align: left;
+    padding: 8px;
+    text-transform: uppercase;
+    /* font-size: 12px; */
+}
+
+td {
+    padding: 8px 0;
+    border-bottom: 1px solid #dee2e6;
+    text-transform: uppercase;
+}
+
+/* .border-right {
+    border-right: 1px solid grey;
+} */
+
+.border-top {
+    border-top: 2px solid #000;
+}
+
+.border-left {
+    border-left: 2px solid #000;
+}
+
+.border-right {
+    border-right: 2px solid #000;
+}
+
+.border-all {
+    border: 2px solid #000;
+}
+
+.till-takings {
+    font-size: 1.1em;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+/* .totals-row td {
+    border-top: 2px solid #000;
+} */
+
+.coins-header {
+    color: #f1c232;
+}
+
+.coins {
+    background-color: #fff2cc;
+}
+
+.notes-header {
+    color: #6aa84f;
+}
+
+.notes {
+    background-color: #d9ead3;
+}
+
+.vouchers-header {
+    color: #cc0000;
+}
+
+.vouchers {
+    background-color: #f4cccc;
+}
+

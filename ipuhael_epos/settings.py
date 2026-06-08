@@ -52,11 +52,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'index',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'import_export',
-    'index',
     'version_2',
 ]
 
@@ -175,6 +175,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'thepopupirishpub@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = 'Ipuhael EPOS System Terminal <thepopupirishpub@gmail.com>'
 
 # Configure Django App for Heroku.
 import django_on_heroku

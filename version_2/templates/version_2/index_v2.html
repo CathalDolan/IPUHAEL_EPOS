@@ -892,8 +892,9 @@
                         </form>
                         <a class="nav-link" href="{% url 'past_orders_v2' %}">Previous Orders</a>
                         <a class="nav-link" href="{% url 'reports' %}">Reports</a>
+                        <a class="nav-link" href="{% url 'eod_takings' %}">Daily Takings</a>
                         <a class="nav-link" href="{% url 'bulk_edit' %}">Edit Products</a>
-                        <a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">Admin</a>
+                        <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
                         <a class="nav-link" href="{% url 'index_v2' %}">Version 2</a>
                     </nav>
                     
@@ -908,6 +909,7 @@
                             <button class="nav-link" type="submit">Log out</button>
                         </form>
                         <a class="nav-link" href="{% url 'past_orders_v2' %}">Previous Orders</a>
+                        <a class="nav-link" href="{% url 'eod_takings' %}">Daily Takings</a>
                         
                     </nav>
                 {% else %}
@@ -1254,8 +1256,17 @@
             
             {% if request.user.is_authenticated %}
             <div class="table-wrapper">
-                <div class="staff-table">
-                    <table>
+                <div class="container staff-table">
+                    
+                        <div class="row">
+                            {% for staff_member in staff %}
+                            <div class="col-4">
+                                <div class="button staff-member" data-name="{{ staff_member.name }}" data-id="{{ staff_member.id }}">{{ staff_member.name }}</div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    
+                    {% comment %} <table>
                         <tr>
                             <th>STAFF USER</th>
                         </tr>
@@ -1264,28 +1275,37 @@
                                 <td>{{ staff_member.name }}</td>
                             </tr>
                         {% endfor %}
-                    </table>
+                    </table> {% endcomment %}
                 </div>
                 <div class="basket">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Size</th>
-                                <th>Qty</th>
-                                <th>Unit</th>
-                                <th>Total</th>
-                                <th>Add</th>
-                                <th>Sub</th>
-                                <th>Del</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-        
-                        </tbody>
-                    </table>
+                    <!-- The X button sits safely outside the scrollable area -->
+                     <div class="magnify-icon-wrapper">
+                        <div class="x">X</div>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                     </div>
                     
+                    <!-- This new wrapper handles the scrolling -->
+                    <div class="basket-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Size</th>
+                                    <th>Qty</th>
+                                    <th>Unit</th>
+                                    <th>Total</th>
+                                    <th>Add</th>
+                                    <th>Sub</th>
+                                    <th>Del</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dynamic rows here -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                
                 <div class="discounts">
                     <table>
                         <thead>
@@ -1306,6 +1326,7 @@
                 </div>
                 
             </div>
+            
             {% else %}
             <div class="form-wrapper">
                 <h3>Login</h3>
@@ -1395,7 +1416,7 @@
                         data-payment_method="Cash"
                         aria-label="Aria €10 note">
                         <img
-                            src="{% static 'images/€10_note.png' %}"
+                            src="{% static 'images/ten_euro_note.png' %}"
                             alt="€10 note" />
                     </button>
                 </div>

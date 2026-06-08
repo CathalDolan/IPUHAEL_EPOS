@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, SubCategory, SubSubCategory, Events, ProductV2, ComplimentaryReasons, WasteReasons, GrandTotalV2, LineItemV2, PfandBalance, ProductSizes
+from .models import Category, SubCategory, SubSubCategory, Events, ProductV2, ComplimentaryReasons, WasteReasons, GrandTotalV2, LineItemV2, PfandBalance, ProductSizes, EndOfDayTakings, Receipts
 from import_export.admin import ExportActionMixin
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
@@ -207,6 +207,66 @@ class LineItemV2Admin(ExportActionMixin, admin.ModelAdmin):
     def payment_reason(self, obj):
         return obj.transaction.payment_reason
 
+
+class EndOfDayTakingsAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'submission_date',
+        'trading_date',
+        'event',
+        'submitted_by',
+        'one_cent',
+        'one_cent_value',
+        'two_cent',
+        'two_cent_value',
+        'five_cent',
+        'five_cent_value',
+        'ten_cent',
+        'ten_cent_value',
+        'twenty_cent',
+        'twenty_cent_value',
+        'fifty_cent',
+        'fifty_cent_value',
+        'one_euro',
+        'one_euro_value',
+        'two_euro',
+        'two_euro_value',
+        'five_euro',
+        'five_euro_value',
+        'ten_euro',
+        'ten_euro_value',
+        'twenty_euro',
+        'twenty_euro_value',
+        'fifty_euro',
+        'fifty_euro_value',
+        'one_hundred_euro',
+        'one_hundred_euro_value',
+        'two_hundred_euro',
+        'two_hundred_euro_value',
+        'total_value',
+        'two_for_one_vouchers',
+        'ten_for_eleven_vouchers',
+        'customer_20_off_vouchers',
+        'austeller_20_off_vouchers',
+        'student_discount_vouchers',
+        'oap_discount_vouchers',
+        'five_euro_off_vouchers',
+        # 'receipts',
+    )
+
+
+class ReceiptsAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'submission_date',
+        'event',
+        'submitted_by',
+        'name',
+        'description',
+        'value',
+        'image',
+    )
+
 class PfandBalanceAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
@@ -227,4 +287,6 @@ admin.site.register(WasteReasons, WasteReasonsAdmin)
 admin.site.register(ProductV2, ProductV2Admin)
 admin.site.register(GrandTotalV2, GrandTotalV2Admin)
 admin.site.register(LineItemV2, LineItemV2Admin)
+admin.site.register(EndOfDayTakings, EndOfDayTakingsAdmin)
+admin.site.register(Receipts, ReceiptsAdmin)
 admin.site.register(PfandBalance, PfandBalanceAdmin)

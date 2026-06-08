@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<!-- dc CSS -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.min.css" type="text/css" /> -->
+<!--My CSS stylesheet-->
+<link rel="stylesheet" href="{% static 'version_2/css/eod_takings.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="container-fluid">
+    {% csrf_token %}
+    
+    <!-- STICKY HEADER: Keeps Metadata and Live Totals always visible at 800px height -->
+    <div class="row summary">
+        <div class="col-md-2">
+            <label class="">Trading Date</label>
+            {{ takings_form.trading_date }}
+        </div>
+        <div class="col-md-2">
+            <label class="">Staff Member</label>
+            {{ takings_form.submitted_by }}
+        </div>
+        <div class="col-md-2">
+            <label class="">Event</label>
+            {{ takings_form.event }}
+        </div>
+        
+        <!--Running total-->
+        <!-- Control panel container layout matching heights perfectly -->
+        <div class="col-md-6 ms-auto d-flex align-items-stretch justify-content-end gap-2">
+            <div class="running-total h-100 d-flex flex-column justify-content-center">
+                <span>RUNNING TOTAL</span>
+                <h3 id="grand-total">€0.00</h3>
+            </div>
+            <!-- FIXED GLOBAL RESET BUTTON: Matches padding and sizing of scoreboard -->
+            <button type="button" id="global-reset-btn" class="btn btn-outline-danger fw-bold">
+                <i class="fa-solid fa-rotate-left me-2"></i> Reset
+            </button>
+
+            
+        </div>
+    </div>
+
+    <!-- MAIN GRID CONTAINER -->
+    <div class="row" id="cash-matrix">
+        <!-- COLUMN 1: COINS (Left) -->
+        <div class="col-md-4 form-section">
+            <h6><i class="fa-solid fa-coins"></i> Coins</h6>
+            <div class="row form-section-headers">
+                <div class="col-2">Unit</div>
+                <div class="col-4">Count</div>
+                <div class="col-4">Value (€)</div>
+            </div>
+            
+            <!-- Denomination Rows -->
+            <div class="row denomination-row field-row" data-multiplier="0.01">
+                <div class="col-2"><label>1c</label></div>
+                <div class="col-4">{{ takings_form.one_cent }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.one_cent_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.one_cent_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.one_cent_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="0.02">
+                <div class="col-2"><label>2c</label></div>
+                <div class="col-4">{{ takings_form.two_cent }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.two_cent_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.two_cent_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.two_cent_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="0.05">
+                <div class="col-2"><label>5c</label></div>
+                <div class="col-4">{{ takings_form.five_cent }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.five_cent_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.five_cent_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.five_cent_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="0.10">
+                <div class="col-2"><label>10c</label></div>
+                <div class="col-4">{{ takings_form.ten_cent }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.ten_cent_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.ten_cent_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.ten_cent_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="0.20">
+                <div class="col-2"><label>20c</label></div>
+                <div class="col-4">{{ takings_form.twenty_cent }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.twenty_cent_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.twenty_cent_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.twenty_cent_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="0.50">
+                <div class="col-2"><label>50c</label></div>
+                <div class="col-4">{{ takings_form.fifty_cent }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.fifty_cent_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.fifty_cent_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.fifty_cent_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="1.00">
+                <div class="col-2"><label>€1</label></div>
+                <div class="col-4">{{ takings_form.one_euro }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.one_euro_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.one_euro_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.one_euro_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="2.00">
+                <div class="col-2"><label>€2</label></div>
+                <div class="col-4">{{ takings_form.two_euro }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.two_euro_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.two_euro_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.two_euro_value }}
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMN 2: NOTES (Center) -->
+        <div class="col-md-4 form-section">
+            <h6><i class="fa-solid fa-money-check-dollar"></i> Notes</h6>
+            <div class="row form-section-headers">
+                <div class="col-2">Unit</div>
+                <div class="col-4">Count</div>
+                <div class="col-4">Value (€)</div>
+            </div>
+            
+            <div class="row denomination-row field-row" data-multiplier="5.00">
+                <div class="col-2"><label>€5</label></div>
+                <div class="col-4">{{ takings_form.five_euro }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.five_euro_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.five_euro_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.five_euro_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="10.00">
+                <div class="col-2"><label>€10</label></div>
+                <div class="col-4">{{ takings_form.ten_euro }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.ten_euro_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.ten_euro_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.ten_euro_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="20.00">
+                <div class="col-2"><label>€20</label></div>
+                <div class="col-4">{{ takings_form.twenty_euro }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.twenty_euro_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.twenty_euro_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.twenty_euro_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="50.00">
+                <div class="col-2"><label>€50</label></div>
+                <div class="col-4">{{ takings_form.fifty_euro }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.fifty_euro_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.fifty_euro_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.fifty_euro_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="100.00">
+                <div class="col-2"><label>€100</label></div>
+                <div class="col-4">{{ takings_form.one_hundred_euro }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.one_hundred_euro_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.one_hundred_euro_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.one_hundred_euro_value }}
+                </div>
+            </div>
+            <div class="row denomination-row field-row" data-multiplier="200.00">
+                <div class="col-2"><label>€200</label></div>
+                <div class="col-4">{{ takings_form.two_hundred_euro }}</div>
+                <div class="col-4">
+                    <!-- Renders server-side errors automatically -->
+                    {% if takings_form.two_hundred_euro_value.errors %}
+                        <div class="text-danger small fw-bold mb-1">{{ takings_form.two_hundred_euro_value.errors.0 }}</div>
+                    {% endif %}
+                    {{ takings_form.two_hundred_euro_value }}
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMN 3: VOUCHERS & SUBMISSION (Right) -->
+        <div class="col-md-4 form-section vouchers">
+            <div>
+                <h6><i class="fa-solid fa-ticket"></i> Vouchers</h6>
+                
+                <div class="row field-row">
+                    <div class="col-5"><label>2-for-1</label></div>
+                    <div class="col-4">{{ takings_form.two_for_one_vouchers }}</div>
+                </div>
+                <div class="row field-row">
+                    <div class="col-5"><label>10-for-11</label></div>
+                    <div class="col-4">{{ takings_form.ten_for_eleven_vouchers }}</div>
+                </div>
+                <div class="row field-row">
+                    <div class="col-5"><label>Customer 20% Off</label></div>
+                    <div class="col-4">{{ takings_form.customer_20_off_vouchers }}</div>
+                </div>
+                <div class="row field-row">
+                    <div class="col-5"><label>Austeller 20% Off</label></div>
+                    <div class="col-4">{{ takings_form.austeller_20_off_vouchers }}</div>
+                </div>
+                <div class="row field-row">
+                    <div class="col-5"><label>Student Discount</label></div>
+                    <div class="col-4">{{ takings_form.student_discount_vouchers }}</div>
+                </div>
+                <div class="row field-row">
+                    <div class="col-5"><label>OAP Discount</label></div>
+                    <div class="col-4">{{ takings_form.oap_discount_vouchers }}</div>
+                </div>
+                <div class="row field-row">
+                    <div class="col-5"><label>€5 Off Voucher</label></div>
+                    <div class="col-4">{{ takings_form.five_euro_off_vouchers }}</div>
+                </div>
+            </div>
+
+            
+        </div>
+
+    </div>
+    <hr>
+    <!-- LOWER ROW BLOCK: HORIZONTAL RECEIPTS PANEL -->
+    <div class="row receipts-section pt-2">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="text-uppercase m-0"><i class="fa-solid fa-receipt"></i> Receipt Attachments</h6>
+            <!-- Dynamic '+' Add Control Button -->
+            <button type="button" id="add-receipt-btn" class="btn btn-sm btn-success fw-bold px-3">
+                <i class="fa-solid fa-plus"></i> Add Another Receipt
+            </button>
+        </div>
+
+        <!-- Scroll Pool Wrapper optimized for 1280x800 display boundaries -->
+        <div id="receipts-container" style="overflow-y: auto; overflow-x: hidden;">
+            <!-- Mandatory management helper for index arrays -->
+            {{ receipt_formset.management_form }}
+            
+            {% for formset_form in receipt_formset %}
+                <div class="row receipts-form-row pb-2">
+                    <!-- Hidden field tracking for IDs -->
+                    <div class="d-none">
+                        {{ formset_form.id }}
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label class="form-label mb-1 small fw-bold">Receipt Name</label>
+                        {{ formset_form.name }}
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label mb-1 small fw-bold">Receipt Value (€)</label>
+                        {{ formset_form.value }}
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1 small fw-bold">Upload Image File</label>
+                        <div class="image-upload-zone rounded bg-white">
+                            {{ formset_form.image }}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1 small fw-bold">Description / Notes</label>
+                        {{ formset_form.description }}
+                    </div>
+                    <!-- NEW: Delete Action Button Pool (col-md-1) -->
+                    <div class="col-md-1 remove-button-col">
+                        <button type="button" class="btn btn-sm btn-danger remove-receipt-btn w-100 fw-bold" style="padding: 0.25rem 0;" title="Remove Row">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    <!-- SUBMIT BUTTON: Anchored securely to the bottom right -->
+    <div class="row buttons-row">
+        <div class="col-3">
+            <a href="{% url 'index_v2' %}"><button type="button" class="back-button"><i class="fa-solid fa-angles-left"></i> Back to site</button></a>
+        </div>
+        <div class="col-3">
+            <!-- Check your button declaration at the bottom of your HTML template -->
+                <button type="submit" class="submit-button">
+                    <i class="fa-solid fa-upload"></i> Submit
+                </button>
+            
+        </div>
+    </div>
+            
+</form>
+    
+
+
+{% endblock %}
+{% block post_load_js %}
+{{ block.super }}
+<script src="{% static 'version_2/js/eod_takings.js' %}"></script>
+{% endblock %}

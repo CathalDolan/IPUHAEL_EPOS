@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {% comment %} {% load static %}
+    <link rel="stylesheet" href="{% static 'version_2/css/reports_email.css' %}"> {% endcomment %}
+    <style>
+        {{ css_styles|safe }}
+    </style>
+</head>
+<body>
+    <div class="container submission-meta">
+        <p class="underline"><strong>TRADING REPORT<strong></p>
+        <P>Event: <strong>{{ event }}</strong> </p>
+        <p>Date: <strong>{{ takings.trading_date }}</strong>.
+        <p>Submitted by: <strong>{{submitted_by}}</strong></p>
+        <p class="muted">{{timestamp}}</p>
+    </div>
+    
+    <div class="table-container">
+        
+        <h3 class="table-name">Transaction Summary</h3>
+        <table class="db-summary-table">
+            <thead>
+                {% comment %} <p>{{report}}</p> {% endcomment %}
+                {% comment %} <tr><th class="table-name">Database sum totals</th></tr> {% endcomment %}
+                <tr>
+                    <th class="text-center">Category</th>
+                    <th class="text-center">#Items</th>
+                    <th class="text-center">Waste</th>
+                    <th class="text-center">Comp</th>
+                    <th class="text-center">Disc</th>
+                    <th class="text-center">Card</th>
+                    <th class="text-center">Cash</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">Drinks</td>
+                    <td class="text-center">{{drinks_report.quantity}}</td>
+                    <td class="text-center">€{{drinks_report.waste|floatformat:2}}</td>
+                    <td class="text-center">€{{drinks_report.complimentary|floatformat:2}}</td>
+                    <td class="text-center">€{{drinks_report.discount_value|floatformat:2}}</td>
+                    <td class="text-center border-left">€{{drinks_report.card|floatformat:2}}</td>
+                    <td class="text-center border-right">€{{drinks_report.cash|floatformat:2}}</td>
+                </tr>
+                <tr>
+                    <td class="text-center">Food</td>
+                    <td class="text-center">{{food_report.quantity}}</td>
+                    <td class="text-center">€{{food_report.waste|floatformat:2}}</td>
+                    <td class="text-center">€{{food_report.complimentary|floatformat:2}}</td>
+                    <td class="text-center">€{{food_report.discount_value|floatformat:2}}</td>
+                    <td class="text-center border-left">€{{food_report.card|floatformat:2}}</td>
+                    <td class="text-center border-right">€{{food_report.cash|floatformat:2}}</td>
+                </tr>
+                <tr>
+                    <td class="text-center">Gifts</td>
+                    <td class="text-center">{{gifts_report.quantity}}</td>
+                    <td class="text-center">€{{gifts_report.waste|floatformat:2}}</td>
+                    <td class="text-center">€{{gifts_report.complimentary|floatformat:2}}</td>
+                    <td class="text-center">€{{gifts_report.discount_value|floatformat:2}}</td>
+                    <td class="text-center border-left">€{{gifts_report.card|floatformat:2}}</td>
+                    <td class="text-center border-right">€{{gifts_report.cash|floatformat:2}}</td>
+                </tr>
+                <tr>
+                    <td class="text-center border-top">Totals</td>
+                    <td class="text-center border-top">{{total_quantity}}</td>
+                    <td class="text-center border-top">€{{total_waste|floatformat:2}}</td>
+                    <td class="text-center border-top">€{{total_complimentary|floatformat:2}}</td>
+                    <td class="text-center border-top">€{{total_discount_value|floatformat:2}}</td>
+                    <td class="text-center border-top border-left">€{{total_card|floatformat:2}}</td>
+                    <td class="text-center border-top border-right">€{{total_cash|floatformat:2}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="table-name">Till Takings</h3>
+        <table class="till-takings">
+            <thead>
+                {% comment %} <tr><th class="table-name">Till Takings</th></tr> {% endcomment %}
+                <tr>
+                    <th class="coins-header">COINS</th>
+                    <th class="text-center">Counted</th>
+                    <th class="text-center border-right">Value</th>
+                    <th class="notes-header">NOTES</th>
+                    <th class="text-center">Counted</th>
+                    <th class="text-center border-right">Value</th>
+                    <th class="vouchers-header">Vouchers</th>
+                    <th class="text-center">Counted</th>
+                    <th class="text-center">Recorded</th>
+                </tr>
+            </thead>
+            <tbody class="fw-bold">
+                <tr>
+                    <td class="coins text-center">1c</td>
+                    <td class="coins text-center">{{ takings.one_cent }}</td>
+                    <td class="coins text-center border-right">€{{ takings.one_cent_value }}</td>
+                    <td class="notes text-center">€5</td>
+                    <td class="notes text-center">{{ takings.five_euro }}</td>
+                    <td class="notes text-center border-right">€{{ takings.five_euro_value }}</td>
+                    <td class="vouchers text-center">2-for-1</td>
+                    <td class="vouchers text-center">{{ takings.two_for_one_vouchers }}</td>
+                    <td class="vouchers text-center">{{report.two_for_one_vouchers_count}}</td>
+                </tr>
+                <tr>
+                    <td class="coins text-center">2c</td>
+                    <td class="coins text-center">{{ takings.two_cent }}</td>
+                    <td class="coins text-center border-right">€{{ takings.two_cent_value }}</td>
+                    <td class="notes text-center">€10</td>
+                    <td class="notes text-center">{{ takings.ten_euro }}</td>
+                    <td class="notes text-center border-right">€{{ takings.ten_euro_value }}</td>
+                    <td class="vouchers text-center">10-for-11</td>
+                    <td class="vouchers text-center">{{ takings.ten_for_eleven_vouchers }}</td>
+                    <td class="vouchers text-center">{{report.ten_for_eleven_vouchers_count}}</td>
+                </tr>
+                <tr>
+                    <td class="coins text-center">5c</td>
+                    <td class="coins text-center">{{ takings.five_cent }}</td>
+                    <td class="coins text-center border-right">€{{ takings.five_cent_value }}</td>
+                    <td class="notes text-center text-center">€20</td>
+                    <td class="notes text-center">{{ takings.twenty_euro }}</td>
+                    <td class="notes text-center border-right">€{{ takings.twenty_euro_value }}</td>
+                    <td class="vouchers text-center">Cust 20% Off</td>
+                    <td class="vouchers text-center">{{ takings.customer_20_off_vouchers }}</td>
+                    <td class="vouchers text-center">{{report.twenty_pc_off_customer_vouchers_count}}</td>
+                </tr>
+                <tr>
+                    <td class="coins text-center">50c</td>
+                    <td class="coins text-center">{{ takings.fifty_cent }}</td>
+                    <td class="coins text-center border-right">€{{ takings.fifty_cent_value }}</td>
+                    <td class="notes text-center">€50</td>
+                    <td class="notes text-center">{{ takings.fifty_euro }}</td>
+                    <td class="notes text-center border-right">€{{ takings.fifty_euro_value }}</td>
+                    <td class="vouchers text-center">Aust 20% Off</td>
+                    <td class="vouchers text-center">{{ takings.austeller_20_off_vouchers }}</td>
+                    <td class="vouchers text-center">{{report.twenty_pc_off_austeller_vouchers_count}}</td>
+                </tr>
+                <tr>
+                    <td class="coins text-center">10c</td>
+                    <td class="coins text-center">{{ takings.ten_cent }}</td>
+                    <td class="coins text-center border-right">€{{ takings.ten_cent_value }}</td>
+                    <td class="notes text-center">€100</td>
+                    <td class="notes text-center">{{ takings.one_hundred_euro }}</td>
+                    <td class="notes text-center border-right">€{{ takings.one_hundred_euro_value }}</td>
+                    <td class="vouchers text-center">Student Disc</td>
+                    <td class="vouchers text-center">{{ takings.student_discount_vouchers }}</td>
+                    <td class="vouchers text-center">{{report.student_discount_vouchers_count}}</td></tr>
+                </tr>
+                <tr>
+                    <td class="coins text-center">20c</td>
+                    <td class="coins text-center">{{ takings.twenty_cent }}</td>
+                    <td class="coins text-center border-right">€{{ takings.twenty_cent_value }}</td>
+                    <td class="notes text-center">€200</td>
+                    <td class="notes text-center">{{ takings.two_hundred_euro }}</td>
+                    <td class="notes text-center border-right">€{{ takings.two_hundred_euro_value }}</td>
+                    <td class="vouchers text-center">OAP Disc</td>
+                    <td class="vouchers text-center">{{ takings.oap_discount_vouchers }}</td>
+                    <td class="vouchers text-center">{{report.oap_discount_vouchers_count}}</td>
+                </tr>
+                <tr>
+                    <td class="coins text-center">€1</td>
+                    <td class="coins text-center">{{ takings.one_euro }}</td>
+                    <td class="coins text-center border-right">€{{ takings.one_euro_value }}</td>
+                    <td class="notes text-center"></td>
+                    <td class="notes text-center"></td>
+                    <td class="notes text-center border-right"></td>
+                    <td class="vouchers text-center">€5 Off</td>
+                    <td class="vouchers text-center">{{ takings.five_euro_off_vouchers }}</td>
+                    <td class="vouchers text-center">{{report.five_euro_off_vouchers_count}}</td>
+                    
+                </tr>
+                <tr>
+                    <td class="coins text-center">€2</td>
+                    <td class="coins text-center">{{ takings.two_euro }}</td>
+                    <td class="coins text-center border-right">€{{ takings.two_euro_value }}</td>
+                    <td class="notes text-center"></td>
+                    <td class="notes text-center"></td>
+                    <td class="notes text-center border-right"></td>
+                    <td class="vouchers text-center"></td>
+                    <td class="vouchers text-center"></td>
+                    <td class="vouchers text-center"></td>
+                    
+                </tr>
+                
+                <tr class="fw-bold border-top">
+                    <td class="coins text-center">TOTAL</td>
+                    <td class="coins text-center">{{ total_coins_count }}</td>
+                    <td class="coins text-center border-right">€{{ total_coins_value|floatformat:2 }}</td>
+                    <td class="notes text-center">TOTAL</td>
+                    <td class="notes text-center">{{ total_notes_count }}</td>
+                    <td class="notes text-center border-right">€{{ total_notes_value|floatformat:2 }}</td>
+                    <td class="vouchers text-center">TOTAL</td>
+                    <td class="vouchers text-center"></td>
+                    <td class="vouchers text-center"></td>
+                </tr>
+                <tr class="border-all fw-bold">
+                    <td>TOTAL CASH</td>
+                    <td>€{{ total_cash_takings|floatformat:2 }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="table-name">Receipts</h3>
+        {% if receipts %}
+            <table class="receipts-table">
+                <thead>
+                    <tr>
+                        <th class="">Name</th>
+                        <th class="text-center">Description</th>
+                        <th class="text-center">Value</th>
+                        <th class="text-center">Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for receipt in receipts %}
+                    <tr>
+                        <td>{{receipt.name}}</td>
+                        <td>{{receipt.description}}</td>
+                        <td class="text-center">€{{receipt.value}}</td>
+                        <td class="text-center"><img height="50" width="50" src="{{receipt.image}}" /></td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        {% else %}
+        <P>NO RECEIPTS SUBMITTED</P>
+        {%endif%}
+    </div>
+
+    <p style="font-size: 13px; color: #7f8c8d; margin-top: 25px;">
+        Submitted By: {{ submitted_by.name|default:"Unknown" }}<br>
+        Event Link: {{ event.name|default:"N/A" }}<br>
+        Database Log Timestamp: {{ timestamp }}
+    </p>
+    <p>Regards,<br><strong>Ipuhael EPOS System Terminal</strong></p>
+</body>
+</html>

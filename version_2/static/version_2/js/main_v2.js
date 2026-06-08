@@ -67,12 +67,23 @@ $('#open_drink_modal').on('hidden.bs.modal', function () {
     $('input[name="pfand"]').val($('input[name="pfand"]').is(':checked'))
 });
 
-$('.basket').on("click", 'td:first-child', function() {
+// $('.basket').on("click", 'td:first-child', function() {
+//     $('.basket').toggleClass('magnify')
+//     $('.mask').toggle()
+// })
+
+$('.magnify-icon-wrapper').on("click", function() {
     $('.basket').toggleClass('magnify')
     $('.mask').toggle()
+    if($(this).children('.x').css('display') == "none") {
+        console.log("NONE")
+        $(this).children('.x').css('display', 'flex')
+    }
+    else {
+        $(this).children('.x').css('display', 'none')
+    }
+    $(this).children('.fa-magnifying-glass').toggle()
 })
-
-
 
 // GLOBAL VARS----------------------------
 var STAFF_ID = "";
@@ -85,6 +96,7 @@ var VOUCHERS = [];
 var GLASSES_RETURNED = 0;
 var GLASSES_OUT = 0;
 // var PFAND = $('#pfand').attr('data-value');
+var NO_PFAND = false;
 var PFAND = 2.5;
 var PFAND_TOTAL = 0;
 var BASKET_TOTAL = 0;
@@ -173,16 +185,24 @@ $('.product-selection-button').click(function() {
 })
 
 $('.pfand-button.activate').click(function() {
-    // console.log("pfand button clicked");
-    GLASSES_RETURNED = Number($(this).attr("data-value"));
+    console.log("pfand button clicked");     
     $('.pfand-button').removeClass('selected');
     $(".pfand-button[data-value='5+']").text(`5+`);
-    if($(this).attr('data-value') != 'reset') {
+    if($(this).attr('data-value') == 'no-pfand') {
+        NO_PFAND = true;
         $(this).addClass('selected');
     }
     else {
-        GLASSES_RETURNED = 0;
+        if($(this).attr('data-value') != 'reset') {
+            $(this).addClass('selected');
+            GLASSES_RETURNED = Number($(this).attr("data-value"));
+        }
+        else {
+            GLASSES_RETURNED = 0;
+            NO_PFAND = false;
+        }
     }
+        
     if (Number($(this).attr("data-value")) > 4) {
         $(".pfand-button[data-value='5+']").addClass("selected").text(`${$(this).attr("data-value")} (5+)`);
     }
@@ -208,17 +228,17 @@ $('.active-indicator').click(() => {
 // Increment basket
 $(document).on("click", ".increment", function() {
     if($(this).parent().hasClass('latest-product')) {
-        GLASSES_RETURNED += 1;
+        // GLASSES_RETURNED += 1;
         LATEST_PRODUCT.qty += 1;
         LATEST_PRODUCT.line_total = LATEST_PRODUCT.price * LATEST_PRODUCT.qty;
-        if(LATEST_PRODUCT.discount_applied == "Pfand Shot") {
-            $('.pfand-button').removeClass('selected')
-            $(".pfand-button[data-value='5+']").text(`5+`);
-            $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
-            if (GLASSES_RETURNED > 4) {
-                $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
-            }
-        }
+        // if(LATEST_PRODUCT.discount_applied == "Pfand Shot") {
+        //     $('.pfand-button').removeClass('selected')
+        //     $(".pfand-button[data-value='5+']").text(`5+`);
+        //     $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
+        //     if (GLASSES_RETURNED > 4) {
+        //         $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
+        //     }
+        // }
     }
 
     else {
@@ -228,15 +248,15 @@ $(document).on("click", ".increment", function() {
         );
         ALL_PRODUCTS[product_index].qty += 1;
         ALL_PRODUCTS[product_index].line_total = ALL_PRODUCTS[product_index].price * ALL_PRODUCTS[product_index].qty;
-        if(ALL_PRODUCTS[product_index].discount_applied == "Pfand Shot") {
-            GLASSES_RETURNED += 1;
-            $('.pfand-button').removeClass('selected')
-            $(".pfand-button[data-value='5+']").text(`5+`);
-            $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
-            if (GLASSES_RETURNED > 4) {
-                $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
-            }
-        }
+        // if(ALL_PRODUCTS[product_index].discount_applied == "Pfand Shot") {
+        //     GLASSES_RETURNED += 1;
+        //     $('.pfand-button').removeClass('selected')
+        //     $(".pfand-button[data-value='5+']").text(`5+`);
+        //     $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
+        //     if (GLASSES_RETURNED > 4) {
+        //         $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
+        //     }
+        // }
     }
     applySpecials()
 })
@@ -246,17 +266,17 @@ $(document).on("click", ".decrement", function() {
     if($(this).parent().hasClass('latest-product')) {
         console.log("YES")
         if(LATEST_PRODUCT.qty > 1) {
-            GLASSES_RETURNED -= 1;
+            // GLASSES_RETURNED -= 1;
             LATEST_PRODUCT.qty -= 1;
             LATEST_PRODUCT.line_total = LATEST_PRODUCT.price * LATEST_PRODUCT.qty;
-            if(LATEST_PRODUCT.discount_applied == "Pfand Shot") {
-                $('.pfand-button').removeClass('selected')
-                $(".pfand-button[data-value='5+']").text(`5+`);
-                $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
-                if (GLASSES_RETURNED > 4) {
-                    $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
-                }
-            }
+            // if(LATEST_PRODUCT.discount_applied == "Pfand Shot") {
+            //     $('.pfand-button').removeClass('selected')
+            //     $(".pfand-button[data-value='5+']").text(`5+`);
+            //     $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
+            //     if (GLASSES_RETURNED > 4) {
+            //         $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
+            //     }
+            // }
         }
     }
 
@@ -269,15 +289,15 @@ $(document).on("click", ".decrement", function() {
             ALL_PRODUCTS[product_index].qty -= 1;
             ALL_PRODUCTS[product_index].line_total =
             ALL_PRODUCTS[product_index].price * ALL_PRODUCTS[product_index].qty;
-            if(ALL_PRODUCTS[product_index].discount_applied == "Pfand Shot") {
-                GLASSES_RETURNED -= 1;
-                $('.pfand-button').removeClass('selected')
-                $(".pfand-button[data-value='5+']").text(`5+`);
-                $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
-                if (GLASSES_RETURNED > 4) {
-                    $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
-                }
-            }
+            // if(ALL_PRODUCTS[product_index].discount_applied == "Pfand Shot") {
+            //     GLASSES_RETURNED -= 1;
+            //     $('.pfand-button').removeClass('selected')
+            //     $(".pfand-button[data-value='5+']").text(`5+`);
+            //     $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
+            //     if (GLASSES_RETURNED > 4) {
+            //         $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
+            //     }
+            // }
         }
     }
     
@@ -287,16 +307,16 @@ $(document).on("click", ".decrement", function() {
 // Remove item from basket
 $(document).on("click", ".remove-product", function() {
     if($(this).parent().hasClass('latest-product')) {
-        if($(this).attr("data-discount_applied") == "Pfand Shot") {
-            GLASSES_RETURNED -= Number($(this).attr("data-qty"));
-            $('.pfand-button').removeClass('selected')
-            $('.product-button').removeClass('disabled')
-            $(".pfand-button[data-value='5+']").text(`5+`);
-            $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
-            if (GLASSES_RETURNED > 4) {
-                $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
-            }
-        }
+        // if($(this).attr("data-discount_applied") == "Pfand Shot") {
+        //     GLASSES_RETURNED -= Number($(this).attr("data-qty"));
+        //     $('.pfand-button').removeClass('selected')
+        //     $('.product-button').removeClass('disabled')
+        //     $(".pfand-button[data-value='5+']").text(`5+`);
+        //     $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
+        //     if (GLASSES_RETURNED > 4) {
+        //         $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
+        //     }
+        // }
         
         LATEST_PRODUCT = {}
         LATEST_PRODUCT_SELECTED = {}
@@ -307,16 +327,16 @@ $(document).on("click", ".remove-product", function() {
             (item) =>
                 item.name == `${$(this).attr('data-name')}` && item.size == `${$(this).attr('data-size')}`,
         );
-        if(ALL_PRODUCTS[product_index].discount_applied == "Pfand Shot") {
-            GLASSES_RETURNED -= ALL_PRODUCTS[product_index].qty;
-            $('.pfand-button').removeClass('selected')
-            $('.product-button').removeClass('disabled')
-            $(".pfand-button[data-value='5+']").text(`5+`);
-            $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
-            if (GLASSES_RETURNED > 4) {
-                $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
-            }
-        }
+        // if(ALL_PRODUCTS[product_index].discount_applied == "Pfand Shot") {
+        //     GLASSES_RETURNED -= ALL_PRODUCTS[product_index].qty;
+        //     $('.pfand-button').removeClass('selected')
+        //     $('.product-button').removeClass('disabled')
+        //     $(".pfand-button[data-value='5+']").text(`5+`);
+        //     $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
+        //     if (GLASSES_RETURNED > 4) {
+        //         $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
+        //     }
+        // }
         ALL_PRODUCTS.splice(product_index, 1);
     }
     
@@ -422,7 +442,7 @@ $(".product-button").click(function() {
         if(LATEST_PRODUCT.discount_applied == "Pfand Shot") {
             LATEST_PRODUCT.qty += 1;
             LATEST_PRODUCT.line_total = LATEST_PRODUCT.qty * PFAND
-            GLASSES_RETURNED +=1;
+            // GLASSES_RETURNED +=1;
         }
         else {
             if(!$.isEmptyObject(LATEST_PRODUCT)) {
@@ -441,15 +461,15 @@ $(".product-button").click(function() {
                 pfand_payable: $(this).attr('data-pfand'),
                 discount_applied: "Pfand Shot"
             }
-            GLASSES_RETURNED +=1;
+            // GLASSES_RETURNED +=1;
         }
         
-        $('.pfand-button').removeClass('selected')
-        $(".pfand-button[data-value='5+']").text(`5+`);
-        $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
-        if (GLASSES_RETURNED > 4) {
-            $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
-        }
+        // $('.pfand-button').removeClass('selected')
+        // $(".pfand-button[data-value='5+']").text(`5+`);
+        // $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
+        // if (GLASSES_RETURNED > 4) {
+        //     $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
+        // }
     }
 
     else if(LATEST_PRODUCT.discount_applied == "Pfand Shot") {
@@ -476,7 +496,7 @@ $(".product-button").click(function() {
         if(LATEST_PRODUCT.discount_applied == "5 Shot Special") {
             LATEST_PRODUCT.qty += 1;
             LATEST_PRODUCT.line_total = LATEST_PRODUCT.qty * LATEST_PRODUCT.price
-            GLASSES_RETURNED +=1;
+            // GLASSES_RETURNED +=1;
         }
         else {
             if(!$.isEmptyObject(LATEST_PRODUCT)) {
@@ -1037,7 +1057,7 @@ function basketGrandTotals() {
         }
         
     })
-    if(GLASSES_RETURNED == "no-pfand") {
+    if(NO_PFAND == true) {
         PFAND_TOTAL = 0;
     }
     else {

@@ -2,7 +2,8 @@ from django.db import models
 from index.models import Staff
 from django.utils import timezone
 import uuid
-
+from decimal import Decimal
+from django.utils import timezone
 # Create your models here.
 
 class Category(models.Model):
@@ -297,6 +298,120 @@ class LineItemV2(models.Model):
     #                                  null=True,
     #                                  blank=True,
     #                                  on_delete=models.PROTECT)
+
+
+class Receipts(models.Model):
+    submission_date = models.DateTimeField(default=timezone.now)
+    event = models.ForeignKey(Events,
+                              null=True, 
+                              blank=True, 
+                              on_delete=models.SET_NULL)
+    submitted_by = models.ForeignKey('index.Staff', 
+                                      null=True, 
+                                      blank=True, 
+                                      on_delete=models.SET_NULL)
+    name = models.CharField(max_length=100,
+                            null=True,
+                            blank=True)
+    description = models.TextField(null=True,
+                                   blank=True)
+    value = models.DecimalField(null=True,
+                                blank=True,
+                                default=0,
+                                decimal_places=2,
+                                max_digits=9)
+    image = models.ImageField(null=True,
+                              blank=True)
+
+
+
+class EndOfDayTakings(models.Model):
+    submission_date = models.DateTimeField(default=timezone.now)
+    event = models.ForeignKey(Events,
+                              null=True, 
+                              blank=True, 
+                              on_delete=models.SET_NULL)
+    trading_date = models.DateField(null=False, 
+                                    blank=False, )
+    submitted_by = models.ForeignKey('index.Staff', 
+                                     null=False, 
+                                     blank=False, 
+                                     on_delete=models.PROTECT)
+
+    # Coincounts (Integers only)
+    one_cent = models.IntegerField(default=0)
+    two_cent = models.IntegerField(default=0)
+    five_cent = models.IntegerField(default=0)
+    ten_cent = models.IntegerField(default=0)
+    twenty_cent = models.IntegerField(default=0)
+    fifty_cent = models.IntegerField(default=0)
+    one_euro = models.IntegerField(default=0)
+    two_euro = models.IntegerField(default=0)
+    
+    # Note counts (Integers only)
+    five_euro = models.IntegerField(default=0)
+    ten_euro = models.IntegerField(default=0)
+    twenty_euro = models.IntegerField(default=0)
+    fifty_euro = models.IntegerField(default=0)
+    one_hundred_euro = models.IntegerField(default=0)
+    two_hundred_euro = models.IntegerField(default=0)
+
+    # Unified Decimal fields with safe digit ceilings (9,999,999.99)
+    one_cent_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    two_cent_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    five_cent_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    ten_cent_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    twenty_cent_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    fifty_cent_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    one_euro_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    two_euro_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    five_euro_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    ten_euro_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    twenty_euro_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    fifty_euro_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    one_hundred_euro_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    two_hundred_euro_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+    
+    total_value = models.DecimalField(default=0, decimal_places=2, max_digits=9)
+
+    # Vouchers
+    two_for_one_vouchers = models.IntegerField(default=0)
+    ten_for_eleven_vouchers = models.IntegerField(default=0)
+    customer_20_off_vouchers = models.IntegerField(default=0)
+    austeller_20_off_vouchers = models.IntegerField(default=0)
+    student_discount_vouchers = models.IntegerField(default=0)
+    oap_discount_vouchers = models.IntegerField(default=0)
+    five_euro_off_vouchers = models.IntegerField(default=0)
+    
+    # receipts = models.ForeignKey('Receipts', null=True, blank=True, on_delete=models.SET_NULL)
+
+    def save(self, *args, **kwargs):
+        # Calculate sub-values dynamically
+        self.one_cent_value = Decimal(self.one_cent) * Decimal('0.01')
+        self.two_cent_value = Decimal(self.two_cent) * Decimal('0.02')
+        self.five_cent_value = Decimal(self.five_cent) * Decimal('0.05')
+        self.ten_cent_value = Decimal(self.ten_cent) * Decimal('0.10')
+        self.twenty_cent_value = Decimal(self.twenty_cent) * Decimal('0.20')
+        self.fifty_cent_value = Decimal(self.fifty_cent) * Decimal('0.50')
+        self.one_euro_value = Decimal(self.one_euro) * Decimal('1.00')
+        self.two_euro_value = Decimal(self.two_euro) * Decimal('2.00')
+        self.five_euro_value = Decimal(self.five_euro) * Decimal('5.00')
+        self.ten_euro_value = Decimal(self.ten_euro) * Decimal('10.00')
+        self.twenty_euro_value = Decimal(self.twenty_euro) * Decimal('20.00')
+        self.fifty_euro_value = Decimal(self.fifty_euro) * Decimal('50.00')
+        self.one_hundred_euro_value = Decimal(self.one_hundred_euro) * Decimal('100.00')
+        self.two_hundred_euro_value = Decimal(self.two_hundred_euro) * Decimal('200.00')
+
+        # Calculate Grand Total
+        self.total_value = (
+            self.one_cent_value + self.two_cent_value + self.five_cent_value +
+            self.ten_cent_value + self.twenty_cent_value + self.fifty_cent_value +
+            self.one_euro_value + self.two_euro_value + self.five_euro_value +
+            self.ten_euro_value + self.twenty_euro_value + self.fifty_euro_value +
+            self.one_hundred_euro_value + self.two_hundred_euro_value
+        )
+        super().save(*args, **kwargs)
+
 
 
 class PfandBalance(models.Model):

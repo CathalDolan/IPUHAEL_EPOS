@@ -89,6 +89,7 @@ console.log("item_bulk_edit.js")
 // });
 
 $(document).ready(function() {
+    validatePriceSize()
     const $fields = $('select, input, textarea');
 
     // 1. Record initial states on page load
@@ -129,7 +130,24 @@ $(document).ready(function() {
                 $parentRow.removeTemplateClass || $parentRow.removeClass('row-changed');
             }
         }
+        validatePriceSize();
     });
+
+    function validatePriceSize() {
+        console.log("validatePriceSize")
+        var default_sizes = $('[name$="-default_size"]')
+        $(default_sizes).each(function(index, element) {
+            $(element).parents('tr').removeClass('invalid')
+            var default_size = $(`#${element['id']} option:selected`).text()
+            var form_id = element['id'].match("-(.*)-")
+    
+            var element_check = $(`#id_form-${form_id[1]}-price_${default_size}`)
+            var default_size_value = element_check.val()
+            if(default_size_value == "") {
+                $(element_check).parents('tr').addClass('invalid')
+            }
+        })
+    }
 });
 
 

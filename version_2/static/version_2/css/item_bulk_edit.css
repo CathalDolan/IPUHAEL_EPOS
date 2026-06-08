@@ -34,15 +34,18 @@ th {
     top: 0;
     color: gold;
     background-color: #000;
-    border: 1px solid grey;
+    border: 1px solid gold;
+    padding: 0 2px;
+    font-size: .75em;
+    text-transform: uppercase;
 }
 
-th, td {
+td {
     padding: 0 2px;
     font-size: .75em;
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
-    border: 1px solid #000;
+    border: 1px solid #fff;
     /* max-width: 50px; */
 }
 
@@ -51,21 +54,30 @@ table {
     overflow: auto;
     border: 1px solid black;
     white-space: nowrap;
-    background-color: #fff;
+    background-color: #000;
 }
 
 th:first-child, td:first-child {
     left: 0;
     position: -webkit-sticky;
     position: sticky;
-    background-color: red;
+    background-color: green;
 }
 
+input, select {
+    color: #fff;
+    background-color: #000;
+    border: none;
+    padding: 2px;
+}
+input[type=number] {
+    width: 50px;
+}
 
 .button {
     position: fixed;
     height: 55px;
-    top: 0;
+    bottom: 10px;
     left: 50px;
     touch-action: manipulation;
     font-weight: 700;
@@ -115,22 +127,15 @@ button:active::before {
     background-color: orange;
 }
 
-/* input[type="checkbox"].changed-input {
-    outline: 3px solid red;
-}
-
-.changed-input {
-    background-color: pink;
-} */
 
 /* Red highlight for the changed field */
 td:has(.field-changed) {
-    background-color: #dc3545 !important; /* Red border */
+    background-color: orange !important; /* Red border */
 }
 
 .field-changed {
-    background-color: #dc3545 !important; /* Red border */
-    color: #fff;
+    background-color: orange !important; /* Red border */
+    color: #000;
     box-shadow: 0 0 4px rgba(220, 53, 69, 0.5);
     /* outline: 3px solid red; */
 }
@@ -139,6 +144,14 @@ td:has(.field-changed) {
 tr.row-changed, 
 tr.row-changed input,
 tr.row-changed select {
-    background-color: pink; /* Soft, readable pink tint */
+    color: #000;
+    background-color: yellow; /* Soft, readable pink tint */
     transition: background-color 0.2s ease; /* Smooth visual feedback */
+}
+
+tr.invalid, 
+tr.invalid input,
+tr.invalid select {
+    background-color: #dc3545 !important;
+    color: #fff !important;
 }
