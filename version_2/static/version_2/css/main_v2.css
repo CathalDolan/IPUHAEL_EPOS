@@ -651,49 +651,6 @@ button:focus {
     font-size: .9rem;
 }
 
-.eod-takings-wrapper {
-    display: none;
-    z-index: 1;
-    height: 100%;
-    width: 100%;
-    border: 2px solid gold;
-}
-
-.takings-header {
-    text-transform: uppercase;
-    color: gold;
-    text-align: center;
-    padding: 50px 0 0 0;
-}
-
-.takings-form {
-    height: 60%;
-    /* width: 100%; */
-    background-color: #211f1f;
-    margin: 0 20px;
-    border-radius: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.takings-form label {
-    color: #fff;
-    margin-bottom:5px;
-}
-
-.takings-form input {
-    width: 100%;
-}
-
-.takings-buttons-row {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-}
-
 
 .table-wrapper {
     height: 355px;
@@ -784,16 +741,20 @@ table {
 }
 
 .staff-table .staff-member {
-    color: #000;
-    background-color: #fff;
+    color: #fff;
+    background-color: #d54242;
     display: flex;
     justify-content: center;
     align-items: center;
     /* margin-top: 3px; */
     text-transform: uppercase;
+    border-bottom: 1px solid #fafafa;
 }
 
-
+.staff-table .staff-member::before {
+    background-color: #d54242;
+    /* border-bottom: 1px solid #fafafa; */
+}
 .staff-table tr:nth-child(even) {
     background-color: #3d3939;
 }

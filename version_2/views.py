@@ -34,7 +34,7 @@ def bulk_edit_items(request):
     
     # 2. Get the sorting parameter from the URL (default to 'name')
     order_by = request.GET.get('order_by', 'name')
-    print("request!!1", request.GET.get('order_by', 'name'))
+    # print("request!!1", request.GET.get('order_by', 'name'))
     # 3. Map URL triggers to specific related field names
     sort_mapping = {
         'name': 'name',
@@ -47,7 +47,7 @@ def bulk_edit_items(request):
         '-subsubcategory': '-subsubcategory__name',
     }
     db_order_field = sort_mapping.get(order_by, 'name')
-    print("db_order_field", db_order_field)
+    # print("db_order_field", db_order_field)
     # 4. Fetch the optimized and sorted dataset
     queryset = ProductV2.objects.all().select_related(
         'category', 
@@ -72,53 +72,26 @@ def bulk_edit_items(request):
 def index_v2(request):
     print("index_v2")
     user = request.user
-    now = datetime.now()
     today = date.today()
-    # print("now = ", now)
-    # print("today = ", today)
     try:
         event = Events.objects.get(date_from__lte=today, date_to__gte=today)
     except Events.DoesNotExist:
         event = "event: None"
-    # print(event)
-    # for item in event:
-    #     print(item)
-    # products = ProductV2.objects.all()
-    # vowels = 'aeiouAEIOU-'
-    # for product in products:
-    #     # print("product = ", product.name) 
-    #     # if len(product.name) > 8 and len(product.name) < 25: 
-    #     #     split_name = product.name.split(" ")
-    #     #     print("product = ", split_name) 
-    #     #     for index, item in enumerate(split_name):
-    #     #         if len(item) > 8:
-    #     #             split_name[index] = "".join([char for char in item if char not in vowels])
-    #     #         print("item = ", item) 
-    #     #     product.abbr_name = " ".join(split_name)
-    #     # else:
-    #     #     print("NO", len(product.name))
-    #     #     product.abbr_name = product.name
-    #     product.abbr_name = product.name
-    #     print("product.abbr_name = ", product.abbr_name)
-        
-    #     # product.save()
+   
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-    # print("is_ajax = ", is_ajax)
     if is_ajax:
         print("is_ajax")
         if not user.is_authenticated:
-            # print("User not authenticated")
             messages.warning(request, "Please log in. Try Again!")
             return JsonResponse({'status': 'Checkout Complete'}, status=200)
         elif request.method == 'POST':
             data = json.load(request)
-            print("Data 0 = ", data[0]) # NEW_BASKET
-            print("Data 1 = ", data[1]) # GRAND_TOTAL
-            print("Data 2 = ", data[2]) # DISCOUNTS
+            # print("Data 0 = ", data[0]) # NEW_BASKET
+            # print("Data 1 = ", data[1]) # GRAND_TOTAL
+            # print("Data 2 = ", data[2]) # DISCOUNTS
             staff_member = Staff.objects.get(
             id=data[1]['Grand_Total']["staff_member"])
             for v in data[1].values():
-                print("v = ", v)
                 new_grand_total = GrandTotalV2(
                     number_of_products=int(v["Total_Products_Qty"]),
                     staff_member=staff_member,
@@ -133,38 +106,19 @@ def index_v2(request):
                     payment_reason=v["payment_reason"],
                 )
                 new_grand_total.save()
-                
-                pfand_balance = PfandBalance.objects.all().last()
-                print("pfand_balance = ", pfand_balance)
-                # if pfand_balance.last_update.date() == datetime.today().date():
-                #     print("ELSE")
-                #     print("pfand_balance.last_update = ", pfand_balance.last_update)
-                if pfand_balance == None or pfand_balance.last_update.date() != datetime.today().date():
-                    print("DoesNotExist = ")
-                    pfand_balance = PfandBalance(
-                        glasses_balance=int(v["glasses_balance"]),
-                        pfand_balance=Decimal(v["Pfand_Total"])
-                    )
-                else:
-                    print("ELSE")
-                    print("pfand_balance.last_update = ", pfand_balance.last_update)
-                    pfand_balance.glasses_balance = pfand_balance.glasses_balance + int(v["glasses_balance"])
-                    pfand_balance.pfand_balance = pfand_balance.pfand_balance + Decimal(v["Pfand_Total"])
-                pfand_balance.save()
 
             for k, v in data[0].items():
                 for x in v:
-                    print("x = ", x)
                     if x['qty'] != 0:
                         if x['subcategory'] != 'open_drink':
                             product = ProductV2.objects.get(name=x["name"])
                         else:
                             product = x['name']
-                        print("product = ", product)
                         try:
                             subsubcategory = SubSubCategory.objects.get(name=x['subsubcategory'])
                         except:
                             subsubcategory = None
+
                         new_line_items = LineItemV2(
                             transaction=new_grand_total,
                             category=Category.objects.get(name=x["category"]),
@@ -217,7 +171,6 @@ def index_v2(request):
     staff = Staff.objects.all().filter(on_duty=True).order_by("name")
     
     pfand_balance = PfandBalance.objects.all().last()
-    # print("open_drink = ", open_drink[0].default_size)
     
     context = {
         'drink_sizes': drink_sizes,
@@ -265,7 +218,6 @@ def past_orders_v2(request):
         day_to = day_from + timedelta(days=1)
 
         orders = LineItemV2.objects.filter(transaction__order_date__gte=day_from).filter(transaction__order_date__lte=day_to).order_by('-transaction__order_date').values(
-            # 'grand_totals_id',
             'transaction__transaction_number',
             'transaction__order_date',
             'transaction__staff_member',
@@ -290,7 +242,6 @@ def past_orders_v2(request):
         
         staff_list = [{'staffId': 0, 'name': 'All'}]
         for order in orders:
-            # print("order = ", order)
             if not any(item['staffId'] == order['transaction__staff_member'] for item in staff_list):
                 staff_list.append({
                     "staffId": order['transaction__staff_member'],
@@ -299,11 +250,8 @@ def past_orders_v2(request):
             # Temp code to remove null values in payment_reason
             if order['transaction__payment_reason'] is None:
                 order['transaction__payment_reason'] = ''
-        # print("staff_list = ", staff_list)
         staffId = request.GET['staffId']
-        # print("staffId = ", staffId)
         if request.GET['staffId'] != '0':
-            # print("NOT ALL")
             staffId = request.GET['staffId']
             orders = orders.filter(transaction__staff_member=staffId)
         return JsonResponse({"orders": list(orders),
@@ -314,7 +262,6 @@ def past_orders_v2(request):
         day_from = today.strftime("%Y-%m-%d")
         day_to = today + timedelta(days=1)
         orders = LineItemV2.objects.all()
-        # print("orders = ", orders)
         orders = LineItemV2.objects.filter(transaction__order_date__gte=day_from).filter(transaction__order_date__lte=day_to).order_by('-transaction__order_date')
         staff_list = [{'staffId': 0, 'name': 'All'}]
         for order in orders: 
@@ -342,18 +289,11 @@ def eod_takings(request):
     # queryset=Receipts.objects.none() prevents historical uploads from loading
     ReceiptsFormSet = modelformset_factory(Receipts, form=ReceiptsForm, extra=1)
 
-
-    # products = LineItemV2.objects.all()
-    # for product in products:
-    #     if product.discount=="":
-    #         print("product.discount = ", product.discount)
-
     if request.method == 'POST':
         # print("POST = ", request.POST)
         takings_form = EndOfDayTakingsForm(request.POST)
         receipt_formset = ReceiptsFormSet(request.POST, request.FILES)
         trading_date = takings_form['trading_date'].value()
-        print("receipt_formset = ", receipt_formset)
         # Step 1: Define the raw mathematical formula for the equivalent value
         cash_equivalent_formula = ExpressionWrapper(
             F('quantity') * F('price_unit'), 
@@ -398,7 +338,6 @@ def eod_takings(request):
             quantity=Sum('quantity'),
         )
         
-        print("drinks_report['quantity'] = ", drinks_report['quantity'])
         drinks_report['quantity'] = drinks_report['quantity'] or 0
         drinks_report['waste'] = round(drinks_report['waste'] or Decimal('0.00'), 2)
         drinks_report['complimentary'] = round(drinks_report['complimentary'] or Decimal('0.00'), 2)
@@ -590,40 +529,29 @@ def eod_takings(request):
 
         vouchers['two_for_one_vouchers_value'] = round(vouchers['two_for_one_vouchers_value'] or Decimal('0.00'), 2)
         vouchers['two_for_one_vouchers_count'] = vouchers['two_for_one_vouchers_count'] or 0
-        # print("two_for_one_vouchers_value = ", two_for_one_vouchers_value)
 
         vouchers['ten_for_eleven_vouchers_value'] = round(vouchers['ten_for_eleven_vouchers_value'] or Decimal('0.00'), 2)
         vouchers['ten_for_eleven_vouchers_count'] = vouchers['ten_for_eleven_vouchers_count'] or 0
-        # print("ten_for_eleven_vouchers_value = ", ten_for_eleven_vouchers_value)
 
         vouchers['twenty_pc_off_customer_vouchers_value'] = round(vouchers['twenty_pc_off_customer_vouchers_value'] or Decimal('0.00'), 2)
         vouchers['twenty_pc_off_customer_vouchers_count'] = vouchers['twenty_pc_off_customer_vouchers_count'] or 0
-        # print("twenty_pc_off_customer_vouchers_value = ", twenty_pc_off_customer_vouchers_value)
 
         vouchers['twenty_pc_off_austeller_vouchers_value'] = round(vouchers['twenty_pc_off_austeller_vouchers_value'] or Decimal('0.00'), 2)
         vouchers['twenty_pc_off_austeller_vouchers_count'] = vouchers['twenty_pc_off_austeller_vouchers_count'] or 0
-        # print("twenty_pc_off_austeller_vouchers_value = ", twenty_pc_off_austeller_vouchers_value)
 
         vouchers['student_discount_vouchers_value'] = round(vouchers['student_discount_vouchers_value'] or Decimal('0.00'), 2)
         vouchers['student_discount_vouchers_count'] = vouchers['student_discount_vouchers_count'] or 0
-        # print("student_discount_vouchers_value = ", student_discount_vouchers_value)
 
         vouchers['oap_discount_vouchers_value'] = round(vouchers['oap_discount_vouchers_value'] or Decimal('0.00'), 2)
         vouchers['oap_discount_vouchers_count'] = vouchers['oap_discount_vouchers_count'] or 0
-        # print("oap_discount_vouchers_value = ", oap_discount_vouchers_value)
         
         vouchers['five_euro_off_vouchers_value'] = round(vouchers['five_euro_off_vouchers_value'] or Decimal('0.00'), 2)
         vouchers['five_euro_off_vouchers_count'] = vouchers['five_euro_off_vouchers_count'] or 0
-
-        print("vouchers['twenty_pc_off_austeller_vouchers_count'] = ", vouchers['twenty_pc_off_austeller_vouchers_count'])
 
         total_vouchers_recorded = (vouchers['two_for_one_vouchers_count'] + vouchers['ten_for_eleven_vouchers_count'] + vouchers['twenty_pc_off_customer_vouchers_count'] + vouchers['twenty_pc_off_austeller_vouchers_count'] + vouchers['student_discount_vouchers_count'] + vouchers['oap_discount_vouchers_count'] + vouchers['five_euro_off_vouchers_count'])
 
         total_vouchers_value = (vouchers['two_for_one_vouchers_value'] + vouchers['ten_for_eleven_vouchers_value'] + vouchers['twenty_pc_off_customer_vouchers_value'] + vouchers['twenty_pc_off_austeller_vouchers_value'] + vouchers['student_discount_vouchers_value'] + vouchers['oap_discount_vouchers_value'] + vouchers['five_euro_off_vouchers_value'])
 
-        # total_discount_value = round(two_for_one_vouchers_value + ten_for_eleven_vouchers_value + twenty_pc_off_customer_vouchers_value + twenty_pc_off_austeller_vouchers_value + student_discount_vouchers_value + oap_discount_vouchers_value + five_euro_off_vouchers_value, 2)
-
-        # print("total_discount_value = ", total_discount_value)
 
         # 1. Inspect form blocks to bypass strict constraints on completely blank panels
         for form in receipt_formset.forms:
@@ -643,7 +571,6 @@ def eod_takings(request):
             # Save your cash total matrix record directly to the database
             # Save core takings object metrics directly to database logs
             takings_instance = takings_form.save()
-            print("takings_instance = ", takings_instance)
             messages.success(request, "Daily takings saved")
 
             # 3. Save each valid filled-out receipt dynamically as standalone logs
@@ -774,7 +701,6 @@ def eod_takings(request):
                 )
 
                 for image in receipt_image_files:
-                    print("receipt = ", image.seek(0)) 
                     image.seek(0)
                     email.attach(
                             image.name,
@@ -855,7 +781,6 @@ def export_data(request):
         'sub_cat_2': [],
     }
     for order in orders:
-        # print("order = ", order.subsubcategory)
         data['line_ID'].append(order.id)
         data['trans_ID'].append(order.transaction.transaction_number)
         data['order_date'].append(order.transaction.order_date.strftime("%d/%m/%Y"))
@@ -883,7 +808,6 @@ def export_data(request):
         else:
             data['sub_cat_2'].append(order.subsubcategory.name)
 
-    # print("data = ", data)
 
     df = pd.DataFrame(data)
 

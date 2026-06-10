@@ -26,15 +26,11 @@ window.onload = function () {
     $('.food-measurement-row').hide()
     $('.gift-measurement-row').hide()
     let products = $('.col-2:not(.omit)').children('.product-button')
-    // console.log("products = ", typeof(products))
     products.each(function(index, elem) {
-        // console.log("elem = ", $(elem).data())
         if($(elem).attr('data-category') == "drink") {
-            // console.log("elem = ", $(elem).data())
             $('.drinks-measurement-row').show()
         }
         if($(elem).attr('data-category') == "food") {
-            // console.log("YES ", elem)
             $('.food-measurement-row').show()
         }
         if($(elem).attr('data-category') == "gift") {
@@ -67,16 +63,11 @@ $('#open_drink_modal').on('hidden.bs.modal', function () {
     $('input[name="pfand"]').val($('input[name="pfand"]').is(':checked'))
 });
 
-// $('.basket').on("click", 'td:first-child', function() {
-//     $('.basket').toggleClass('magnify')
-//     $('.mask').toggle()
-// })
 
 $('.magnify-icon-wrapper').on("click", function() {
     $('.basket').toggleClass('magnify')
     $('.mask').toggle()
     if($(this).children('.x').css('display') == "none") {
-        console.log("NONE")
         $(this).children('.x').css('display', 'flex')
     }
     else {
@@ -110,14 +101,12 @@ var Grand_Total = {};
 
 $(document).on("click", ".drinks-measure-button:not(.disabled)", function() {
     if($.isEmptyObject(LATEST_PRODUCT)) {
-        // console.log("return")
         return
     }
     else if(LATEST_PRODUCT.category == "drink") {
         $('.drinks-measure-button').removeClass('selected');
         $(this).addClass("selected");
         let size = $(this).attr("data-size");
-        // console.log("size = ", size);
         LATEST_PRODUCT.size = size;
         LATEST_PRODUCT.price = Number(LATEST_PRODUCT_SELECTED[`${size}`])
         LATEST_PRODUCT.line_total = LATEST_PRODUCT.qty * LATEST_PRODUCT.price;
@@ -136,26 +125,22 @@ $(document).on("click", ".modal-measure-button", function() {
 
 $(document).on("click", ".food-measure-button:not(.disabled)", function() {
     if($.isEmptyObject(LATEST_PRODUCT)) {
-        // console.log("return")
         return
     }
     else if(LATEST_PRODUCT.category == "food") {
         $('.food-measure-button').removeClass('selected');
         $(this).addClass("selected");
         let size = $(this).attr("data-size");
-        // console.log("size = ", size);
         LATEST_PRODUCT.size = size;
         LATEST_PRODUCT.price = Number(LATEST_PRODUCT_SELECTED[`${size}`])
         LATEST_PRODUCT.line_total = LATEST_PRODUCT.qty * LATEST_PRODUCT.price
         LATEST_PRODUCT_SELECTED.changed_size = true;
     }
-    // console.log("LATEST_PRODUCT = ", LATEST_PRODUCT)
     applySpecials()
 })
 
 $('.product-selection-button').click(function() {
     let product_type = $(this).attr("data-products");
-    // console.log("product_type = ", product_type);
     $('.product-selection-button').removeClass('selected');
     $(this).addClass('selected');
     sessionStorage.setItem("till_display", $(this).attr('data-products'));
@@ -167,15 +152,11 @@ $('.product-selection-button').click(function() {
     $('.food-measurement-row').hide()
     $('.gift-measurement-row').hide()
     let products = $('.col-2:not(.omit)').children('.product-button')
-    // console.log("products = ", typeof(products))
     products.each(function(index, elem) {
-        // console.log("elem = ", $(elem).data())
         if($(elem).attr('data-category') == "drink") {
             $('.drinks-measurement-row').show()
         }
         if($(elem).attr('data-category') == "food") {
-            
-            console.log("elem = ", $(elem).data())  
             $('.food-measurement-row').show()
         }
         if($(elem).attr('data-category') == "gift") {
@@ -186,7 +167,6 @@ $('.product-selection-button').click(function() {
 })
 
 $('.pfand-button.activate').click(function() {
-    console.log("pfand button clicked");     
     $('.pfand-button').removeClass('selected');
     $(".pfand-button[data-value='5+']").text(`5+`);
     if($(this).attr('data-value') == 'no-pfand') {
@@ -207,7 +187,6 @@ $('.pfand-button.activate').click(function() {
     if (Number($(this).attr("data-value")) > 4) {
         $(".pfand-button[data-value='5+']").addClass("selected").text(`${$(this).attr("data-value")} (5+)`);
     }
-    console.log("GLASSES_RETURNED = ", GLASSES_RETURNED);
     basketGrandTotals()
 })
 
@@ -215,7 +194,6 @@ $('.pfand-button.activate').click(function() {
 $('.staff-member').click(function() {
     var name = $(this).attr("data-name");
     STAFF_ID = $(this).attr('data-id');
-    // console.log("STAFF_ID = ", STAFF_ID);
     $('.staff-table').hide();
     $('.mask').delay(250).hide(0);
     $('.basket').show();
@@ -265,19 +243,9 @@ $(document).on("click", ".increment", function() {
 // Decrement basket
 $(document).on("click", ".decrement", function() {
     if($(this).parent().hasClass('latest-product')) {
-        console.log("YES")
         if(LATEST_PRODUCT.qty > 1) {
-            // GLASSES_RETURNED -= 1;
             LATEST_PRODUCT.qty -= 1;
             LATEST_PRODUCT.line_total = LATEST_PRODUCT.price * LATEST_PRODUCT.qty;
-            // if(LATEST_PRODUCT.discount_applied == "Pfand Shot") {
-            //     $('.pfand-button').removeClass('selected')
-            //     $(".pfand-button[data-value='5+']").text(`5+`);
-            //     $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
-            //     if (GLASSES_RETURNED > 4) {
-            //         $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
-            //     }
-            // }
         }
     }
 
@@ -290,15 +258,6 @@ $(document).on("click", ".decrement", function() {
             ALL_PRODUCTS[product_index].qty -= 1;
             ALL_PRODUCTS[product_index].line_total =
             ALL_PRODUCTS[product_index].price * ALL_PRODUCTS[product_index].qty;
-            // if(ALL_PRODUCTS[product_index].discount_applied == "Pfand Shot") {
-            //     GLASSES_RETURNED -= 1;
-            //     $('.pfand-button').removeClass('selected')
-            //     $(".pfand-button[data-value='5+']").text(`5+`);
-            //     $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
-            //     if (GLASSES_RETURNED > 4) {
-            //         $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
-            //     }
-            // }
         }
     }
     
@@ -346,13 +305,10 @@ $(document).on("click", ".remove-product", function() {
 
 $(document).on("click", ".remove-special", function() {
     let special = $(this).attr('data-special');
-    console.log("VOUCHERS = ", VOUCHERS)
-    console.log("special = ", special)
     let voucher_index = VOUCHERS.findIndex(
         (item) => item == $(this).attr("data-special"),
     ); // Find this attribute in the VOUCHERS array
     
-    console.log("voucher_index = ", voucher_index)
     VOUCHERS.splice(voucher_index, 1); // Remove this voucher from the VOUCHERS array
     applySpecials()
 })
@@ -360,7 +316,6 @@ $(document).on("click", ".remove-special", function() {
 // Function to enter an open drink
 $(".open-drink-submit").click(() => {
     let product_size = $(".drink.modal-measure-button.selected").attr("data-size");
-    console.log("product_size = ", product_size)
     let product_qty = Number($('input[name="quantity"]').val());
     let product_name = $('input[name="drink-name"]').val();
     let category = $('input[name="category"]').val();
@@ -404,7 +359,6 @@ $(".open-drink-submit").click(() => {
         discount_applied: "",
     };
     $("#open_drink_modal").modal("hide");
-    // LATEST_PRODUCT.push(product);
     applySpecials();
 });
 
@@ -428,9 +382,7 @@ $(".product-button").click(function() {
             return;
         }
     }
-    // console.log($(this).data())
     else if($(this).attr('data-name') == 'Pfand Shot') {
-        console.log("LATEST_PRODUCT = ", LATEST_PRODUCT);
         $('.product-button').addClass('disabled');
         $('.open_drink').addClass('disabled');
         $('[data-subsubcategory=spirit]').removeClass('disabled');
@@ -443,7 +395,6 @@ $(".product-button").click(function() {
         if(LATEST_PRODUCT.discount_applied == "Pfand Shot") {
             LATEST_PRODUCT.qty += 1;
             LATEST_PRODUCT.line_total = LATEST_PRODUCT.qty * PFAND
-            // GLASSES_RETURNED +=1;
         }
         else {
             if(!$.isEmptyObject(LATEST_PRODUCT)) {
@@ -462,15 +413,7 @@ $(".product-button").click(function() {
                 pfand_payable: $(this).attr('data-pfand'),
                 discount_applied: "Pfand Shot"
             }
-            // GLASSES_RETURNED +=1;
         }
-        
-        // $('.pfand-button').removeClass('selected')
-        // $(".pfand-button[data-value='5+']").text(`5+`);
-        // $(`.pfand-button[data-value=${GLASSES_RETURNED}]`).addClass('selected')
-        // if (GLASSES_RETURNED > 4) {
-        //     $(".pfand-button[data-value='5+']").addClass("selected").text(`${GLASSES_RETURNED} (5+)`);
-        // }
     }
 
     else if(LATEST_PRODUCT.discount_applied == "Pfand Shot") {
@@ -486,7 +429,6 @@ $(".product-button").click(function() {
     }
 
     else if($(this).attr('data-name') == "5 Shot Special") {
-        console.log("5 Shot Special")
         $('.product-button').addClass('disabled');
         $('.open_drink').addClass('disabled');
         $('[data-subsubcategory=shots]').removeClass('disabled');
@@ -497,7 +439,6 @@ $(".product-button").click(function() {
         if(LATEST_PRODUCT.discount_applied == "5 Shot Special") {
             LATEST_PRODUCT.qty += 1;
             LATEST_PRODUCT.line_total = LATEST_PRODUCT.qty * LATEST_PRODUCT.price
-            // GLASSES_RETURNED +=1;
         }
         else {
             if(!$.isEmptyObject(LATEST_PRODUCT)) {
@@ -559,7 +500,6 @@ $(".product-button").click(function() {
             
             LATEST_PRODUCT_SELECTED = $(this).data();
             LATEST_PRODUCT_SELECTED.changed_size = false;
-            console.log("LATEST_PRODUCT_SELECTED = ", LATEST_PRODUCT_SELECTED)
             $('.drinks-measure-button').removeClass('disabled selected')
             $('.food-measure-button').removeClass('disabled selected')
             $.each(LATEST_PRODUCT_SELECTED, function(k, v) {
@@ -618,8 +558,6 @@ $(document).on("click", ".specials_option", function () {
 
 
 function applySpecials() {
-    // console.log("VOUCHERS = ", VOUCHERS);
-    // console.log("ALL_PRODUCTS = ", ALL_PRODUCTS);
     NEW_BASKET = JSON.parse(JSON.stringify(ALL_PRODUCTS));//https://www.freecodecamp.org/news/how-to-clone-an-array-in-javascript-1d3183468f6a/
     if(!$.isEmptyObject(LATEST_PRODUCT)) {
         NEW_BASKET.push(LATEST_PRODUCT)
@@ -784,13 +722,10 @@ function applySpecials() {
                     }
                 }
         });
-        // console.log("single_items pre-sort = ", single_items)
         single_items.sort((a, b) => {
             return a.total_discount - b.total_discount;
         });
-        // console.log("single_items post-sort = ", single_items)
         single_items = single_items.slice(-2);
-        // console.log("single_items post-slice = ", single_items)
         if (single_items.length > 1) {
             discount_item = single_items[0];
         } else {
@@ -809,7 +744,6 @@ function applySpecials() {
                 obj.name == discount_item.product && obj.size == discount_item.size
             );
         });
-        // console.log("index = ", index)
         if (index != -1) {
             NEW_BASKET[index].line_total = NEW_BASKET[index].price * (NEW_BASKET[index].qty - 1);
             NEW_BASKET[index].discount_applied = "2 for 1";
@@ -885,7 +819,6 @@ function applySpecials() {
             $.each(NEW_BASKET, function (index, item) {
                 if(item.discount_applied == "") {
                     total_discount += ((item.price * item.qty) * 0.2);
-                    // item.price = item.price * 0.8;
                     item.line_total = (item.price * item.qty) * 0.8;
                     item.discount_applied = "20% Off - Customer";
                 }
@@ -928,7 +861,6 @@ function applySpecials() {
             $.each(NEW_BASKET, function (index, item) {
                 if(item.discount_applied == "") {
                     total_discount += ((item.price * item.qty) * 0.2);
-                    // item.price = item.price * 0.8;
                     item.line_total = (item.price * item.qty) * 0.8;
                     item.discount_applied = "20% Off - Austeller";
                 }
@@ -952,6 +884,33 @@ function applySpecials() {
                 status: "invalid",
             };
         }
+        DISCOUNTS.push(discount_item);
+    }
+    
+    if (VOUCHERS.includes("city voucher")) {
+        voucher_value = 5.00;
+        $.each(NEW_BASKET, function (index, item) {
+            if(item.discount_applied == "" && voucher_value > 0) {
+                if(item.line_total >= voucher_value) {
+                    item.line_total -= voucher_value;
+                    voucher_value = 0;
+                    item.discount_applied = "City Voucher";
+                }
+                else {
+                    voucher_value -= item.line_total;
+                    item.line_total = 0;
+                    item.discount_applied = "City Voucher";
+                }
+            }    
+        });
+        discount_item = {
+            product: "Various",
+            size: "",
+            qty: "",
+            total_discount: 5 - voucher_value,
+            special: "City Voucher",
+            status: "valid",
+        };
         DISCOUNTS.push(discount_item);
     }
     update_basket();
@@ -1012,7 +971,6 @@ function update_basket() {
     if (DISCOUNTS.length != 0) {
         $('.discounts').show()
         $('.discounts').find('tbody').empty();
-        // console.log("DISCOUNTS = ", DISCOUNTS)
         $(DISCOUNTS).each(function (index, item) {
             $(".discounts").find('tbody').prepend(
                 `<tr>
@@ -1041,10 +999,7 @@ function basketGrandTotals() {
     PFAND_TOTAL = 0;
     BASKET_TOTAL = 0;
     TOTAL_DUE = 0;
-    // GLASSES_RETURNED = Number($('.pfand-button.selected:not(.five_plus)').attr('data-value'))
-    console.log("pfand_return = ", typeof(pfand_return))
     $(NEW_BASKET).each(function() {
-        // console.log("this = ", this)
         if(!$.isEmptyObject(this)) {
             BASKET_TOTAL += this.line_total;
             PRODUCTS_QTY += this.qty;
@@ -1065,8 +1020,6 @@ function basketGrandTotals() {
         PFAND_TOTAL = (GLASSES_OUT - GLASSES_RETURNED) * PFAND
     }
     
-    console.log("GLASSES_OUT = ", GLASSES_OUT)
-    console.log("GLASSES_RETURNED = ", GLASSES_RETURNED)
     TOTAL_DUE = BASKET_TOTAL + PFAND_TOTAL;
     $('#drink_food_total').text("€" + BASKET_TOTAL.toFixed(2));
     $('#pfand_total').text("€" + PFAND_TOTAL.toFixed(2));
@@ -1080,7 +1033,6 @@ $("#amount_tendered").keyup(function(){
 });
 
 function recalculate_change_due() {
-    // console.log("recalculate_change_due()");
     Amount_Tendered = parseFloat($("#amount_tendered").val());
     if (isNaN(Amount_Tendered) || Amount_Tendered <= TOTAL_DUE) {
         $("#change_due").text("€");
@@ -1130,7 +1082,6 @@ $('#credit-card-button').click(function() {
 })
 
 $(".cancel-button").click(function () {
-    console.log("CANCEL")
     ALL_PRODUCTS = [];
     LATEST_PRODUCT = {};
     LATEST_PRODUCT_SELECTED = {};
@@ -1168,7 +1119,6 @@ $(".finish-button").click(function () {
 $(".payment_button").click(function () {
     PAYMENT_METHOD = $(this).attr("data-payment_method");
     PAYMENT_REASON = $(this).attr("data-payment_reason");
-    // console.log("PAYMENT_REASON = ", PAYMENT_REASON);
     checkout();
 });
 
@@ -1186,7 +1136,6 @@ function validate() {
     //     resetCheckoutTimer();
     //     return false;
     // }
-    console.log("Amount_Tendered = ", Amount_Tendered)
     // if (Amount_Tendered == "") {
     //     $("#amount_tendered").addClass("error");
     //     var message_container = $(".message-container");
@@ -1249,7 +1198,6 @@ function checkoutTimer() {
 }
 
 function countDown() {
-    // console.log("countDownCounter = ", countdownCounter)
     if (timerPaused === false) {
         let path = $(".fg");
         $(".pause-button").text("Pause");
@@ -1275,7 +1223,6 @@ function resetCheckoutTimer() {
 }
 
 function checkout(payment_method, payment_reason) {
-    console.log("checkout()")
     ALLOW_CHECKOUT = false;
     if (payment_reason == undefined) {
         payment_reason = "";
@@ -1284,13 +1231,11 @@ function checkout(payment_method, payment_reason) {
     // e.g. where a customer buys 1 Pfand Shot Special, but returns a glass. One cancels the other so amount submitted and amount due is 0
     if (TOTAL_DUE - (GLASSES_RETURNED * PFAND) <= 0) {
         PAYMENT_METHOD = "Pfand Payment"; // This applies where the pfand is sufficient to cover the payment.
-        // console.log("PAYMENT_METHOD = ", PAYMENT_METHOD)
         $("#amount_tendered").val(0);
     }
 
     if (PAYMENT_METHOD == "Complimentary" || PAYMENT_METHOD == "Waste") {
         GLASSES_RETURNED = 0;
-        // GLASSES_OUT = 0;
         PFAND_TOTAL = 0;
         BASKET_TOTAL = 0;
         Amount_Tendered = 0;
@@ -1310,14 +1255,9 @@ function checkout(payment_method, payment_reason) {
             }
         });
     }
-    console.log("discounts = ", discounts)
     if (GLASSES_RETURNED == 'no-pfand') {
         GLASSES_RETURNED = 0;
     }
-
-    
-    console.log("PAYMENT_METHOD = ", PAYMENT_METHOD)
-    console.log("PAYMENT_REASON = ", PAYMENT_REASON)
 
     Grand_Total.glasses_balance = GLASSES_RETURNED - GLASSES_OUT;
     Grand_Total.Pfand_Buttons_Total = GLASSES_RETURNED*PFAND;
