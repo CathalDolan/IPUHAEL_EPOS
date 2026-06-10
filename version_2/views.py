@@ -353,7 +353,7 @@ def eod_takings(request):
         takings_form = EndOfDayTakingsForm(request.POST)
         receipt_formset = ReceiptsFormSet(request.POST, request.FILES)
         trading_date = takings_form['trading_date'].value()
-        print("TRADING_DATE = ", trading_date)
+        print("receipt_formset = ", receipt_formset)
         # Step 1: Define the raw mathematical formula for the equivalent value
         cash_equivalent_formula = ExpressionWrapper(
             F('quantity') * F('price_unit'), 
@@ -481,6 +481,7 @@ def eod_takings(request):
             ),
             quantity=Sum('quantity'),
         )
+        
         gifts_report['quantity'] = gifts_report['quantity'] or 0
         gifts_report['waste'] = round(gifts_report['waste'] or Decimal('0.00'), 2)
         gifts_report['complimentary'] = round(gifts_report['complimentary'] or Decimal('0.00'), 2)
@@ -497,64 +498,9 @@ def eod_takings(request):
         total_quantity = drinks_report['quantity'] + food_report['quantity'] + gifts_report['quantity']
         #######################################################################################################################
         # Step 2: Run a single conditional aggregation query
-        report = LineItemV2.objects.filter(
+        vouchers = LineItemV2.objects.filter(
             transaction__order_date__date=trading_date
         ).aggregate(
-            # --- CASH ---
-            total_cash_sales=Sum(
-                Case(
-                    When(transaction__payment_method__iexact='cash', then='price_line_total'),
-                    output_field=DecimalField()
-                )
-            ),
-            cash_transaction_count=Count(
-                Case(
-                    When(transaction__payment_method__iexact='cash', then='transaction_id')
-                ),
-                distinct=True
-            ),
-
-            # --- CREDIT CARD ONLY ---
-            total_card_sales=Sum(
-                Case(
-                    When(transaction__payment_method__iexact='credit card', then='price_line_total'),
-                    output_field=DecimalField()
-                )
-            ),
-            card_transaction_count=Count(
-                Case(
-                    When(transaction__payment_method__iexact='credit card', then='transaction_id')
-                ),
-                distinct=True
-            ),
-
-            # --- COMPLIMENTARY  ---
-            total_complimentary_value=Sum(
-                Case(
-                    When(transaction__payment_method__iexact='complimentary', then=cash_equivalent_formula),
-                    output_field=DecimalField()
-                )
-            ),
-            complimentary_transaction_count=Count(
-                Case(
-                    When(transaction__payment_method__iexact='complimentary', then='transaction_id')
-                ),
-                distinct=True
-            ),
-            
-            # --- WASTE ---
-            total_waste_value=Sum(
-                Case(
-                    When(transaction__payment_method__iexact='waste', then=cash_equivalent_formula),
-                    output_field=DecimalField()
-                )
-            ),
-            waste_transaction_count=Count(
-                Case(
-                    When(transaction__payment_method__iexact='waste', then='transaction_id')
-                ),
-                distinct=True
-            ),
             two_for_one_vouchers_value=Sum(
                 Case(
                     When(discount__iexact='2 for 1', then=discounted_sum_formula),
@@ -642,64 +588,42 @@ def eod_takings(request):
 
         )
 
-        
-
-        two_for_one_vouchers_value = round(report['two_for_one_vouchers_value'] or Decimal('0.00'), 2)
-        two_for_one_vouchers_count = report['two_for_one_vouchers_count'] or 0
+        vouchers['two_for_one_vouchers_value'] = round(vouchers['two_for_one_vouchers_value'] or Decimal('0.00'), 2)
+        vouchers['two_for_one_vouchers_count'] = vouchers['two_for_one_vouchers_count'] or 0
         # print("two_for_one_vouchers_value = ", two_for_one_vouchers_value)
 
-        ten_for_eleven_vouchers_value = round(report['ten_for_eleven_vouchers_value'] or Decimal('0.00'), 2)
-        ten_for_eleven_vouchers_count = report['ten_for_eleven_vouchers_count'] or 0
+        vouchers['ten_for_eleven_vouchers_value'] = round(vouchers['ten_for_eleven_vouchers_value'] or Decimal('0.00'), 2)
+        vouchers['ten_for_eleven_vouchers_count'] = vouchers['ten_for_eleven_vouchers_count'] or 0
         # print("ten_for_eleven_vouchers_value = ", ten_for_eleven_vouchers_value)
 
-        twenty_pc_off_customer_vouchers_value = round(report['twenty_pc_off_customer_vouchers_value'] or Decimal('0.00'), 2)
-        twenty_pc_off_customer_vouchers_count = report['twenty_pc_off_customer_vouchers_count'] or 0
+        vouchers['twenty_pc_off_customer_vouchers_value'] = round(vouchers['twenty_pc_off_customer_vouchers_value'] or Decimal('0.00'), 2)
+        vouchers['twenty_pc_off_customer_vouchers_count'] = vouchers['twenty_pc_off_customer_vouchers_count'] or 0
         # print("twenty_pc_off_customer_vouchers_value = ", twenty_pc_off_customer_vouchers_value)
 
-        twenty_pc_off_austeller_vouchers_value = round(report['twenty_pc_off_austeller_vouchers_value'] or Decimal('0.00'), 2)
-        twenty_pc_off_austeller_vouchers_count = report['twenty_pc_off_austeller_vouchers_count'] or 0
+        vouchers['twenty_pc_off_austeller_vouchers_value'] = round(vouchers['twenty_pc_off_austeller_vouchers_value'] or Decimal('0.00'), 2)
+        vouchers['twenty_pc_off_austeller_vouchers_count'] = vouchers['twenty_pc_off_austeller_vouchers_count'] or 0
         # print("twenty_pc_off_austeller_vouchers_value = ", twenty_pc_off_austeller_vouchers_value)
 
-        student_discount_vouchers_value = round(report['student_discount_vouchers_value'] or Decimal('0.00'), 2)
-        student_discount_vouchers_count = report['student_discount_vouchers_count'] or 0
+        vouchers['student_discount_vouchers_value'] = round(vouchers['student_discount_vouchers_value'] or Decimal('0.00'), 2)
+        vouchers['student_discount_vouchers_count'] = vouchers['student_discount_vouchers_count'] or 0
         # print("student_discount_vouchers_value = ", student_discount_vouchers_value)
 
-        oap_discount_vouchers_value = round(report['oap_discount_vouchers_value'] or Decimal('0.00'), 2)
-        oap_discount_vouchers_count = report['oap_discount_vouchers_count'] or 0
+        vouchers['oap_discount_vouchers_value'] = round(vouchers['oap_discount_vouchers_value'] or Decimal('0.00'), 2)
+        vouchers['oap_discount_vouchers_count'] = vouchers['oap_discount_vouchers_count'] or 0
         # print("oap_discount_vouchers_value = ", oap_discount_vouchers_value)
         
-        five_euro_off_vouchers_value = round(report['oap_discount_vouchers_value'] or Decimal('0.00'), 2)
-        five_euro_off_vouchers_count = report['oap_discount_vouchers_count'] or 0
-        # print("five_euro_off_vouchers_value = ", five_euro_off_vouchers_value)
+        vouchers['five_euro_off_vouchers_value'] = round(vouchers['five_euro_off_vouchers_value'] or Decimal('0.00'), 2)
+        vouchers['five_euro_off_vouchers_count'] = vouchers['five_euro_off_vouchers_count'] or 0
+
+        print("vouchers['twenty_pc_off_austeller_vouchers_count'] = ", vouchers['twenty_pc_off_austeller_vouchers_count'])
+
+        total_vouchers_recorded = (vouchers['two_for_one_vouchers_count'] + vouchers['ten_for_eleven_vouchers_count'] + vouchers['twenty_pc_off_customer_vouchers_count'] + vouchers['twenty_pc_off_austeller_vouchers_count'] + vouchers['student_discount_vouchers_count'] + vouchers['oap_discount_vouchers_count'] + vouchers['five_euro_off_vouchers_count'])
+
+        total_vouchers_value = (vouchers['two_for_one_vouchers_value'] + vouchers['ten_for_eleven_vouchers_value'] + vouchers['twenty_pc_off_customer_vouchers_value'] + vouchers['twenty_pc_off_austeller_vouchers_value'] + vouchers['student_discount_vouchers_value'] + vouchers['oap_discount_vouchers_value'] + vouchers['five_euro_off_vouchers_value'])
+
         # total_discount_value = round(two_for_one_vouchers_value + ten_for_eleven_vouchers_value + twenty_pc_off_customer_vouchers_value + twenty_pc_off_austeller_vouchers_value + student_discount_vouchers_value + oap_discount_vouchers_value + five_euro_off_vouchers_value, 2)
 
         # print("total_discount_value = ", total_discount_value)
-
-        # Pack values into the single structured clean tracking dictionary framework
-        cleaned_report = {
-            
-            # 'total_complimentary_waste_value': round(complimentary_value + waste_value + total_discount_value, 2),
-            'two_for_one_vouchers_value': two_for_one_vouchers_value,
-            'two_for_one_vouchers_count': two_for_one_vouchers_count,
-            'ten_for_eleven_vouchers_value': ten_for_eleven_vouchers_value,
-            'ten_for_eleven_vouchers_count': ten_for_eleven_vouchers_count,
-            'twenty_pc_off_customer_vouchers_value': twenty_pc_off_customer_vouchers_value,
-            'twenty_pc_off_customer_vouchers_count': twenty_pc_off_customer_vouchers_count,
-            'twenty_pc_off_austeller_vouchers_value': twenty_pc_off_austeller_vouchers_value,
-            'twenty_pc_off_austeller_vouchers_count': twenty_pc_off_austeller_vouchers_count,
-            'student_discount_vouchers_value': student_discount_vouchers_value,
-            'student_discount_vouchers_count': student_discount_vouchers_count,
-            'oap_discount_vouchers_value': oap_discount_vouchers_value,
-            'oap_discount_vouchers_count': oap_discount_vouchers_count,
-            'five_euro_off_vouchers_value': five_euro_off_vouchers_value,
-            'five_euro_off_vouchers_count': five_euro_off_vouchers_count,
-            'total_discount_value': total_discount_value,
-            'total_discount_count': two_for_one_vouchers_count + ten_for_eleven_vouchers_count + twenty_pc_off_customer_vouchers_count + twenty_pc_off_austeller_vouchers_count + student_discount_vouchers_count + oap_discount_vouchers_count + five_euro_off_vouchers_count
-        }
-
-       
-
-
 
         # 1. Inspect form blocks to bypass strict constraints on completely blank panels
         for form in receipt_formset.forms:
@@ -725,15 +649,23 @@ def eod_takings(request):
             # 3. Save each valid filled-out receipt dynamically as standalone logs
             receipts_saved_count = 0
             saved_receipt_instances = []
+            receipt_image_files = []
             for receipt_form in receipt_formset.forms:
                 if not receipt_form.empty_permitted:
-                    # Saves the row as an independent row record inside the Receipts table
-                    receipt_instance = receipt_form.save(commit=False)
-                    receipt_instance.event = event
-                    receipt_instance.submitted_by = submitted_by
-                    receipt_instance.save()
-                    saved_receipt_instances.append(receipt_instance)
-                    receipts_saved_count += 1
+                    if receipt_form.cleaned_data and not receipt_form.cleaned_data.get('DELETE', False):
+                        # Extract the raw file object directly from the form's cleaned data
+                        receipt_image_file = receipt_form.cleaned_data.get('image')
+                        receipt_image_files.append(receipt_image_file)
+                        receipt_file_name = receipt_image_file.name
+                        print("receipt_file_name = ", receipt_file_name)
+                        # Saves the row as an independent row record inside the Receipts table
+                        receipt_instance = receipt_form.save(commit=False)
+                        receipt_instance.event = event
+                        receipt_instance.submitted_by = submitted_by
+                        receipt_instance.name = receipt_file_name 
+                        receipt_instance.save()
+                        saved_receipt_instances.append(receipt_instance)
+                        receipts_saved_count += 1
             if receipts_saved_count > 0:
                 messages.success(request, f"{receipts_saved_count} Receipts submitted successfully!") 
 
@@ -783,6 +715,14 @@ def eod_takings(request):
                 )
                 total_cash_takings = total_coins_value + total_notes_value
 
+                total_vouchers_count = ((takings_instance.two_for_one_vouchers or 0) + 
+                                        (takings_instance.ten_for_eleven_vouchers or 0) +
+                                        (takings_instance.customer_20_off_vouchers or 0) +
+                                        (takings_instance.austeller_20_off_vouchers or 0) +
+                                        (takings_instance.student_discount_vouchers or 0) +
+                                        (takings_instance.oap_discount_vouchers or 0) +
+                                        (takings_instance.five_euro_off_vouchers or 0))
+
                 # 1. Locate your CSS file path dynamically
                 css_path = os.path.join(settings.BASE_DIR, 'version_2', 'static', 'version_2', 'css', 'reports_email.css')
 
@@ -813,9 +753,14 @@ def eod_takings(request):
                     'total_coins_value': total_coins_value,
                     'total_notes_value': total_notes_value,
                     'total_cash_takings': round(total_cash_takings, 2),
+                    'vouchers': vouchers,
+                    'total_vouchers_count': total_vouchers_count,
+                    'total_vouchers_recorded': total_vouchers_recorded,
+                    'total_vouchers_value': total_vouchers_value,
                     'css_styles': css_content,
                 }
 
+                
                 # Compile header metadata fields
                 t_date_str = takings_instance.trading_date.strftime('%d-%m-%Y') if takings_instance.trading_date else 'No Date'
                 email_subject = f"Daily Takings Summary - {event.name if event else 'No Event'} - {t_date_str}"
@@ -828,6 +773,14 @@ def eod_takings(request):
                     to=['peterwkellett@gmail.com']
                 )
 
+                for image in receipt_image_files:
+                    print("receipt = ", image.seek(0)) 
+                    image.seek(0)
+                    email.attach(
+                            image.name,
+                            image.read(),
+                            image.content_type
+                        )
                 # 3. CRITICAL: Inform email software (like Gmail) to render this as an HTML page, not plain text [1]
                 email.content_subtype = "html" 
 
@@ -902,7 +855,7 @@ def export_data(request):
         'sub_cat_2': [],
     }
     for order in orders:
-        print("order = ", order.subsubcategory)
+        # print("order = ", order.subsubcategory)
         data['line_ID'].append(order.id)
         data['trans_ID'].append(order.transaction.transaction_number)
         data['order_date'].append(order.transaction.order_date.strftime("%d/%m/%Y"))
@@ -930,7 +883,7 @@ def export_data(request):
         else:
             data['sub_cat_2'].append(order.subsubcategory.name)
 
-    print("data = ", data)
+    # print("data = ", data)
 
     df = pd.DataFrame(data)
 

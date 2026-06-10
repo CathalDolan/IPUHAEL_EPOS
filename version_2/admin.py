@@ -265,6 +265,7 @@ class ReceiptsAdmin(admin.ModelAdmin):
         'description',
         'value',
         'image',
+        'image_url',
     )
 
 class PfandBalanceAdmin(admin.ModelAdmin):

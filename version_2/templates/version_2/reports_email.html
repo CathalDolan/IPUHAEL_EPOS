@@ -85,9 +85,6 @@
                     <th class="notes-header">NOTES</th>
                     <th class="text-center">Counted</th>
                     <th class="text-center border-right">Value</th>
-                    <th class="vouchers-header">Vouchers</th>
-                    <th class="text-center">Counted</th>
-                    <th class="text-center">Recorded</th>
                 </tr>
             </thead>
             <tbody class="fw-bold">
@@ -98,9 +95,6 @@
                     <td class="notes text-center">€5</td>
                     <td class="notes text-center">{{ takings.five_euro }}</td>
                     <td class="notes text-center border-right">€{{ takings.five_euro_value }}</td>
-                    <td class="vouchers text-center">2-for-1</td>
-                    <td class="vouchers text-center">{{ takings.two_for_one_vouchers }}</td>
-                    <td class="vouchers text-center">{{report.two_for_one_vouchers_count}}</td>
                 </tr>
                 <tr>
                     <td class="coins text-center">2c</td>
@@ -109,9 +103,6 @@
                     <td class="notes text-center">€10</td>
                     <td class="notes text-center">{{ takings.ten_euro }}</td>
                     <td class="notes text-center border-right">€{{ takings.ten_euro_value }}</td>
-                    <td class="vouchers text-center">10-for-11</td>
-                    <td class="vouchers text-center">{{ takings.ten_for_eleven_vouchers }}</td>
-                    <td class="vouchers text-center">{{report.ten_for_eleven_vouchers_count}}</td>
                 </tr>
                 <tr>
                     <td class="coins text-center">5c</td>
@@ -120,9 +111,6 @@
                     <td class="notes text-center text-center">€20</td>
                     <td class="notes text-center">{{ takings.twenty_euro }}</td>
                     <td class="notes text-center border-right">€{{ takings.twenty_euro_value }}</td>
-                    <td class="vouchers text-center">Cust 20% Off</td>
-                    <td class="vouchers text-center">{{ takings.customer_20_off_vouchers }}</td>
-                    <td class="vouchers text-center">{{report.twenty_pc_off_customer_vouchers_count}}</td>
                 </tr>
                 <tr>
                     <td class="coins text-center">50c</td>
@@ -131,9 +119,6 @@
                     <td class="notes text-center">€50</td>
                     <td class="notes text-center">{{ takings.fifty_euro }}</td>
                     <td class="notes text-center border-right">€{{ takings.fifty_euro_value }}</td>
-                    <td class="vouchers text-center">Aust 20% Off</td>
-                    <td class="vouchers text-center">{{ takings.austeller_20_off_vouchers }}</td>
-                    <td class="vouchers text-center">{{report.twenty_pc_off_austeller_vouchers_count}}</td>
                 </tr>
                 <tr>
                     <td class="coins text-center">10c</td>
@@ -142,9 +127,6 @@
                     <td class="notes text-center">€100</td>
                     <td class="notes text-center">{{ takings.one_hundred_euro }}</td>
                     <td class="notes text-center border-right">€{{ takings.one_hundred_euro_value }}</td>
-                    <td class="vouchers text-center">Student Disc</td>
-                    <td class="vouchers text-center">{{ takings.student_discount_vouchers }}</td>
-                    <td class="vouchers text-center">{{report.student_discount_vouchers_count}}</td></tr>
                 </tr>
                 <tr>
                     <td class="coins text-center">20c</td>
@@ -153,9 +135,6 @@
                     <td class="notes text-center">€200</td>
                     <td class="notes text-center">{{ takings.two_hundred_euro }}</td>
                     <td class="notes text-center border-right">€{{ takings.two_hundred_euro_value }}</td>
-                    <td class="vouchers text-center">OAP Disc</td>
-                    <td class="vouchers text-center">{{ takings.oap_discount_vouchers }}</td>
-                    <td class="vouchers text-center">{{report.oap_discount_vouchers_count}}</td>
                 </tr>
                 <tr>
                     <td class="coins text-center">€1</td>
@@ -164,9 +143,6 @@
                     <td class="notes text-center"></td>
                     <td class="notes text-center"></td>
                     <td class="notes text-center border-right"></td>
-                    <td class="vouchers text-center">€5 Off</td>
-                    <td class="vouchers text-center">{{ takings.five_euro_off_vouchers }}</td>
-                    <td class="vouchers text-center">{{report.five_euro_off_vouchers_count}}</td>
                     
                 </tr>
                 <tr>
@@ -176,9 +152,6 @@
                     <td class="notes text-center"></td>
                     <td class="notes text-center"></td>
                     <td class="notes text-center border-right"></td>
-                    <td class="vouchers text-center"></td>
-                    <td class="vouchers text-center"></td>
-                    <td class="vouchers text-center"></td>
                     
                 </tr>
                 
@@ -189,13 +162,72 @@
                     <td class="notes text-center">TOTAL</td>
                     <td class="notes text-center">{{ total_notes_count }}</td>
                     <td class="notes text-center border-right">€{{ total_notes_value|floatformat:2 }}</td>
-                    <td class="vouchers text-center">TOTAL</td>
-                    <td class="vouchers text-center"></td>
-                    <td class="vouchers text-center"></td>
                 </tr>
                 <tr class="border-all fw-bold">
                     <td>TOTAL CASH</td>
                     <td>€{{ total_cash_takings|floatformat:2 }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="table-name">Vouchers</h3>
+        <table class="Vouchers">
+            <thead>
+                {% comment %} <tr><th class="table-name">Till Takings</th></tr> {% endcomment %}
+                <tr>
+                    <th class="vouchers-header">Vouchers</th>
+                    <th class="text-center">Counted</th>
+                    <th class="text-center border-right">Recorded</th>
+                    <th class="text-center border-right">Value</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="vouchers">2-for-1</td>
+                    <td class="vouchers text-center">{{ takings.two_for_one_vouchers }}</td>
+                    <td class="vouchers text-center">{{vouchers.two_for_one_vouchers_count}}</td>
+                    <td class="vouchers text-center">€{{vouchers.two_for_one_vouchers_value}}</td>
+                </tr>
+                <tr>
+                    <td class="vouchers">10-for-11</td>
+                    <td class="vouchers text-center">{{ takings.ten_for_eleven_vouchers }}</td>
+                    <td class="vouchers text-center">{{vouchers.ten_for_eleven_vouchers_count}}</td>
+                    <td class="vouchers text-center">€{{vouchers.ten_for_eleven_vouchers_value}}</td>
+                </tr>
+                <tr>
+                    <td class="vouchers">Cust. 20% off%</td>
+                    <td class="vouchers text-center">{{ takings.customer_20_off_vouchers }}</td>
+                    <td class="vouchers text-center">{{vouchers.twenty_pc_off_customer_vouchers_count}}</td>
+                    <td class="vouchers text-center">€{{vouchers.twenty_pc_off_customer_vouchers_value}}</td>
+                </tr>
+                <tr>
+                    <td class="vouchers">Aust. 20% off%</td>
+                    <td class="vouchers text-center">{{ takings.austeller_20_off_vouchers }}</td>
+                    <td class="vouchers text-center">{{vouchers.twenty_pc_off_austeller_vouchers_count}}</td>
+                    <td class="vouchers text-center">€{{vouchers.twenty_pc_off_austeller_vouchers_value}}</td>
+                </tr>
+                <tr>
+                    <td class="vouchers">Student Disc</td>
+                    <td class="vouchers text-center">{{ takings.student_discount_vouchers }}</td>
+                    <td class="vouchers text-center">{{vouchers.student_discount_vouchers_count}}</td>
+                    <td class="vouchers text-center">€{{vouchers.student_discount_vouchers_value}}</td>
+                </tr>
+                <tr>
+                    <td class="vouchers">OAP Disc</td>
+                    <td class="vouchers text-center">{{ takings.oap_discount_vouchers }}</td>
+                    <td class="vouchers text-center">{{vouchers.oap_discount_vouchers_count}}</td>
+                    <td class="vouchers text-center">€{{vouchers.oap_discount_vouchers_value}}</td>
+                </tr>
+                <tr>
+                    <td class="vouchers">€5 Off</td>
+                    <td class="vouchers text-center">{{ takings.five_euro_off_vouchers }}</td>
+                    <td class="vouchers text-center">{{vouchers.five_euro_off_vouchers_count}}</td>
+                    <td class="vouchers text-center">€{{vouchers.five_euro_off_vouchers_value}}</td>
+                </tr>
+                <tr>
+                    <td class="vouchers">Totals</td>
+                    <td class="vouchers text-center">{{ total_vouchers_count }}</td>
+                    <td class="vouchers text-center">{{total_vouchers_recorded}}</td>
+                    <td class="vouchers text-center">€{{total_vouchers_value}}</td>
                 </tr>
             </tbody>
         </table>
@@ -218,7 +250,7 @@
                         <td>{{receipt.name}}</td>
                         <td>{{receipt.description}}</td>
                         <td class="text-center">€{{receipt.value}}</td>
-                        <td class="text-center"><img height="50" width="50" src="{{receipt.image}}" /></td>
+                        <td class="text-center"><img height="50" width="50" src="{{receipt.image.url}}" /></td>
                     </tr>
                     {% endfor %}
                     
