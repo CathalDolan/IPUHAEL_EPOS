@@ -147,6 +147,7 @@ $(document).on("click", ".food-measure-button:not(.disabled)", function() {
         LATEST_PRODUCT.size = size;
         LATEST_PRODUCT.price = Number(LATEST_PRODUCT_SELECTED[`${size}`])
         LATEST_PRODUCT.line_total = LATEST_PRODUCT.qty * LATEST_PRODUCT.price
+        LATEST_PRODUCT_SELECTED.changed_size = true;
     }
     // console.log("LATEST_PRODUCT = ", LATEST_PRODUCT)
     applySpecials()
