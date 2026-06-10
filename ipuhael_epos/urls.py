@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import RedirectView  # 1. Import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('', include('index.urls')),
+    # path('', include('index.urls')),
+    # 2. Replace index.urls with a RedirectView pointing to version_2/
+    path('', RedirectView.as_view(url='version_2/', permanent=False)),
     path('version_2/', include('version_2.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
