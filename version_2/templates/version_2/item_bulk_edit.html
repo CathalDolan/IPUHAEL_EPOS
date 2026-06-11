@@ -35,10 +35,22 @@
                         <thead>
                             <tr>
                             {% for field in formset.forms.0.visible_fields %}
-                                
+{% comment %}                                 
                                 {% if forloop.counter != 9 and forloop.counter != 10 %}
                                     <th>{{ field.label }}</th>
-                                {% endif %}
+                                {% endif %} {% endcomment %}
+                                {# Safely skip headers by their exact variable names #}
+                                    <th>
+                                        {# Provide directional sorting helpers using your mapped triggers #}
+                                        {% if field.name == 'name' or field.name == 'category' or field.name == 'subcategory' or field.name == 'subsubcategory' %}
+                                            <a href="?order_by={% if current_order == field.name %}-{% endif %}{{ field.name }}">
+                                                {{ field.label }}
+                                                {% if current_order == field.name %}▲{% elif current_order == '-'|add:field.name %}▼{% endif %}
+                                            </a>
+                                        {% else %}
+                                            {{ field.label }}
+                                        {% endif %}
+                                    </th>
                             {% endfor %}
                             
                             </tr>
@@ -46,11 +58,19 @@
                         <tbody>
                             {% for form in formset %}
                             <tr>
+                                {# CRITICAL: Renders the row ID and any token metadata silently #}
+                                {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                {% endfor %}
                                 <!-- Hidden field to keep track of the row's database ID -->
-                                 {% for field in form %}
-                                    {% if forloop.counter != 9 and forloop.counter != 10 %}
-                                        <td>{{ field }}</td>
-                                    {% endif %}
+                                {# Render your table data data blocks #}
+                                {% for field in form.visible_fields %}
+                                    <td>
+                                        {{ field }}
+                                        {% if field.errors %}
+                                            <div class="text-danger small">{{ field.errors }}</div>
+                                        {% endif %}
+                                    </td>
                                 {% endfor %}
                                 
                             </tr>

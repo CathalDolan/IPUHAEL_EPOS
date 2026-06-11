@@ -26,8 +26,9 @@ from django.db.models import F, Sum, Count, Case, When, DecimalField, Expression
 import os
 
 def bulk_edit_items(request):
-    # Automatically get all field names except the auto-incrementing ID
-    all_fields = [f.name for f in ProductV2._meta.fields if f.name != 'id']
+    # 1. Dynamically get all fields except 'id' AND the excluded products
+    excluded_fields = {'id', 'summer_product', 'winter_product'}
+    all_fields = [f.name for f in ProductV2._meta.fields if f.name not in excluded_fields]
     
     # Pass the dynamic list into the formset factory
     ItemFormSet = modelformset_factory(ProductV2, fields=all_fields, extra=1)
@@ -57,15 +58,18 @@ def bulk_edit_items(request):
     
     if request.method == 'POST':
         # 2. Bind the submitted POST data to the formset
-        formset = ItemFormSet(request.POST)
+        formset = ItemFormSet(request.POST, queryset=queryset)
         if formset.is_valid():
             formset.save()  # Saves all changes to the database at once
             return redirect(f"{request.path}?order_by={order_by}")  # Reloads the page to show updated data
+        else:
+            # Troubleshooting step: Print errors if the form is invalid
+            print("Formset validation failed:", formset.errors)
     else:
         # 3. On a GET request, pull all records into the formset
-        formset = ItemFormSet(queryset=ProductV2.objects.all())
+        formset = ItemFormSet(queryset=queryset)
         
-    return render(request, 'version_2/item_bulk_edit.html', {'formset': formset})
+    return render(request, 'version_2/item_bulk_edit.html', {'formset': formset, 'current_order': order_by})
 
 
 # Create your views here.
