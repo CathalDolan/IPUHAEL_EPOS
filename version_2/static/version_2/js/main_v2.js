@@ -363,6 +363,8 @@ $(".open-drink-submit").click(() => {
 });
 
 $(".product-button").click(function() {
+    
+    console.log("$(this).attr('data-subcategory') = ", $(this).attr('data-subcategory'))
     if($(this).hasClass('disabled')) {
         return;
     }
@@ -471,6 +473,16 @@ $(".product-button").click(function() {
         ALL_PRODUCTS.push(LATEST_PRODUCT)
         LATEST_PRODUCT = {}
     }
+
+
+
+    else if($(this).attr('data-subcategory') == 'non_alcoholic' && sessionStorage.getItem("till_display") == 'kitchen') {
+        console.log("YESSS")
+        
+    }
+
+
+
 
     else {
         if($(this).data() == LATEST_PRODUCT_SELECTED && LATEST_PRODUCT_SELECTED.changed_size != true) {
@@ -1099,6 +1111,7 @@ $(".cancel-button").click(function () {
     $('.mask').show();
     $('.staff-table').show();
     $("#pfand_total").text("€");
+    $("#drink_food_total").text("€");
     $("#total_due").text("€");
     $("#amount_tendered").val(0);
     $("#change_due").text("€");
