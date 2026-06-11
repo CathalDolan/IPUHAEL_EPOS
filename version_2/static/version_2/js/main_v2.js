@@ -41,14 +41,33 @@ window.onload = function () {
     $(".toast").toast("show");
 }
 
+function getOrdinal(n) {
+    let ord = 'th';
+  
+    if (n % 10 == 1 && n % 100 != 11)
+    {
+      ord = 'st';
+    }
+    else if (n % 10 == 2 && n % 100 != 12)
+    {
+      ord = 'nd';
+    }
+    else if (n % 10 == 3 && n % 100 != 13)
+    {
+      ord = 'rd';
+    }
+  
+    return ord;
+}
+
 setInterval(function () {
     const now = new Date();
     var days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
     $('#day').text(days[now.getDay()]);
+    $('#date').text(now.getDate() + getOrdinal(now.getDate()));
     $('#month').text(months[now.getMonth()]);
-    $('#date').text(now.getDate());
     $('#year').text(now.getFullYear())
     $('#hours').text(now.getHours() < 10 ? "0" + now.getHours() : now.getHours());
     $('#minutes').text(now.getMinutes() < 10 ? "0" + now.getMinutes()

@@ -863,16 +863,14 @@
         <div class="col-5 till-right-side">
             <div class="status-bar">
                 <span class="clock">
-                    <span id="hours">{% now "G" %}</span>
-                    :
-                    <span id="minutes">{% now "i" %}</span>
-                    :
-                    <span id="seconds">{% now "s" %}</span> - 
                     <span id="day">{% now "D" %}</span>
-                    , 
+                    <span id="date">{% now "jS" %}</span>
                     <span id="month">{% now "M" %}</span>
+                     - 
+                    <span id="hours">{% now "G" %}</span>:
+                    <span id="minutes">{% now "i" %}</span>:
+                    <span id="seconds">{% now "s" %}</span>
                     
-                    <span id="date">{% now "j" %}</span>
                     
                     
                 </span>
