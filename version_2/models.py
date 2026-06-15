@@ -162,6 +162,10 @@ class ProductV2(models.Model):
                                         blank=True,
                                         decimal_places=2,
                                         max_digits=5)
+    cloth_3xl = models.DecimalField(null=True,
+                                        blank=True,
+                                        decimal_places=2,
+                                        max_digits=5)
 
     def __str__(self):
         return self.name

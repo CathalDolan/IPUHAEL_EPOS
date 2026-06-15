@@ -110,6 +110,7 @@ class ProductV2Admin(ExportActionMixin, admin.ModelAdmin):
         'cloth_l',
         'cloth_xl',
         'cloth_2xl',
+        'cloth_3xl',
         'summer_product',
         'winter_product',
         'bar_product',

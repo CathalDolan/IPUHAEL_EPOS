@@ -714,6 +714,19 @@ def eod_takings(request):
                 # 3. CRITICAL: Inform email software (like Gmail) to render this as an HTML page, not plain text [1]
                 email.content_subtype = "html" 
 
+                #4 Create spreadsheet of thedays orders
+                try:
+                    excel_buffer = generate_epos_excel_buffer(trading_date)
+                    
+                except Exception as e:
+                    messages.error(request, f"Failed to dispatch report data email: {str(e)}")
+        
+                email.attach(
+                    f'epos_report_{trading_date}.xlsx',
+                    excel_buffer.getvalue(),  # Extracts the inner raw binary data string
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' # Explicit Excel MIME type
+                )
+
 
                 # Fire data payload safely over Gmail SMTP infrastructure
                 email.send(fail_silently=False)
@@ -756,109 +769,207 @@ def eod_takings(request):
         
     return render(request, 'version_2/eod_takings.html', context)
 
-def export_data(request):
-    orders = LineItemV2.objects.all()
+
+def generate_epos_excel_buffer(trading_date):
+    """
+    Generates the optimized transactions spreadsheet.
+    Returns: BytesIO object containing the raw spreadsheet binary data.
+    """
+    orders = LineItemV2.objects.filter(transaction__order_date__date=trading_date).select_related(
+        'transaction',
+        'category',
+        'subcategory',
+        'subsubcategory'
+    )
 
     data = {
-        'line_ID': [],
-        'trans_ID': [],
-        'order_date': [],
-        'order_time': [],
-        'qty_of_products': [],
-        'products_total': [],
-        'pfand_total': [],
-        'total_due': [],
-        'tendered_amount': [],
-        'change_due': [],
-        'payment_method': [],
-        'payment_reason': [],
-        'staff_member': [],
-        'product_name': [],
-        'product_size': [],
-        'price_unit': [],
-        'quantity': [],
-        'line_total': [],
-        'discount': [],
-        'discount_type': [],
-        'parent_cat': [],
-        'sub_cat_1': [],
-        'sub_cat_2': [],
+        'line_ID': [], 'trans_ID': [], 'order_date': [], 'order_time': [],
+        'qty_of_products': [], 'products_total': [], 'pfand_total': [],
+        'total_due': [], 'tendered_amount': [], 'change_due': [],
+        'payment_method': [], 'payment_reason': [], 'staff_member': [],
+        'product_name': [], 'product_size': [], 'price_unit': [],
+        'quantity': [], 'line_total': [], 'discount': [],
+        'discount_type': [], 'category': [], 'subcategory': [], 'subsubcategory': [],
     }
+    
     for order in orders:
+        tx = order.transaction
         data['line_ID'].append(order.id)
-        data['trans_ID'].append(order.transaction.transaction_number)
-        data['order_date'].append(order.transaction.order_date.strftime("%d/%m/%Y"))
-        data['order_time'].append(order.transaction.order_date.strftime("%H:%M:%S"))
-        data['qty_of_products'].append(order.transaction.number_of_products)
-        data['products_total'].append(order.transaction.drinks_food_total)
-        data['pfand_total'].append(order.transaction.pfand_total)
-        data['total_due'].append(order.transaction.total_due)
-        data['tendered_amount'].append(order.transaction.tendered_amount)
-        data['change_due'].append(order.transaction.change_due)
-        data['payment_method'].append(order.transaction.payment_method)
-        data['payment_reason'].append(order.transaction.payment_reason)
-        data['staff_member'].append(order.transaction.staff_member)
+        data['trans_ID'].append(tx.transaction_number if tx else '')
+        data['order_date'].append(tx.order_date.strftime("%d/%m/%Y") if tx else '')
+        data['order_time'].append(tx.order_date.strftime("%H:%M:%S") if tx else '')
+        data['qty_of_products'].append(tx.number_of_products if tx else 0)
+        data['products_total'].append(tx.drinks_food_total if tx else 0)
+        data['pfand_total'].append(tx.pfand_total if tx else 0)
+        data['total_due'].append(tx.total_due if tx else 0)
+        data['tendered_amount'].append(tx.tendered_amount if tx else 0)
+        data['change_due'].append(tx.change_due if tx else 0)
+        data['payment_method'].append(tx.payment_method if tx else '')
+        data['payment_reason'].append(tx.payment_reason if tx else '')
+        data['staff_member'].append(tx.staff_member if tx else '')
+        
         data['product_name'].append(order.name)
         data['product_size'].append(order.size)
         data['price_unit'].append(order.price_unit)
         data['quantity'].append(order.quantity)
         data['line_total'].append(order.price_line_total)
-        data['discount'].append(order.price_unit * order.quantity - order.price_line_total)
+        data['discount'].append((order.price_unit * order.quantity) - order.price_line_total)
         data['discount_type'].append(order.discount)
-        data['parent_cat'].append(order.category.name)
-        data['sub_cat_1'].append(order.subcategory.name)
-        if order.subsubcategory == None:
-            data['sub_cat_2'].append('')
-        else:
-            data['sub_cat_2'].append(order.subsubcategory.name)
-
+        
+        data['category'].append(order.category.name if order.category else '')
+        data['subcategory'].append(order.subcategory.name if order.subcategory else '')
+        data['subsubcategory'].append(order.subsubcategory.name if order.subsubcategory else '')
 
     df = pd.DataFrame(data)
 
-    # 2. CLEANING: Convert non-Excel types to strings
-    # This handles UUIDs, Decimals, and Django Staff objects
     for col in df.columns:
         df[col] = df[col].apply(lambda x: str(x) if isinstance(x, (UUID, Decimal)) or hasattr(x, '_meta') else x)
 
     buffer = io.BytesIO()
+    
+    with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Transactions')
+        workbook = writer.book
+        worksheet = writer.sheets['Transactions']
+        
+        header_fmt = workbook.add_format({'bold': True, 'bg_color': '#D7E4BC', 'align': 'center', 'border': 1})
+        merge_fmt = workbook.add_format({'valign': 'vcenter', 'align': 'left', 'border': 1})
+
+        for col_num, value in enumerate(df.columns.values):
+            worksheet.write(0, col_num, value, header_fmt)
+
+        for trans_id in df['trans_ID'].unique():
+            indices = df.index[df['trans_ID'] == trans_id].tolist()
+            if len(indices) > 1:
+                first_row = indices[0] + 1
+                last_row = indices[-1] + 1
+                for col in list(range(0, 13)):
+                    val = df.iloc[indices[0], col]
+                    for r in range(first_row + 1, last_row + 1):
+                        worksheet.write_blank(r, col, None)
+                    worksheet.merge_range(first_row, col, last_row, col, val, merge_fmt)
+            else:
+                row_idx = indices[0] + 1
+                for col in range(0, 13):
+                    val = df.iloc[indices[0], col]
+                    worksheet.write(row_idx, col, val, merge_fmt)
+
+        for i, col in enumerate(df.columns):
+            max_len = max(df[col].astype(str).map(len).max(), len(col)) + 3
+            worksheet.set_column(i, i, min(max_len, 50))
+
+    buffer.seek(0)
+    return buffer  # Exposes raw stream directly to your caller scopes
+
+
+def export_data(request):
+    # 1. OPTIMIZATION: One single SQL query using select_related to kill the N+1 problem
+    orders = LineItemV2.objects.all().select_related(
+        'transaction',
+        'category',
+        'subcategory',
+        'subsubcategory'
+    )
+
+    data = {
+        'line_ID': [], 'trans_ID': [], 'order_date': [], 'order_time': [],
+        'qty_of_products': [], 'products_total': [], 'pfand_total': [],
+        'total_due': [], 'tendered_amount': [], 'change_due': [],
+        'payment_method': [], 'payment_reason': [], 'staff_member': [],
+        'product_name': [], 'product_size': [], 'price_unit': [],
+        'quantity': [], 'line_total': [], 'discount': [],
+        'discount_type': [], 'parent_cat': [], 'sub_cat_1': [], 'sub_cat_2': [],
+    }
+    
+    for order in orders:
+        tx = order.transaction  # Local caching variable for micro-optimization
+        
+        data['line_ID'].append(order.id)
+        data['trans_ID'].append(tx.transaction_number if tx else '')
+        data['order_date'].append(tx.order_date.strftime("%d/%m/%Y") if tx else '')
+        data['order_time'].append(tx.order_date.strftime("%H:%M:%S") if tx else '')
+        data['qty_of_products'].append(tx.number_of_products if tx else 0)
+        data['products_total'].append(tx.drinks_food_total if tx else 0)
+        data['pfand_total'].append(tx.pfand_total if tx else 0)
+        data['total_due'].append(tx.total_due if tx else 0)
+        data['tendered_amount'].append(tx.tendered_amount if tx else 0)
+        data['change_due'].append(tx.change_due if tx else 0)
+        data['payment_method'].append(tx.payment_method if tx else '')
+        data['payment_reason'].append(tx.payment_reason if tx else '')
+        data['staff_member'].append(tx.staff_member if tx else '')
+        
+        data['product_name'].append(order.name)
+        data['product_size'].append(order.size)
+        data['price_unit'].append(order.price_unit)
+        data['quantity'].append(order.quantity)
+        data['line_total'].append(order.price_line_total)
+        data['discount'].append((order.price_unit * order.quantity) - order.price_line_total)
+        data['discount_type'].append(order.discount)
+        
+        data['parent_cat'].append(order.category.name if order.category else '')
+        data['sub_cat_1'].append(order.subcategory.name if order.subcategory else '')
+        data['sub_cat_2'].append(order.subsubcategory.name if order.subsubcategory else '')
+
+    df = pd.DataFrame(data)
+
+    # 2. CLEANING: Safe type conversions
+    for col in df.columns:
+        df[col] = df[col].apply(lambda x: str(x) if isinstance(x, (UUID, Decimal)) or hasattr(x, '_meta') else x)
+
+    buffer = io.BytesIO()
+    
+    # 3. SECURE EXCEL LAYOUT ENGINE LINK
     with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
         df.to_excel(writer, index=False, sheet_name='Transactions')
         
         workbook = writer.book
         worksheet = writer.sheets['Transactions']
         
-        # Formats
-        header_fmt = workbook.add_format({'bold': True, 'bg_color': '#D7E4BC', 'align': 'center'})
-        merge_fmt = workbook.add_format({'valign': 'vcenter', 'align': 'left'})
+        # Styles
+        header_fmt = workbook.add_format({'bold': True, 'bg_color': '#D7E4BC', 'align': 'center', 'border': 1})
+        merge_fmt = workbook.add_format({'valign': 'vcenter', 'align': 'left', 'border': 1})
 
-        # Style Headers
+        # Rewrite Header formatting explicitly
         for col_num, value in enumerate(df.columns.values):
             worksheet.write(0, col_num, value, header_fmt)
 
-        # 3. MERGING LOGIC
-        # We merge based on 'trans_ID' (which is now a string)
+        # 4. SAFE TRANSACTION CELL MERGING WORKFLOW
         for trans_id in df['trans_ID'].unique():
             indices = df.index[df['trans_ID'] == trans_id].tolist()
             
             if len(indices) > 1:
-                first = indices[0] + 1
-                last = indices[-1] + 1
+                # Add 1 because Excel row index 0 is occupied by headers
+                first_row = indices[0] + 1
+                last_row = indices[-1] + 1
                 
-                # Columns to merge: line_ID thru staff_member (Indices 0 to 12)
-                # We do NOT merge product_name (13), product_size (14), etc.
+                # Transaction metadata block columns (Indices 0 to 12)
                 columns_to_group = list(range(0, 13)) 
                 
                 for col in columns_to_group:
                     val = df.iloc[indices[0], col]
-                    worksheet.merge_range(first, col, last, col, val, merge_fmt)
+                    
+                    # CRITICAL FIX: Clear the data inside the cell ranges *before* invoking merge_range
+                    # This prevents XlsxWriter from throwing data-corruption collisions
+                    for r in range(first_row + 1, last_row + 1):
+                        worksheet.write_blank(r, col, None)
+                        
+                    worksheet.merge_range(first_row, col, last_row, col, val, merge_fmt)
+            else:
+                # Format single standalone rows with the standard non-merged grid boundaries
+                row_idx = indices[0] + 1
+                for col in range(0, 13):
+                    val = df.iloc[indices[0], col]
+                    worksheet.write(row_idx, col, val, merge_fmt)
 
-        # Set Column Widths
-        # worksheet.set_column('B:B', 40) # wide trans_ID
-        # worksheet.set_column('M:M', 20) # staff_member
-        # worksheet.set_column('N:N', 25) # product_name
+        # 5. DYNAMIC COLUMN AUTO-FIT SIZER
+        for i, col in enumerate(df.columns):
+            # Evaluate maximum string length within this column context to prevent text clipping
+            max_len = max(df[col].astype(str).map(len).max(), len(col)) + 3
+            worksheet.set_column(i, i, min(max_len, 50)) # Cap extreme lengths at 50 chars
 
     buffer.seek(0)
-    response = HttpResponse(buffer.getvalue(), content_type='application/vnd.ms-excel')
+    response = HttpResponse(buffer.getvalue(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename="epos_report.xlsx"'
     return response
+
     # #######################    

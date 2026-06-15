@@ -7,7 +7,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    background-color: #000000ee;
+    background-color: #000000dd;
     height: 100dvh;
     width: 100%;
 }
@@ -102,19 +102,22 @@ button.modal-measure-button.selected::before {
 }
 
 button.drinks-measure-button.disabled,
-button.food-measure-button.disabled {
+button.food-measure-button.disabled,
+button.gift-measure-button.disabled {
     color: #fafafa;
     background-color: grey;
     transform: translate(0em, 0.25em)
 }
 
 button.drinks-measure-button.disabled span,
-button.food-measure-button.disabled span {
+button.food-measure-button.disabled span,
+button.gift-measure-button.disabled span {
     color: #fafafa;
 }
 
 button.drinks-measure-button.disabled::before,
-button.food-measure-button.disabled::before {
+button.food-measure-button.disabled::before,
+button.gift-measure-button.disabled::before {
     background-color: grey;
     transform: translate3d(0, 0.25em, -1em);
 }
