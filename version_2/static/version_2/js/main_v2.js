@@ -739,12 +739,15 @@ function applySpecials() {
         }
         else if(item.discount_applied != 'Pfand Shot' && item.discount_applied != "5 Shot Special") {
             item.discount_applied = "";
-            
+            if(item.size == "bottle") {
+                item.pfand_payable = "False";
+            }
         }
 
         item.line_total = item.price * item.qty;
     });
-
+    
+    console.log("NEW_BASKET = ", NEW_BASKET);
     console.log("Basket prices synchronized successfully.");
     
     DISCOUNTS = []; // Reset the discounts applied
