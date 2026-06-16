@@ -3,7 +3,7 @@ const host = window.location.host;
 var url = '';
 if(host.includes("heroku")) {
     console.log("HEROKU")
-    url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/past_orders"
+    url = "https://ipuhael-epos-8b5f0c382be3.herokuapp.com/version_2/past_orders_v2"
 }
 else {
     console.log("GITPOD")
