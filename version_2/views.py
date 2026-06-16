@@ -724,7 +724,7 @@ def eod_takings(request):
                     messages.error(request, f"Failed to dispatch report data email: {str(e)}")
         
                 email.attach(
-                    f'epos_report_{trading_date}.xlsx',
+                    f'epos_report_{event.name}_{trading_date}.xlsx',
                     excel_buffer.getvalue(),  # Extracts the inner raw binary data string
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' # Explicit Excel MIME type
                 )

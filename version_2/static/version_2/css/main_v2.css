@@ -1109,7 +1109,7 @@ table {
 
 .complimentary-button {
     background-color: #ff9100;
-    color: #fff;
+    color: #000;
 }
 
 .complimentary-button::before {
@@ -1130,7 +1130,7 @@ table {
 
 .waste-button {
     background-color: #48caca;
-    color: #fff;
+    color: #000;
     font-weight: 800;
 }
 
