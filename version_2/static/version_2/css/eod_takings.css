@@ -243,7 +243,7 @@ label {
 .loader {
     width: 48px;
     height: 48px;
-    border: 5px solid #FF3D00;
+    border: 5px solid #0d6efd;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
