@@ -644,9 +644,16 @@ $(".product-button").click(function() {
                 });
             }
             
-            var default_size = `${LATEST_PRODUCT_SELECTED.default_size}`
-            var default_price = LATEST_PRODUCT_SELECTED[default_size];
-    
+            let default_size = `${LATEST_PRODUCT_SELECTED.default_size}`
+            let default_price = LATEST_PRODUCT_SELECTED[default_size];
+            let pfand_payable = $(this).attr("data-pfand")
+            
+            if(LATEST_PRODUCT_SELECTED.subcategory == "spirits_and_liquers" && sessionStorage.getItem("till_display") == 'gift') {
+                default_size = 'bottle';
+                default_price = LATEST_PRODUCT_SELECTED['bottle'];;
+                pfand_payable = "False";
+                LATEST_PRODUCT_SELECTED.changed_size = true;
+            }
             LATEST_PRODUCT = {
                 name: $(this).attr("data-name"),
                 abbr_name: $(this).attr("data-abbr_name"),
@@ -657,7 +664,7 @@ $(".product-button").click(function() {
                 qty: 1,
                 price: Number(default_price),
                 line_total: Number(default_price),
-                pfand_payable: $(this).attr("data-pfand"),
+                pfand_payable: pfand_payable,
                 discount_applied: $(this).attr("data-name") == "5 Shots Special" ? "5 Shots Special" : ""
             }
         }
@@ -725,13 +732,7 @@ function applySpecials() {
         }
         else if(item.discount_applied != 'Pfand Shot' && item.discount_applied != "5 Shot Special") {
             item.discount_applied = "";
-            if(item.subcategory == "spirits_and_liquers" && sessionStorage.getItem("till_display") == 'gift') {
-                let product = $(`[data-name='${item.name}']`)
-                console.log("product = ", product.attr('data-bottle'))
-                item.price = Number(product.attr('data-bottle'))
-                item.size = 'bottle'
-                item.pfand_payable = "False"
-            }
+            
         }
 
         item.line_total = item.price * item.qty;
