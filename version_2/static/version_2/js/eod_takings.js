@@ -415,5 +415,28 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    const form = document.querySelector('form');
+    const submitBtn = document.getElementById('submit-btn');
+    const loadingState = document.getElementById('processing');
+
+    if (form && submitBtn && loadingState) {
+        form.addEventListener('submit', function (event) {
+            // 1. Check if the browser flags any HTML5 field errors
+            if (!form.checkValidity()) {
+                // If invalid, let the browser show its error bubbles. Stop here.
+                console.log("INVALID FORM")
+                return; 
+            }
+
+            // 2. If valid, prevent double-clicks by disabling the button
+            submitBtn.disabled = true;
+
+            // 3. Swap the elements visually
+            submitBtn.style.display = 'none';
+            loadingState.style.display = 'block'; 
+            
+            // The form will now naturally submit and reload the page.
+        });
+    }
 
 });

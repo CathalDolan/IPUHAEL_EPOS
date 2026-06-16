@@ -315,14 +315,14 @@
     <!-- SUBMIT BUTTON: Anchored securely to the bottom right -->
     <div class="row buttons-row">
         <div class="col-3">
-            <a href="{% url 'index_v2' %}"><button type="button" class="back-button"><i class="fa-solid fa-angles-left"></i> Back to site</button></a>
+            <a href="{% url 'index_v2' %}"><button type="button" class="button back-button"><i class="fa-solid fa-angles-left"></i> Back to site</button></a>
         </div>
         <div class="col-3">
             <!-- Check your button declaration at the bottom of your HTML template -->
-                <button type="submit" class="submit-button">
+                <button id="submit-btn" type="submit" class="button submit-button">
                     <i class="fa-solid fa-upload"></i> Submit
                 </button>
-            
+                <div id="processing"><h4>Processing...</h4><div class='loader'></div></div>
         </div>
     </div>
             
