@@ -25,18 +25,25 @@ window.onload = function () {
     $('.drinks-measurement-row').hide()
     $('.food-measurement-row').hide()
     $('.gift-measurement-row').hide()
-    let products = $('.col-2:not(.omit)').children('.product-button')
-    products.each(function(index, elem) {
-        if($(elem).attr('data-category') == "drink") {
-            $('.drinks-measurement-row').show()
-        }
-        if($(elem).attr('data-category') == "food") {
-            $('.food-measurement-row').show()
-        }
-        if($(elem).attr('data-category') == "gift") {
-            $('.gift-measurement-row').show()
-        }
-    })
+
+    if(till_display == "bar") {
+        $('.drinks-measurement-row').show()
+    }
+    if(till_display == "kitchen") {
+        $('.food-measurement-row').show()
+    }
+    // let products = $('.col-2:not(.omit)').children('.product-button')
+    // products.each(function(index, elem) {
+    //     if($(elem).attr('data-category') == "drink") {
+    //         $('.drinks-measurement-row').show()
+    //     }
+    //     if($(elem).attr('data-category') == "food") {
+    //         $('.food-measurement-row').show()
+    //     }
+    //     if($(elem).attr('data-category') == "gift") {
+    //         $('.gift-measurement-row').show()
+    //     }
+    // })
     // Calls message toasts
     $(".toast").toast("show");
 }
@@ -62,8 +69,8 @@ function getOrdinal(n) {
 
 setInterval(function () {
     const now = new Date();
-    var days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-    var months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    var days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
     $('#day').text(days[now.getDay()]);
     $('#date').text(now.getDate() + getOrdinal(now.getDate()));
@@ -183,21 +190,33 @@ $('.product-selection-button').click(function() {
     $("[data-kitchen_product]").parent().addClass("omit");
     $("[data-gift_product]").parent().addClass("omit");
     $(`[data-${product_type}_product=True]`).parent().removeClass('omit');
+
     $('.drinks-measurement-row').hide()
     $('.food-measurement-row').hide()
     $('.gift-measurement-row').hide()
-    let products = $('.col-2:not(.omit)').children('.product-button')
-    products.each(function(index, elem) {
-        if($(elem).attr('data-category') == "drink") {
-            $('.drinks-measurement-row').show()
-        }
-        if($(elem).attr('data-category') == "food") {
-            $('.food-measurement-row').show()
-        }
-        if($(elem).attr('data-category') == "gift") {
-            $('.gift-measurement-row').show()
-        }
-    })
+
+    if(product_type == "bar") {
+        $('.drinks-measurement-row').show()
+    }
+    if(product_type == "kitchen") {
+        $('.food-measurement-row').show()
+    }
+    // if(product_type == "bar") {
+    //     $('.drinks-measurement-row').show()
+    // }
+    console.log("product_type = ", product_type)
+    // let products = $('.col-2:not(.omit)').children('.product-button')
+    // products.each(function(index, elem) {
+    //     if($(elem).attr('data-category') == "drink") {
+    //         $('.drinks-measurement-row').show()
+    //     }
+    //     if($(elem).attr('data-category') == "food") {
+    //         $('.food-measurement-row').show()
+    //     }
+    //     if($(elem).attr('data-category') == "gift") {
+    //         $('.gift-measurement-row').show()
+    //     }
+    // })
 
 })
 
@@ -611,7 +630,7 @@ $(".product-button").click(function() {
             }
             else {
                 $.each(LATEST_PRODUCT_SELECTED, function(k, v) {
-                    console.log(k,':',v)
+                    // console.log(k,':',v)
                     if(v == "None") {
                         $(`.drinks-measure-button[data-size=${k}]`).addClass('disabled')
                         $(`.food-measure-button[data-size=${k}]`).addClass('disabled')
@@ -701,11 +720,20 @@ function applySpecials() {
                 discountedDrinksApplied++;
             } else {
                 item.price = 4.00; // Standard price
+                item.discount_applied = ""
             }
         }
         else if(item.discount_applied != 'Pfand Shot' && item.discount_applied != "5 Shot Special") {
             item.discount_applied = "";
+            if(item.subcategory == "spirits_and_liquers" && sessionStorage.getItem("till_display") == 'gift') {
+                let product = $(`[data-name='${item.name}']`)
+                console.log("product = ", product.attr('data-bottle'))
+                item.price = Number(product.attr('data-bottle'))
+                item.size = 'bottle'
+                item.pfand_payable = "False"
+            }
         }
+
         item.line_total = item.price * item.qty;
     });
 
