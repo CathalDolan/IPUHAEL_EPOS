@@ -288,7 +288,8 @@ def eod_takings(request):
     # FIX: Initialize forms early so they always exist in memory
     takings_form = None
     receipt_formset = None
-
+    staff_id = request.GET.get('staff')
+    print("staff_id = ", staff_id)
     # 1. Define the dynamic Receipts Formset framework
     # queryset=Receipts.objects.none() prevents historical uploads from loading
     ReceiptsFormSet = modelformset_factory(Receipts, form=ReceiptsForm, extra=1)
@@ -758,7 +759,7 @@ def eod_takings(request):
             event = Events.objects.get(date_from__lte=date.today(), date_to__gte=date.today())
         except Events.DoesNotExist:
             event = None
-        takings_form = EndOfDayTakingsForm(initial={'trading_date': default_date, 'event': event})
+        takings_form = EndOfDayTakingsForm(initial={'trading_date': default_date, 'event': event, 'submitted_by': staff_id})
         receipt_formset = ReceiptsFormSet(queryset=Receipts.objects.none())
         
     # FIX: Building the context dictionary explicitly right before rendering 

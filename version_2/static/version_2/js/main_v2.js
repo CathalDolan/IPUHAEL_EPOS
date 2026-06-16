@@ -10,6 +10,7 @@ if (host.includes("heroku")) {
 }
 
 window.onload = function () {
+    sessionStorage.setItem("staff", "");
     let till_display = sessionStorage.getItem("till_display");
     if (till_display == null) {
         till_display = "bar";
@@ -255,6 +256,12 @@ $('.staff-member').click(function() {
     $('.basket').show();
     $('#staff-user').text(name);
 })
+
+$('#daily-takings').on('click', function(event) {
+    event.preventDefault();
+    const staffId = sessionStorage.getItem("staff");
+    window.location.href = $(this).attr('href') + '?staff=' + encodeURIComponent(staffId);
+});
 
 $('.active-indicator').click(() => {
     $('.nav').toggle(250)
