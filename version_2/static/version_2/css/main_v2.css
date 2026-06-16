@@ -720,7 +720,7 @@ table {
     border: 3px solid gold;
     text-align: center;
     font-weight: 600;
-    height: 100%;
+    height: 320px;
     overflow-y: scroll;    
 }
 
@@ -765,6 +765,39 @@ table {
 .staff-table tr:nth-child(odd) {
     background-color: #211f1f;
 }
+
+#processing {
+    /* position:relative; */
+    height: 300px;
+    display: none;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+}
+
+#processing h4 {
+    padding-right: 1rem;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #0d6efd;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+} 
 
 .basket {
     display: none;

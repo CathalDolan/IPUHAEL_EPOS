@@ -1451,7 +1451,9 @@ function checkout(payment_method, payment_reason) {
     Grand_Total.staff_member = STAFF_ID;
 
     // let sub_amount = Amount_Tendered - Total_Due;
-
+    $('.basket-content').hide();
+    $('#processing').css('display', 'flex');
+    // $('.no-entries').append("<h4>Please wait...</h4><div class='loader'></div>")
     fetch(url, {
         method: "POST",
         credentials: "same-origin",
@@ -1471,13 +1473,13 @@ function checkout(payment_method, payment_reason) {
             },
         ]),
     })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log("response.data = ", data);
-            if (data.status == "Checkout Complete") {
-                location.reload();
-            }
-        });
+    .then((response) => response.json())
+    .then((data) => {
+        console.log("response.data = ", data);
+        if (data.status == "Checkout Complete") {
+            location.reload();
+        }
+    });
 }
 
 function getCookie(name) {
