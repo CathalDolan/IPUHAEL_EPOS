@@ -57,7 +57,7 @@ class EndOfDayTakingsForm(forms.ModelForm):
         # 3. Safe dynamic loading of Staff relationships
         StaffModel = apps.get_model('index', 'Staff')
         self.fields['submitted_by'] = forms.ModelChoiceField(
-            queryset=StaffModel.objects.all(),
+            queryset=StaffModel.objects.all().filter(on_duty=True),
             required=True,
             widget=forms.Select(attrs={'class': 'form-control'}),
             label="Staff Member"
