@@ -242,7 +242,7 @@ function getOrders() {
               <td class="no-border-top no-border-bottom"></td>
           </tr>`
         )
-        transaction_id = orders[i]['grand_totals_id'];
+        // transaction_id = orders[i]['grand_totals_id'];
       }
       
     }
