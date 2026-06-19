@@ -108,6 +108,7 @@ def index_v2(request):
                     discounts=v["Discounts"],
                     payment_method=v["Payment_Method"],
                     payment_reason=v["payment_reason"],
+                    event=event,
                 )
                 new_grand_total.save()
 
