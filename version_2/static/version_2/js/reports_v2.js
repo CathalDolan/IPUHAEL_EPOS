@@ -26,7 +26,7 @@ $('document').ready(function () {
 
     drawHourlySalesChart()
 
-    
+
     // Function to display the filter dropdown lists when clicked
     $('.anchor').on('click', function () {
         if (this.parentNode.classList.contains('visible')) {
@@ -302,15 +302,15 @@ $('document').ready(function () {
         $('#summary-table').append(
             `<tr>
                 <td>${analyticsSummary.totalTransactions}</td>
-                <td>€${analyticsSummary.totalRevenue}</td>
+                <td>${analyticsSummary.totalRevenue}</td>
                 <td>${analyticsSummary.cashTransactionsCount}</td>
-                <td>€${analyticsSummary.cashTotal}</td>
+                <td>${analyticsSummary.cashTotal}</td>
                 <td>${analyticsSummary.cardTransactionsCount}</td>
-                <td>€${analyticsSummary.cardTotal}</td>
+                <td>${analyticsSummary.cardTotal}</td>
                 <td>${analyticsSummary.wasteTransactionsCount}</td>
-                <td>€${analyticsSummary.wasteTotal}</td>
+                <td>${analyticsSummary.wasteTotal}</td>
                 <td>${analyticsSummary.complimentaryTransactionsCount}</td>
-                <td>€${analyticsSummary.complimentaryTotal}</td>
+                <td>${analyticsSummary.complimentaryTotal}</td>
             </tr>`
         )
 
