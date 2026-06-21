@@ -975,4 +975,101 @@ def export_data(request):
     response['Content-Disposition'] = 'attachment; filename="epos_report.xlsx"'
     return response
 
-    # #######################    
+# #######################
+def reports_v2(request):
+    """ A view to return the past orders page """ 
+    print("NOW = ", datetime.now())
+    entries = LineItemV2.objects.all().values(
+        'transaction__transaction_number',
+        'transaction__order_date',
+        # 'grand_totals',
+        'category__name',
+        'subcategory__name',
+        'subsubcategory__name',
+        'name',
+        'quantity',
+        'size',
+        'price_unit',
+        'price_line_total',
+        'discount',
+        'transaction__payment_method',
+        'transaction__payment_reason',
+        'transaction__staff_member'
+    )
+    staff = []
+    categories = []
+    drinks = []
+    food = []
+    gifts = []
+    sizes = []
+    payment = []
+    # for entry in entries:
+    #     if not entry["transaction__staff_member"] in staff:
+    #         staff.append(entry["transaction__staff_member"])
+    #     if not entry["category__name"] in categories:
+    #         categories.append(entry["category__name"])
+    #     if not entry["name"] in drinks and not "food" in entry["category"].lower() and not "gifts" in entry["category"].lower():
+    #         drinks.append(entry["name"])
+    #     if "food" in entry["category"].lower() and not entry["name"] in food:
+    #         food.append(entry["name"])
+    #     if "gifts" in entry["category"].lower() and not entry["name"] in gifts:
+    #         gifts.append(entry["name"])
+    #     if not entry["size"] in sizes:
+    #         sizes.append(entry["size"])
+    #     if not entry["grand_totals_id__payment_method"] in payment:
+    #         payment.append(entry["grand_totals_id__payment_method"])
+    staff.sort()
+    categories.sort()
+    drinks.sort()
+    food.sort()
+    gifts.sort()
+    sizes.sort()
+    payment.sort()
+    # earliest_date = entries.earliest('order_date_li')
+    # latest_date = entries.latest('order_date_li')
+    date_now = datetime.now()
+    date_yesterday = datetime.now() + timedelta(days=-1)
+
+    if request.GET:
+        print("YES GET")
+        from_date = datetime.strptime(request.GET['from_date'], "%a, %d %b %Y %H:%M:%S %Z")
+        to_date = datetime.strptime(request.GET['to_date'], "%a, %d %b %Y %H:%M:%S %Z")
+        print("from_date = ", from_date) 
+        print("to_date = ", to_date) 
+        entries = entries.filter(order_date_li__range=(from_date, to_date))
+        print("entries = ", entries.count())
+        return JsonResponse({"orders": list(entries)},
+                            safe=False)
+        
+    else:
+        # latest_entry = LineItemV2.objects.latest('transaction__order_date')
+        # latest_date = latest_entry.transaction__order_date
+        # print("latest_date = ", latest_date)
+        # if latest_date.hour < 10:
+        #     from_date = latest_date.replace(hour=10, minute=00, second=00) + timedelta(-1)
+        #     to_date = latest_date.replace(hour=2, minute=00, second=00)
+        #     # print("from_date = ", from_date)
+        #     # print("to_date = ", to_date) 
+        # else:
+        #     from_date = latest_date.replace(hour=10, minute=00, second=00)  
+        #     to_date = latest_date.replace(hour=2, minute=00, second=00) + timedelta(1)
+        #     # print("from_date = ", from_date)
+        #     # print("to_date = ", to_date)
+        # entries = entries.filter(order_date_li__range=(from_date, to_date))
+        
+        context = {
+            "data": list(entries),
+            "staff": staff,
+            "categories": categories,
+            "drinks": drinks,
+            "food": food,
+            "gifts": gifts,
+            "sizes": sizes,
+            "payment": payment,
+            # "earliest_date": from_date,
+            # "latest_date": to_date,
+            "date_now": date_now,
+            "date_yesterday": date_yesterday
+        }
+        return render(request, 'version_2/reports_v2.html', context)
+ 

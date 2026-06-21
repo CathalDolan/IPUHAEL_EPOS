@@ -1,0 +1,137 @@
+.heading_row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    color: #000;
+    text-align: center;
+    font-weight: bolder;
+}
+
+button {
+    vertical-align: middle;
+}
+
+table {
+  margin-bottom: 5px!important;
+}
+
+.summary-table, .group-table {
+  font-size: .9rem;
+  border: 1px solid black; 
+  padding: 2px; 
+  margin-bottom: 5px;
+  background-color: #cacaca;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #D6EEEE;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+thead {
+  background-color: #dbdfdf!important;
+}
+
+.group-table th:not(:nth-child(1)), .group-table td:not(:nth-child(1)) {
+  text-align: center;
+}
+
+.summary-table th, .summary-table td {
+  text-align: center;
+}
+
+.filter-container {
+    border: 1px solid black;
+    padding: 5px;
+    color: #fff;
+    background-color: #000;
+    font-size: .9rem;
+}
+
+label {
+  display: block;
+  padding-top: 5px;
+}
+
+.datepicker, .timepicker {
+   display: block;
+   width: 100%;
+   margin: 5px 0;
+}
+
+.dropdown-check-list {
+    position: relative;
+  }
+  
+  .dropdown-check-list .anchor {
+    width: 100%;
+    cursor: pointer;
+    display: block;
+    padding: 5px 50px 5px 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .dropdown-check-list .anchor:after {
+    position: absolute;
+    content: "";
+    border-left: 2px solid #fff;
+    border-top: 2px solid #fff;
+    padding: 5px;
+    right: 10px;
+    top: 20%;
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+  }
+  
+  .dropdown-check-list .anchor:active:after {
+    right: 8px;
+    top: 21%;
+  }
+  
+  .dropdown-check-list ul.items {
+    width: 100%;
+    position: absolute;
+    padding: 1em 0 0;
+    display: none;
+    margin: 0;
+    /* border: 1px solid #ccc; */
+    background-color: #000;
+    color: #fff;
+    border-top: none;
+  }
+
+  .checkbox {
+    transform: scale(1.5);
+  }
+  
+  .dropdown-check-list ul.items li {
+    list-style: none;
+    margin-bottom: 1em;
+    padding-left: 1em;
+  }
+  
+  .dropdown-check-list.visible .anchor {
+    /* color: #0094ff; */
+    background-color: #494848;
+  }
+  
+  .dropdown-check-list.visible .items {
+    z-index: 1;
+    display: block;
+    max-height: 500px;
+    overflow-y: scroll;
+    background-color: #494848;
+  }
+
+  .dropdown-check-list span {
+    padding: 1em;
+  }

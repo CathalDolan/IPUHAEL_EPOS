@@ -3,8 +3,8 @@
     background-color: #f4f6f9;
     display: none;
     position: fixed;
-    bottom: 120px;
-    right: 60px;
+    bottom: 130px;
+    left: 10px;
     width: 350px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);

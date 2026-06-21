@@ -9,4 +9,5 @@ urlpatterns = [
     path('export_data', views.export_data, name='export_data'),
     path('items/edit-all/', views.bulk_edit_items, name='bulk_edit'),
     path('eod_takings', views.eod_takings, name='eod_takings'),
+    path('reports_v2', views.reports_v2, name='reports_v2'),
 ]

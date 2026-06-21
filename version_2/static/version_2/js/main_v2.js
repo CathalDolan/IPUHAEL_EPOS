@@ -10,6 +10,10 @@ if (host.includes("heroku")) {
 }
 
 window.onload = function () {
+    // Run this on your main layout page
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    document.cookie = "django_timezone=" + tz + "; path=/; max-age=31536000; SameSite=Lax";
+    
     sessionStorage.setItem("staff", "");
     let till_display = sessionStorage.getItem("till_display");
     if (till_display == null) {

@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<!-- dc CSS -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.min.css" type="text/css" /> -->
+<!--My CSS stylesheet-->
+<link rel="stylesheet" href="{% static 'version_2/css/reports_v2.css' %}">
+<style>
+    /* Force Plotly's internal SVG components to match container bounds */
+    #sunburst svg.main-svg {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+<!-- The display block and position attributes force the chart to stay in bounds -->
+<div id="sunburst" style="display: block !important; position: relative !important; width: 100%; height: 500px; visibility: visible !important; opacity: 1 !important;"></div>
+
+<div id="stackedBarChart" style="width:100%; min-height:500px; height:600px;"></div>
+
+<div id="hourlyBarChart" style="width:100%; min-height:450px; height:500px;"></div>
+
+
+<div class="container-fluid heading-container">
+    <div class="row heading_row text-center">
+        <div class="col-3">
+        </div>
+        <div class="col">
+            <h1 class="">REPORTS</h1>
+        </div>
+        <div class="col-3">
+            <a href="{% url 'index_v2' %}"><button type="button" class="btn btn-primary">Back to site</button></a>
+        </div> 
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="summary-table">
+                <h6>SUMMARY</h6>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <!-- <th scope="col">Staff</th> -->
+                        <th scope="col"># Transactions</th>
+                        <th scope="col"># Revenue Total</th>
+                        <th scope="col"># Cash Transactions </th>
+                        <th scope="col">Cash Total</th>
+                        <th scope="col"># Card Transactions</th>
+                        <th scope="col">Card Total</th>
+                        <th scope="col"># Waste Transactions</th>
+                        <th scope="col">Waste Total</th>
+                        <th scope="col"># Comp Transactions</th>
+                        <th scope="col">Comp Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="summary-table">
+            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 pe-0">
+            <div class="filter-container">
+                <h6 class="text-center">FILTER</h6>
+                <div>
+                    <label for="from_date">From</label>
+                    <input class="datepicker" id="from_date" type="date" name="from_date" value=''>
+                    {% comment %} <input class="datepicker" id="from_date" type="date" name="from_date" value='{{ earliest_date | date:"Y" }}-{{ earliest_date | date:"m" }}-{{ earliest_date | date:"d" }}'> {% endcomment %}
+                    <input class="timepicker" type="time" id="from_time" name="from_time" value='10:00'>
+                </div>
+                
+                <div>
+                    <label for="to_date">To</label><input class="datepicker" id="to_date" type="date" name="to_date" value=''>
+                    {% comment %} <input class="datepicker" id="to_date" type="date" name="to_date" value='{{ latest_date | date:"Y" }}-{{ latest_date | date:"m" }}-{{ latest_date | date:"d" }}'> {% endcomment %}
+                    <input class="timepicker" type="time" id="to_time" name="to_time" value='02:00'>
+                </div>
+                
+                <div>
+                    <label for="staff">Staff</label>
+                    <div id="staff" class="dropdown-check-list">
+                        <span class="anchor">Select Staff</span>
+                        <ul class="items">
+                            <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
+                            {% for item in staff %}
+                            <li><input class="checkbox" type="checkbox" name="{{ item }}" checked/><span>{{ item }}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="category">Category</label>
+                    <div id="category" class="dropdown-check-list">
+                        <span class="anchor">Select Category</span>
+                        <ul class="items">
+                            <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
+                            {% for item in categories %}
+                                <li><input class="checkbox" type="checkbox" name="{{ item }}" checked/><span>{{ item }}</span></li>
+                            {% endfor %}
+                            <li><input class="checkbox" type="checkbox" name="Open drink" checked/><span>Open Drink</span></li>
+                        </ul>
+                    </div>
+                </div>
+    
+                <div>
+                    <label for="drinks">Drinks</label>
+                    <div id="drinks" class="dropdown-check-list">
+                        <span class="anchor">Select Drinks</span>
+                        <ul class="items">
+                            <li><input class="checkbox" type="checkbox" name="all"/><span>All</span></li>
+                            {% for item in drinks %}
+                            <li><input class="checkbox" type="checkbox" name="{{ item }}"/><span>{{ item }}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="food">Food</label>
+                    <div id="food" class="dropdown-check-list">
+                        <span class="anchor">Select Food</span>
+                        <ul class="items">
+                            <li><input class="checkbox" type="checkbox" name="all"/><span>All</span></li>
+                            {% for item in food %}
+                            <li><input class="checkbox" type="checkbox" name="{{ item }}"/><span>{{ item }}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="gifts">Gifts</label>
+                    <div id="gifts" class="dropdown-check-list">
+                        <span class="anchor">Select Gifts</span>
+                        <ul class="items">
+                            <li><input class="checkbox" type="checkbox" name="all"/><span>All</span></li>
+                            {% for item in gifts %}
+                            <li><input class="checkbox" type="checkbox" name="{{ item }}"/><span>{{ item }}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+    
+                <div>
+                    <label for="size">Size</label>
+                    <div id="size" class="dropdown-check-list">
+                        <span class="anchor">Select Sizes</span>
+                        <ul class="items">
+                            <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
+                            {% for item in sizes %}
+                            <li><input class="checkbox" type="checkbox" name="{{ item }}" checked/><span>{{ item }}</span></li>
+                            {% endfor %}
+                            
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="transaction_type">Transaction Type</label>
+                    <div id="transaction_type" class="dropdown-check-list">
+                        <span class="anchor">Select</span>
+                        <ul class="items">
+                            <li><input class="checkbox" type="checkbox" name="all" checked/><span>All</span></li>
+                            {% for item in payment %}
+                            <li><input class="checkbox" type="checkbox" name="{{ item }}" checked/><span>{{ item }}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-9">
+            <div class="group-table">
+                <h6>GROUPINGS</h6>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <!-- <th scope="col">Staff</th> -->
+                        <th scope="col">Product</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Price</th>
+                    </tr>
+                    </thead>
+                    <tbody id="group-table">
+            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+
+
+    
+</div>
+
+
+
+{{ data|json_script:"data" }}
+{% comment %} <div class="container graph-container">
+    <canvas id="scatter-plot"></canvas>
+    <div id="line-graph"></div>
+    <div id="per-day-chart"></div>
+    <div id="stacked-chart"></div>
+    <div id="drinks"></div>
+</div> {% endcomment %}
+
+{% endblock %}
+
+{% block post_load_js %}
+{{ block.super }}
+<!-- Standalone Chart.js v4 build (No modules or missing dependency errors) -->
+<!-- Standalone Chart.js v4 via jsDelivr CDN -->
+<!-- Load directly from your own project directory to eliminate all CORS risks -->
+<script src="{% static 'version_2/js/chart.umd.min.js' %}"></script>
+
+<!-- d3 charting library (v5) -->
+{% comment %} <script src="https://cloudflare.com"
+    integrity="sha256-SQJ/nCYPXFPuqoS56EfnesDBPNiitndOIfN2WdPRi/o=" crossorigin="anonymous"></script> {% endcomment %}
+
+<!-- Crossfilter charting library -->
+{% comment %} <script src="https://cloudflare.com"
+    integrity="sha256-T9tvV3x+/vCnCoFciKNZwbaJ46q9lh6iZjD0ZjD95lE=" crossorigin="anonymous"></script> {% endcomment %}
+
+<!-- dc charting library -->
+{% comment %} <script src="https://cloudflare.com"
+    integrity="sha256-g36jGLL708D9oZr5QHvv1KB0lnMupwfKDFK2nTK+PD0=" crossorigin="anonymous"></script> {% endcomment %}
+
+{% comment %} <script src="https://jsdelivr.net"></script> {% endcomment %}
+<!-- Load Local Libraries -->
+<script src="{% static 'version_2/js/plotly-3.6.0.min.js' %}"></script>
+
+<!-- D3 v3 (Keep only if your Plotly or Eurostat extensions explicitly require v3 instead of v5) -->
+{% comment %} <script src='https://cloudflare.com'></script> {% endcomment %}
+
+<!-- Your Custom JavaScript Logic -->
+<script src="{% static 'version_2/js/reports_v2.js' %}"></script>
+
+{% endblock %}

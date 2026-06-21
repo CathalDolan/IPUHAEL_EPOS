@@ -9,6 +9,9 @@ else {
     console.log("GITPOD")
     url = "http://127.0.0.1:8000/version_2/past_orders_v2";
 }
+
+
+
 const calendarDates = document.querySelector('.calendar-dates');
 const monthYear = document.getElementById('month-year');
 const prevMonthBtn = document.getElementById('prev-month');
