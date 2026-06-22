@@ -703,8 +703,8 @@ def eod_takings(request):
                 email = EmailMessage(
                     subject=email_subject,
                     body=html_body_content,
-                    to=['cathal@thepopupirishpub.com'],
-                    cc=['peterwkellett@gmail.com']
+                    # to=['cathal@thepopupirishpub.com'],
+                    to=['peterwkellett@gmail.com']
                 )
 
                 for image in receipt_image_files:
@@ -773,9 +773,99 @@ def eod_takings(request):
     return render(request, 'version_2/eod_takings.html', context)
 
 
+# def generate_epos_excel_buffer(trading_date):
+#     """
+#     Generates the optimized transactions spreadsheet.
+#     Returns: BytesIO object containing the raw spreadsheet binary data.
+#     """
+#     orders = LineItemV2.objects.filter(transaction__order_date__date=trading_date).select_related(
+#         'transaction',
+#         'category',
+#         'subcategory',
+#         'subsubcategory'
+#     )
+
+#     data = {
+#         'line_ID': [], 'trans_ID': [], 'order_date': [], 'order_time': [],
+#         'qty_of_products': [], 'products_total': [], 'pfand_total': [],
+#         'total_due': [], 'tendered_amount': [], 'change_due': [],
+#         'payment_method': [], 'payment_reason': [], 'staff_member': [],
+#         'product_name': [], 'product_size': [], 'price_unit': [],
+#         'quantity': [], 'line_total': [], 'discount': [],
+#         'discount_type': [], 'category': [], 'subcategory': [], 'subsubcategory': [],
+#     }
+    
+#     for order in orders:
+#         tx = order.transaction
+#         data['line_ID'].append(order.id)
+#         data['trans_ID'].append(tx.transaction_number if tx else '')
+#         data['order_date'].append(tx.order_date.strftime("%d/%m/%Y") if tx else '')
+#         data['order_time'].append(tx.order_date.strftime("%H:%M:%S") if tx else '')
+#         data['qty_of_products'].append(tx.number_of_products if tx else 0)
+#         data['products_total'].append(tx.drinks_food_total if tx else 0)
+#         data['pfand_total'].append(tx.pfand_total if tx else 0)
+#         data['total_due'].append(tx.total_due if tx else 0)
+#         data['tendered_amount'].append(tx.tendered_amount if tx else 0)
+#         data['change_due'].append(tx.change_due if tx else 0)
+#         data['payment_method'].append(tx.payment_method if tx else '')
+#         data['payment_reason'].append(tx.payment_reason if tx else '')
+#         data['staff_member'].append(tx.staff_member if tx else '')
+        
+#         data['product_name'].append(order.name)
+#         data['product_size'].append(order.size)
+#         data['price_unit'].append(order.price_unit)
+#         data['quantity'].append(order.quantity)
+#         data['line_total'].append(order.price_line_total)
+#         data['discount'].append((order.price_unit * order.quantity) - order.price_line_total)
+#         data['discount_type'].append(order.discount)
+        
+#         data['category'].append(order.category.name if order.category else '')
+#         data['subcategory'].append(order.subcategory.name if order.subcategory else '')
+#         data['subsubcategory'].append(order.subsubcategory.name if order.subsubcategory else '')
+
+#     df = pd.DataFrame(data)
+
+#     for col in df.columns:
+#         df[col] = df[col].apply(lambda x: str(x) if isinstance(x, (UUID, Decimal)) or hasattr(x, '_meta') else x)
+
+#     buffer = io.BytesIO()
+    
+#     with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+#         df.to_excel(writer, index=False, sheet_name='Transactions')
+#         workbook = writer.book
+#         worksheet = writer.sheets['Transactions']
+        
+#         header_fmt = workbook.add_format({'bold': True, 'bg_color': '#D7E4BC', 'align': 'center', 'border': 1})
+#         merge_fmt = workbook.add_format({'valign': 'vcenter', 'align': 'left', 'border': 1})
+
+#         for col_num, value in enumerate(df.columns.values):
+#             worksheet.write(0, col_num, value, header_fmt)
+
+#         for trans_id in df['trans_ID'].unique():
+#             indices = df.index[df['trans_ID'] == trans_id].tolist()
+#             if len(indices) > 1:
+#                 first_row = indices[0] + 1
+#                 last_row = indices[-1] + 1
+#                 for col in list(range(0, 13)):
+#                     val = df.iloc[indices[0], col]
+#                     for r in range(first_row + 1, last_row + 1):
+#                         worksheet.write_blank(r, col, None)
+#                     worksheet.merge_range(first_row, col, last_row, col, val, merge_fmt)
+#             else:
+#                 row_idx = indices[0] + 1
+#                 for col in range(0, 13):
+#                     val = df.iloc[indices[0], col]
+#                     worksheet.write(row_idx, col, val, merge_fmt)
+
+#         for i, col in enumerate(df.columns):
+#             max_len = max(df[col].astype(str).map(len).max(), len(col)) + 3
+#             worksheet.set_column(i, i, min(max_len, 50))
+
+#     buffer.seek(0)
+#     return buffer  # Exposes raw stream directly to your caller scopes
 def generate_epos_excel_buffer(trading_date):
     """
-    Generates the optimized transactions spreadsheet.
+    Generates the optimized transactions spreadsheet without cell merging.
     Returns: BytesIO object containing the raw spreadsheet binary data.
     """
     orders = LineItemV2.objects.filter(transaction__order_date__date=trading_date).select_related(
@@ -786,13 +876,29 @@ def generate_epos_excel_buffer(trading_date):
     )
 
     data = {
-        'line_ID': [], 'trans_ID': [], 'order_date': [], 'order_time': [],
-        'qty_of_products': [], 'products_total': [], 'pfand_total': [],
-        'total_due': [], 'tendered_amount': [], 'change_due': [],
-        'payment_method': [], 'payment_reason': [], 'staff_member': [],
-        'product_name': [], 'product_size': [], 'price_unit': [],
-        'quantity': [], 'line_total': [], 'discount': [],
-        'discount_type': [], 'category': [], 'subcategory': [], 'subsubcategory': [],
+        'line_ID': [],
+        'trans_ID': [], 
+        'order_date': [], 
+        'order_time': [],
+        # 'qty_of_products': [],
+        # 'products_total': [], 
+        'pfand_total': [],
+        'total_due': [], 
+        'tendered_amount': [], 
+        'change_due': [],
+        'payment_method': [], 
+        'payment_reason': [], 
+        'staff_member': [],
+        'product_name': [], 
+        'product_size': [], 
+        'price_unit': [],
+        'quantity': [], 
+        'line_total': [], 
+        'discount': [],
+        'discount_type': [], 
+        'category': [], 
+        'subcategory': [], 
+        'subsubcategory': [],
     }
     
     for order in orders:
@@ -836,33 +942,27 @@ def generate_epos_excel_buffer(trading_date):
         worksheet = writer.sheets['Transactions']
         
         header_fmt = workbook.add_format({'bold': True, 'bg_color': '#D7E4BC', 'align': 'center', 'border': 1})
-        merge_fmt = workbook.add_format({'valign': 'vcenter', 'align': 'left', 'border': 1})
+        cell_fmt = workbook.add_format({'valign': 'vcenter', 'align': 'left', 'border': 1})
 
+        # Format header row
         for col_num, value in enumerate(df.columns.values):
             worksheet.write(0, col_num, value, header_fmt)
 
-        for trans_id in df['trans_ID'].unique():
-            indices = df.index[df['trans_ID'] == trans_id].tolist()
-            if len(indices) > 1:
-                first_row = indices[0] + 1
-                last_row = indices[-1] + 1
-                for col in list(range(0, 13)):
-                    val = df.iloc[indices[0], col]
-                    for r in range(first_row + 1, last_row + 1):
-                        worksheet.write_blank(r, col, None)
-                    worksheet.merge_range(first_row, col, last_row, col, val, merge_fmt)
-            else:
-                row_idx = indices[0] + 1
-                for col in range(0, 13):
-                    val = df.iloc[indices[0], col]
-                    worksheet.write(row_idx, col, val, merge_fmt)
+        # Apply cell borders and alignment across all rows and columns without merging
+        for row_idx in range(len(df)):
+            # Excel rows start at 1 because index 0 is the header
+            excel_row = row_idx + 1
+            for col_idx in range(len(df.columns)):
+                val = df.iloc[row_idx, col_idx]
+                worksheet.write(excel_row, col_idx, val, cell_fmt)
 
+        # Autofit column widths
         for i, col in enumerate(df.columns):
             max_len = max(df[col].astype(str).map(len).max(), len(col)) + 3
             worksheet.set_column(i, i, min(max_len, 50))
 
     buffer.seek(0)
-    return buffer  # Exposes raw stream directly to your caller scopes
+    return buffer
 
 
 def export_data(request):
