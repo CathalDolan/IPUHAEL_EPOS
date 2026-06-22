@@ -83,6 +83,7 @@
             <div class="main-section">
                 <table>
                     <tr>
+                        <th>ID</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Staff</th>
@@ -106,6 +107,7 @@
                     {% comment %} {{ order.transaction.transaction_number }} {% endcomment %}
                     {% ifchanged order.transaction.transaction_number %}
                         <tr class="content {% cycle 'row1' 'row2' as rowcolors %}">
+                            <td>{{ order.id }}</td>
                             <td class="no-border-bottom left-align">{{ order.transaction.order_date|date:"j/m/Y" }}</td>
                             <td class="no-border-bottom left-align">{{ order.transaction.order_date|date:"H:i:s" }}</td>
                             <td class="no-border-bottom left-align">{{ order.transaction.staff_member }}</td>
@@ -127,6 +129,7 @@
                         </tr>
                     {% else %}
                         <tr class="content {{ rowcolors }}">
+                            <td>{{ order.id }}</td>
                             <td class="no-border-top no-border-bottom"></td>
                             <td class="no-border-top no-border-bottom"></td>
                             <td class="no-border-top no-border-bottom"></td>
