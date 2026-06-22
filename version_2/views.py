@@ -703,8 +703,8 @@ def eod_takings(request):
                 email = EmailMessage(
                     subject=email_subject,
                     body=html_body_content,
-                    # to=['cathal@thepopupirishpub.com'],
-                    to=['peterwkellett@gmail.com']
+                    to=['cathal@thepopupirishpub.com'],
+                    cc=['peterwkellett@gmail.com']
                 )
 
                 for image in receipt_image_files:
