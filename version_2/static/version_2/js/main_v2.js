@@ -730,6 +730,7 @@ function applySpecials() {
     NEW_BASKET.forEach(item => {
         // Look specifically for your 'non_alcoholic' subcategory
         if (item.subcategory === 'non_alcoholic' && sessionStorage.getItem("till_display") == 'kitchen') {
+            item.pfand_payable = "False";
             if (validFoodCount > 0) {
                 item.discount_applied = "Food Special"
                 item.price = 2.50; // Discount applied!
