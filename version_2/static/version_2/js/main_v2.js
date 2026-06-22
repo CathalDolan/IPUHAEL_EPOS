@@ -721,9 +721,7 @@ function applySpecials() {
     //     }
     // })
     const validFoodCount = NEW_BASKET.filter(item => 
-        item.category === 'food' && 
-        item.subcategory !== 'extra_serving' && 
-        item.subcategory !== 'snack'
+        item.category === 'food'
     ).length;
     console.log("validFoodCount = ", validFoodCount);
     let discountedDrinksApplied = 0;
@@ -1187,10 +1185,16 @@ function basketGrandTotals() {
             if (this.pfand_payable == "True") {
                 if (this.name == "Whiskey Platter") {
                     GLASSES_OUT += 6;
+                    this.pfand = 6 * PFAND;
                 } else {
                     GLASSES_OUT += this.qty;
+                    this.pfand = PFAND;
                 }
             }
+            else {
+                this.pfand = 0;
+            }
+            
         }
         
     })
@@ -1200,7 +1204,7 @@ function basketGrandTotals() {
     else {
         PFAND_TOTAL = (GLASSES_OUT - GLASSES_RETURNED) * PFAND
     }
-    
+    console.log("NEW_BASKET = ", NEW_BASKET);
     TOTAL_DUE = BASKET_TOTAL + PFAND_TOTAL;
     $('#drink_food_total').text("€" + BASKET_TOTAL.toFixed(2));
     $('#pfand_total').text("€" + PFAND_TOTAL.toFixed(2));
