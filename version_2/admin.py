@@ -143,36 +143,37 @@ class GrandTotalV2Admin(ExportActionMixin, admin.ModelAdmin):
    
 
 class LineItemV2Resource(resources.ModelResource):
-    transaction_number = Field(attribute="transaction__transaction_number", column_name="TRANSACTION NUMBER")
-    order_date = Field(attribute="transaction__order_date", column_name="ORDER DATE")
-    staff_member = Field(attribute="transaction__staff_member__name", column_name="STAFF MEMBER")
-    category = Field(attribute="category__name", column_name="CATEGORY")
-    subcategory = Field(attribute="subcategory__name", column_name="SUBCATEGORY")
-    name = Field(attribute="name", column_name="NAME")
-    quantity = Field(attribute="quantity", column_name="QUANTITY")
-    size = Field(attribute="size", column_name="SIZE")
-    price_unit = Field(attribute="price_unit", column_name="PRICE PER UNIT")
-    price_line_total = Field(attribute="price_line_total", column_name="LINE TOTAL")
-    payment_method = Field(attribute="transaction__payment_method", column_name="PAYMENT METHOD")
-    payment_reason = Field(attribute="transaction__payment_reason", column_name="PAYMENT REASON")
-    discount = Field(attribute="discount", column_name="DISCOUNT")
+    # transaction_number = Field(attribute="transaction__transaction_number")
+    # order_date = Field(attribute="transaction__order_date", column_name="ORDER DATE")
+    # staff_member = Field(attribute="transaction__staff_member__name", column_name="STAFF MEMBER")
+    # category = Field(attribute="category__name", column_name="CATEGORY")
+    # subcategory = Field(attribute="subcategory__name", column_name="SUBCATEGORY")
+    # name = Field(attribute="name", column_name="NAME")
+    # quantity = Field(attribute="quantity", column_name="QUANTITY")
+    # size = Field(attribute="size", column_name="SIZE")
+    # price_unit = Field(attribute="price_unit", column_name="PRICE PER UNIT")
+    # price_line_total = Field(attribute="price_line_total", column_name="LINE TOTAL")
+    # payment_method = Field(attribute="transaction__payment_method", column_name="PAYMENT METHOD")
+    # payment_reason = Field(attribute="transaction__payment_reason", column_name="PAYMENT REASON")
+    # discount = Field(attribute="discount", column_name="DISCOUNT")
     class Meta:
         model = LineItemV2
         fields = (
             'transaction_number',
-            'order_date',
-            'staff_member',
-            'category',
-            'subcategory',
-            'subsubcategory',
+            'transaction__order_date',
+            'transaction__staff_member__name',
+            'category__name',
+            'subcategory__name',
+            'subsubcategory__name',
             'name',
             'quantity',
             'size',
             'price_unit',
             'price_line_total',
             'discount',
-            'payment_method',
-            'payment_reason',
+            'transaction__payment_method',
+            'transaction__payment_reason',
+            'transaction__event__name',
             )
     
 

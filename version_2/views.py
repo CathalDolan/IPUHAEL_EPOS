@@ -77,6 +77,13 @@ def index_v2(request):
     print("index_v2")
     user = request.user
     today = date.today()
+    tempEvent = Events.objects.get(name="Kieler Woche")
+    print("tempEvent = ", tempEvent)
+    grandTotals = GrandTotalV2.objects.all()
+    for item in grandTotals:
+        print("item = ", item.event)
+        item.event = tempEvent
+        item.save()
     try:
         event = Events.objects.get(date_from__lte=today, date_to__gte=today)
     except Events.DoesNotExist:
