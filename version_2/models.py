@@ -292,16 +292,6 @@ class LineItemV2(models.Model):
     discount = models.CharField(null=True,
                                 blank=True,
                                 max_length=100)
-    # payment_method = models.CharField(null=True,
-    #                                   blank=True,
-    #                                   max_length=100)
-    # payment_reason = models.CharField(null=True,
-    #                                   blank=True,
-    #                                   max_length=100)
-    # staff_member = models.ForeignKey(Staff,
-    #                                  null=True,
-    #                                  blank=True,
-    #                                  on_delete=models.PROTECT)
 
 
 class Receipts(models.Model):

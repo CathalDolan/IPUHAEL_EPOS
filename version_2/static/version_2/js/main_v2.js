@@ -74,7 +74,7 @@ function getOrdinal(n) {
 
 setInterval(function () {
     const now = new Date();
-    var days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+    var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
     $('#day').text(days[now.getDay()]);
