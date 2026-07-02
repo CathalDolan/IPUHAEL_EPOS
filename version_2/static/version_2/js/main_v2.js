@@ -517,9 +517,10 @@ $(".product-button").click(function() {
     else if($(this).attr('data-name') == 'Pfand Shot') {
         $('.product-button').addClass('disabled');
         $('.open_drink').addClass('disabled');
-        $('[data-subsubcategory=spirit]').removeClass('disabled');
-        $('[data-subsubcategory=liquer]').removeClass('disabled');
-        $('[data-subsubcategory=shots]').removeClass('disabled');
+        $('[data-name="Tullamore Original"]').removeClass('disabled');
+        $('[data-name="Tullamore Honey"]').removeClass('disabled');
+        $('[data-name="Tullamore Cafe Honey"]').removeClass('disabled');
+        $('[data-name="Baileys"]').removeClass('disabled');
         $('.drinks-measure-button').removeClass('selected').addClass('disabled')
         $('.drinks-measure-button[data-size=single]').addClass('selected').removeClass('disabled')
         $(this).removeClass('disabled');
