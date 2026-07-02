@@ -1,0 +1,15 @@
+{
+    "name": "ipuhael_epos",
+    "version": "1.0.0",
+    "description": "backports.zoneinfo==0.2.1;python_version<\"3.9\"",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Peter Kellett",
+    "license": "ISC",
+    "devDependencies": {
+        "prettier": "3.6.2"
+    }
+}

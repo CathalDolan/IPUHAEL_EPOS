@@ -1,19 +1,26 @@
+# Development Environment & System Files
+.env
+env.py
 core.Microsoft*
 core.mongo*
 core.python*
-env.py
-__pycache__/
-.venv
-*.py[cod]
+
+# Virtual Environments & Packages
+.venv/
 node_modules/
-.github/
-cloudinary_python.txt
-*.sqlite3
+
+# Python Cache & Compiled Files
+__pycache__/
+*.py[cod]
 *.pyc 
-.env
-autoPopulate.js
+
+# Databases & Media
+*.sqlite3
+LineItems.csv
+
+# Configurations & Extras
+.github/
 .prettierignore
 .prettierrc
-package-lock.json
-package.json
-LineItems.csv
+cloudinary_python.txt
+autoPopulate.js
