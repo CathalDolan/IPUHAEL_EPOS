@@ -200,24 +200,25 @@ function getOrders() {
         transaction_counter++;
         $('table').append(
           `<tr class="content ${rowcolors[transaction_counter%2]}">
-              <td class="no-border-bottom left-align">${date}/${month+1}/${String(year)}</td>
-              <td class="no-border-bottom left-align">${hours}:${minutes<10?0:''}${minutes}:${seconds<10?0:''}${seconds}</td>
-              <td class="no-border-bottom left-align">${orders[i]['transaction__staff_member__name']}</td>
-              <td class="no-border-bottom">€${orders[i]['transaction__pfand_total'] }</td>
-              <td class="no-border-bottom">€${orders[i]['transaction__drinks_food_total'] }</td>
-              <td class="no-border-bottom">€${orders[i]['transaction__total_due'] }</td>
-              <td class="no-border-bottom">€${orders[i]['transaction__tendered_amount'] }</td>
-              <td class="no-border-bottom">€${orders[i]['transaction__change_due'] }</td>
-              <td class="no-border-bottom left-align">${orders[i]['transaction__payment_method'] }</td>
-              <td class="no-border-bottom left-align">${orders[i]['transaction__payment_reason'] }</td>
-              <td class="no-border-bottom left-align">${orders[i]['discount'] }</td>
-              <td class="no-border-bottom">${orders[i]['transaction__number_of_products'] }</td>
-              <td class="left-align">${orders[i]['name'] }</td>
-              <td class="">${orders[i]['quantity'] }</td>
-              <td class="left-align">${orders[i]['size'] }</td>
-              <td>€${orders[i]['price_unit'] }</td>
-              <td>€${orders[i]['price_line_total'] }</td>
-              <td class="no-border-bottom" class="no-border-bottom">${orders[i]['transaction__transaction_number']}</td>
+            <td class="no-border-bottom left-align">${orders[i]['id'] }</td>
+            <td class="no-border-bottom left-align">${date}/${month+1}/${String(year)}</td>
+            <td class="no-border-bottom left-align">${hours}:${minutes<10?0:''}${minutes}:${seconds<10?0:''}${seconds}</td>
+            <td class="no-border-bottom left-align">${orders[i]['transaction__staff_member__name']}</td>
+            <td class="no-border-bottom">€${orders[i]['transaction__pfand_total'] }</td>
+            <td class="no-border-bottom">€${orders[i]['transaction__drinks_food_total'] }</td>
+            <td class="no-border-bottom">€${orders[i]['transaction__total_due'] }</td>
+            <td class="no-border-bottom">€${orders[i]['transaction__tendered_amount'] }</td>
+            <td class="no-border-bottom">€${orders[i]['transaction__change_due'] }</td>
+            <td class="no-border-bottom left-align">${orders[i]['transaction__payment_method'] }</td>
+            <td class="no-border-bottom left-align">${orders[i]['transaction__payment_reason'] }</td>
+            <td class="no-border-bottom left-align">${orders[i]['discount'] }</td>
+            <td class="no-border-bottom">${orders[i]['transaction__number_of_products'] }</td>
+            <td class="left-align">${orders[i]['name'] }</td>
+            <td class="">${orders[i]['quantity'] }</td>
+            <td class="left-align">${orders[i]['size'] }</td>
+            <td>€${orders[i]['price_unit'] }</td>
+            <td>€${orders[i]['price_line_total'] }</td>
+            <td class="no-border-bottom" class="no-border-bottom">${orders[i]['transaction__transaction_number']}</td>
           </tr>`
         )
         transaction_id = orders[i]['transaction__transaction_number'];
