@@ -108,7 +108,7 @@ def index_v2(request):
     try:
         event = Events.objects.get(date_from__lte=today, date_to__gte=today)
     except Events.DoesNotExist:
-        event = "event: None"
+        event = None
 
     is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
     if is_ajax:
@@ -169,10 +169,11 @@ def index_v2(request):
                             # staff_member=staff_member,
                         )
                         new_line_items.save()
-            messages.success(request, "Transaction Complete!")
+            # messages.success(request, "Transaction Complete!")
+            # message_html = render_to_string('template/includes/toasts/toast_success.html', request=request)
             return JsonResponse({"status": "Checkout Complete"}, status=200)
 
-        messages.error(request, "Problem. Try Again!")
+        # messages.error(request, "Problem. Try Again!")
         return JsonResponse({"status": "Checkout Failed"}, status=400)
 
     drink_sizes = (

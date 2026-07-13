@@ -768,17 +768,24 @@ table {
     background-color: #211f1f;
 }
 
-#processing {
+#processing-container {
     /* position:relative; */
+    display: flex;
+    flex-direction: column;
     height: 300px;
-    display: none;
+    /* display: none; */
     color: #fff;
     justify-content: center;
     align-items: center;
 }
 
-#processing h4 {
+.processor {
+    width: 100%;
+}
+
+.processer h4 {
     padding-right: 1rem;
+    display:inline-block;
 }
 
 .loader {
@@ -787,7 +794,7 @@ table {
     border: 5px solid #0d6efd;
     border-bottom-color: transparent;
     border-radius: 50%;
-    display: block;
+    display: inline-block;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
 }
@@ -985,6 +992,7 @@ table {
 }
 
 .toast {
+    /* display: block; */
     background-color: transparent;
     width: 100%;
 }

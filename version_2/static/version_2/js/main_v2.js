@@ -258,6 +258,7 @@ $('.staff-member').click(function() {
     $('.staff-table').hide();
     $('.mask').delay(250).hide(0);
     $('.basket').show();
+    $('.basket-content').show();
     $('#staff-user').text(name);
 })
 
@@ -1260,6 +1261,7 @@ $('#credit-card-button').click(function() {
     $("#change_due").text("€0");
     PAYMENT_METHOD = "Credit Card";
     var valid = validate();
+    console.log("ALLOW_CHECKOUT = ", ALLOW_CHECKOUT)
     if (valid === true) {
         if(ALLOW_CHECKOUT == true) {
             checkout();
@@ -1269,6 +1271,10 @@ $('#credit-card-button').click(function() {
 })
 
 $(".cancel-button").click(function () {
+    resetAll();   
+});
+
+function resetAll() {
     ALL_PRODUCTS = [];
     LATEST_PRODUCT = {};
     LATEST_PRODUCT_SELECTED = {};
@@ -1278,11 +1284,13 @@ $(".cancel-button").click(function () {
     PFAND_TOTAL = 0;
     BASKET_TOTAL = 0;
     TOTAL_DUE = 0;
+    ALLOW_CHECKOUT = true;
     $(".pfand-button").removeClass("selected");
     $(".basket").find('tbody').empty();
     $(".basket").hide();
     $(".discounts").find('tbody').empty();
     $(".discounts").hide();
+    $("#processing-container").empty()
     $('.mask').show();
     $('.staff-table').show();
     $("#pfand_total").text("€");
@@ -1291,11 +1299,12 @@ $(".cancel-button").click(function () {
     $("#amount_tendered").val(0);
     $("#change_due").text("€");
     resetCheckoutTimer();
-});
+}
 
 $(".finish-button").click(function () {
     resetCheckoutTimer();
     var valid = validate();
+    console.log("valid = ", valid)
     if (valid === true) {
         if(ALLOW_CHECKOUT == true) {
             checkout();
@@ -1411,6 +1420,7 @@ function resetCheckoutTimer() {
 }
 
 function checkout(payment_method, payment_reason) {
+    console.log("checkout()")
     ALLOW_CHECKOUT = false;
     if (payment_reason == undefined) {
         payment_reason = "";
@@ -1462,14 +1472,19 @@ function checkout(payment_method, payment_reason) {
 
     // let sub_amount = Amount_Tendered - Total_Due;
     $('.basket-content').hide();
-    $('#processing').css('display', 'flex');
-    // $('.no-entries').append("<h4>Please wait...</h4><div class='loader'></div>")
+    $('#processing-container').append(
+        `<div class="processor">
+            <h4>Processing...</h4>
+            <span class='loader'></span>
+        </div>`
+    );
     fetch(url, {
         method: "POST",
         credentials: "same-origin",
         headers: {
             "X-Requested-With": "XMLHttpRequest",
             "X-CSRFToken": getCookie("csrftoken"),
+            "Content-Type": "application/json" // Good practice to include this
         },
         body: JSON.stringify([
             {
@@ -1487,8 +1502,45 @@ function checkout(payment_method, payment_reason) {
     .then((data) => {
         console.log("response.data = ", data);
         if (data.status == "Checkout Complete") {
-            location.reload();
+            // location.reload();
+            resetAll();
+            $(".message-container").empty().append(
+                `<div class="toast custom-toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                <!-- <div class="w100 toast-capper bg-success"></div> -->
+                <div class="toast-header toast-success">
+                    <!-- <img src="..." class="rounded me-2" alt="..."> -->
+                    <strong class="me-auto ">Success!</strong>Transaction Complete!
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>`
+            );
+            
+            setTimeout(function() {
+                $(".message-container").empty()
+            }, 2000); // Time in milliseconds
         }
+        else {
+            console.log("response = ", response)
+        }
+    })
+    .catch((error) => {
+        console.error("Error:", error)
+
+        $("#processing-container").empty().append(
+            `<div class="processor">
+                <h4>Application Failed!</h4>
+            </div>
+            <div class="row toast error-toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="arrow-up arrow-danger"></div>
+         
+            <!-- <div class="w100 toast-capper bg-danger"></div> -->
+            <div class="toast-header bg-white text-dark">
+                <!-- <img src="..." class="rounded me-2" alt="..."> -->
+                <strong class="me-auto">Error!</strong>${error}
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>`
+        );
     });
 }
 
