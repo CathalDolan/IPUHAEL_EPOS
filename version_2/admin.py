@@ -189,7 +189,7 @@ class LineItemV2Admin(ExportActionMixin, admin.ModelAdmin):
         'category',
         'subcategory',
         'subsubcategory',
-        'productId_id',
+        'product_id',
         'name',
         'quantity',
         'size',

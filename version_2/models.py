@@ -275,10 +275,11 @@ class LineItemV2(models.Model):
                                     null=True,
                                     blank=True,
                                     on_delete=models.PROTECT)
-    productId = models.ForeignKey(ProductV2,
+    product = models.ForeignKey(ProductV2,
                                    null=True,
                                    blank=True,
-                                   on_delete=models.PROTECT)
+                                   on_delete=models.PROTECT,
+                                   related_name='lineitems_v2')
     name = models.CharField(max_length=100)
     quantity = models.IntegerField(null=True,
                                    blank=True)
