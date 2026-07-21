@@ -11,6 +11,7 @@ class Command(BaseCommand):
         # 1. Main Lookup Map: Maps lowercase product names to their objects
         # e.g., {"draught": <ProductV2: Draught>, "guinness": <ProductV2: Guinness>}
         product_map = {p.name.strip().lower(): p for p in ProductV2.objects.all()}
+        # print("product_map = ", product_map)
         
         line_items = LineItemV2.objects.all()
         updated_items = []
@@ -29,10 +30,11 @@ class Command(BaseCommand):
                 if not product_object and line_item.subcategory:
                     sub_field = line_item.subcategory
                     # Extract the string name text from the ForeignKey subcategory model
-                    sub_name = sub_field.name.strip().lower() if hasattr(sub_field, 'name') else str(sub_field).strip().lower()
-                    
+                    sub_name = sub_field.name.strip().lower().replace('_', ' ') if hasattr(sub_field, 'name') else str(sub_field).strip().lower()
+                    print("sub_name = ", sub_name)
                     # 🚀 Look up the product using the subcategory string name text as the key!
                     product_object = product_map.get(sub_name, None)
+                    print("product_object = ", product_object)
 
                 # Assign the matched product object (or None if both routes fail)
                 line_item.product = product_object

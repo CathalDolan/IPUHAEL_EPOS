@@ -101,21 +101,21 @@ def index_v2(request):
     today = date.today()
     # tempEvent = Events.objects.get(name="Kieler Woche")
     # print("tempEvent = ", tempEvent)
-    lineItems = LineItemV2.objects.all()
-    for line_item in lineItems:
-        # print("line_item = ", line_item.name)
-        try:
-            product = ProductV2.objects.get(name=line_item.name)
-        except:
-            # print("line_item = ", line_item.name)
-            # subcategory = line_item.subcategory
-            # print("subcategory = ", subcategory)
-            # product = ProductV2.objects.get(subcategory=subcategory)
-            # print("product = ", product)
-            product = None
+    # lineItems = LineItemV2.objects.all()
+    # for line_item in lineItems:
+    #     # print("line_item = ", line_item.name)
+    #     try:
+    #         product = ProductV2.objects.get(name=line_item.name)
+    #     except:
+    #         # print("line_item = ", line_item.name)
+    #         # subcategory = line_item.subcategory
+    #         # print("subcategory = ", subcategory)
+    #         # product = ProductV2.objects.get(subcategory=subcategory)
+    #         # print("product = ", product)
+    #         product = None
 
-        line_item.productId = product
-        line_item.save() 
+    #     line_item.productId = product
+    #     line_item.save() 
     try:
         event = Events.objects.get(date_from__lte=today, date_to__gte=today)
     except Events.DoesNotExist as e:
