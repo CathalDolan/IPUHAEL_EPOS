@@ -274,6 +274,8 @@ $('.active-indicator').click(() => {
 
 // Increment basket
 $(document).on("click", ".increment", function() {
+    console.log("ALL_PRODUCTS = ", ALL_PRODUCTS)
+    console.log("$(this).data() = ", $(this).attr('data-product_id'))
     if($(this).parent().hasClass('latest-product')) {
         // GLASSES_RETURNED += 1;
         LATEST_PRODUCT.qty += 1;
@@ -291,8 +293,10 @@ $(document).on("click", ".increment", function() {
     else {
         let product_index = ALL_PRODUCTS.findIndex(
             (item) =>
-                item.name == `${$(this).attr('data-name')}` && item.size == `${$(this).attr('data-size')}`,
+                item.product_id == `${$(this).attr('data-product_id')}` && item.size == `${$(this).attr('data-size')}`,
         );
+        
+        console.log("product_index = ", product_index)
         ALL_PRODUCTS[product_index].qty += 1;
         ALL_PRODUCTS[product_index].line_total = ALL_PRODUCTS[product_index].price * ALL_PRODUCTS[product_index].qty;
         // if(ALL_PRODUCTS[product_index].discount_applied == "Pfand Shot") {
@@ -320,7 +324,7 @@ $(document).on("click", ".decrement", function() {
     else {
         let product_index = ALL_PRODUCTS.findIndex(
         (item) =>
-            item.name == `${$(this).attr('data-name')}` && item.size == `${$(this).attr('data-size')}`,
+            Number(item.product_id) == `${Number($(this).attr('data-product_id'))}` && item.size == `${$(this).attr('data-size')}`,
         );
         if (ALL_PRODUCTS[product_index].qty > 1) {
             ALL_PRODUCTS[product_index].qty -= 1;
@@ -353,7 +357,7 @@ $(document).on("click", ".remove-product", function() {
     else {
         let product_index = ALL_PRODUCTS.findIndex(
             (item) =>
-                item.name == `${$(this).attr('data-name')}` && item.size == `${$(this).attr('data-size')}`,
+                item.product_id == `${$(this).attr('data-product_id')}` && item.size == `${$(this).attr('data-size')}`,
         );
         // if(ALL_PRODUCTS[product_index].discount_applied == "Pfand Shot") {
         //     GLASSES_RETURNED -= ALL_PRODUCTS[product_index].qty;
@@ -551,6 +555,7 @@ $(".product-button").click(function() {
     }
 
     else if(LATEST_PRODUCT.discount_applied == "Pfand Shot") {
+        LATEST_PRODUCT.product_id = $(this).attr('data-product_id')
         LATEST_PRODUCT.name = $(this).attr('data-name');
         LATEST_PRODUCT.abbr_name = $(this).attr('data-abbr_name');
         LATEST_PRODUCT.category = $(this).attr('data-category');
@@ -595,6 +600,7 @@ $(".product-button").click(function() {
         }
     }
     else if(LATEST_PRODUCT.discount_applied == "5 Shot Special") {
+        LATEST_PRODUCT.product_id = $(this).attr('data-product_id')
         LATEST_PRODUCT.name = $(this).attr('data-name');
         LATEST_PRODUCT.abbr_name = $(this).attr('data-abbr_name');
         LATEST_PRODUCT.category = $(this).attr('data-category');
@@ -614,11 +620,11 @@ $(".product-button").click(function() {
             if(!$.isEmptyObject(LATEST_PRODUCT)) {
                 let basket_product = ALL_PRODUCTS.filter(
                     (item) =>
-                        item.name == `${LATEST_PRODUCT.name}` && item.size == `${LATEST_PRODUCT.size}`,
+                        item.product_id == `${LATEST_PRODUCT.product_id}` && item.size == `${LATEST_PRODUCT.size}`,
                 );
                 let basket_product_index = ALL_PRODUCTS.findIndex(
                     (item) =>
-                        item.name == `${LATEST_PRODUCT.name}` && item.size == `${LATEST_PRODUCT.size}`,
+                        item.product_id == `${LATEST_PRODUCT.product_id}` && item.size == `${LATEST_PRODUCT.size}`,
                 );
                 if (basket_product.length > 0) {
                     ALL_PRODUCTS[basket_product_index].qty += LATEST_PRODUCT.qty;
@@ -668,6 +674,7 @@ $(".product-button").click(function() {
                 LATEST_PRODUCT_SELECTED.changed_size = true;
             }
             LATEST_PRODUCT = {
+                product_id: $(this).attr('data-product_id'),
                 name: $(this).attr("data-name"),
                 abbr_name: $(this).attr("data-abbr_name"),
                 category: $(this).attr("data-category"),
@@ -1121,9 +1128,9 @@ function update_basket() {
                 <td>${LATEST_PRODUCT.qty}</td>
                 <td>${LATEST_PRODUCT.price.toFixed(2)}</td>
                 <td>${LATEST_PRODUCT.line_total.toFixed(2)}</td>
-                <td class="increment" data-name="${LATEST_PRODUCT.name}" data-size="${LATEST_PRODUCT.size}"><i class="fas fa-plus"></i></td>
-                <td class="decrement" data-name="${LATEST_PRODUCT.name}" data-size="${LATEST_PRODUCT.size}"><i class="fas fa-minus"></i></td>
-                <td class="remove-product" data-name="${LATEST_PRODUCT.name}" data-size="${LATEST_PRODUCT.size}" data-qty="${LATEST_PRODUCT.qty}" data-discount_applied="${LATEST_PRODUCT.discount_applied}"><i class="fas fa-trash-alt"></i></td>
+                <td class="increment" data-product_id="${LATEST_PRODUCT.product_id}" data-name="${LATEST_PRODUCT.name}" data-size="${LATEST_PRODUCT.size}"><i class="fas fa-plus"></i></td>
+                <td class="decrement" data-product_id="${LATEST_PRODUCT.product_id}" data-name="${LATEST_PRODUCT.name}" data-size="${LATEST_PRODUCT.size}"><i class="fas fa-minus"></i></td>
+                <td class="remove-product" data-product_id="${LATEST_PRODUCT.product_id}" data-name="${LATEST_PRODUCT.name}" data-size="${LATEST_PRODUCT.size}" data-qty="${LATEST_PRODUCT.qty}" data-discount_applied="${LATEST_PRODUCT.discount_applied}"><i class="fas fa-trash-alt"></i></td>
             </tr>`
         )
     }
@@ -1141,9 +1148,9 @@ function update_basket() {
                     <td>${this.qty}</td>
                     <td>${this.price.toFixed(2)}</td>
                     <td>${this.line_total.toFixed(2)}</td>
-                    <td class="increment" data-name="${this.name}" data-size="${this.size}"><i class="fas fa-plus"></i></td>
-                    <td class="decrement" data-name="${this.name}" data-size="${this.size}"><i class="fas fa-minus"></i></td>
-                    <td class="remove-product" data-name="${this.name}" data-size="${this.size}" data-qty="${LATEST_PRODUCT.qty}" data-discount_applied="${LATEST_PRODUCT.discount_applied}"><i class="fas fa-trash-alt"></i></td>
+                    <td class="increment" data-product_id="${this.product_id}" data-name="${this.name}" data-size="${this.size}"><i class="fas fa-plus"></i></td>
+                    <td class="decrement" data-product_id="${this.product_id}" data-name="${this.name}" data-size="${this.size}"><i class="fas fa-minus"></i></td>
+                    <td class="remove-product" data-product_id="${this.product_id}" data-name="${this.name}" data-size="${this.size}" data-qty="${LATEST_PRODUCT.qty}" data-discount_applied="${LATEST_PRODUCT.discount_applied}"><i class="fas fa-trash-alt"></i></td>
                 </tr>`
             )
         }
@@ -1298,6 +1305,7 @@ function resetAll() {
     $("#total_due").text("€");
     $("#amount_tendered").val(0);
     $("#change_due").text("€");
+    $('#staff-user').text('');
     resetCheckoutTimer();
 }
 
@@ -1487,18 +1495,22 @@ function checkout(payment_method, payment_reason) {
             "Content-Type": "application/json" // Good practice to include this
         },
         body: JSON.stringify([
-            {
-                NEW_BASKET,
-            },
-            {
-                Grand_Total,
-            },
-            {
-                DISCOUNTS,
-            },
+            {NEW_BASKET,},
+            {Grand_Total,},
+            {DISCOUNTS,},
         ]),
     })
-    .then((response) => response.json())
+    .then((response) => {
+        // 1. Check if the server returned an error status code (e.g., 400, 500)
+        if (!response.ok) {
+            // Parse the error payload from the server and pass it to the .catch() block
+            return response.json().then((errData) => {
+                console.log("errData = ", errData)
+                throw new Error(errData.error || "Server Exception Occurred");
+            });
+        }
+        return response.json();
+    })
     .then((data) => {
         console.log("response.data = ", data);
         if (data.status == "Checkout Complete") {
@@ -1520,26 +1532,22 @@ function checkout(payment_method, payment_reason) {
             }, 2000); // Time in milliseconds
         }
         else {
-            console.log("response = ", response)
+            // Fixed: safely logged 'data' instead of the undefined 'response' variable
+            console.log("Unexpected status response = ", data);
         }
     })
     .catch((error) => {
         console.error("Error:", error)
 
         $("#processing-container").empty().append(
-            `<div class="processor">
-                <h4>Application Failed!</h4>
-            </div>
+            `
             <div class="row toast error-toast show" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="arrow-up arrow-danger"></div>
-         
-            <!-- <div class="w100 toast-capper bg-danger"></div> -->
-            <div class="toast-header bg-white text-dark">
-                <!-- <img src="..." class="rounded me-2" alt="..."> -->
-                <strong class="me-auto">Error!</strong>${error}
-                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                <div class="toast-header">
+                    <strong class="me-auto">${error}</strong>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
             </div>
-        </div>`
+            `
         );
     });
 }

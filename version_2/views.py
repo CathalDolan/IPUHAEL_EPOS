@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 import json
 from decimal import Decimal
@@ -100,19 +101,35 @@ def index_v2(request):
     today = date.today()
     # tempEvent = Events.objects.get(name="Kieler Woche")
     # print("tempEvent = ", tempEvent)
-    # grandTotals = GrandTotalV2.objects.all()
-    # for item in grandTotals:
-    #     print("item = ", item.event)
-    #     item.event = tempEvent
-    #     item.save()
+    lineItems = LineItemV2.objects.all()
+    for line_item in lineItems:
+        # print("line_item = ", line_item.name)
+        try:
+            product = ProductV2.objects.get(name=line_item.name)
+        except:
+            print("line_item = ", line_item.name)
+            subcategory = line_item.subcategory
+            print("subcategory = ", subcategory)
+            product = ProductV2.objects.get(subcategory=subcategory)
+            print("product = ", product)
+
+        line_item.productId = product
+        line_item.save() 
     try:
         event = Events.objects.get(date_from__lte=today, date_to__gte=today)
-    except Events.DoesNotExist:
+    except Events.DoesNotExist as e:
         event = None
 
     is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
     if is_ajax:
         print("is_ajax")
+        try:
+            event = Events.objects.get(date_from__lte=today, date_to__gte=today)
+        except Exception as e:
+            # Catch-all for any other unexpected system errors (e.g., database connection down)
+            error_msg = f"{str(e)}"
+            return JsonResponse({"error": error_msg}, status=500)
+
         if not user.is_authenticated:
             messages.warning(request, "Please log in. Try Again!")
             return JsonResponse({"status": "Checkout Complete"}, status=200)
@@ -121,60 +138,95 @@ def index_v2(request):
             # print("Data 0 = ", data[0]) # NEW_BASKET
             # print("Data 1 = ", data[1]) # GRAND_TOTAL
             # print("Data 2 = ", data[2]) # DISCOUNTS
-            staff_member = Staff.objects.get(id=data[1]["Grand_Total"]["staff_member"])
-            for v in data[1].values():
-                new_grand_total = GrandTotalV2(
-                    number_of_products=int(v["Total_Products_Qty"]),
-                    staff_member=staff_member,
-                    pfand_buttons_total=float(v["Pfand_Buttons_Total"]),
-                    drinks_food_total=float(v["Line_Totals_Total"]),
-                    pfand_total=float(v["Pfand_Total"]),
-                    total_due=float(v["Total_Due"]),
-                    tendered_amount=float(v["Amount_Tendered"]),
-                    change_due=float(v["Change_Due"]),
-                    discounts=v["Discounts"],
-                    payment_method=v["Payment_Method"],
-                    payment_reason=v["payment_reason"],
-                    event=event,
-                )
-                new_grand_total.save()
 
-            for k, v in data[0].items():
-                for x in v:
-                    if x["qty"] != 0:
-                        if x["subcategory"] != "open_drink":
-                            product = ProductV2.objects.get(name=x["name"])
-                        else:
-                            product = x["name"]
-                        try:
-                            subsubcategory = SubSubCategory.objects.get(
-                                name=x["subsubcategory"]
+            try:
+                staff_member = Staff.objects.get(id=data[1]["Grand_Total"]["staff_member"])
+            except Exception as e:
+            # Catch-all for any other unexpected system errors (e.g., database connection down)
+                error_msg = f"{str(e)}"
+                return JsonResponse({"error": error_msg}, status=500)
+            
+            try:
+                for v in data[1].values():
+                    new_grand_total = GrandTotalV2(
+                        number_of_products=int(v["Total_Products_Qty"]),
+                        staff_member=staff_member,
+                        pfand_buttons_total=float(v["Pfand_Buttons_Total"]),
+                        drinks_food_total=float(v["Line_Totals_Total"]),
+                        pfand_total=float(v["Pfand_Total"]),
+                        total_due=float(v["Total_Due"]),
+                        tendered_amount=float(v["Amount_Tendered"]),
+                        change_due=float(v["Change_Due"]),
+                        discounts=v["Discounts"],
+                        payment_method=v["Payment_Method"],
+                        payment_reason=v["payment_reason"],
+                        event=event,
+                    )
+                    new_grand_total.save()
+            except ObjectDoesNotExist as e:
+                # Catches missing Products, Categories, or SubCategories
+                error_msg = f"Database lookup failed: Grand Total Error ({str(e)})"
+                return JsonResponse({"error": error_msg}, status=400)
+
+            except ValueError as e:
+                # Catches data conversion issues (e.g., int("invalid") or float("invalid"))
+                error_msg = f"Invalid data Grand Total Error: {str(e)}"
+                return JsonResponse({"error": error_msg}, status=400)
+
+            except Exception as e:
+                # Catch-all for any other unexpected system errors (e.g., database connection down)
+                error_msg = f"An unexpected Grand Total Error: {str(e)}"
+                return JsonResponse({"error": error_msg}, status=500)
+
+            try:
+                for k, v in data[0].items():
+                    for x in v:
+                        if x["qty"] != 0:
+                            if x["subcategory"] != "open_drink":
+                                product = ProductV2.objects.get(id=x["product_id"])
+                                print("product 178= ", product)
+                            else:
+                                product = x["name"]
+                            try:
+                                subsubcategory = SubSubCategory.objects.get(
+                                    name=x["subsubcategory"]
+                                )
+                            except:
+                                subsubcategory = None
+
+                            new_line_items = LineItemV2(
+                                transaction=new_grand_total,
+                                category=Category.objects.get(name=x["category"]),
+                                subcategory=SubCategory.objects.get(name=x["subcategory"]),
+                                subsubcategory=subsubcategory,
+                                product_id=product,
+                                name=product.name,
+                                quantity=int(x["qty"]),
+                                size=x["size"],
+                                price_unit=float(x["price"]),
+                                price_line_total=float(x["line_total"]),
+                                discount=x["discount_applied"],
+                                # payment_method=data[1]['Grand_Total']['Payment_Method'],
+                                # payment_reason=data[1]['Grand_Total']["payment_reason"],
+                                # staff_member=staff_member,
                             )
-                        except:
-                            subsubcategory = None
+                            new_line_items.save()
+                # messages.success(request, "Transaction Complete!")
+                return JsonResponse({"status": "Checkout Complete"}, status=200)
+            except ObjectDoesNotExist as e:
+                # Catches missing Products, Categories, or SubCategories
+                error_msg = f"Database lookup failed: Line Item Error ({str(e)})"
+                return JsonResponse({"error": error_msg}, status=400)
 
-                        new_line_items = LineItemV2(
-                            transaction=new_grand_total,
-                            category=Category.objects.get(name=x["category"]),
-                            subcategory=SubCategory.objects.get(name=x["subcategory"]),
-                            subsubcategory=subsubcategory,
-                            name=product,
-                            quantity=int(x["qty"]),
-                            size=x["size"],
-                            price_unit=float(x["price"]),
-                            price_line_total=float(x["line_total"]),
-                            discount=x["discount_applied"],
-                            # payment_method=data[1]['Grand_Total']['Payment_Method'],
-                            # payment_reason=data[1]['Grand_Total']["payment_reason"],
-                            # staff_member=staff_member,
-                        )
-                        new_line_items.save()
-            # messages.success(request, "Transaction Complete!")
-            # message_html = render_to_string('template/includes/toasts/toast_success.html', request=request)
-            return JsonResponse({"status": "Checkout Complete"}, status=200)
+            except ValueError as e:
+                # Catches data conversion issues (e.g., int("invalid") or float("invalid"))
+                error_msg = f"Invalid data Line Item Error: {str(e)}"
+                return JsonResponse({"error": error_msg}, status=400)
 
-        # messages.error(request, "Problem. Try Again!")
-        return JsonResponse({"status": "Checkout Failed"}, status=400)
+            except Exception as e:
+                # Catch-all for any other unexpected system errors (e.g., database connection down)
+                error_msg = f"An unexpected Line Item Error: {str(e)}"
+                return JsonResponse({"error": error_msg}, status=500)
 
     drink_sizes = (
         ProductSizes.objects.all().filter(category__name="drink").filter(in_use=True)
@@ -1075,97 +1127,8 @@ def eod_takings(request):
     return render(request, "version_2/eod_takings.html", context)
 
 
-# def generate_epos_excel_buffer(trading_date):
-#     """
-#     Generates the optimized transactions spreadsheet.
-#     Returns: BytesIO object containing the raw spreadsheet binary data.
-#     """
-#     orders = LineItemV2.objects.filter(transaction__order_date__date=trading_date).select_related(
-#         'transaction',
-#         'category',
-#         'subcategory',
-#         'subsubcategory'
-#     )
 
-#     data = {
-#         'line_ID': [], 'trans_ID': [], 'order_date': [], 'order_time': [],
-#         'qty_of_products': [], 'products_total': [], 'pfand_total': [],
-#         'total_due': [], 'tendered_amount': [], 'change_due': [],
-#         'payment_method': [], 'payment_reason': [], 'staff_member': [],
-#         'product_name': [], 'product_size': [], 'price_unit': [],
-#         'quantity': [], 'line_total': [], 'discount': [],
-#         'discount_type': [], 'category': [], 'subcategory': [], 'subsubcategory': [],
-#     }
-
-#     for order in orders:
-#         tx = order.transaction
-#         data['line_ID'].append(order.id)
-#         data['trans_ID'].append(tx.transaction_number if tx else '')
-#         data['order_date'].append(tx.order_date.strftime("%d/%m/%Y") if tx else '')
-#         data['order_time'].append(tx.order_date.strftime("%H:%M:%S") if tx else '')
-#         data['qty_of_products'].append(tx.number_of_products if tx else 0)
-#         data['products_total'].append(tx.drinks_food_total if tx else 0)
-#         data['pfand_total'].append(tx.pfand_total if tx else 0)
-#         data['total_due'].append(tx.total_due if tx else 0)
-#         data['tendered_amount'].append(tx.tendered_amount if tx else 0)
-#         data['change_due'].append(tx.change_due if tx else 0)
-#         data['payment_method'].append(tx.payment_method if tx else '')
-#         data['payment_reason'].append(tx.payment_reason if tx else '')
-#         data['staff_member'].append(tx.staff_member if tx else '')
-
-#         data['product_name'].append(order.name)
-#         data['product_size'].append(order.size)
-#         data['price_unit'].append(order.price_unit)
-#         data['quantity'].append(order.quantity)
-#         data['line_total'].append(order.price_line_total)
-#         data['discount'].append((order.price_unit * order.quantity) - order.price_line_total)
-#         data['discount_type'].append(order.discount)
-
-#         data['category'].append(order.category.name if order.category else '')
-#         data['subcategory'].append(order.subcategory.name if order.subcategory else '')
-#         data['subsubcategory'].append(order.subsubcategory.name if order.subsubcategory else '')
-
-#     df = pd.DataFrame(data)
-
-#     for col in df.columns:
-#         df[col] = df[col].apply(lambda x: str(x) if isinstance(x, (UUID, Decimal)) or hasattr(x, '_meta') else x)
-
-#     buffer = io.BytesIO()
-
-#     with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-#         df.to_excel(writer, index=False, sheet_name='Transactions')
-#         workbook = writer.book
-#         worksheet = writer.sheets['Transactions']
-
-#         header_fmt = workbook.add_format({'bold': True, 'bg_color': '#D7E4BC', 'align': 'center', 'border': 1})
-#         merge_fmt = workbook.add_format({'valign': 'vcenter', 'align': 'left', 'border': 1})
-
-#         for col_num, value in enumerate(df.columns.values):
-#             worksheet.write(0, col_num, value, header_fmt)
-
-#         for trans_id in df['trans_ID'].unique():
-#             indices = df.index[df['trans_ID'] == trans_id].tolist()
-#             if len(indices) > 1:
-#                 first_row = indices[0] + 1
-#                 last_row = indices[-1] + 1
-#                 for col in list(range(0, 13)):
-#                     val = df.iloc[indices[0], col]
-#                     for r in range(first_row + 1, last_row + 1):
-#                         worksheet.write_blank(r, col, None)
-#                     worksheet.merge_range(first_row, col, last_row, col, val, merge_fmt)
-#             else:
-#                 row_idx = indices[0] + 1
-#                 for col in range(0, 13):
-#                     val = df.iloc[indices[0], col]
-#                     worksheet.write(row_idx, col, val, merge_fmt)
-
-#         for i, col in enumerate(df.columns):
-#             max_len = max(df[col].astype(str).map(len).max(), len(col)) + 3
-#             worksheet.set_column(i, i, min(max_len, 50))
-
-
-#     buffer.seek(0)
-#     return buffer  # Exposes raw stream directly to your caller scopes
+# Triggered when Eod_takings is triggered. It generates the excel spreadsheet.
 def generate_epos_excel_buffer(trading_date):
     """
     Generates the optimized transactions spreadsheet without cell merging.
@@ -1276,7 +1239,7 @@ def generate_epos_excel_buffer(trading_date):
     buffer.seek(0)
     return buffer
 
-
+# Used to extract the lineItems manually and save as download to the device.
 def export_data(request):
     # 1. OPTIMIZATION: One single SQL query using select_related to kill the N+1 problem
     orders = LineItemV2.objects.all().select_related(
@@ -1447,6 +1410,9 @@ def reports_v2(request):
     sizes = []
     payment = []
     # for entry in entries:
+        # print("entry = ", entry)
+        # if entry['category__name'] == 'food' and entry['discount'] != '':
+        #     print("entry = ", entry)
     #     if not entry["transaction__staff_member"] in staff:
     #         staff.append(entry["transaction__staff_member"])
     #     if not entry["category__name"] in categories:

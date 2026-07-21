@@ -8,15 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/4.2.7/style/dc.css" integrity="sha512-ZCK4qcVpG4m3G6VG2CWs5Tl870Xn9xhT3SWJLmbsbTfU9/hzyZDeCzyLpjsCc27YxlDi19URyKlY+h4cQIifig==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!--My CSS stylesheet-->
 <link rel="stylesheet" href="{% static 'version_2/css/reports_v2.css' %}">
-<style>
-    /* Force Plotly's internal SVG components to match container bounds */
-    #sunburst svg.main-svg {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        position: relative !important;
-    }
-</style>
+
 
 {% endblock %}
 
@@ -47,7 +39,92 @@
                     <input type="date" id="date-to" class="form-control form-control-sm" style="max-width: 160px;">
                 </div>
     
+
+                <!-- 🚀 Dropdown 1: Category Filter -->
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle py-1" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Filter Category
+                    </button>
+                    <ul class="dropdown-menu p-3" aria-labelledby="categoryDropdown" id="category-filter-list" style="min-width: 200px; max-height: 300px; overflow-y: auto;">
+                        <!-- JS dynamically populates checkboxes here -->
+                    </ul>
+                </div>
+
+                <!-- 🚀 Dropdown 2: Payment Method Filter -->
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle py-1" type="button" id="paymentDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Filter Payment
+                    </button>
+                    <ul class="dropdown-menu p-3" aria-labelledby="paymentDropdown" id="payment-filter-list" style="min-width: 200px; max-height: 300px; overflow-y: auto;">
+                        <!-- JS dynamically populates checkboxes here -->
+                    </ul>
+                </div>
+                <!-- 🚀 Dropdown 3: Event Filter -->
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle py-1" type="button" id="eventDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Filter Event
+                    </button>
+                    <ul class="dropdown-menu p-3" aria-labelledby="eventDropdown" id="event-filter-list" style="min-width: 200px; max-height: 300px; overflow-y: auto;">
+                        <!-- JS dynamically populates checkboxes here -->
+                    </ul>
+                </div>
+                
                 <button id="clear-date-filter" class="btn btn-sm btn-outline-secondary py-1">Clear Range</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Row: Category Financial Performance Matrix -->
+    <div class="row mt-4 mb-5">
+        <div class="col-md-12">
+            <div class="bg-white p-3 border rounded shadow-sm">
+                <h6 class="fw-bold text-secondary mb-3">Category Performance Matrix</h6>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover table-bordered align-middle m-0" id="financial-matrix-table">
+                        <thead class="table-light text-center small text-uppercase">
+                            <tr>
+                                <th class="text-start">Category</th>
+                                <th>Items Sold</th>
+                                <th>Cash Revenue</th>
+                                <th>Card Revenue</th>
+                                <th>Discounted Value</th>
+                                <th>Waste Value</th>
+                                <th>Complimentary Value</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small text-end" id="financial-matrix-body">
+                            <!-- JS dynamically injects calculated matrix aggregates here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product size table: Product Size Performance Matrix -->
+    <div class="row mt-4 mb-5">
+        <div class="col-md-12">
+            <div class="bg-white p-3 border rounded shadow-sm">
+                <h6 class="fw-bold text-secondary mb-3">Product Size Performance Matrix</h6>
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-sm table-hover table-bordered align-middle m-0" id="size-matrix-table">
+                        <thead class="table-light text-center small text-uppercase sticky-top">
+                            <tr>
+                                <th class="text-start">Product Item</th>
+                                <th>Size</th>
+                                <th>Items Sold</th>
+                                <th>Cash Revenue</th>
+                                <th>Card Revenue</th>
+                                <th>Discounted Vol.</th>
+                                <th>Waste Value</th>
+                                <th>Complimentary Vol.</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small text-end" id="size-matrix-body">
+                            <!-- JS dynamically injects calculated product size aggregates here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

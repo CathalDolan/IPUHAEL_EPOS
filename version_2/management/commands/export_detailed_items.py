@@ -1,4 +1,5 @@
 import json
+import os
 from django.core.management.base import BaseCommand
 from version_2.models import LineItemV2
 
@@ -6,7 +7,6 @@ class Command(BaseCommand):
     help = 'Exports LineItemV2 with all ForeignKey data into a structured JSON file'
 
     def handle(self, *args, **options):
-        # FIXED: Changed 'transaction__staff' to 'transaction__staff_member'
         queryset = LineItemV2.objects.all().select_related(
             'transaction', 
             'transaction__staff_member', 
@@ -16,13 +16,10 @@ class Command(BaseCommand):
             'subsubcategory'
         )
 
-        exported_list = []
-
+        new_items = []
         for item in queryset:
             tx = item.transaction
-            
             item_data = {
-                # 1. Line Item Fields
                 "line_item_id": item.id,
                 "name": item.name,
                 "quantity": item.quantity,
@@ -30,25 +27,38 @@ class Command(BaseCommand):
                 "price_unit": str(item.price_unit) if item.price_unit else None,
                 "price_line_total": str(item.price_line_total) if item.price_line_total else None,
                 "discount": item.discount,
-                
-                # 2. Category & Hierarchical Metadata
                 "category": item.category.name if item.category else None,
                 "subcategory": item.subcategory.name if item.subcategory else None,
                 "subsubcategory": item.subsubcategory.name if item.subsubcategory else None,
-                
-                # 3. Parent Transaction Data (GrandTotalV2 details)
                 "transaction_uuid": str(tx.transaction_number) if tx else None,
                 "order_date": tx.order_date.isoformat() if tx and tx.order_date else None,
                 "payment_method": tx.payment_method if tx else None,
                 "payment_reason": tx.payment_reason if tx else None,
                 "transaction_total_due": str(tx.total_due) if tx and tx.total_due else None,
                 "transaction_discounts": tx.discounts if tx else None,
-                
-                # 4. Indirect Relations (FIXED: tx.staff_member)
                 "staff_member": tx.staff_member.name if tx and tx.staff_member else None,
                 "event_name": tx.event.name if tx and tx.event else None,
             }
-            exported_list.append(item_data)
+            new_items.append(item_data)
 
-        # Print the finished clean JSON string straight to console stdout
-        self.stdout.write(json.dumps(exported_list, indent=2))
+        file_path = 'version_2/static/version_2/data/historical_data.json'
+        existing_data = []
+
+        # If the file already exists, read it and extract the current array
+        if os.path.exists(file_path):
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    existing_data = json.load(f)
+                    if not isinstance(existing_data, list):
+                        existing_data = [] # Reset if corrupt or not an array
+            except json.JSONDecodeError:
+                existing_data = []
+
+        # Merge the new items into the existing list
+        existing_data.extend(new_items)
+
+        # Overwrite the file with the newly combined single array
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(existing_data, f, indent=2)
+            
+        self.stdout.write(self.style.SUCCESS(f"Successfully exported data to {file_path}"))

@@ -25,9 +25,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			window.parseISOString = d3.utcParse("%Y-%m-%d %H:%M:%S.%L%Z");
 
+			// Pre-process raw data fields cleanly for Crossfilter
+			loadedData.forEach(d => {
+				d.order_date = d.order_date ? new Date(d.order_date) : null;
+				d.price_line_total = cleanPrice(d);
+			});
 			prepopulateDatePickers(loadedData);
 			initDatePickerListeners(loadedData);
 			renderDashboardWithData(loadedData);
+			console.log(loadedData)
 		})
 		.catch((error) => {
 			console.error(
@@ -75,18 +81,21 @@ function calculateEffectivePrice(v) {
 /**
  * Pre-populates HTML date inputs with dataset boundary limits
  */
-function prepopulateDatePickers(masterData) {
-	if (!masterData || masterData.length === 0) return;
+function prepopulateDatePickers(orderData) {
+	if (!orderData || orderData.length === 0) return;
 
 	let minDate = null;
 	let maxDate = null;
 
-	masterData.forEach((item) => {
+	orderData.forEach((item) => {
 		const rawDate = item.order_date;
 		if (!rawDate) return;
 
 		const currentParsed = new Date(rawDate);
 		if (isNaN(currentParsed.getTime())) return;
+
+		// 🚀 FIX 1: Mutate the item so Crossfilter gets the true Date Object!
+    	item.order_date = currentParsed;
 
 		if (!minDate || currentParsed < minDate) minDate = currentParsed;
 		if (!maxDate || currentParsed > maxDate) maxDate = currentParsed;
@@ -114,7 +123,7 @@ function prepopulateDatePickers(masterData) {
 /**
  * Initializes date picker inputs using native Crossfilter range controls
  */
-function initDatePickerListeners(masterData) {
+function initDatePickerListeners(orderData) {
 	const fromInput = document.getElementById("date-from");
 	const toInput = document.getElementById("date-to");
 	const clearButton = document.getElementById("clear-date-filter");
@@ -147,7 +156,7 @@ function initDatePickerListeners(masterData) {
 		console.log(
 			"Resetting calendar ranges cleanly via crossfilter engine."
 		);
-		prepopulateDatePickers(masterData);
+		prepopulateDatePickers(orderData);
 		dateDimension.filterAll();
 		dc.redrawAll();
 	});
@@ -157,6 +166,11 @@ function initDatePickerListeners(masterData) {
  * Main dashboard setup and orchestration pipeline
  */
 function renderDashboardWithData(orderData) {
+	// Instantiate Chart Elements
+	hourlyChart = new dc.BarChart("#dc-hourly-chart");
+	categoryChart = new dc.BarChart("#dc-category-chart");
+	sunburstChart = new dc.SunburstChart("#dc-sunburst-chart");
+	dataCountWidget = new dc.DataCount("#dc-data-count");
 	console.log(
 		"Rendering dashboard instance with active rows:",
 		orderData.length
@@ -164,11 +178,11 @@ function renderDashboardWithData(orderData) {
 
 	ndx = crossfilter(orderData);
 
-	dateDimension = ndx.dimension((d) => {
-		if (!d.order_date) return new Date(1970, 0, 1);
-		const parsed = new Date(d.order_date);
-		return isNaN(parsed.getTime()) ? new Date(1970, 0, 1) : parsed;
-	});
+	// 1. Setup Crossfilter Dimensions for our custom HTML dropdown menus
+    const filterCategoryDimension = ndx.dimension(d => String(d.category || "Other").trim());
+    const filterPaymentDimension = ndx.dimension(d => String(d.payment_method || "Other").trim());
+	// 🚀 ADDED: Event Dimension matching your 'event_name' JSON key
+    const filterEventDimension = ndx.dimension(d => String(d.event_name || "No Event").trim());
 
 	const allRecordsDimension = ndx.dimension((d) => d);
 
@@ -191,13 +205,12 @@ function renderDashboardWithData(orderData) {
 	});
 
 	const categoryDimension = ndx.dimension((currentItem) => {
-		return String(currentItem.category || "Other")
-			.toLowerCase()
-			.trim();
+		// 🚀 FIX 2A: Use category_name instead of category
+    	return String(currentItem.category || "Other").toLowerCase().trim();
 	});
 
 	const multiTierProductDimension = ndx.dimension((d) => {
-		const categoryName = String(d.category || "Other")
+		const categoryName = String(d.category  || "Other")
 			.toLowerCase()
 			.trim();
 		const productName = String(d.name || "Unknown Product").trim();
@@ -205,13 +218,114 @@ function renderDashboardWithData(orderData) {
 		return [categoryName, productName, productSize];
 	});
 
+	// 2. Custom Group Reducer tracking all 6 requested fields per category
+    const matrixCategoryGroup = categoryDimension.group().reduce(
+        // Add Record Function
+        (p, v) => {
+			// console.log("v.category = ", v.category)
+			const cat = v.category.toLowerCase().trim();
+			const unitPrice = v.price_unit
+            const qty = +v.quantity || 0;
+            const lineTotal = +v.price_line_total || 0;
+            const discountStr = String(v.discount || "").toLowerCase().trim();
+            const method = String(v.payment_method || "").toLowerCase().trim();
+            const reason = String(v.payment_reason || "").toLowerCase().trim();
+			// console.log("cat = ", cat, discountStr)
+
+            p.items_sold += qty;
+
+            if (method.includes("waste") || reason.includes("waste") || discountStr.includes("waste")) {
+                p.waste += unitPrice * qty;
+            } else if (method.includes("complimentary") || reason.includes("complimentary") || discountStr.includes("comp")) {
+                p.complimentary += unitPrice * qty;
+            } else if (discountStr !== "" && discountStr !== "none") {
+                p.discounted += ((unitPrice * qty) - lineTotal);
+                if (method.includes("cash")) p.cash += lineTotal;
+                if (method.includes("card")) p.card += lineTotal;
+            } else {
+                if (method.includes("cash")) p.cash += lineTotal;
+                if (method.includes("card")) p.card += lineTotal;
+            }
+			// console.log("p = ", p)
+            return p;
+        },
+        // Remove Record Function
+        (p, v) => {
+			const unitPrice = v.price_unit
+            const qty = +v.quantity || 0;
+            const lineTotal = +v.price_line_total || 0;
+            const discountStr = String(v.discount || "").toLowerCase().trim();
+            const method = String(v.payment_method || "").toLowerCase().trim();
+            const reason = String(v.payment_reason || "").toLowerCase().trim();
+
+            p.items_sold -= qty;
+
+            if (method.includes("waste") || reason.includes("waste") || discountStr.includes("waste")) {
+                p.waste -= unitPrice * qty;
+            } else if (method.includes("complimentary") || reason.includes("complimentary") || discountStr.includes("comp")) {
+                p.complimentary -= unitPrice * qty;
+            } else if (discountStr !== "" && discountStr !== "none") {
+                p.discounted -= ((unitPrice * qty) - lineTotal);
+                if (method.includes("cash")) p.cash -= lineTotal;
+                if (method.includes("card")) p.card -= lineTotal;
+            } else {
+                if (method.includes("cash")) p.cash -= lineTotal;
+                if (method.includes("card")) p.card -= lineTotal;
+            }
+            return p;
+        },
+        // Init Object Function
+        () => ({ items_sold: 0, cash: 0, card: 0, discounted: 0, waste: 0, complimentary: 0 })
+    );
+	// 2. Custom Group Reducer tracking all fields per product/size variation
+    const matrixSizeGroup = multiTierProductDimension.group().reduce(
+        (p, v) => {
+			// console.log("1st p = ", p, v)
+            const qty = +v.quantity || 0;
+			const unitPrice = v.price_unit
+            const lineTotal = +v.price_line_total || 0;
+            const discountStr = String(v.discount || "").toLowerCase().trim();
+            const method = String(v.payment_method || "").toLowerCase().trim();
+            const reason = String(v.payment_reason || "").toLowerCase().trim();
+
+            p.items_sold += qty;
+            if (method.includes("waste") || reason.includes("waste") || discountStr.includes("waste")) {
+                p.waste += (qty * unitPrice);
+            } else if (method.includes("complimentary") || reason.includes("complimentary") || discountStr.includes("comp")) {
+                p.complimentary += (qty * unitPrice);
+            } else {
+                if (discountStr !== "" && discountStr !== "none") p.discounted += ((qty * unitPrice) - lineTotal);
+                if (method.includes("cash")) p.cash += lineTotal;
+                if (method.includes("card")) p.card += lineTotal;
+            }
+            return p;
+        },
+        (p, v) => {
+			// console.log("2nd p")
+            const qty = +v.quantity || 0;
+			const unitPrice = v.price_unit
+            const lineTotal = +v.price_line_total || 0;
+            const discountStr = String(v.line_discount || "").toLowerCase().trim();
+            const method = String(v.payment_method || "").toLowerCase().trim();
+            const reason = String(v.payment_reason || "").toLowerCase().trim();
+
+            p.items_sold -= qty;
+            if (method.includes("waste") || reason.includes("waste") || discountStr.includes("waste")) {
+                p.waste -= (qty * unitPrice);
+            } else if (method.includes("complimentary") || reason.includes("complimentary") || discountStr.includes("comp")) {
+                p.complimentary -= (qty * unitPrice);
+            } else {
+                if (discountStr !== "" && discountStr !== "none") p.discounted -= ((qty * unitPrice) - lineTotal);
+                if (method.includes("cash")) p.cash -= lineTotal;
+                if (method.includes("card")) p.card -= lineTotal;
+            }
+            return p;
+        },
+        () => ({ items_sold: 0, cash: 0, card: 0, discounted: 0, waste: 0, complimentary: 0 })
+    );
 	// Setup Groups & Reducers
-	const revenueByMultiTierGroup = multiTierProductDimension
-		.group()
-		.reduceSum(calculateEffectivePrice);
-	const rawHourlyGroup = continuousHourDimension
-		.group()
-		.reduceSum(calculateEffectivePrice);
+	const revenueByMultiTierGroup = multiTierProductDimension.group().reduceSum(calculateEffectivePrice);
+	const rawHourlyGroup = continuousHourDimension.group().reduceSum(calculateEffectivePrice);
 
 	const categoryRevenueGroup = categoryDimension.group().reduce(
 		function (p, v) {
@@ -222,7 +336,8 @@ function renderDashboardWithData(orderData) {
 			const reason = String(v.payment_reason || "")
 				.toLowerCase()
 				.trim();
-			const discount = String(v.discount || "")
+			// 🚀 FIX 3: Apply this matching fix to BOTH your custom add() and remove() reductions:
+			const discount = String(v.line_discount || "")
 				.toLowerCase()
 				.trim();
 
@@ -327,11 +442,246 @@ function renderDashboardWithData(orderData) {
 		},
 	};
 
-	// Instantiate Chart Elements
-	hourlyChart = new dc.BarChart("#dc-hourly-chart");
-	categoryChart = new dc.BarChart("#dc-category-chart");
-	sunburstChart = new dc.SunburstChart("#dc-sunburst-chart");
-	dataCountWidget = new dc.DataCount("#dc-data-count");
+    // 2. 🚀 UPDATED: Extract unique keys from your true dataset (orderData)
+    const uniqueCategories = [...new Set(orderData.map(d => String(d.category || "Other").trim()))].sort();
+    const uniquePayments = [...new Set(orderData.map(d => String(d.payment_method || "Other").trim()))].sort();
+	// 🚀 ADDED: Extract unique event names
+    const uniqueEvents = [...new Set(orderData.map(d => String(d.event_name || "No Event").trim()))].sort();
+
+
+    // 3. Render Category Dropdown Options
+    const catList = document.getElementById("category-filter-list");
+    if (catList) {
+        catList.innerHTML = uniqueCategories.map(cat => `
+            <li class="form-check mb-1">
+                <input class="form-check-input category-chk" type="checkbox" value="${cat}" id="chk-cat-${cat}" checked>
+                <label class="form-check-label small text-capitalize" for="chk-cat-${cat}">${cat}</label>
+            </li>
+        `).join('');
+    }
+
+    // 4. Render Payment Dropdown Options
+    const payList = document.getElementById("payment-filter-list");
+    if (payList) {
+        payList.innerHTML = uniquePayments.map(pay => `
+            <li class="form-check mb-1">
+                <input class="form-check-input payment-chk" type="checkbox" value="${pay}" id="chk-pay-${pay}" checked>
+                <label class="form-check-label small" for="chk-pay-${pay}">${pay}</label>
+            </li>
+        `).join('');
+    }
+	// 🚀 5. ADDED: Render Event Dropdown Options
+    const evtList = document.getElementById("event-filter-list");
+    if (evtList) {
+        evtList.innerHTML = uniqueEvents.map(evt => `
+            <li class="form-check mb-1">
+                <input class="form-check-input event-chk" type="checkbox" value="${evt}" id="chk-evt-${evt}" checked>
+                <label class="form-check-label small" for="chk-evt-${evt}">${evt}</label>
+            </li>
+        `).join('');
+    }
+
+    // 5. Function to update Crossfilter when boxes are toggled
+    function applyDropdownFilters() {
+		console.log("applyDropdownFilters()")
+        const activeCategories = Array.from(document.querySelectorAll('.category-chk:checked')).map(el => String(el.value).toLowerCase().trim());
+
+        if (activeCategories.length === uniqueCategories.length) {
+            filterCategoryDimension.filterAll();
+        } else {
+            // filterCategoryDimension.filterFunction(d => activeCategories.includes(d));
+			// Evaluates string matches uniformly
+            filterCategoryDimension.filterFunction(d => activeCategories.includes(String(d).toLowerCase().trim()));
+        }
+
+        const activePayments = Array.from(document.querySelectorAll('.payment-chk:checked')).map(el => String(el.value).toLowerCase().trim());
+        if (activePayments.length === uniquePayments.length) {
+            filterPaymentDimension.filterAll();
+        } else {
+            filterPaymentDimension.filterFunction(d => activePayments.includes(String(d).toLowerCase().trim()));
+        }
+		// 🚀 ADDED: Collect and evaluate checked event values
+        const activeEvents = Array.from(document.querySelectorAll('.event-chk:checked')).map(el => String(el.value).toLowerCase().trim());
+        if (activeEvents.length === uniqueEvents.length) {
+            filterEventDimension.filterAll();
+        } else {
+            filterEventDimension.filterFunction(d => activeEvents.includes(String(d).toLowerCase().trim()));
+        }
+
+        dc.redrawAll();
+		// 🚀 FORCED TABLE MATRIX RECALCULATION: Trigger updates directly from the checkbox event click
+        renderFinancialMatrixTable();
+        renderProductSizeMatrixTable();
+    }
+
+    // 6. Bind change events to all dynamically built checkbox targets
+    document.querySelectorAll('.category-chk, .payment-chk, .event-chk').forEach(chk => {
+        chk.addEventListener('change', applyDropdownFilters);
+    });
+
+	dateDimension = ndx.dimension((d) => {
+		if (!d.order_date) return new Date(1970, 0, 1);
+		const parsed = new Date(d.order_date);
+		return isNaN(parsed.getTime()) ? new Date(1970, 0, 1) : parsed;
+	});
+
+
+    // 3. Render Matrix Rows dynamically whenever Crossfilter updates
+    function renderFinancialMatrixTable() {
+		console.log("renderFinancialMatrixTable()")
+        const tableBody = document.getElementById("financial-matrix-body");
+        if (!tableBody) return;
+
+        // Fetch active calculated group items sorted alphabetically by category name
+        const rowsData = matrixCategoryGroup.all();
+		console.log("rowsData = ", rowsData)
+
+        // Format currency helper
+        const fmt = val => `€${Number(val).toLocaleString("en-IE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+        // 🚀 INITIALIZE SUMMARY TOTAL TRACKERS
+        let grandTotalItems = 0;
+        let grandTotalCash = 0;
+        let grandTotalCard = 0;
+        let grandTotalDiscounted = 0;
+        let grandTotalWaste = 0;
+        let grandTotalComplimentary = 0;
+
+        // Build individual rows and accumulate totals
+        const rowsHtml = rowsData.map(row => {
+            const cat = row.key;
+            const data = row.value;
+
+            // Don't render empty rows to keep the performance grid clean
+            // if (data.items_sold === 0 && data.cash === 0 && data.card === 0 && data.waste === 0 && data.complimentary === 0) {
+            //     return '';
+            // }
+
+            // 🚀 ACCUMULATE EACH COLUMN FOR THE FOOTER SUMMARY
+            grandTotalItems += data.items_sold;
+            grandTotalCash += data.cash;
+            grandTotalCard += data.card;
+            grandTotalDiscounted += data.discounted;
+            grandTotalWaste += data.waste;
+            grandTotalComplimentary += data.complimentary;
+
+            return `
+                <tr>
+                    <td class="text-start fw-bold text-capitalize">${cat}</td>
+                    <td class="text-center font-monospace">${data.items_sold.toLocaleString("en-IE")}</td>
+                    <td class="text-center text-success font-monospace">${fmt(data.cash)}</td>
+                    <td class="text-center text-success font-monospace">${fmt(data.card)}</td>
+                    <td class="text-center font-monospace text-muted">${fmt(data.discounted)}</td>
+                    <td class="text-center font-monospace text-danger">${fmt(data.waste)}</td>
+                    <td class="text-center font-monospace text-info">${fmt(data.complimentary)}</td>
+                </tr>
+            `;
+        }).join('');
+
+        // Inject calculated category data into body container element
+        tableBody.innerHTML = rowsHtml;
+
+        // 🚀 DYNAMIC FOOTER RENDERING: Append or update the Summary Row
+        const tableElement = document.getElementById("financial-matrix-table");
+        if (tableElement) {
+            // Check if a tfoot element already exists to prevent duplicate adding
+            let tableFoot = tableElement.querySelector("tfoot");
+            if (!tableFoot) {
+                tableFoot = document.createElement("tfoot");
+                tableElement.appendChild(tableFoot);
+            }
+
+            // Inject the calculated totals into the table footer layout grid
+            tableFoot.innerHTML = `
+                <tr class="table-secondary fw-bold">
+                    <td class="text-start text-uppercase">Total Summary</td>
+                    <td class="text-center font-monospace">${grandTotalItems.toLocaleString("en-IE")}</td>
+                    <td class="text-center text-success font-monospace">${fmt(grandTotalCash)}</td>
+                    <td class="text-center text-success font-monospace">${fmt(grandTotalCard)}</td>
+                    <td class="text-center font-monospace">${fmt(grandTotalDiscounted)}</td>
+                    <td class="text-center font-monospace text-danger">${fmt(grandTotalWaste)}</td>
+                    <td class="text-center font-monospace text-info">${fmt(grandTotalComplimentary)}</td>
+                </tr>
+            `;
+        }
+    }
+
+    // 3. Render Product Size Rows dynamically whenever Crossfilter updates
+    function renderProductSizeMatrixTable() {
+        const tableBody = document.getElementById("size-matrix-body");
+        if (!tableBody) return;
+
+        const rowsData = matrixSizeGroup.all();
+		console.log("rowsData = ", rowsData)
+		// 🚀 THE FIX: Sort the rows by total revenue (Cash + Card) descending
+        rowsData.sort((a, b) => {
+            const revenueA = (a.value.cash || 0) + (a.value.card || 0);
+            const revenueB = (b.value.cash || 0) + (b.value.card || 0);
+            return revenueB - revenueA; // Highest revenue first
+        });
+
+        const fmt = val => `€${Number(val).toLocaleString("en-IE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+        let totalItems = 0, totalCash = 0, totalCard = 0, totalDiscounted = 0, totalWaste = 0, totalComplimentary = 0;
+
+        const rowsHtml = rowsData.map(row => {
+            const data = row.value;
+
+            // Hide variations with absolutely zero records active
+            if (data.items_sold === 0 && data.cash === 0 && data.card === 0 && data.waste === 0 && data.complimentary === 0) {
+                return '';
+            }
+
+            // 🚀 THE PERMANENT FIX: Read from the Array Key directly instead of using split()!
+            // row.key is an array path: [category, product_name, product_size]
+            const isArrayKey = Array.isArray(row.key);
+            const productName = isArrayKey ? row.key[1] : row.key;
+            const productSize = isArrayKey ? row.key[2] : "Standard";
+
+            totalItems += data.items_sold;
+            totalCash += data.cash;
+            totalCard += data.card;
+            totalDiscounted += data.discounted;
+            totalWaste += data.waste;
+            totalComplimentary += data.complimentary;
+
+            return `
+                <tr>
+                    <td class="text-start fw-bold">${productName}</td>
+                    <td class="text-center text-muted small text-capitalize">${productSize}</td>
+                    <td class="text-center font-monospace">${data.items_sold.toLocaleString("en-IE")}</td>
+                    <td class="text-center font-monospace">${fmt(data.cash)}</td>
+                    <td class="text-center font-monospace">${fmt(data.card)}</td>
+                    <td class="text-center font-monospace text-muted">${fmt(data.discounted)}</td>
+                    <td class="text-center font-monospace text-danger">${fmt(data.waste)}</td>
+                    <td class="text-center font-monospace text-info">${fmt(data.complimentary)}</td>
+                </tr>
+            `;
+        }).join('');
+
+        tableBody.innerHTML = rowsHtml;
+
+        // Append or update the Summary Row at the bottom of the table
+        const tableElement = document.getElementById("size-matrix-table");
+        if (tableElement) {
+            let tableFoot = tableElement.querySelector("tfoot");
+            if (!tableFoot) {
+                tableFoot = document.createElement("tfoot");
+                tableElement.appendChild(tableFoot);
+            }
+            tableFoot.innerHTML = `
+                <tr class="table-secondary fw-bold sticky-bottom">
+                    <td class="text-start text-uppercase" colspan="2">Total Summary</td>
+                    <td class="text-center font-monospace">${totalItems.toLocaleString("en-IE")}</td>
+                    <td class="text-center font-monospace">${fmt(totalCash)}</td>
+                    <td class="text-center font-monospace">${fmt(totalCard)}</td>
+                    <td class="text-center font-monospace">${fmt(totalDiscounted)}</td>
+                    <td class="text-center font-monospace text-danger">${fmt(totalWaste)}</td>
+                    <td class="text-center font-monospace text-info">${fmt(totalComplimentary)}</td>
+                </tr>
+            `;
+        }
+    }
 
     // 1. Configure 3-Tier Sunburst Chart (Keep your standard settings)
     sunburstChart
@@ -363,7 +713,7 @@ function renderDashboardWithData(orderData) {
             if (Array.isArray(filter)) {
                 return filter.every((val, i) => recordArray[i] === val);
             }
-            return recordArray[0] === filter || recordArray === filter;
+            return recordArray[0] === filter;
         });
         
         // Trigger a global redraw for the OTHER charts on the dashboard
@@ -526,6 +876,18 @@ function renderDashboardWithData(orderData) {
 		}
 	});
 
+	// 2. Safely attach rendering callbacks to all active charts registered on the page
+    // This loops over your loaded visual widgets and ensures that clicking any chart slice updates your tables.
+    dc.chartRegistry.list().forEach(function (dashboardChart) {
+        dashboardChart.on("filtered.tables", function () {
+            renderFinancialMatrixTable();
+            renderProductSizeMatrixTable();
+        });
+    });
+
+    // Initial load runs to draw the spreadsheet data grids on startup
+    renderFinancialMatrixTable();
+    renderProductSizeMatrixTable();
 	dc.renderAll();
 	resizeCharts();
 }
@@ -549,7 +911,8 @@ function resizeCharts() {
 			sunburstChart.width(sunburstWidth);
 		}
 
-		dc.redrawAll();
+		// 🚀 FIX 5: Use renderAll instead of redrawAll inside the resize wrapper
+    	dc.renderAll();
 	}
 }
 

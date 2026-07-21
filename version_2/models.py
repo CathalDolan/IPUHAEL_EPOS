@@ -167,8 +167,8 @@ class ProductV2(models.Model):
                                         decimal_places=2,
                                         max_digits=5)
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
     # def save(self, *args, **kwargs):
     #     # 1. Perform your function (e.g., remove vowels in Python)
     #     vowels = 'aeiouAEIOU'
@@ -260,9 +260,9 @@ class GrandTotalV2(models.Model):
 
 class LineItemV2(models.Model):
     transaction = models.ForeignKey(GrandTotalV2,
-                                     null=False,
-                                     on_delete=models.CASCADE,
-                                     related_name='lineitems')
+                                    null=False,
+                                    on_delete=models.CASCADE,
+                                    related_name='lineitems')
     category = models.ForeignKey(Category,
                                  null=True,
                                  blank=True,
@@ -275,6 +275,10 @@ class LineItemV2(models.Model):
                                     null=True,
                                     blank=True,
                                     on_delete=models.PROTECT)
+    productId = models.ForeignKey(ProductV2,
+                                   null=True,
+                                   blank=True,
+                                   on_delete=models.PROTECT)
     name = models.CharField(max_length=100)
     quantity = models.IntegerField(null=True,
                                    blank=True)

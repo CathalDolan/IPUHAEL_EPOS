@@ -1014,6 +1014,11 @@ table {
     background-color: green;
 }
 
+.error-toast {
+    background-color: red;
+    color: #fafafa;
+}
+ 
 .totals {
     padding-bottom: 5px;
     background-color: #211f1f;
