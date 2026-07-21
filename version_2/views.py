@@ -107,11 +107,12 @@ def index_v2(request):
         try:
             product = ProductV2.objects.get(name=line_item.name)
         except:
-            print("line_item = ", line_item.name)
-            subcategory = line_item.subcategory
-            print("subcategory = ", subcategory)
-            product = ProductV2.objects.get(subcategory=subcategory)
-            print("product = ", product)
+            # print("line_item = ", line_item.name)
+            # subcategory = line_item.subcategory
+            # print("subcategory = ", subcategory)
+            # product = ProductV2.objects.get(subcategory=subcategory)
+            # print("product = ", product)
+            product = None
 
         line_item.productId = product
         line_item.save() 
