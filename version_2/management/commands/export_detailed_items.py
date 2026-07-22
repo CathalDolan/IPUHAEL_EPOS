@@ -3,6 +3,12 @@ import os
 from django.core.management.base import BaseCommand
 from version_2.models import LineItemV2
 
+# To run:
+# 1. Login to Heroku CLI
+# 2. Get the production database url, run: heroku config:get DATABASE_URL --app ipuhael-epos
+# 3. Temporarily change the dev env url pointer, run: $env:DATABASE_URL="YOUR_COPIED_POSTGRES_STRING_HERE"
+# 4. Trigger the file writing, run: python manage.py export_detailed_items
+
 class Command(BaseCommand):
     help = 'Exports LineItemV2 with all ForeignKey data into a structured JSON file'
 
