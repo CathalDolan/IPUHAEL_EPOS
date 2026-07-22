@@ -13,7 +13,8 @@ class Command(BaseCommand):
             'transaction__event',
             'category', 
             'subcategory', 
-            'subsubcategory'
+            'subsubcategory',
+            'product'
         )
 
         new_items = []
@@ -21,6 +22,8 @@ class Command(BaseCommand):
             tx = item.transaction
             item_data = {
                 "line_item_id": item.id,
+                # 🚀 THE CRITICAL FIX: Grab the direct database integer ID from your new relationship column
+                "product_id": item.product_id if item.product_id else None,
                 "name": item.name,
                 "quantity": item.quantity,
                 "size": item.size,
