@@ -32,9 +32,6 @@ from .models import (
     GrandTotalV2,
     PfandBalance,
     LineItemV2,
-    Category,
-    SubCategory,
-    SubSubCategory,
     Events,
     Receipts,
 )
@@ -183,33 +180,17 @@ def index_v2(request):
                 for k, v in data[0].items():
                     for x in v:
                         if x["qty"] != 0:
-                            if x["subcategory"] != "open_drink":
-                                product = ProductV2.objects.get(id=x["product_id"])
-                                print("product 178= ", product)
-                            else:
-                                product = x["name"]
-                            try:
-                                subsubcategory = SubSubCategory.objects.get(
-                                    name=x["subsubcategory"]
-                                )
-                            except:
-                                subsubcategory = None
+                            product = ProductV2.objects.get(id=x["product_id"])
 
                             new_line_items = LineItemV2(
                                 transaction=new_grand_total,
-                                category=Category.objects.get(name=x["category"]),
-                                subcategory=SubCategory.objects.get(name=x["subcategory"]),
-                                subsubcategory=subsubcategory,
-                                product_id=product,
-                                name=product.name,
+                                product=product,
+                                name=x["name"],
                                 quantity=int(x["qty"]),
                                 size=x["size"],
                                 price_unit=float(x["price"]),
                                 price_line_total=float(x["line_total"]),
                                 discount=x["discount_applied"],
-                                # payment_method=data[1]['Grand_Total']['Payment_Method'],
-                                # payment_reason=data[1]['Grand_Total']["payment_reason"],
-                                # staff_member=staff_member,
                             )
                             new_line_items.save()
                 # messages.success(request, "Transaction Complete!")
@@ -522,7 +503,7 @@ def eod_takings(request):
 
         drinks_report = (
             LineItemV2.objects.filter(transaction__order_date__date=trading_date)
-            .filter(category__name="drink")
+            .filter(product__category__name="drink")
             .aggregate(
                 waste=Sum(
                     Case(
@@ -588,7 +569,7 @@ def eod_takings(request):
         food_report = (
             LineItemV2.objects.all()
             .filter(transaction__order_date__date=trading_date)
-            .filter(category__name="food")
+            .filter(product__category__name="food")
             .aggregate(
                 waste=Sum(
                     Case(
@@ -650,7 +631,7 @@ def eod_takings(request):
         gifts_report = (
             LineItemV2.objects.all()
             .filter(transaction__order_date__date=trading_date)
-            .filter(category__name="gift")
+            .filter(product__category__name="gift")
             .aggregate(
                 waste=Sum(
                     Case(
@@ -1137,7 +1118,7 @@ def generate_epos_excel_buffer(trading_date):
     """
     orders = LineItemV2.objects.filter(
         transaction__order_date__date=trading_date
-    ).select_related("transaction", "category", "subcategory", "subsubcategory")
+    ).select_related("transaction", "product")
 
     data = {
         "line_ID": [],
@@ -1167,6 +1148,7 @@ def generate_epos_excel_buffer(trading_date):
 
     for order in orders:
         tx = order.transaction
+        product = order.product
         data["line_ID"].append(order.id)
         data["trans_ID"].append(tx.transaction_number if tx else "")
         data["order_date"].append(tx.order_date.strftime("%d/%m/%Y") if tx else "")
@@ -1191,10 +1173,10 @@ def generate_epos_excel_buffer(trading_date):
         )
         data["discount_type"].append(order.discount)
 
-        data["category"].append(order.category.name if order.category else "")
-        data["subcategory"].append(order.subcategory.name if order.subcategory else "")
+        data["category"].append(product.category if product.category else "")
+        data["subcategory"].append(product.subcategory if product.subcategory else "")
         data["subsubcategory"].append(
-            order.subsubcategory.name if order.subsubcategory else ""
+            product.subsubcategory if product.subsubcategory else ""
         )
 
     df = pd.DataFrame(data)
@@ -1241,40 +1223,31 @@ def generate_epos_excel_buffer(trading_date):
     return buffer
 
 # Used to extract the lineItems manually and save as download to the device.
+# Functionality currently broken
 def export_data(request):
-    # 1. OPTIMIZATION: One single SQL query using select_related to kill the N+1 problem
+    # 1. OPTIMIZATION: Deep prefetching to fully eliminate the N+1 problem
+    # Replace 'category', 'subcategory', 'subsubcategory' with the actual FK field names on your Product model
     orders = LineItemV2.objects.all().select_related(
-        "transaction", "category", "subcategory", "subsubcategory"
-    )
+        "transaction", 
+        "product__category", 
+        "product__subcategory", 
+        "product__subsubcategory"
+    ).iterator(chunk_size=2000) # Prevents loading all Django objects into RAM at once
 
+    # Lists for high-speed list comprehension appending
     data = {
-        "line_ID": [],
-        "trans_ID": [],
-        "order_date": [],
-        "order_time": [],
-        "qty_of_products": [],
-        "products_total": [],
-        "pfand_total": [],
-        "total_due": [],
-        "tendered_amount": [],
-        "change_due": [],
-        "payment_method": [],
-        "payment_reason": [],
-        "staff_member": [],
-        "product_name": [],
-        "product_size": [],
-        "price_unit": [],
-        "quantity": [],
-        "line_total": [],
-        "discount": [],
-        "discount_type": [],
-        "parent_cat": [],
-        "sub_cat_1": [],
-        "sub_cat_2": [],
+        "line_ID": [], "trans_ID": [], "order_date": [], "order_time": [],
+        "qty_of_products": [], "products_total": [], "pfand_total": [],
+        "total_due": [], "tendered_amount": [], "change_due": [],
+        "payment_method": [], "payment_reason": [], "staff_member": [],
+        "product_name": [], "product_size": [], "price_unit": [],
+        "quantity": [], "line_total": [], "discount": [],
+        "discount_type": [], "parent_cat": [], "sub_cat_1": [], "sub_cat_2": [],
     }
 
     for order in orders:
-        tx = order.transaction  # Local caching variable for micro-optimization
+        tx = order.transaction
+        prod = order.product
 
         data["line_ID"].append(order.id)
         data["trans_ID"].append(tx.transaction_number if tx else "")
@@ -1295,26 +1268,20 @@ def export_data(request):
         data["price_unit"].append(order.price_unit)
         data["quantity"].append(order.quantity)
         data["line_total"].append(order.price_line_total)
-        data["discount"].append(
-            (order.price_unit * order.quantity) - order.price_line_total
-        )
+        data["discount"].append((order.price_unit * order.quantity) - order.price_line_total)
         data["discount_type"].append(order.discount)
 
-        data["parent_cat"].append(order.category.name if order.category else "")
-        data["sub_cat_1"].append(order.subcategory.name if order.subcategory else "")
-        data["sub_cat_2"].append(
-            order.subsubcategory.name if order.subsubcategory else ""
-        )
+        # Accessing nested relations safely (now cached by select_related)
+        data["parent_cat"].append(str(prod.category) if prod and prod.category else "")
+        data["sub_cat_1"].append(str(prod.subcategory) if prod and prod.subcategory else "")
+        data["sub_cat_2"].append(str(prod.subsubcategory) if prod and prod.subsubcategory else "")
 
     df = pd.DataFrame(data)
 
-    # 2. CLEANING: Safe type conversions
+    # 2. VECTORIZED CLEANING: Avoid `.apply()` loops over every cell
     for col in df.columns:
-        df[col] = df[col].apply(
-            lambda x: (
-                str(x) if isinstance(x, (UUID, Decimal)) or hasattr(x, "_meta") else x
-            )
-        )
+        if df[col].dtype == 'object':
+            df[col] = df[col].astype(str)
 
     buffer = io.BytesIO()
 
@@ -1325,53 +1292,35 @@ def export_data(request):
         workbook = writer.book
         worksheet = writer.sheets["Transactions"]
 
-        # Styles
-        header_fmt = workbook.add_format(
-            {"bold": True, "bg_color": "#D7E4BC", "align": "center", "border": 1}
-        )
-        merge_fmt = workbook.add_format(
-            {"valign": "vcenter", "align": "left", "border": 1}
-        )
+        header_fmt = workbook.add_format({"bold": True, "bg_color": "#D7E4BC", "align": "center", "border": 1})
+        merge_fmt = workbook.add_format({"valign": "vcenter", "align": "left", "border": 1})
 
-        # Rewrite Header formatting explicitly
         for col_num, value in enumerate(df.columns.values):
             worksheet.write(0, col_num, value, header_fmt)
 
-        # 4. SAFE TRANSACTION CELL MERGING WORKFLOW
-        for trans_id in df["trans_ID"].unique():
-            indices = df.index[df["trans_ID"] == trans_id].tolist()
+        # 4. OPTIMIZED TRANSACTION CELL MERGING
+        # Groupby is significantly faster than using df.index[df[...] == ...] in a loop
+        for trans_id, group in df.groupby("trans_ID", sort=False):
+            indices = group.index.tolist()
+            first_row = indices[0] + 1
+            last_row = indices[-1] + 1
 
             if len(indices) > 1:
-                # Add 1 because Excel row index 0 is occupied by headers
-                first_row = indices[0] + 1
-                last_row = indices[-1] + 1
-
-                # Transaction metadata block columns (Indices 0 to 12)
-                columns_to_group = list(range(0, 13))
-
-                for col in columns_to_group:
-                    val = df.iloc[indices[0], col]
-
-                    # CRITICAL FIX: Clear the data inside the cell ranges *before* invoking merge_range
-                    # This prevents XlsxWriter from throwing data-corruption collisions
+                for col in range(0, 13):
+                    val = group.iloc[0, col]
                     for r in range(first_row + 1, last_row + 1):
                         worksheet.write_blank(r, col, None)
-
                     worksheet.merge_range(first_row, col, last_row, col, val, merge_fmt)
             else:
-                # Format single standalone rows with the standard non-merged grid boundaries
-                row_idx = indices[0] + 1
+                row_idx = first_row
                 for col in range(0, 13):
-                    val = df.iloc[indices[0], col]
+                    val = group.iloc[0, col]
                     worksheet.write(row_idx, col, val, merge_fmt)
 
         # 5. DYNAMIC COLUMN AUTO-FIT SIZER
         for i, col in enumerate(df.columns):
-            # Evaluate maximum string length within this column context to prevent text clipping
-            max_len = max(df[col].astype(str).map(len).max(), len(col)) + 3
-            worksheet.set_column(
-                i, i, min(max_len, 50)
-            )  # Cap extreme lengths at 50 chars
+            max_len = max(df[col].astype(str).str.len().max(), len(col)) + 3
+            worksheet.set_column(i, i, min(max_len, 50))
 
     buffer.seek(0)
     response = HttpResponse(

@@ -389,6 +389,7 @@ $(document).on("click", ".remove-special", function() {
 $(".open-drink-submit").click(() => {
     let product_size = $(".drink.modal-measure-button.selected").attr("data-size");
     let product_qty = Number($('input[name="quantity"]').val());
+    let product_id  = $('input[name="product_id"]').val();
     let product_name = $('input[name="drink-name"]').val();
     let category = $('input[name="category"]').val();
     let subcategory = $('input[name="subcategory"]').val();
@@ -421,6 +422,7 @@ $(".open-drink-submit").click(() => {
     LATEST_PRODUCT = {
         category: category,
         subcategory: subcategory,
+        product_id: product_id,
         name: product_name,
         abbr_name: product_name,
         size: product_size,

@@ -12,35 +12,35 @@ document.addEventListener("DOMContentLoaded", () => {
 	console.log("Targeting JSON endpoint location:", jsonFileUrl);
 
 	fetch(jsonFileUrl)
-		.then((response) => {
-			if (!response.ok)
-				throw new Error(`Network failure. Status: ${response.status}`);
-			return response.json();
-		})
-		.then((loadedData) => {
-			console.log(
-				"JSON file successfully imported! Record count:",
-				loadedData.length
-			);
+	.then((response) => {
+		if (!response.ok)
+			throw new Error(`Network failure. Status: ${response.status}`);
+		return response.json();
+	})
+	.then((loadedData) => {
+		console.log(
+			"JSON file successfully imported! Record count:",
+			loadedData.length
+		);
 
-			window.parseISOString = d3.utcParse("%Y-%m-%d %H:%M:%S.%L%Z");
+		window.parseISOString = d3.utcParse("%Y-%m-%d %H:%M:%S.%L%Z");
 
-			// Pre-process raw data fields cleanly for Crossfilter
-			loadedData.forEach(d => {
-				d.order_date = d.order_date ? new Date(d.order_date) : null;
-				d.price_line_total = cleanPrice(d);
-			});
-			prepopulateDatePickers(loadedData);
-			initDatePickerListeners(loadedData);
-			renderDashboardWithData(loadedData);
-			console.log(loadedData)
-		})
-		.catch((error) => {
-			console.error(
-				"Critical Failure: Unable to fetch JSON file:",
-				error
-			);
+		// Pre-process raw data fields cleanly for Crossfilter
+		loadedData.forEach(d => {
+			d.order_date = d.order_date ? new Date(d.order_date) : null;
+			d.price_line_total = cleanPrice(d);
 		});
+		prepopulateDatePickers(loadedData);
+		initDatePickerListeners(loadedData);
+		renderDashboardWithData(loadedData);
+		console.log(loadedData)
+	})
+	.catch((error) => {
+		console.error(
+			"Critical Failure: Unable to fetch JSON file:",
+			error
+		);
+	});
 }); // 👈 Close the DOMContentLoaded block here
 
 // Global chart handles accessible to all app modules
@@ -277,6 +277,15 @@ function renderDashboardWithData(orderData) {
         // Init Object Function
         () => ({ items_sold: 0, cash: 0, card: 0, discounted: 0, waste: 0, complimentary: 0 })
     );
+
+	// 🚀 STEP 1: Define the safe string-delimiter dimension right above the group
+    const tableProductSizeDimension = ndx.dimension(d => {
+        const pId   = String(d.product_id || "0").trim();
+        const pName = String(d.name || "Unknown Product").trim();
+        const pSize = String(d.size || "Standard").trim();
+        return `${pId}:::${pName}:::${pSize}`;
+    });
+
 	// 2. Custom Group Reducer tracking all fields per product/size variation
     const matrixSizeGroup = multiTierProductDimension.group().reduce(
         (p, v) => {
@@ -305,7 +314,7 @@ function renderDashboardWithData(orderData) {
             const qty = +v.quantity || 0;
 			const unitPrice = v.price_unit
             const lineTotal = +v.price_line_total || 0;
-            const discountStr = String(v.line_discount || "").toLowerCase().trim();
+            const discountStr = String(v.discount || "").toLowerCase().trim();
             const method = String(v.payment_method || "").toLowerCase().trim();
             const reason = String(v.payment_reason || "").toLowerCase().trim();
 

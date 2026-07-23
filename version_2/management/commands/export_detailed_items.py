@@ -17,9 +17,6 @@ class Command(BaseCommand):
             'transaction', 
             'transaction__staff_member', 
             'transaction__event',
-            'category', 
-            'subcategory', 
-            'subsubcategory',
             'product'
         )
 
@@ -36,9 +33,9 @@ class Command(BaseCommand):
                 "price_unit": str(item.price_unit) if item.price_unit else None,
                 "price_line_total": str(item.price_line_total) if item.price_line_total else None,
                 "discount": item.discount,
-                "category": item.category.name if item.category else None,
-                "subcategory": item.subcategory.name if item.subcategory else None,
-                "subsubcategory": item.subsubcategory.name if item.subsubcategory else None,
+                "category": item.product.category.name if item.product.category else None,
+                "subcategory": item.product.subcategory.name if item.product.subcategory else None,
+                "subsubcategory": item.product.subsubcategory.name if item.product.subsubcategory else None,
                 "transaction_uuid": str(tx.transaction_number) if tx else None,
                 "order_date": tx.order_date.isoformat() if tx and tx.order_date else None,
                 "payment_method": tx.payment_method if tx else None,

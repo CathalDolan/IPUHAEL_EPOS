@@ -162,10 +162,10 @@ class LineItemV2Resource(resources.ModelResource):
             'transaction_number',
             'transaction__order_date',
             'transaction__staff_member__name',
-            'category__name',
-            'subcategory__name',
-            'subsubcategory__name',
-            # 'productId__id',
+            'product__category__name',
+            'product__subcategory__name',
+            'product__subsubcategory__name',
+            'product__id',
             'name',
             'quantity',
             'size',
@@ -199,6 +199,15 @@ class LineItemV2Admin(ExportActionMixin, admin.ModelAdmin):
         'payment_method',
         'payment_reason',
     )
+    def category(self, obj):
+        return obj.product.category
+    
+    def subcategory(self, obj):
+        return obj.product.subcategory
+    
+    def subsubcategory(self, obj):
+        return obj.product.subsubcategory
+    
     def order_date(self, obj):
         return obj.transaction.order_date
     
