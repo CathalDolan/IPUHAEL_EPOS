@@ -59,8 +59,16 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'import_export',
     'version_2',
+    'django_q',
 ]
 
+Q_CLUSTER = {
+    'name': 'myproject_q',
+    'workers': 4,
+    'orm': 'default',      # <-- REQUIRED: Tells Django-Q2 to use your Django database
+    'timeout': 60,         # <-- Max time a task is allowed to run (60 seconds)
+    'retry': 90,           # <-- REQUIRED: Must be strictly greater than timeout
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

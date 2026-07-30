@@ -73,7 +73,7 @@
                 </tr>
             </tbody>
         </table>
-
+        {% if takings %}
         <h3 class="table-name">Till Takings</h3>
         <table class="till-takings">
             <thead>
@@ -169,7 +169,9 @@
                 </tr>
             </tbody>
         </table>
-
+        {% else %}
+        <p>System generated email. No takings available.</p>
+        {% endif %}
         <h3 class="table-name">Vouchers</h3>
         <table class="Vouchers">
             <thead>

@@ -716,8 +716,6 @@ $(document).on("click", ".specials_option", function () {
     }
 });
 
-
-
 function applySpecials() {
     NEW_BASKET = JSON.parse(JSON.stringify(ALL_PRODUCTS));//https://www.freecodecamp.org/news/how-to-clone-an-array-in-javascript-1d3183468f6a/
     if(!$.isEmptyObject(LATEST_PRODUCT)) {
@@ -1326,6 +1324,10 @@ $(".finish-button").click(function () {
 $(".payment_button").click(function () {
     PAYMENT_METHOD = $(this).attr("data-payment_method");
     PAYMENT_REASON = $(this).attr("data-payment_reason");
+    console.log("parents = ", $(this).parents('.modal'));
+    $(this).parents('.modal').modal("hide");
+    
+    // $("#open_drink_modal").modal("hide");
     checkout();
 });
 

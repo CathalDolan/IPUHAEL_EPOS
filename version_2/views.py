@@ -990,7 +990,8 @@ def eod_takings(request):
                 try:
                     with open(css_path, "r", encoding="utf-8") as f:
                         css_content = f.read()
-                except FileNotFoundError:
+                except FileNotFoundError(e):
+                    print(f"email css file not found - {e}")
                     css_content = ""  # Fallback if file is missing during testing
 
                 email_context = {
@@ -1037,6 +1038,7 @@ def eod_takings(request):
                 email = EmailMessage(
                     subject=email_subject,
                     body=html_body_content,
+                    # to=["peterwkellett@gmail.com"],
                     to=["cathal@thepopupirishpub.com"],
                     cc=["peterwkellett@gmail.com"],
                 )
@@ -1335,13 +1337,13 @@ def export_data(request):
 def reports_v2(request):
     """A view to return the past orders page"""
     print("NOW = ", datetime.now())
-    entries = LineItemV2.objects.all().values(
+    entries = LineItemV2.objects.all().select_related("transaction", "product").values(
         "transaction__transaction_number",
         "transaction__order_date",
         # 'grand_totals',
-        "category__name",
-        "subcategory__name",
-        "subsubcategory__name",
+        "product__category__name",
+        "product__subcategory__name",
+        "product__subsubcategory__name",
         "name",
         "quantity",
         "size",
@@ -1391,9 +1393,7 @@ def reports_v2(request):
 
     if request.GET:
         print("YES GET")
-        from_date = datetime.strptime(
-            request.GET["from_date"], "%a, %d %b %Y %H:%M:%S %Z"
-        )
+        from_date = datetime.strptime(request.GET["from_date"], "%a, %d %b %Y %H:%M:%S %Z")
         to_date = datetime.strptime(request.GET["to_date"], "%a, %d %b %Y %H:%M:%S %Z")
         print("from_date = ", from_date)
         print("to_date = ", to_date)
