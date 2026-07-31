@@ -1518,7 +1518,7 @@ def daily_stock_take(trading_date):
         .annotate(total_volume_ml=Sum('line_volume'))
         
         # Optional: Sort by subcategory name, then by highest volume
-        .order_by('product__subcategory__name', '-total_volume_ml')
+        .order_by('total_volume_ml')
     )
     # print(drink_volumes)
     # 3. Print the report
