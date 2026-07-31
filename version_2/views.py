@@ -36,6 +36,7 @@ from .models import (
     Receipts,
 )
 
+
 def bulk_edit_items(request):
     # 1. Dynamically get all fields except 'id' AND the excluded products
     excluded_fields = {"id", "summer_product", "winter_product"}
@@ -112,7 +113,7 @@ def index_v2(request):
     #         product = None
 
     #     line_item.productId = product
-    #     line_item.save() 
+    #     line_item.save()
     try:
         event = Events.objects.get(date_from__lte=today, date_to__gte=today)
     except Events.DoesNotExist as e:
@@ -138,12 +139,14 @@ def index_v2(request):
             # print("Data 2 = ", data[2]) # DISCOUNTS
 
             try:
-                staff_member = Staff.objects.get(id=data[1]["Grand_Total"]["staff_member"])
+                staff_member = Staff.objects.get(
+                    id=data[1]["Grand_Total"]["staff_member"]
+                )
             except Exception as e:
-            # Catch-all for any other unexpected system errors (e.g., database connection down)
+                # Catch-all for any other unexpected system errors (e.g., database connection down)
                 error_msg = f"{str(e)}"
                 return JsonResponse({"error": error_msg}, status=500)
-            
+
             try:
                 for v in data[1].values():
                     new_grand_total = GrandTotalV2(
@@ -391,6 +394,7 @@ def index_v2(request):
 
 def past_orders_v2(request):
     print("PAST_ORDERS!!")
+    
     if request.GET:
         print("YES GET")
         day = int(request.GET["day"])
@@ -986,6 +990,13 @@ def eod_takings(request):
                     "reports_email.css",
                 )
 
+                # Get the volumes of each product
+                try:
+                    volumes = daily_stock_take(trading_date)
+                except:
+                    print("volumes except block = ",)
+                    volumes = {}
+                print("volumes = ", volumes)
                 # 2. Read the raw text inside the CSS file safely
                 try:
                     with open(css_path, "r", encoding="utf-8") as f:
@@ -1020,6 +1031,7 @@ def eod_takings(request):
                     "total_vouchers_count": total_vouchers_count,
                     "total_vouchers_recorded": total_vouchers_recorded,
                     "total_vouchers_value": total_vouchers_value,
+                    "volumes": volumes,
                     "css_styles": css_content,
                 }
 
@@ -1038,9 +1050,9 @@ def eod_takings(request):
                 email = EmailMessage(
                     subject=email_subject,
                     body=html_body_content,
-                    # to=["peterwkellett@gmail.com"],
-                    to=["cathal@thepopupirishpub.com"],
-                    cc=["peterwkellett@gmail.com"],
+                    to=["peterwkellett@gmail.com"],
+                    # to=["cathal@thepopupirishpub.com"],
+                    # cc=["peterwkellett@gmail.com"],
                 )
 
                 for image in receipt_image_files:
@@ -1109,7 +1121,6 @@ def eod_takings(request):
     context = {"takings_form": takings_form, "receipt_formset": receipt_formset}
 
     return render(request, "version_2/eod_takings.html", context)
-
 
 
 # Triggered when Eod_takings is triggered. It generates the excel spreadsheet.
@@ -1224,27 +1235,48 @@ def generate_epos_excel_buffer(trading_date):
     buffer.seek(0)
     return buffer
 
+
 # Used to extract the lineItems manually and save as download to the device.
 # Functionality currently broken
 def export_data(request):
     # 1. OPTIMIZATION: Deep prefetching to fully eliminate the N+1 problem
     # Replace 'category', 'subcategory', 'subsubcategory' with the actual FK field names on your Product model
-    orders = LineItemV2.objects.all().select_related(
-        "transaction", 
-        "product__category", 
-        "product__subcategory", 
-        "product__subsubcategory"
-    ).iterator(chunk_size=2000) # Prevents loading all Django objects into RAM at once
+    orders = (
+        LineItemV2.objects.all()
+        .select_related(
+            "transaction",
+            "product__category",
+            "product__subcategory",
+            "product__subsubcategory",
+        )
+        .iterator(chunk_size=2000)
+    )  # Prevents loading all Django objects into RAM at once
 
     # Lists for high-speed list comprehension appending
     data = {
-        "line_ID": [], "trans_ID": [], "order_date": [], "order_time": [],
-        "qty_of_products": [], "products_total": [], "pfand_total": [],
-        "total_due": [], "tendered_amount": [], "change_due": [],
-        "payment_method": [], "payment_reason": [], "staff_member": [],
-        "product_name": [], "product_size": [], "price_unit": [],
-        "quantity": [], "line_total": [], "discount": [],
-        "discount_type": [], "parent_cat": [], "sub_cat_1": [], "sub_cat_2": [],
+        "line_ID": [],
+        "trans_ID": [],
+        "order_date": [],
+        "order_time": [],
+        "qty_of_products": [],
+        "products_total": [],
+        "pfand_total": [],
+        "total_due": [],
+        "tendered_amount": [],
+        "change_due": [],
+        "payment_method": [],
+        "payment_reason": [],
+        "staff_member": [],
+        "product_name": [],
+        "product_size": [],
+        "price_unit": [],
+        "quantity": [],
+        "line_total": [],
+        "discount": [],
+        "discount_type": [],
+        "parent_cat": [],
+        "sub_cat_1": [],
+        "sub_cat_2": [],
     }
 
     for order in orders:
@@ -1270,19 +1302,25 @@ def export_data(request):
         data["price_unit"].append(order.price_unit)
         data["quantity"].append(order.quantity)
         data["line_total"].append(order.price_line_total)
-        data["discount"].append((order.price_unit * order.quantity) - order.price_line_total)
+        data["discount"].append(
+            (order.price_unit * order.quantity) - order.price_line_total
+        )
         data["discount_type"].append(order.discount)
 
         # Accessing nested relations safely (now cached by select_related)
         data["parent_cat"].append(str(prod.category) if prod and prod.category else "")
-        data["sub_cat_1"].append(str(prod.subcategory) if prod and prod.subcategory else "")
-        data["sub_cat_2"].append(str(prod.subsubcategory) if prod and prod.subsubcategory else "")
+        data["sub_cat_1"].append(
+            str(prod.subcategory) if prod and prod.subcategory else ""
+        )
+        data["sub_cat_2"].append(
+            str(prod.subsubcategory) if prod and prod.subsubcategory else ""
+        )
 
     df = pd.DataFrame(data)
 
     # 2. VECTORIZED CLEANING: Avoid `.apply()` loops over every cell
     for col in df.columns:
-        if df[col].dtype == 'object':
+        if df[col].dtype == "object":
             df[col] = df[col].astype(str)
 
     buffer = io.BytesIO()
@@ -1294,8 +1332,12 @@ def export_data(request):
         workbook = writer.book
         worksheet = writer.sheets["Transactions"]
 
-        header_fmt = workbook.add_format({"bold": True, "bg_color": "#D7E4BC", "align": "center", "border": 1})
-        merge_fmt = workbook.add_format({"valign": "vcenter", "align": "left", "border": 1})
+        header_fmt = workbook.add_format(
+            {"bold": True, "bg_color": "#D7E4BC", "align": "center", "border": 1}
+        )
+        merge_fmt = workbook.add_format(
+            {"valign": "vcenter", "align": "left", "border": 1}
+        )
 
         for col_num, value in enumerate(df.columns.values):
             worksheet.write(0, col_num, value, header_fmt)
@@ -1337,22 +1379,26 @@ def export_data(request):
 def reports_v2(request):
     """A view to return the past orders page"""
     print("NOW = ", datetime.now())
-    entries = LineItemV2.objects.all().select_related("transaction", "product").values(
-        "transaction__transaction_number",
-        "transaction__order_date",
-        # 'grand_totals',
-        "product__category__name",
-        "product__subcategory__name",
-        "product__subsubcategory__name",
-        "name",
-        "quantity",
-        "size",
-        "price_unit",
-        "price_line_total",
-        "discount",
-        "transaction__payment_method",
-        "transaction__payment_reason",
-        "transaction__staff_member",
+    entries = (
+        LineItemV2.objects.all()
+        .select_related("transaction", "product")
+        .values(
+            "transaction__transaction_number",
+            "transaction__order_date",
+            # 'grand_totals',
+            "product__category__name",
+            "product__subcategory__name",
+            "product__subsubcategory__name",
+            "name",
+            "quantity",
+            "size",
+            "price_unit",
+            "price_line_total",
+            "discount",
+            "transaction__payment_method",
+            "transaction__payment_reason",
+            "transaction__staff_member",
+        )
     )
     staff = []
     categories = []
@@ -1362,9 +1408,9 @@ def reports_v2(request):
     sizes = []
     payment = []
     # for entry in entries:
-        # print("entry = ", entry)
-        # if entry['category__name'] == 'food' and entry['discount'] != '':
-        #     print("entry = ", entry)
+    # print("entry = ", entry)
+    # if entry['category__name'] == 'food' and entry['discount'] != '':
+    #     print("entry = ", entry)
     #     if not entry["transaction__staff_member"] in staff:
     #         staff.append(entry["transaction__staff_member"])
     #     if not entry["category__name"] in categories:
@@ -1393,7 +1439,9 @@ def reports_v2(request):
 
     if request.GET:
         print("YES GET")
-        from_date = datetime.strptime(request.GET["from_date"], "%a, %d %b %Y %H:%M:%S %Z")
+        from_date = datetime.strptime(
+            request.GET["from_date"], "%a, %d %b %Y %H:%M:%S %Z"
+        )
         to_date = datetime.strptime(request.GET["to_date"], "%a, %d %b %Y %H:%M:%S %Z")
         print("from_date = ", from_date)
         print("to_date = ", to_date)
@@ -1432,3 +1480,51 @@ def reports_v2(request):
             "date_yesterday": date_yesterday,
         }
         return render(request, "version_2/reports_v2.html", context)
+
+
+from django.db.models import Subquery, OuterRef, F, Case, When, Value, DecimalField
+from django.db.models.functions import Coalesce
+
+
+def daily_stock_take(trading_date):
+    print("daily_stock_take")
+    # 1. Subquery to find the ml_value matching the LineItem's size text string and category
+    size_ml_subquery = Subquery(
+        ProductSizes.objects.filter(
+            size=OuterRef('size'),
+            category=OuterRef('product__category')
+        ).values('ml_value')[:1]
+    )
+
+    # 2. Filter, annotate individual line volumes, group by product details, and sum
+    drink_volumes = (
+        LineItemV2.objects
+        # Only look at line items that are drinks and have a valid product assigned
+        .filter(product__category__name__iexact='drink', product__isnull=False, transaction__order_date__date=trading_date)
+        
+        # Step A: Calculate individual line volumes
+        .annotate(size_ml=Coalesce(size_ml_subquery, 0))
+        .annotate(line_volume=F('quantity') * F('size_ml'))
+        
+        # Step B: Group by unique product details, including subcategory and subsubcategory names
+        .values(
+            'product_id', 
+            'product__name',
+            'product__subcategory__name',
+            'product__subsubcategory__name'
+        )
+        
+        # Step C: Aggregate total volume for each unique combination
+        .annotate(total_volume_ml=Sum('line_volume'))
+        
+        # Optional: Sort by subcategory name, then by highest volume
+        .order_by('product__subcategory__name', '-total_volume_ml')
+    )
+    # print(drink_volumes)
+    # 3. Print the report
+    for item in drink_volumes:
+        # Handle potentially null subsubcategories cleanly
+        sub_sub = item['product__subsubcategory__name'] or "N/A"
+        
+        print(item)
+    return drink_volumes

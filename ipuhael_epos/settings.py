@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'import_export',
     'version_2',
     'django_q',
+    'mathfilters',
 ]
 
 Q_CLUSTER = {

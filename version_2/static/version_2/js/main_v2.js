@@ -1292,6 +1292,8 @@ function resetAll() {
     BASKET_TOTAL = 0;
     TOTAL_DUE = 0;
     ALLOW_CHECKOUT = true;
+    PAYMENT_METHOD = "";
+    PAYMENT_REASON = "";
     $(".pfand-button").removeClass("selected");
     $(".basket").find('tbody').empty();
     $(".basket").hide();

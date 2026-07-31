@@ -53,6 +53,7 @@ class ProductSizesAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
         'size',
+        'ml_value',
         'category',
         'in_use',
     )

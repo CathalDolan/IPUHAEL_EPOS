@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load mathfilters %}
 <html>
 <head>
     <meta charset="utf-8">
@@ -73,8 +74,41 @@
                 </tr>
             </tbody>
         </table>
-        {% if takings %}
+        <h3 class="table-name">Daily Stock Volumes Used</h3>
+        <table class="product-volumes">
+            <thead>
+                <tr>
+                    <th class="text-center">Product</th>
+                    <th class="text-center">Volume (ml)</th>
+                    <th class="text-center">Vol (50L keg)</th>
+                    <th class="text-center">Vol (30L keg)</th>
+                    <th class="text-center">Vol (750ml bottle)</th>
+                </tr>
+            </thead>
+            <tbody class="fw-bold">
+                {% for item in volumes %}
+                <tr>
+                    <td class="text-center">{{ item.product__name }}</td>
+                    <td class="text-center">{{ item.total_volume_ml }}</td>
+                    {% if item.product__subcategory__name == 'draught' %}
+                    <td class="text-center">{{ item.total_volume_ml|div:"50000"|floatformat:"2"}}</td>
+                    <td class="text-center">{{ item.total_volume_ml|div:"30000"|floatformat:"2"}}</td>
+                    <td></td>
+                    {% else %}
+                    <td></td>
+                    <td></td>
+                    <td class="text-center">{{ item.total_volume_ml|div:"750"|floatformat:"2"}}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
         <h3 class="table-name">Till Takings</h3>
+        {% if takings %}
         <table class="till-takings">
             <thead>
                 {% comment %} <tr><th class="table-name">Till Takings</th></tr> {% endcomment %}

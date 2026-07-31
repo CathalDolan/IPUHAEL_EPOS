@@ -2,7 +2,7 @@
 from django.utils import timezone
 from .models import Events, LineItemV2
 import datetime
-from .views import generate_epos_excel_buffer, eod_takings
+from .views import generate_epos_excel_buffer, eod_takings, daily_stock_take
 
 from django.db.models import F, Sum, Count, Case, When, DecimalField, ExpressionWrapper
 from decimal import Decimal
@@ -412,6 +412,14 @@ def daily_3am_event_check():
         + vouchers["five_euro_off_vouchers_value"]
     )
 
+    # Get the volumes of each product
+    try:
+        volumes = daily_stock_take(trading_date)
+    except:
+        print("volumes except block = ",)
+        volumes = {}
+    print("volumes = ", volumes)
+
     # 1. Locate your CSS file path dynamically
     css_path = os.path.join(
         settings.BASE_DIR,
@@ -452,10 +460,11 @@ def daily_3am_event_check():
         "total_coins_value": "",
         "total_notes_value": "",
         "total_cash_takings": "",
-        "vouchers": "",
+        "vouchers": vouchers,
         "total_vouchers_count": "",
-        "total_vouchers_recorded": "",
-        "total_vouchers_value": "",
+        "total_vouchers_recorded": total_vouchers_recorded,
+        "total_vouchers_value": total_vouchers_value,
+        "volumes": volumes,
         "css_styles": css_content,
     }
 

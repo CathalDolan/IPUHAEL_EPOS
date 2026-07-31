@@ -28,6 +28,8 @@ class ProductSizes(models.Model):
                                blank=True,
                                on_delete=models.PROTECT)
     size=models.CharField(max_length=100)
+    ml_value = models.IntegerField(null=True,
+                                   blank=True)
     in_use = models.BooleanField(default=True)
 
     def __str__(self):
