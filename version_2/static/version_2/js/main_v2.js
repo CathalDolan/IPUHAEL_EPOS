@@ -1282,19 +1282,26 @@ $(".cancel-button").click(function () {
 });
 
 function resetAll() {
-    ALL_PRODUCTS = [];
-    LATEST_PRODUCT = {};
+    // GLOBAL VARS----------------------------
+    STAFF_ID = "";
     LATEST_PRODUCT_SELECTED = {};
+    LATEST_PRODUCT = {};
+    ALL_PRODUCTS = [];
     NEW_BASKET = [];
-    VOUCHERS = [];
     DISCOUNTS = [];
+    VOUCHERS = [];
     GLASSES_RETURNED = 0;
+    GLASSES_OUT = 0;
+    NO_PFAND = false;
     PFAND_TOTAL = 0;
     BASKET_TOTAL = 0;
     TOTAL_DUE = 0;
-    ALLOW_CHECKOUT = true;
+    CHANGE_DUE = 0;
+    PRODUCTS_QTY = 0;
+    Grand_Total = {};
     PAYMENT_METHOD = "";
     PAYMENT_REASON = "";
+    ALLOW_CHECKOUT = true;
     $(".pfand-button").removeClass("selected");
     $(".basket").find('tbody').empty();
     $(".basket").hide();
