@@ -1285,6 +1285,7 @@ function resetAll() {
     ALL_PRODUCTS = [];
     LATEST_PRODUCT = {};
     LATEST_PRODUCT_SELECTED = {};
+    NEW_BASKET = [];
     VOUCHERS = [];
     DISCOUNTS = [];
     GLASSES_RETURNED = 0;
