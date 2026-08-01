@@ -238,6 +238,7 @@ function getOrders() {
               <td class="no-border-top no-border-bottom"></td>
               <td class="no-border-top no-border-bottom"></td>
               <td class="no-border-top no-border-bottom"></td>
+              <td class="no-border-top no-border-bottom"></td>
               <td class="no-border-bottom left-align">${orders[i]['name'] }</td>
               <td class="">${orders[i]['quantity'] }</td>
               <td class="left-align">${orders[i]['size'] }</td>
