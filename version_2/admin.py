@@ -184,6 +184,7 @@ class LineItemV2Admin(ExportActionMixin, admin.ModelAdmin):
     # readonly_fields = ('display_uuid',)
     list_display = (
         # 'display_uuid',
+        'pk',
         'transaction',
         'order_date',
         'staff_member',
