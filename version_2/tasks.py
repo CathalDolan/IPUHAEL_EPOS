@@ -470,7 +470,7 @@ def daily_3am_event_check():
 
     # Compile header metadata fields
     t_date_str = trading_date.strftime("%d-%m-%Y")
-    email_subject = f"Daily Takings Summary - {event.name if event else 'No Event'} - {t_date_str}"
+    email_subject = f"Automated Daily Takings Summary - {event.name if event else 'No Event'} - {t_date_str}"
     # 1 Render document layout template to string structure
     html_body_content = render_to_string(
         "version_2/reports_email.html", email_context
@@ -479,9 +479,9 @@ def daily_3am_event_check():
     email = EmailMessage(
         subject=email_subject,
         body=html_body_content,
-        to=["peterwkellett@gmail.com"],
-        # to=["cathal@thepopupirishpub.com"],
-        # cc=["peterwkellett@gmail.com"],
+        # to=["peterwkellett@gmail.com"],
+        to=["cathal@thepopupirishpub.com"],
+        cc=["peterwkellett@gmail.com"],
     )
     
     # 3. CRITICAL: Inform email software (like Gmail) to render this as an HTML page, not plain text [1]
