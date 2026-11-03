@@ -53,6 +53,12 @@ window.onload = function () {
     $(".toast").toast("show");
 }
 
+
+var outerHeight = window.outerHeight
+var innerHeight = window.innerHeight
+$('.outerHeight').text(outerHeight)
+$('.innerHeight').text(innerHeight)
+
 function getOrdinal(n) {
     let ord = 'th';
   
@@ -338,6 +344,9 @@ $(document).on("click", ".decrement", function() {
 
 // Remove item from basket
 $(document).on("click", ".remove-product", function() {
+    if($(this).attr('data-discount_applied') == "Pfand Shot" || $(this).attr('data-discount_applied') == "5 Shot Special") {
+        $('.product-button').removeClass('disabled')
+    }
     if($(this).parent().hasClass('latest-product')) {
         // if($(this).attr("data-discount_applied") == "Pfand Shot") {
         //     GLASSES_RETURNED -= Number($(this).attr("data-qty"));
@@ -1303,6 +1312,7 @@ function resetAll() {
     PAYMENT_REASON = "";
     ALLOW_CHECKOUT = true;
     $(".pfand-button").removeClass("selected");
+    $(".product-button").removeClass("disabled")
     $(".basket").find('tbody').empty();
     $(".basket").hide();
     $(".discounts").find('tbody').empty();
