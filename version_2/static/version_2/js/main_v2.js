@@ -19,10 +19,10 @@ window.onload = function () {
     if (till_display == null) {
         till_display = "bar";
     }
-    $("[data-bar_product=true]").parent().addClass("omit");
-    $("[data-kitchen_product=true]").parent().addClass("omit");
+    $("[data-bar_product='True']").parent().addClass("omit");
+    $("[data-kitchen_product='True']").parent().addClass("omit");
     // $("[data-gift_product]").parent().addClass("omit");
-    
+    console.log($('[data-kitchen_product="True"]'))
     $(`[data-${till_display}_product=True]`).parent().removeClass("omit");
     $(`#${till_display}-products`).addClass('selected');
 
