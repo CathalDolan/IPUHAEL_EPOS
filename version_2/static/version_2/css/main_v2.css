@@ -27,8 +27,8 @@
 .food-measurement-row .col-2,
 .gift-measurement-row .col,
 .pfand-button-row .col {
-    padding: 2px;
-    margin-bottom: 10px;
+    padding: 3px;
+    margin-bottom: 5px;
 }
 
 button.disabled span {
@@ -132,6 +132,11 @@ button.gift-measure-button.disabled::before {
 .food-products-row .col-2,
 .gift-products-row .col-2 {
     padding: 3px;
+    margin-bottom: 3px;
+}
+
+.gift.product-button {
+    /* padding: 3px; */
     margin-bottom: 7px;
 }
 
@@ -1070,11 +1075,12 @@ table {
 
 .checkout {
     background-color: #211f1f;
+    margin-bottom: 5px;
 }
 
 .checkout .col-3 {
-    padding: 0 3px;
-    margin-bottom: 15px;
+    padding: 3px;
+    /* margin-bottom: 15px; */
 }
 
 .checkout-button {
