@@ -209,6 +209,73 @@
         </div>
     </div>
 </div>
+
+<!-- The Gifts Modal -->
+<div class="modal" id="giftsModal">
+    <div class="modal-dialog" aria-label="Aria gifts modal">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Gifts</h5>
+                <div
+                    type="button"
+                    class=""
+                    data-bs-dismiss="modal"
+                    aria-label="Aria gifts modal dismiss">
+                    <i class="fa-solid fa-x"></i>
+                </div>
+                    
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    {% for item in gifts %}
+                    <div class="col-4">
+                        <button
+                            class="{{item.category}} {{item.subcategory}} button product-button"
+                            id="{{item.id}}"
+                            data-product_id="{{item.id}}"
+                            data-pfand="{{item.pfand}}"
+                            data-category="{{item.category}}"
+                            data-subcategory="{{item.subcategory}}"
+                            data-subsubcategory="{{item.subsubcategory}}"
+                            data-name="{{item.name}}"
+                            data-abbr_name="{{item.abbr_name}}"
+                            data-default_size="{{item.default_size}}"
+                            data-no_size="{{item.price_no_size}}"
+                            data-cloth_xs="{{item.cloth_xs}}"
+                            data-cloth_s="{{item.cloth_s}}"
+                            data-cloth_m="{{item.cloth_m}}"
+                            data-cloth_l="{{item.cloth_l}}"
+                            data-cloth_xl="{{item.cloth_xl}}"
+                            data-cloth_2xl="{{item.cloth_2xl}}"
+                            data-cloth_3xl="{{item.cloth_3xl}}"
+                            data-bar_product="{{item.bar_product}}"
+                            data-kitchen_product="{{item.kitchen_product}}"
+                            data-gift_product="{{item.gift_product}}"
+                            aria-label="Aria {{item.name}}">
+                            <span class="text">{{item.abbr_name}}</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="button"
+                    data-bs-dismiss="modal"
+                    aria-label="Aria gifts modal close">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid main-container">
     <div class="row">
         <!--  Left Side of till with product buttons  -->
@@ -833,7 +900,8 @@
                 </div> -->
             </div>
             
-            <div class="row gift-products-row">
+            <!--REMOVED 3/11/2026 - removed gift products row, moved gifts to a modal-->
+            {% comment %} <div class="row gift-products-row">
                 {% for item in gifts %}
                     <div class="col-2">
                         <button
@@ -863,10 +931,11 @@
                         </button>
                     </div>
                 {% endfor %}
-            </div>
+            </div> {% endcomment %}
 
+            <!--REMOVED 3/11/2026 - Removed in order to reduce page overflow-->
             <!--  Food Sizes, Gifts, Admin & Previous Drinks Buttons  -->
-            <div class="global-buttons">
+            {% comment %} <div class="global-buttons">
                 <!-- Empty Button -->
                  <div class="row product-selection-row">
                     <div class="col-3">
@@ -904,7 +973,7 @@
                     </div>
                  </div>
                  
-            </div>
+            </div> {% endcomment %}
             
         </div>
         <!--  Right Side of till with product buttons  -->
@@ -1693,6 +1762,16 @@
                     </button>
                 </div>
                 
+                <!-- The gifts Button -->
+                <div class="col-3">
+                    <button
+                        class="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#giftsModal"
+                        aria-label="Aria gifts modal open">
+                        Gifts
+                    </button>
+                </div>
             </div>
         </div>
     </div>

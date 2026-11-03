@@ -19,9 +19,9 @@ window.onload = function () {
     if (till_display == null) {
         till_display = "bar";
     }
-    $("[data-bar_product]").parent().addClass("omit");
-    $("[data-kitchen_product]").parent().addClass("omit");
-    $("[data-gift_product]").parent().addClass("omit");
+    $("[data-bar_product=true]").parent().addClass("omit");
+    $("[data-kitchen_product=true]").parent().addClass("omit");
+    // $("[data-gift_product]").parent().addClass("omit");
     
     $(`[data-${till_display}_product=True]`).parent().removeClass("omit");
     $(`#${till_display}-products`).addClass('selected');
@@ -1168,27 +1168,28 @@ function update_basket() {
         
     })
 
-    if (DISCOUNTS.length != 0) {
-        $('.discounts').show()
-        $('.discounts').find('tbody').empty();
-        $(DISCOUNTS).each(function (index, item) {
-            $(".discounts").find('tbody').prepend(
-                `<tr>
-                    <td>${item["product"]}</td>
-                    <td>${item["size"]}</td>
-                    <td>${item["qty"]}</td>
-                    <td>${item["total_discount"] == "" ? "" : item["total_discount"].toFixed(2)}</td>
-                    <td>${item["special"]}</td>
-                    <td data-status=${item.status}>${item.status}</td>
-                    <td class="remove-special" data-special="${item.special}"><i class="fas fa-trash-alt"></i></td>
-                </tr>
-                `
-            );
-        });
-    }
-    else {
-        $('.discounts').hide();
-    }
+    // REMOVED 3/11/2026 - To reduce the basket space due to page overflow.
+    // if (DISCOUNTS.length != 0) {
+    //     $('.discounts').show()
+    //     $('.discounts').find('tbody').empty();
+    //     $(DISCOUNTS).each(function (index, item) {
+    //         $(".discounts").find('tbody').prepend(
+    //             `<tr>
+    //                 <td>${item["product"]}</td>
+    //                 <td>${item["size"]}</td>
+    //                 <td>${item["qty"]}</td>
+    //                 <td>${item["total_discount"] == "" ? "" : item["total_discount"].toFixed(2)}</td>
+    //                 <td>${item["special"]}</td>
+    //                 <td data-status=${item.status}>${item.status}</td>
+    //                 <td class="remove-special" data-special="${item.special}"><i class="fas fa-trash-alt"></i></td>
+    //             </tr>
+    //             `
+    //         );
+    //     });
+    // }
+    // else {
+    //     $('.discounts').hide();
+    // }
     basketGrandTotals();
 }
 

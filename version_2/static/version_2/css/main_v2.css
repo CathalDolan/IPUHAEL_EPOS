@@ -36,7 +36,7 @@ button.disabled span {
 }
 
 .button {
-    height: 55px;
+    height: 50px;
     touch-action: manipulation;
     font-weight: 700;
     text-transform: uppercase;
@@ -719,11 +719,13 @@ table {
 }
 
 .staff-table {
+    position: absolute;
     border: 3px solid gold;
     text-align: center;
     font-weight: 600;
-    height: 320px;
-    overflow-y: scroll;    
+    height: 220px;
+    overflow-y: scroll; 
+    background-color: #000;   
 }
 
 .staff-table .row {
@@ -772,7 +774,7 @@ table {
     /* position:relative; */
     display: flex;
     flex-direction: column;
-    height: 300px;
+    /* height: 300px; */
     /* display: none; */
     color: #fff;
     justify-content: center;
@@ -812,6 +814,7 @@ table {
     display: none;
     position: relative; 
     box-sizing: border-box;
+    font-size: .8em;
 }
 
 .basket th {
@@ -819,7 +822,6 @@ table {
     top: 0;  
     width: 10%;
     color: gold;
-    /* font-size: .8em; */
     background-color: #232323;
     border-bottom: 1px solid gold;
     border-top: 1px solid gold;
@@ -892,7 +894,7 @@ table {
 }
 
 .basket .basket-content {
-    max-height: 300px;
+    max-height: 120px;
     overflow-y: auto; /* 'auto' only shows scrollbars when needed */
     width: 100%;
 }
@@ -915,13 +917,13 @@ table {
     max-height: 60px;
     overflow-y: scroll;
     min-height: 50px;
+    font-size: .8em;
 }
 
 .discounts th {
     position: sticky;
     top: 0;
     color: gold;
-    /* font-size: .8em; */
     background-color: #232323;
     border-bottom: 1px solid gold;
     border-top: 1px solid gold;
@@ -1024,7 +1026,7 @@ table {
     background-color: #211f1f;
     color: #fff;
     text-transform: uppercase;
-    /* font-size: .85em; */
+    font-size: .8em;
 }
 
 .grand-totals-labels,
