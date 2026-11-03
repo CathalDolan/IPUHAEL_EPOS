@@ -56,8 +56,10 @@ window.onload = function () {
 
 var outerHeight = window.outerHeight
 var innerHeight = window.innerHeight
+var innerWidth = window.innerWidth
 $('.outerHeight').text(outerHeight)
 $('.innerHeight').text(innerHeight)
+$('.innerWidth').text(innerWidth)
 
 function getOrdinal(n) {
     let ord = 'th';
