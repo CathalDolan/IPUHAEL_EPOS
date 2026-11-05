@@ -1,6 +1,6 @@
 # myapp/tasks.py
 from django.utils import timezone
-from .models import Events, LineItemV2
+from .models import Events, LineItemV2, GrandTotalV2
 import datetime
 from .views import generate_epos_excel_buffer, eod_takings, daily_stock_take
 
@@ -45,6 +45,10 @@ def daily_3am_event_check():
         output_field=DecimalField(max_digits=10, decimal_places=2),
     )
 
+    pfand_balance = (
+        GrandTotalV2.objects.filter(order_date__date=trading_date).aggregate(Sum("pfand_total"))
+    )
+    
     drinks_report = (
         LineItemV2.objects.filter(transaction__order_date__date=trading_date)
         .filter(product__category__name="drink")
@@ -439,6 +443,7 @@ def daily_3am_event_check():
         css_content = ""  # Fallback if file is missing during testing
 
     email_context = {
+        "pfand_balance": pfand_balance,
         "takings": "",
         "receipts": "",
         "event": event,

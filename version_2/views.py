@@ -97,6 +97,10 @@ def index_v2(request):
     print("index_v2")
     user = request.user
     today = date.today()
+    pfand_balance = (
+            GrandTotalV2.objects.all().aggregate(Sum("pfand_total"))
+        )
+    print("pfand_balance = ", pfand_balance["pfand_total__sum"])
     # tempEvent = Events.objects.get(name="Kieler Woche")
     # print("tempEvent = ", tempEvent)
     # lineItems = LineItemV2.objects.all()
@@ -504,6 +508,10 @@ def eod_takings(request):
             (F("quantity") * F("price_unit")) - F("price_line_total"),
             output_field=DecimalField(max_digits=10, decimal_places=2),
         )
+
+        pfand_balance = (
+                GrandTotalV2.objects.filter(order_date__date=trading_date).aggregate(Sum("pfand_total"))
+            )
 
         drinks_report = (
             LineItemV2.objects.filter(transaction__order_date__date=trading_date)
@@ -1006,6 +1014,7 @@ def eod_takings(request):
                     css_content = ""  # Fallback if file is missing during testing
 
                 email_context = {
+                    "pfand_balance": pfand_balance,
                     "takings": takings_instance,
                     "receipts": saved_receipt_instances,
                     "event": event,
