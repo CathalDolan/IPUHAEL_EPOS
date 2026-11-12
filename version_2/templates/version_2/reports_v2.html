@@ -5,6 +5,9 @@
 <!-- 1. DC.js CSS Stylesheet -->
 <!-- 1. Load DC Stylesheets first in your head section -->
 {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'version_2/css/dc.min.css' %}" /> {% endcomment %}
+<!-- Fixed dc.css link -->
+{% comment %} <link rel="stylesheet" href="https://cloudflare.com" integrity="sha512-C8Z6Z6g9S7vVqem6oR8V4by60zI9X380A9sS5VfQ3fO5fWk1CtXhRjDeS7m6V4h9/4cKlWfXFm5N19Dqf0e7fA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> {% endcomment %}
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/4.2.7/style/dc.css" integrity="sha512-ZCK4qcVpG4m3G6VG2CWs5Tl870Xn9xhT3SWJLmbsbTfU9/hzyZDeCzyLpjsCc27YxlDi19URyKlY+h4cQIifig==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!--My CSS stylesheet-->
 <link rel="stylesheet" href="{% static 'version_2/css/reports_v2.css' %}">
@@ -14,161 +17,115 @@
 
 {% block content %}
 <!-- The display block and position attributes force the chart to stay in bounds -->
-<div class="container-fluid mt-2">
-    <!-- Top Row: Dynamic Summary Counters -->
-    <div class="row text-center">
-        <div class="col-md-12">
-            <div id="dc-data-count" class="alert alert-info py-2">
-                <span class="filter-count fw-bold">0</span> records selected out of 
-                <span class="total-count fw-bold">0</span> | Total Revenue: 
-                <span id="dc-revenue-counter" class="fw-bold">€0.00</span>
-            </div>
+<div class="container mt-2">
+    <div class="row dashboard-container">
+        <header>
+            <h1>Sales & Operations Analytics</h1>
+            <button class="reset-all" onclick="dc.filterAll(); dc.renderAll();">Reset All Filters</button>
+        </header>
+    </div> 
+    <!-- Dropdown Control Filters -->
+    <div class="filter-panel">
+        <div class="filter-group">
+            <label>Festival / Event</label>
+            <div id="filter-event" class="dc-chart"></div>
+        </div>
+        <div class="filter-group">
+            <label>Payment Method</label>
+            <div id="filter-payment" class="dc-chart"></div>
+        </div>
+        <div class="filter-group">
+            <label>Staff Member</label>
+            <div id="filter-staff" class="dc-chart"></div>
+        </div>
+        <div class="filter-group">
+            <label>Category</label>
+            <div id="filter-category" class="dc-chart"></div>
         </div>
     </div>
-    <div class="row filters-row">
-        <div class="col-md-12">
-            <div class="bg-white p-3 border rounded shadow-sm d-flex align-items-center gap-3 flex-wrap">
-                
-                <div class="d-flex align-items-center gap-2">
-                    <label for="date-from" class="m-0 text-muted small">From:</label>
-                    <input type="date" id="date-from" class="form-control form-control-sm" style="max-width: 160px;">
-                </div>
+       
     
-                <div class="d-flex align-items-center gap-2">
-                    <label for="date-to" class="m-0 text-muted small">To:</label>
-                    <input type="date" id="date-to" class="form-control form-control-sm" style="max-width: 160px;">
-                </div>
+        <!-- KPI Summary Row -->
+    <div class="kpi-container">
+        <h3>Overview</h3>
+        <div class="kpi-row">
+            
+            <div class="kpi-card">
+                <h3>Cash Revenue</h3>
+                <div id="kpi-cash" class="kpi-value"></div>
+            </div>
+            <div class="kpi-card">
+                <h3>Card Revenue</h3>
+                <div id="kpi-card" class="kpi-value"></div>
+            </div>
+            <div class="kpi-card">
+                <h3>Discounts Given</h3>
+                <div id="kpi-discount" class="kpi-value"></div>
+            </div>
+            <div class="kpi-card">
+                <h3>Complimentary</h3>
+                <div id="kpi-complimentary" class="kpi-value"></div>
+            </div>
+            <div class="kpi-card">
+                <h3>Waste</h3>
+                <div id="kpi-waste" class="kpi-value"></div>
+            </div>
+            <div class="kpi-card">
+                <h3>Items Sold</h3>
+                <div id="kpi-qty" class="kpi-value"></div>
+            </div>
+            
+        </div>
+    </div>
     
+    <div class="row daily-sales">
+        <!-- Timeline Chart Block -->
+        <div class="chart-card">
+            <h3>Daily Sales Volume Pattern</h3>
+            <div id="chart-timeline" style="width: 100%;"></div>
+        </div>
+    </div>
+        
+    <div class="row event-performance-table">
+        <!-- Breakdown Analysis Matrices (Data Tables) -->
+        <div class="chart-card">
+            <h3>Performance by Event Location</h3>
+            <table id="table-events">
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Qty</th>
+                        <th>Cash</th>
+                        <th>Card</th>
+                        <th>Discounted</th>
+                        <th>Complimentary</th>
+                        <th>Waste</th>
 
-                <!-- 🚀 Dropdown 1: Category Filter -->
-                <div class="dropdown">
-                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle py-1" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                        Filter Category
-                    </button>
-                    <ul class="dropdown-menu p-3" aria-labelledby="categoryDropdown" id="category-filter-list" style="min-width: 200px; max-height: 300px; overflow-y: auto;">
-                        <!-- JS dynamically populates checkboxes here -->
-                    </ul>
-                </div>
-
-                <!-- 🚀 Dropdown 2: Payment Method Filter -->
-                <div class="dropdown">
-                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle py-1" type="button" id="paymentDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                        Filter Payment
-                    </button>
-                    <ul class="dropdown-menu p-3" aria-labelledby="paymentDropdown" id="payment-filter-list" style="min-width: 200px; max-height: 300px; overflow-y: auto;">
-                        <!-- JS dynamically populates checkboxes here -->
-                    </ul>
-                </div>
-                <!-- 🚀 Dropdown 3: Event Filter -->
-                <div class="dropdown">
-                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle py-1" type="button" id="eventDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                        Filter Event
-                    </button>
-                    <ul class="dropdown-menu p-3" aria-labelledby="eventDropdown" id="event-filter-list" style="min-width: 200px; max-height: 300px; overflow-y: auto;">
-                        <!-- JS dynamically populates checkboxes here -->
-                    </ul>
-                </div>
-                
-                <button id="clear-date-filter" class="btn btn-sm btn-outline-secondary py-1">Clear Range</button>
-            </div>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 
-    <!-- Table Row: Category Financial Performance Matrix -->
-    <div class="row mt-4 mb-5">
-        <div class="col-md-12">
-            <div class="bg-white p-3 border rounded shadow-sm">
-                <h6 class="fw-bold text-secondary mb-3">Category Performance Matrix</h6>
-                <div class="table-responsive">
-                    <table class="table table-sm table-hover table-bordered align-middle m-0" id="financial-matrix-table">
-                        <thead class="table-light text-center small text-uppercase">
-                            <tr>
-                                <th class="text-start">Category</th>
-                                <th>Items Sold</th>
-                                <th>Cash Revenue</th>
-                                <th>Card Revenue</th>
-                                <th>Discounted Value</th>
-                                <th>Waste Value</th>
-                                <th>Complimentary Value</th>
-                            </tr>
-                        </thead>
-                        <tbody class="small text-end" id="financial-matrix-body">
-                            <!-- JS dynamically injects calculated matrix aggregates here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="row product-performance-table">
+        <div class="chart-card">
+            <h3>Performance by Product</h3>
+            <table id="table-products">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Cash</th>
+                        <th>Card</th>
+                        <th>Discounted</th>
+                        <th>Complimentary</th>
+                        <th>Waste</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
-
-    <!-- Product size table: Product Size Performance Matrix -->
-    <div class="row mt-4 mb-5">
-        <div class="col-md-12">
-            <div class="bg-white p-3 border rounded shadow-sm">
-                <h6 class="fw-bold text-secondary mb-3">Product Size Performance Matrix</h6>
-                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-                    <table class="table table-sm table-hover table-bordered align-middle m-0" id="size-matrix-table">
-                        <thead class="table-light text-center small text-uppercase sticky-top">
-                            <tr>
-                                <th class="text-start">Product Item</th>
-                                <th>Size</th>
-                                <th>Items Sold</th>
-                                <th>Cash Revenue</th>
-                                <th>Card Revenue</th>
-                                <th>Discounted Vol.</th>
-                                <th>Waste Value</th>
-                                <th>Complimentary Vol.</th>
-                            </tr>
-                        </thead>
-                        <tbody class="small text-end" id="size-matrix-body">
-                            <!-- JS dynamically injects calculated product size aggregates here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Middle Row: Interactive Graphic Charts -->
-    <div class="row">
-        <!-- Hourly Linear Bar Chart -->
-        <!-- Hourly Chart Box Container -->
-        <div class="col-md-8 mb-4">
-            <div class="hourly-sales-wrapper bg-white p-3 border rounded shadow-sm" style="width: 100%; overflow: hidden;">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="m-0 fw-bold text-secondary">Hourly Sales Footprint</h6>
-                    <a class="reset btn btn-sm btn-outline-danger py-0" href="javascript:hourlyChart.filterAll();dc.redrawAll();" style="display: none;">Reset Filter</a>
-                </div>
-                <!-- 💡 This is the actual container target where DC.js injects graphics -->
-                <div id="dc-hourly-chart" style="width: 100%;"></div>
-            </div>
-        </div>
-
-        <!-- Category Structural Row Chart -->
-        <!-- Category Chart Box Container -->
-        <div class="col-md-4 mb-4">
-            <!-- Main Outer Card Wrapper -->
-            <div class="bg-white p-3 border rounded shadow-sm mb-4" style="width: 100%;">
-                <!-- Header Controls Row (Completely separated from the chart engine) -->
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="m-0 fw-bold text-secondary">Revenue by Category</h6>
-                    <a class="reset btn btn-sm btn-outline-danger py-0" href="javascript:categoryChart.filterAll();dc.redrawAll();" style="display: none;">Reset Filter</a>
-                </div>
-                <div class="clearfix"></div>
-
-                <!-- 💡 FIXED INNER TARGET: Move the ID here so DC.js leaves your headers alone! -->
-                <div id="dc-category-chart" style="width: 100%; height: 380px; overflow: hidden;"></div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div id="dc-sunburst-chart" class="chart-box">
-                <strong>Product Size Breakdown</strong>
-                <a class="reset" href="javascript:sunburstChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
+        
 </div>
 
 
@@ -187,6 +144,19 @@
 
 {% block post_load_js %}
 {{ block.super }}
+
+<!-- 1. D3.js (Factual Baseline for Rendering) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" integrity="sha512-vc58qvvBdrDR4etbxMdlTt4GBQk1qjvyORR2nrsPsFPyrs+/u5c3+1Ct6upOgdZoIl7eq6k3a1UPDSNAQi/32A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- 2. CROSSFILTER2 (Updated modern fork required for dc.js v4+) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.js" integrity="sha512-AxVvqPXa38W1cR1DEcxNLBO+tI52iSuWZSnMR1yqRv9aIEPh6s2pIhCN64XLaxgaL5BTlPNB3xSb7XAv1I7n3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- 3. dc.js Core Wrapper Layer -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dc/4.2.7/dc.min.js" integrity="sha512-vIRU1/ofrqZ6nA3aOsDQf8kiJnAHnLrzaDh4ob8yBcJNry7Czhb8mdKIP+p8y7ixiNbT/As1Oii9IVk+ohSFiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- 4. Optional Extra Analytics Layer (Your Local Plotly Asset) -->
+<script src="{% static 'version_2/js/plotly-3.6.0.min.js' %}"></script>
+
 <!-- Load your custom script and dynamically provide the static file path -->
 <script 
     src="{% static 'version_2/js/reports_v2.js' %}" 
@@ -194,31 +164,5 @@
     defer
     data-json-url="{% static 'version_2/data/historical_data.json' %}">
 </script>
-<!-- Standalone Chart.js v4 build (No modules or missing dependency errors) -->
-<!-- Standalone Chart.js v4 via jsDelivr CDN -->
-<!-- Load directly from your own project directory to eliminate all CORS risks -->
-{% comment %} <script src="{% static 'version_2/js/chart.umd.min.js' %}"></script> {% endcomment %}
-<!--D£-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" integrity="sha512-vc58qvvBdrDR4etbxMdlTt4GBQk1qjvyORR2nrsPsFPyrs+/u5c3+1Ct6upOgdZoIl7eq6k3a1UPDSNAQi/32A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<!-- 3. Core Framework Mathematics Dependencies (Order Matters!) -->
-{% comment %} <script src="{% static 'version_2/js/d3.min.js' %}"></script> {% endcomment %}
-<!--CROSSFILTER-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js" integrity="sha512-nlO6OGj6wb0uu/thpSry7qFal63hfhCLExpWxYomYB3tBznqWmKggsDHNHSLjnVaoade9tv/rErN498NSzwBnA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-{% comment %} <script src="{% static 'version_2/js/crossfilter.min.js' %}"></script> {% endcomment %}
-<!--DC-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dc/4.2.7/dc.min.js" integrity="sha512-vIRU1/ofrqZ6nA3aOsDQf8kiJnAHnLrzaDh4ob8yBcJNry7Czhb8mdKIP+p8y7ixiNbT/As1Oii9IVk+ohSFiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<!-- 4. Rendering Analytics Engine Layer -->
-{% comment %} <script src="{% static 'version_2/js/dc.min.js' %}"></script> {% endcomment %}
-
-
-
-
-
-<!-- Load Local Libraries -->
-<script src="{% static 'version_2/js/plotly-3.6.0.min.js' %}"></script>
-
-
-<!-- Your Custom JavaScript Logic -->
-<script src="{% static 'version_2/js/reports_v2.js' %}"></script>
 
 {% endblock %}
