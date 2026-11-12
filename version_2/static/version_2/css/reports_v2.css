@@ -125,6 +125,12 @@ table {
   margin-top: 10px;
   font-size: 13px;
 }
+th:not(:first-child) {
+  text-align: center;
+}
+td:not(:first-child) {
+  text-align: center;
+}
 th, td {
   padding: 10px;
   text-align: left;
