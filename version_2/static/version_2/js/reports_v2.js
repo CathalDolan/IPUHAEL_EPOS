@@ -185,7 +185,8 @@ function renderDashboardWithData(orderData) {
 
 	// Dimensions
 	const eventDim = ndx.dimension((d) => d.event_name || "Missing Event");
-	// console.log("eventDim = ", eventDim)
+	// Dimension 2: Dedicated strictly to the Event Dropdown Filter
+	const eventFilterDim = ndx.dimension((d) => d.event_name || "Missing Event");
 	const paymentDim = ndx.dimension((d) => d.payment_method || "Unspecified");
 	const staffDim = ndx.dimension((d) => d.staff_member || "Unknown");
 	const categoryDim = ndx.dimension((d) => d.category || "Uncategorized");
@@ -254,7 +255,13 @@ function renderDashboardWithData(orderData) {
 			buildMultiMetricReducer().remove,
 			buildMultiMetricReducer().init
 		);
-
+		// 1. Create a lightweight wrapper that filters out 0-quantity rows
+	const activeEventGroup = {
+		all: () => eventGroupMetrics.all().filter((d) => d.value.qty > 0),
+		top: (n) => eventGroupMetrics.top(n).filter((d) => d.value.qty > 0),
+		bottom: (n) => eventGroupMetrics.top(n).filter((d) => d.value.qty > 0)
+	};
+	
 	// timelineVolumeGroup = hourDim.group().reduceSum((d) => d.quantity);
 
 	// 1. KPI Value Assignments
@@ -285,8 +292,8 @@ function renderDashboardWithData(orderData) {
 
 	// 2. Dropdowns Setup
 	new dc.SelectMenu("#filter-event")
-		.dimension(eventDim)
-		.group(eventDim.group().reduceCount())
+		.dimension(eventFilterDim)
+		.group(eventFilterDim.group().reduceCount())
 		.title((d) => d.key)
 		.promptText("All Events");
 	new dc.SelectMenu("#filter-payment")
@@ -327,7 +334,7 @@ function renderDashboardWithData(orderData) {
 
 	// 4. Matrix Breakdown Tables
 	new dc.DataTable("#table-events")
-		.dimension(eventGroupMetrics)
+		.dimension(activeEventGroup)
 		.group(() => "Event Aggregates")
 		.size(Infinity)
 		.columns([
