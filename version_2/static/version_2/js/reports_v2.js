@@ -193,10 +193,20 @@ function renderDashboardWithData(orderData) {
 	const productDim = ndx.dimension((d) => d.name || "Unknown Item");
 	// New stable setup:
 	// Grouping by rolling hour windows using the fast primitive timestamp integer
-	const hourDim = ndx.dimension(d => d3.utcDay(d.timestampObj).getTime());
+	const hourDim = ndx.dimension(d => d3.utcHour(d.timestampObj).getTime());
 
 	const timelineVolumeGroup = hourDim.group().reduceSum(d => d.price_line_total);
 	// Isolate Accumulators (The custom reducers preventing dimension clashing)
+
+	// Wrapper that strips out 0-value days/hours so elasticX knows the true active date range
+	const activeTimelineGroup = {
+		all: () => {
+			const nonZero = timelineVolumeGroup.all().filter((d) => d.value > 0);
+			// Fallback to full list if filters return 0 results so the chart doesn't crash
+			return nonZero.length > 0 ? nonZero : timelineVolumeGroup.all();
+		}
+	};
+
 	function buildMultiMetricReducer() {
 		return {
 			add: (p, v) => {
@@ -262,7 +272,6 @@ function renderDashboardWithData(orderData) {
 		bottom: (n) => eventGroupMetrics.top(n).filter((d) => d.value.qty > 0)
 	};
 	
-	// timelineVolumeGroup = hourDim.group().reduceSum((d) => d.quantity);
 
 	// 1. KPI Value Assignments
 	new dc.NumberDisplay("#kpi-cash")
@@ -318,20 +327,96 @@ function renderDashboardWithData(orderData) {
 	const minDateEpoch = hourDim.bottom(1)[0].timestampEpoch;
 	const maxDateEpoch = hourDim.top(1)[0].timestampEpoch;
 
-	new dc.BarChart("#chart-timeline")
-		.width(
-			document.getElementById("chart-timeline").parentElement.offsetWidth - 40
-		)
-		.height(220)
+	const timelineChart = new dc.BarChart("#chart-timeline");
+	timelineChart
+		.width(document.getElementById("chart-timeline").parentElement.offsetWidth - 40)
+		.height(300)
+		.margins({ top: 10, right: 30, bottom: 95, left: 65 }) // Prevents Y-axis label overlap
 		.dimension(hourDim)
 		.group(timelineVolumeGroup)
 		// FIX: Using the raw numeric range limits natively
     	.x(d3.scaleTime().domain([minDateEpoch - 86400000, maxDateEpoch + 86400000])) // +/- 1 day padding
 		.xUnits(d3.utcHours)
+		// .elasticX(true)
+		// .xAxisPadding(1) // Adds 1 day of breathing room on left and right edges
+		.xAxisPaddingUnit(d3.utcDay) // Use d3.utcHour if grouping by hour
 		.elasticY(true)
 		.brushOn(true)
 		.yAxisLabel("Income €");
 
+		timelineChart.on("renderlet", function (chart) {
+			// 1. Only label events that are currently active (not filtered out)
+			const activeEvents = eventGroupMetrics.all().filter((d) => d.value.qty > 0);
+			const activeEventNames = new Set(activeEvents.map((d) => d.key));
+		
+			// 2. Calculate the center timestamp for each active event
+			const eventRanges = d3.rollup(
+				orderData.filter((d) => activeEventNames.has(d.event_name)),
+				(v) => ({
+					min: d3.min(v, (d) => d.timestampEpoch),
+					max: d3.max(v, (d) => d.timestampEpoch)
+				}),
+				(d) => d.event_name
+			);
+		
+			const labelsData = Array.from(eventRanges, ([name, stats]) => ({
+				name,
+				midDate: (stats.min + stats.max) / 2
+			}));
+		
+			// 3. Position labels below the X-axis ticks inside chart.g()
+			const yPos = chart.height() - chart.margins().bottom + 32;
+			const leftMargin = chart.margins().left;
+		
+			const labels = chart.g().selectAll("text.event-cluster-label").data(labelsData, (d) => d.name);
+		
+			// const labels = chart.g().selectAll("text.event-cluster-label").data(labelsData, (d) => d.name);
+
+    const labelsMerged = labels.enter()
+        .append("text")
+        .attr("class", "event-cluster-label")
+        .merge(labels)
+        .attr("transform", (d) => {
+            const xPos = leftMargin + chart.x()(new Date(d.midDate));
+            // Translate to the anchor point first, then rotate -45 degrees
+            return `translate(${xPos}, ${yPos}) rotate(-45)`;
+        })
+        .attr("text-anchor", "end") // Aligns the end of the slanted text neatly under the date
+        .style("font-size", "11px")
+        .style("font-weight", "600")
+        .style("fill", "#2b5c8f");
+
+		// 4. Wrap text into multiple <tspan> lines if longer than 14 characters
+		labelsMerged.each(function (d) {
+			const textEl = d3.select(this);
+			textEl.text(null); // Clear existing text on redraw
+
+			const words = d.name.split(/\s+/);
+			let lines = [];
+			let currentLine = "";
+
+			words.forEach((word) => {
+				if ((currentLine + " " + word).trim().length > 14 && currentLine !== "") {
+					lines.push(currentLine);
+					currentLine = word;
+				} else {
+					currentLine = (currentLine + " " + word).trim();
+				}
+			});
+			if (currentLine) lines.push(currentLine);
+
+			// Append each wrapped line as a stacked <tspan>
+			lines.forEach((line, index) => {
+				textEl.append("tspan")
+					.attr("x", 0)
+					.attr("dy", index === 0 ? "0em" : "1.15em")
+					.text(line);
+			});
+		});
+
+		labels.exit().remove();
+	});
+		
 	// 4. Matrix Breakdown Tables
 	new dc.DataTable("#table-events")
 		.dimension(activeEventGroup)
