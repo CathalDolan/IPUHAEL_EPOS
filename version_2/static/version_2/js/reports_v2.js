@@ -193,7 +193,7 @@ function renderDashboardWithData(orderData) {
 	const productDim = ndx.dimension((d) => d.name || "Unknown Item");
 	// New stable setup:
 	// Grouping by rolling hour windows using the fast primitive timestamp integer
-	const hourDim = ndx.dimension(d => d3.utcHour(d.timestampObj).getTime());
+	const hourDim = ndx.dimension(d => d3.utcDay(d.timestampObj).getTime());
 
 	const timelineVolumeGroup = hourDim.group().reduceSum(d => d.price_line_total);
 	// Isolate Accumulators (The custom reducers preventing dimension clashing)
