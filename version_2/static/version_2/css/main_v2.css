@@ -135,6 +135,10 @@ button.gift-measure-button.disabled::before {
     margin-bottom: 3px;
 }
 
+#giftsModal .modal-dialog {
+    max-width: 90%;
+}
+
 .gift.product-button {
     /* padding: 3px; */
     margin-bottom: 7px;

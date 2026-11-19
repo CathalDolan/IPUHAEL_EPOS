@@ -1402,7 +1402,7 @@ function validate() {
 
 var timer;
 var timerPaused = false;
-var countdownCounter = 2;
+var countdownCounter = 6;
 
 $(".pause-button").click(() => {
     if (timerPaused === true) {
@@ -1419,7 +1419,7 @@ function checkoutTimer() {
     $(".pause-button").text("Pause");
     timerPaused = false;
     if (valid === true) {
-        countdownCounter = 2;
+        countdownCounter = 6;
         clearInterval(timer);
         timer = setInterval(countDown, 100);
         $(".checkout-timer-wrapper").show();
@@ -1434,7 +1434,7 @@ function countDown() {
         let path = $(".fg");
         $(".pause-button").text("Pause");
         countdownCounter -= 0.1;
-        path.css("stroke-dashoffset", countdownCounter * 35);
+        path.css("stroke-dashoffset", countdownCounter * 17);
         $("#countdown").text(Math.ceil(countdownCounter).toFixed(0));
         if (countdownCounter < 0) {
             clearInterval(timer);
@@ -1448,7 +1448,7 @@ function countDown() {
 
 function resetCheckoutTimer() {
     clearInterval(timer);
-    countdownCounter = 2;
+    countdownCounter = 6;
     timerPaused = false;
     $(".pause-button").text("Pause");
     $(".checkout-timer-wrapper").hide();
