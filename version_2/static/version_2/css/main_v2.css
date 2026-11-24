@@ -246,6 +246,14 @@ button:focus {
     background-color: #a52a2acc;
 }
 
+.wine {
+    background-color: #a52a2a;
+}
+
+.wine::before {
+    background-color: #a52a2acc;
+}
+
 .hot_toddy {
     background-color: #5858e4;
 }
