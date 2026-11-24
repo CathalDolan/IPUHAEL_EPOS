@@ -426,6 +426,39 @@
                     </div>
                 {% endfor %}
 
+                {% for drink in extra_shot %}
+                    <div class="col-2">
+                        <button
+                            class="{{drink.subcategory}} button product-button"
+                            data-product_id="{{drink.id}}"
+                            data-product_id="{{drink.id}}"
+                            data-pfand="{{drink.pfand}}"
+                            data-category="{{drink.category}}"
+                            data-subcategory="{{drink.subcategory}}"
+                            data-subsubcategory="{{drink.subsubcategory}}"
+                            data-name="{{drink.name}}"
+                            data-abbr_name="{{drink.abbr_name}}"
+                            data-default_size="{{drink.default_size}}"
+                            data-no_size="{{drink.price_no_size}}"
+                            data-single="{{drink.price_single}}"
+                            data-double="{{drink.price_double}}"
+                            data-dash="{{drink.price_dash}}"
+                            data-03="{{drink.price_03}}"
+                            data-04="{{drink.price_04}}"
+                            data-pint="{{drink.price_pint}}"
+                            data-bottle="{{drink.price_bottle}}"
+                            data-small="{{drink.price_small}}"
+                            data-regular="{{drink.price_regular}}"
+                            data-large="{{drink.price_large}}"
+                            data-bar_product="{{drink.bar_product}}"
+                            data-kitchen_product="{{drink.kitchen_product}}"
+                            data-gift_product="{{drink.gift_product}}"
+                            aria-label="Aria {{drink.name}}">
+                            <span class="text">{{drink.abbr_name}}</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
                 {% for drink in spirits_and_liquers %}
                     <div class="col-2">
                         <button

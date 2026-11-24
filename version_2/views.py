@@ -298,7 +298,7 @@ def index_v2(request):
     )
     wines = (
         ProductV2.objects.all()
-        .filter(subcategory__name="wines")
+        .filter(subcategory__name="wine")
         .filter(bar_product=True)
         .exclude(in_use=False)
         .order_by("position_index")
@@ -377,6 +377,14 @@ def index_v2(request):
     specials = (
         ProductV2.objects.all()
         .filter(subcategory__name="special")
+        .exclude(name="Extra Shot")
+        .exclude(in_use=False)
+    )
+    # for special in specials:
+    #     print("special = ", special.name)
+    extra_shot = (
+        ProductV2.objects.all()
+        .filter(name="Extra Shot")
         .exclude(in_use=False)
     )
     staff = Staff.objects.all().filter(on_duty=True).order_by("name")
@@ -398,6 +406,7 @@ def index_v2(request):
         "hot_toddy": hot_toddy,
         "cocktails": cocktails,
         "wines": wines,
+        "extra_shot": extra_shot,
         "mains": mains,
         "potatoes": potatoes,
         "extra_serving": extra_serving,

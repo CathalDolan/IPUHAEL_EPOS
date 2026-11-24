@@ -22,7 +22,7 @@ window.onload = function () {
     $("[data-bar_product='True']").parent().addClass("omit");
     $("[data-kitchen_product='True']").parent().addClass("omit");
     // $("[data-gift_product]").parent().addClass("omit");
-    console.log($('[data-kitchen_product="True"]'))
+    // console.log($('[data-kitchen_product="True"]'))
     $(`[data-${till_display}_product=True]`).parent().removeClass("omit");
     $(`#${till_display}-products`).addClass('selected');
 
@@ -512,7 +512,7 @@ $(".open-drink-submit").click(() => {
 
 $(".product-button").click(function() {
     
-    console.log("$(this).attr('data-subcategory') = ", $(this).attr('data-subcategory'))
+    console.log("LATEST_PRODUCT = ", LATEST_PRODUCT)
     if($(this).hasClass('disabled')) {
         return;
     }
@@ -532,6 +532,81 @@ $(".product-button").click(function() {
             return;
         }
     }
+
+
+    else if ($(this).attr("data-name") == "Extra Shot") {
+        let check_gluhwein = ALL_PRODUCTS.some(item => item.name?.toLowerCase().includes("gluhwein")) || Boolean(LATEST_PRODUCT?.name?.toLowerCase().includes("gluhwein"));
+
+        console.log("LATEST_PRODUCT = ", LATEST_PRODUCT)
+        console.log("ALL_PRODUCTS = ", ALL_PRODUCTS)
+        console.log("NEW_BASKET = ", NEW_BASKET)
+        console.log("check_gluhwein = ", check_gluhwein)
+        if (check_gluhwein == false) {
+            $(".message-container").empty().append(`
+                <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header toast-warning">
+                        <strong class="me-auto">Oops!! </strong>Please add a Gluhwein drink first.
+                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>`);
+            $(".toast").toast("show");
+            return;
+        }
+        else {
+            $('.product-button').addClass('disabled');
+            $('.open_drink').addClass('disabled');
+            $('[data-name="Tullamore Original"]').removeClass('disabled');
+            $('[data-name="Tullamore Honey"]').removeClass('disabled');
+            $('[data-name="Tullamore Cafe Honey"]').removeClass('disabled');
+            $('[data-name="Baileys"]').removeClass('disabled');
+            $('[data-name="Port"]').removeClass('disabled');
+            $('[data-name="Kahlua"]').removeClass('disabled');
+            $('[data-name="Ammaretto"]').removeClass('disabled');
+            $('[data-name="Rum"]').removeClass('disabled');
+            $('.drinks-measure-button').removeClass('selected').addClass('disabled')
+            $('.drinks-measure-button[data-size=single]').addClass('selected').removeClass('disabled')
+            $(this).removeClass('disabled');
+
+            if(LATEST_PRODUCT.discount_applied == "Extra Shot") {
+                LATEST_PRODUCT.qty += 1;
+                LATEST_PRODUCT.line_total = LATEST_PRODUCT.qty * LATEST_PRODUCT.price
+            }
+            else {
+                if(!$.isEmptyObject(LATEST_PRODUCT)) {
+                    ALL_PRODUCTS.push(LATEST_PRODUCT)
+                }
+                LATEST_PRODUCT = {
+                    name: "",
+                    abbr_name: "",
+                    category: "",
+                    subcategory: "",
+                    subsubcategory: "",
+                    size: "single",
+                    qty: 1,
+                    price: Number($(this).attr(`data-${$(this).attr('data-default_size')}`)),
+                    line_total: Number($(this).attr(`data-${$(this).attr('data-default_size')}`)),
+                    pfand_payable: $(this).attr('data-pfand'),
+                    discount_applied: "Extra Shot"
+                }
+            }
+            console.log("LATEST_PRODUCT = ", LATEST_PRODUCT)
+        }
+    }
+
+    else if(LATEST_PRODUCT.discount_applied == "Extra Shot") {
+        LATEST_PRODUCT.product_id = $(this).attr('data-product_id')
+        LATEST_PRODUCT.name = $(this).attr('data-name');
+        LATEST_PRODUCT.abbr_name = $(this).attr('data-abbr_name');
+        LATEST_PRODUCT.category = $(this).attr('data-category');
+        LATEST_PRODUCT.subcategory = $(this).attr('data-subcategory');
+        LATEST_PRODUCT.subsubcategory = $(this).attr('data-subsubcategory');
+        // LATEST_PRODUCT.pfand_payable = $(this).attr('data-pfand');
+        $('.product-button').removeClass('disabled')
+        ALL_PRODUCTS.push(LATEST_PRODUCT)
+        LATEST_PRODUCT = {}
+    }
+        
+    
     else if($(this).attr('data-name') == 'Pfand Shot') {
         $('.product-button').addClass('disabled');
         $('.open_drink').addClass('disabled');
@@ -605,7 +680,7 @@ $(".product-button").click(function() {
                 size: $(this).attr('data-default_size'),
                 qty: 1,
                 price: Number($(this).attr(`data-${$(this).attr('data-default_size')}`)),
-                line_total: $(this).attr(`data-${$(this).attr('data-default_size')}`),
+                line_total: Number($(this).attr(`data-${$(this).attr('data-default_size')}`)),
                 pfand_payable: $(this).attr('data-pfand'),
                 discount_applied: "5 Shot Special"
             }
@@ -733,7 +808,7 @@ function applySpecials() {
         NEW_BASKET.push(LATEST_PRODUCT)
     }
     
-    console.log("NEW_BASKET = ", NEW_BASKET);
+    // console.log("NEW_BASKET = ", NEW_BASKET);
     // NEW_BASKET.forEach(item => {
     //     item.line_total = item.price * item.qty;
     //     if(item.discount_applied != 'Pfand Shot' && item.discount_applied != "5 Shot Special") {
@@ -743,7 +818,7 @@ function applySpecials() {
     const validFoodCount = NEW_BASKET.filter(item => 
         item.category === 'food'
     ).length;
-    console.log("validFoodCount = ", validFoodCount);
+    // console.log("validFoodCount = ", validFoodCount);
     let discountedDrinksApplied = 0;
 
     // 2. Loop through your actual basket structure
@@ -760,7 +835,7 @@ function applySpecials() {
                 item.discount_applied = ""
             }
         }
-        else if(item.discount_applied != 'Pfand Shot' && item.discount_applied != "5 Shot Special") {
+        else if(item.discount_applied != 'Pfand Shot' && item.discount_applied != "5 Shot Special" && item.discount_applied != "Extra Shot") {
             item.discount_applied = "";
             if(item.size == "bottle") {
                 item.pfand_payable = "False";
@@ -770,8 +845,8 @@ function applySpecials() {
         item.line_total = item.price * item.qty;
     });
     
-    console.log("NEW_BASKET = ", NEW_BASKET);
-    console.log("Basket prices synchronized successfully.");
+    // console.log("NEW_BASKET = ", NEW_BASKET);
+    // console.log("Basket prices synchronized successfully.");
     
     DISCOUNTS = []; // Reset the discounts applied
     if (VOUCHERS.includes("Student Discount")) {
