@@ -444,6 +444,7 @@ def daily_3am_event_check():
 
     email_context = {
         "pfand_balance": pfand_balance,
+        "trading_date": trading_date,
         "takings": "",
         "receipts": "",
         "event": event,
