@@ -17,30 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
 				throw new Error(`Network failure. Status: ${response.status}`);
 			return response.json();
 		})
-		.then((loadedData) => {
+		.then((raw) => {
 			console.log(
 				"JSON file successfully imported! Record count:",
-				loadedData.length
+				raw.length
 			);
-
-			// window.parseISOString = d3.utcParse("%Y-%m-%d %H:%M:%S.%L%Z");
-			const parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%S.%L%Z");
-
-			// Pre-process raw data fields cleanly for Crossfilter
-			loadedData.forEach((d) => {
-				// Parse into a standard Date object
-				const dateObj = parseDate(d.order_date.substring(0, 29)) || new Date(d.order_date);
-				
-				// FIX: Extract the primitive epoch millisecond number for Crossfilter sorting!
-				d.timestampObj = dateObj; // Keep the object handy for d3 scale utilities if needed
-				d.timestampEpoch = dateObj.getTime(); // This raw number safely prevents sorting recursion loops
-				
-				// Standardize metrics safely
-				d.quantity = +d.quantity || 0;
-				d.price_unit = +d.price_unit || 0;
-				d.price_line_total = +d.price_line_total || 0;
-				d.discount_calculated = (d.quantity * d.price_unit) - d.price_line_total;
-			});
+			
+			const loadedData = cleanData(raw)
 			
 			renderDashboardWithData(loadedData);
 		})
@@ -52,123 +35,121 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 }); // 👈 Close the DOMContentLoaded block here
 
-var ndx;
-/**
- * Universal safe currency parser
- */
-function cleanPrice(item) {
-	return (
-		parseFloat(
-			String(item.price_line_total || "0")
-				.replace(/[^0-9.,]/g, "")
-				.replace(",", ".")
-		) || 0
-	);
+function cleanData(raw) {
+	// window.parseISOString = d3.utcParse("%Y-%m-%d %H:%M:%S.%L%Z");
+	const parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%S.%L%Z");
+
+	// Pre-process raw data fields cleanly for Crossfilter
+	raw.forEach((d) => {
+		// Parse into a standard Date object
+		const dateObj = parseDate(d.order_date.substring(0, 29)) || new Date(d.order_date);
+		
+		// FIX: Extract the primitive epoch millisecond number for Crossfilter sorting!
+		d.timestampObj = dateObj; // Keep the object handy for d3 scale utilities if needed
+		d.timestampEpoch = dateObj.getTime(); // This raw number safely prevents sorting recursion loops
+		
+		// Standardize metrics safely
+		// Strictly cast all numeric strings to Numbers
+		d.quantity = Number(d.quantity) || 0;
+		d.price_unit = Number(d.price_unit) || 0;
+		d.price_line_total = Number(d.price_line_total) || 0;
+		d.gross_calculated = d.quantity * d.price_unit;
+		// Only count discount if it was a paid item with a reduced line total
+		const method = (d.payment_method || "").trim().toLowerCase();
+        const isUnpaid = method === "complimentary" || method === "waste";
+        d.discount_calculated = isUnpaid ? 0 : Math.max(0, d.gross_calculated - d.price_line_total);
+	});
+	return raw;
 }
 
-/**
- * Fallback calculation engine when price_line_total is zero (Complimentary/Waste)
- */
-function calculateEffectivePrice(v) {
-	let price = cleanPrice(v);
-	if (price === 0) {
-		const quantity = parseInt(v.quantity, 10) || 0;
-		const unitPrice =
-			parseFloat(
-				String(v.price_unit || "0")
-					.replace(/[^0-9.,]/g, "")
-					.replace(",", ".")
-			) || 0;
-		price = quantity * unitPrice;
-	}
-	return price;
-}
+var ndx;
 
 /**
  * Pre-populates HTML date inputs with dataset boundary limits
  */
-function prepopulateDatePickers(orderData) {
-	if (!orderData || orderData.length === 0) return;
+// function prepopulateDatePickers(orderData) {
+// 	if (!orderData || orderData.length === 0) return;
 
-	let minDate = null;
-	let maxDate = null;
+// 	let minDate = null;
+// 	let maxDate = null;
 
-	orderData.forEach((item) => {
-		const rawDate = item.order_date;
-		if (!rawDate) return;
+// 	orderData.forEach((item) => {
+// 		const rawDate = item.order_date;
+// 		if (!rawDate) return;
 
-		const currentParsed = new Date(rawDate);
-		if (isNaN(currentParsed.getTime())) return;
+// 		const currentParsed = new Date(rawDate);
+// 		if (isNaN(currentParsed.getTime())) return;
 
-		// 🚀 FIX 1: Mutate the item so Crossfilter gets the true Date Object!
-		item.order_date = currentParsed;
+// 		// 🚀 FIX 1: Mutate the item so Crossfilter gets the true Date Object!
+// 		item.order_date = currentParsed;
 
-		if (!minDate || currentParsed < minDate) minDate = currentParsed;
-		if (!maxDate || currentParsed > maxDate) maxDate = currentParsed;
-	});
+// 		if (!minDate || currentParsed < minDate) minDate = currentParsed;
+// 		if (!maxDate || currentParsed > maxDate) maxDate = currentParsed;
+// 	});
 
-	function formatToDateInputString(dateObject) {
-		if (!dateObject) return "";
-		const year = dateObject.getFullYear();
-		const month = String(dateObject.getMonth() + 1).padStart(2, "0");
-		const day = String(dateObject.getDate()).padStart(2, "0");
-		return `${year}-${month}-${day}`;
-	}
+// 	function formatToDateInputString(dateObject) {
+// 		if (!dateObject) return "";
+// 		const year = dateObject.getFullYear();
+// 		const month = String(dateObject.getMonth() + 1).padStart(2, "0");
+// 		const day = String(dateObject.getDate()).padStart(2, "0");
+// 		return `${year}-${month}-${day}`;
+// 	}
 
-	if (minDate && maxDate) {
-		const fromInput = document.getElementById("date-from");
-		const toInput = document.getElementById("date-to");
+// 	if (minDate && maxDate) {
+// 		const fromInput = document.getElementById("date-from");
+// 		const toInput = document.getElementById("date-to");
 
-		if (fromInput && toInput) {
-			fromInput.value = formatToDateInputString(minDate);
-			toInput.value = formatToDateInputString(maxDate);
-		}
-	}
-}
+// 		if (fromInput && toInput) {
+// 			fromInput.value = formatToDateInputString(minDate);
+// 			toInput.value = formatToDateInputString(maxDate);
+// 		}
+// 	}
+// }
 
 /**
  * Initializes date picker inputs using native Crossfilter range controls
  */
-function initDatePickerListeners(orderData) {
-	const fromInput = document.getElementById("date-from");
-	const toInput = document.getElementById("date-to");
-	const clearButton = document.getElementById("clear-date-filter");
+// function initDatePickerListeners(orderData) {
+// 	const fromInput = document.getElementById("date-from");
+// 	const toInput = document.getElementById("date-to");
+// 	const clearButton = document.getElementById("clear-date-filter");
 
-	function processAndFilterData() {
-		const fromVal = fromInput.value;
-		const toVal = toInput.value;
+// 	function processAndFilterData() {
+// 		const fromVal = fromInput.value;
+// 		const toVal = toInput.value;
 
-		if (!fromVal || !toVal) return;
+// 		if (!fromVal || !toVal) return;
 
-		const fromDate = new Date(fromVal);
-		fromDate.setHours(0, 0, 0, 0);
+// 		const fromDate = new Date(fromVal);
+// 		fromDate.setHours(0, 0, 0, 0);
 
-		const toDate = new Date(toVal);
-		toDate.setHours(23, 59, 59, 999);
+// 		const toDate = new Date(toVal);
+// 		toDate.setHours(23, 59, 59, 999);
 
-		if (fromDate <= toDate) {
-			console.log(
-				`Filtering crossfilter data layer between: ${fromVal} and ${toVal}`
-			);
-			dateDimension.filterRange([fromDate, toDate]);
-			dc.redrawAll();
-		}
-	}
+// 		if (fromDate <= toDate) {
+// 			console.log(
+// 				`Filtering crossfilter data layer between: ${fromVal} and ${toVal}`
+// 			);
+// 			dateDimension.filterRange([fromDate, toDate]);
+// 			dc.redrawAll();
+// 		}
+// 	}
 
-	fromInput.addEventListener("change", processAndFilterData);
-	toInput.addEventListener("change", processAndFilterData);
+// 	fromInput.addEventListener("change", processAndFilterData);
+// 	toInput.addEventListener("change", processAndFilterData);
 
-	clearButton.addEventListener("click", function () {
-		console.log(
-			"Resetting calendar ranges cleanly via crossfilter engine."
-		);
-		prepopulateDatePickers(orderData);
-		dateDimension.filterAll();
-		dc.redrawAll();
-	});
-}
+// 	clearButton.addEventListener("click", function () {
+// 		console.log(
+// 			"Resetting calendar ranges cleanly via crossfilter engine."
+// 		);
+// 		prepopulateDatePickers(orderData);
+// 		dateDimension.filterAll();
+// 		dc.redrawAll();
+// 	});
+// }
 
 // 1. Declare your locale settings array
+
 const euroLocale = d3.formatLocale({
     decimal: ".",
     thousands: ",",
@@ -180,7 +161,14 @@ const euroLocale = d3.formatLocale({
 const formatEuro = euroLocale.format("$,.2f");
 
 function renderDashboardWithData(orderData) {
-	console.log("renderDashboardWithData")
+	// orderData.forEach(item => {
+	// 	console.log(typeof(item["discount_calculated"]))
+	// 	if(Number.isInteger(item["gross_calculated"])) {
+	// 		// continue;
+	// 		console.log(item)
+	// 	}
+	// })
+	console.log("renderDashboardWithData", orderData)
 	ndx = crossfilter(orderData);
 
 	// Dimensions
@@ -195,7 +183,7 @@ function renderDashboardWithData(orderData) {
 	// Grouping by rolling hour windows using the fast primitive timestamp integer
 	const hourDim = ndx.dimension(d => d3.utcDay(d.timestampObj).getTime());
 
-	const timelineVolumeGroup = hourDim.group().reduceSum(d => d.price_line_total);
+	const timelineVolumeGroup = hourDim.group().reduceSum(d => Number(d.gross_calculated) || 0);
 	// Isolate Accumulators (The custom reducers preventing dimension clashing)
 
 	// Wrapper that strips out 0-value days/hours so elasticX knows the true active date range
@@ -210,25 +198,41 @@ function renderDashboardWithData(orderData) {
 	function buildMultiMetricReducer() {
 		return {
 			add: (p, v) => {
-				p.qty += v.quantity;
-				p.gross += v.price_line_total;
-				p.net += v.price_line_total;
-				p.discount += v.discount_calculated;
-				if (v.payment_method === "Cash") p.cash += v.price_line_total;
-				if (v.payment_method === "Credit Card") p.card += v.price_line_total;
-				if (v.payment_method === "Complimentary") p.complimentary += (v.quantity * v.price_unit);
-				if (v.payment_method === "Waste") p.waste += (v.quantity * v.price_unit);
+				// console.log(p, v)
+				p.qty += Number(v.quantity) || 0;
+            	p.gross += Number(v.gross_calculated) || 0;
+				p.net += Number(v.price_line_total) || 0;
+            	p.discount += Number(v.discount_calculated) || 0;
+				const method = (v.payment_method || "").trim().toLowerCase();
+				if (method === "cash") {
+					p.cash += Number(v.price_line_total) || 0;
+				} else if (method === "credit card") {
+					p.card += Number(v.price_line_total) || 0;
+				} else if (method === "complimentary") {
+					// Use gross_calculated since price_line_total is null for comp drinks
+					p.complimentary += Number(v.gross_calculated) || 0;
+				} else if (method === "waste") {
+					// Use gross_calculated since price_line_total is null for waste
+					p.waste += Number(v.gross_calculated) || 0;
+				}
 				return p;
 			},
 			remove: (p, v) => {
-				p.qty -= v.quantity;
-				p.gross -= v.price_line_total;
-				p.net -= v.price_line_total;
-				p.discount -= v.discount_calculated;
-				if (v.payment_method === "Cash") p.cash -= v.price_line_total;
-				if (v.payment_method === "Credit Card") p.card -= v.price_line_total;
-				if (v.payment_method === "Complimentary") p.complimentary -= (v.quantity * v.price_unit);
-				if (v.payment_method === "Waste") p.waste -= (v.quantity * v.price_unit);
+				p.qty -= Number(v.quantity) || 0;
+				p.gross -= Number(v.gross_calculated) || 0;
+				p.net -= Number(v.price_line_total) || 0;
+				p.discount -= Number(v.discount_calculated) || 0;
+
+				const method = (v.payment_method || "").trim().toLowerCase();
+				if (method === "cash") {
+					p.cash -= Number(v.price_line_total) || 0;
+				} else if (method === "credit card") {
+					p.card -= Number(v.price_line_total) || 0;
+				} else if (method === "complimentary") {
+					p.complimentary -= Number(v.gross_calculated) || 0;
+				} else if (method === "waste") {
+					p.waste -= Number(v.gross_calculated) || 0;
+				}
 				return p;
 			},
 			init: () => ({

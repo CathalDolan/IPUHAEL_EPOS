@@ -30,8 +30,8 @@ class Command(BaseCommand):
                 "name": item.name,
                 "quantity": item.quantity,
                 "size": item.size,
-                "price_unit": str(item.price_unit) if item.price_unit else None,
-                "price_line_total": str(item.price_line_total) if item.price_line_total else None,
+                "price_unit": float(item.price_unit) if item.price_unit else 0,
+                "price_line_total": float(item.price_line_total) if item.price_line_total else 0,
                 "discount": item.discount,
                 "category": item.product.category.name if item.product.category else None,
                 "subcategory": item.product.subcategory.name if item.product.subcategory else None,
@@ -40,14 +40,14 @@ class Command(BaseCommand):
                 "order_date": tx.order_date.isoformat() if tx and tx.order_date else None,
                 "payment_method": tx.payment_method if tx else None,
                 "payment_reason": tx.payment_reason if tx else None,
-                "transaction_total_due": str(tx.total_due) if tx and tx.total_due else None,
+                "transaction_total_due": float(tx.total_due) if tx and tx.total_due else 0,
                 "transaction_discounts": tx.discounts if tx else None,
                 "staff_member": tx.staff_member.name if tx and tx.staff_member else None,
                 "event_name": tx.event.name if tx and tx.event else None,
             }
             new_items.append(item_data)
 
-        file_path = 'version_2/static/version_2/data/historical_data.json'
+        file_path = 'version_2/static/version_2/data/historical_data1.json'
         existing_data = []
 
         # If the file already exists, read it and extract the current array
