@@ -535,62 +535,62 @@ $(".product-button").click(function() {
 
 
     else if ($(this).attr("data-name") == "Extra Shot") {
-        let check_gluhwein = ALL_PRODUCTS.some(item => item.name?.toLowerCase().includes("gluhwein")) || Boolean(LATEST_PRODUCT?.name?.toLowerCase().includes("gluhwein"));
+        // let check_gluhwein = ALL_PRODUCTS.some(item => item.name?.toLowerCase().includes("gluhwein")) || Boolean(LATEST_PRODUCT?.name?.toLowerCase().includes("gluhwein"));
 
         console.log("LATEST_PRODUCT = ", LATEST_PRODUCT)
         console.log("ALL_PRODUCTS = ", ALL_PRODUCTS)
         console.log("NEW_BASKET = ", NEW_BASKET)
-        console.log("check_gluhwein = ", check_gluhwein)
-        if (check_gluhwein == false) {
-            $(".message-container").empty().append(`
-                <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header toast-warning">
-                        <strong class="me-auto">Oops!! </strong>Please add a Gluhwein drink first.
-                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                </div>`);
-            $(".toast").toast("show");
-            return;
+        // console.log("check_gluhwein = ", check_gluhwein)
+        // if (check_gluhwein == false) {
+        //     $(".message-container").empty().append(`
+        //         <div class="toast custom-toast" role="alert" aria-live="assertive" aria-atomic="true">
+        //             <div class="toast-header toast-warning">
+        //                 <strong class="me-auto">Oops!! </strong>Please add a Gluhwein drink first.
+        //                 <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        //             </div>
+        //         </div>`);
+        //     $(".toast").toast("show");
+        //     return;
+        // }
+        
+        $('.product-button').addClass('disabled');
+        $('.open_drink').addClass('disabled');
+        $('[data-name="Tullamore Original"]').removeClass('disabled');
+        $('[data-name="Tullamore Honey"]').removeClass('disabled');
+        $('[data-name="Tullamore Cafe Honey"]').removeClass('disabled');
+        $('[data-name="Baileys"]').removeClass('disabled');
+        $('[data-name="Port"]').removeClass('disabled');
+        $('[data-name="Kahlua"]').removeClass('disabled');
+        $('[data-name="Ammaretto"]').removeClass('disabled');
+        $('[data-name="Rum"]').removeClass('disabled');
+        $('.drinks-measure-button').removeClass('selected').addClass('disabled')
+        $('.drinks-measure-button[data-size=single]').addClass('selected').removeClass('disabled')
+        $(this).removeClass('disabled');
+
+        if(LATEST_PRODUCT.discount_applied == "Extra Shot") {
+            LATEST_PRODUCT.qty += 1;
+            LATEST_PRODUCT.line_total = LATEST_PRODUCT.qty * LATEST_PRODUCT.price
         }
         else {
-            $('.product-button').addClass('disabled');
-            $('.open_drink').addClass('disabled');
-            $('[data-name="Tullamore Original"]').removeClass('disabled');
-            $('[data-name="Tullamore Honey"]').removeClass('disabled');
-            $('[data-name="Tullamore Cafe Honey"]').removeClass('disabled');
-            $('[data-name="Baileys"]').removeClass('disabled');
-            $('[data-name="Port"]').removeClass('disabled');
-            $('[data-name="Kahlua"]').removeClass('disabled');
-            $('[data-name="Ammaretto"]').removeClass('disabled');
-            $('[data-name="Rum"]').removeClass('disabled');
-            $('.drinks-measure-button').removeClass('selected').addClass('disabled')
-            $('.drinks-measure-button[data-size=single]').addClass('selected').removeClass('disabled')
-            $(this).removeClass('disabled');
-
-            if(LATEST_PRODUCT.discount_applied == "Extra Shot") {
-                LATEST_PRODUCT.qty += 1;
-                LATEST_PRODUCT.line_total = LATEST_PRODUCT.qty * LATEST_PRODUCT.price
+            if(!$.isEmptyObject(LATEST_PRODUCT)) {
+                ALL_PRODUCTS.push(LATEST_PRODUCT)
             }
-            else {
-                if(!$.isEmptyObject(LATEST_PRODUCT)) {
-                    ALL_PRODUCTS.push(LATEST_PRODUCT)
-                }
-                LATEST_PRODUCT = {
-                    name: "",
-                    abbr_name: "",
-                    category: "",
-                    subcategory: "",
-                    subsubcategory: "",
-                    size: "single",
-                    qty: 1,
-                    price: Number($(this).attr(`data-${$(this).attr('data-default_size')}`)),
-                    line_total: Number($(this).attr(`data-${$(this).attr('data-default_size')}`)),
-                    pfand_payable: $(this).attr('data-pfand'),
-                    discount_applied: "Extra Shot"
-                }
+            LATEST_PRODUCT = {
+                name: "",
+                abbr_name: "",
+                category: "",
+                subcategory: "",
+                subsubcategory: "",
+                size: "single",
+                qty: 1,
+                price: Number($(this).attr(`data-${$(this).attr('data-default_size')}`)),
+                line_total: Number($(this).attr(`data-${$(this).attr('data-default_size')}`)),
+                pfand_payable: $(this).attr('data-pfand'),
+                discount_applied: "Extra Shot"
             }
-            console.log("LATEST_PRODUCT = ", LATEST_PRODUCT)
         }
+        console.log("LATEST_PRODUCT = ", LATEST_PRODUCT)
+        
     }
 
     else if(LATEST_PRODUCT.discount_applied == "Extra Shot") {
