@@ -2,6 +2,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 	console.log("reports_v2.js loaded successfully");
 
+	const dbEntries = JSON.parse($('#data').text())
+	console.log("dbEntries = ", dbEntries[0])
+
 	const scriptElement = document.getElementById("reports-script");
 	if (!scriptElement) {
 		console.error("Critical: Could not find script element placeholder");
@@ -18,12 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
 			return response.json();
 		})
 		.then((raw) => {
-			console.log(
-				"JSON file successfully imported! Record count:",
-				raw.length
-			);
-			
-			const loadedData = cleanData(raw)
+			console.log("JSON file successfully imported! Record count:", raw.length);
+			console.log("raw = ", raw[0])
+			const combinedData = [...raw, ...dbEntries];
+			const loadedData = cleanData(combinedData)
 			
 			renderDashboardWithData(loadedData);
 		})

@@ -1420,61 +1420,42 @@ def reports_v2(request):
     print("NOW = ", datetime.now())
     entries = (
         LineItemV2.objects.all()
-        .select_related("transaction", "product")
-        .values(
-            "transaction__transaction_number",
-            "transaction__order_date",
-            # 'grand_totals',
-            "product__category__name",
-            "product__subcategory__name",
-            "product__subsubcategory__name",
-            "name",
-            "quantity",
-            "size",
-            "price_unit",
-            "price_line_total",
-            "discount",
-            "transaction__payment_method",
-            "transaction__payment_reason",
-            "transaction__staff_member",
+        .select_related(
+            'transaction', 
+            'transaction__staff_member', 
+            'transaction__event',
+            'product'
         )
+        
     )
-    staff = []
-    categories = []
-    drinks = []
-    food = []
-    gifts = []
-    sizes = []
-    payment = []
-    # for entry in entries:
-    # print("entry = ", entry)
-    # if entry['category__name'] == 'food' and entry['discount'] != '':
-    #     print("entry = ", entry)
-    #     if not entry["transaction__staff_member"] in staff:
-    #         staff.append(entry["transaction__staff_member"])
-    #     if not entry["category__name"] in categories:
-    #         categories.append(entry["category__name"])
-    #     if not entry["name"] in drinks and not "food" in entry["category"].lower() and not "gifts" in entry["category"].lower():
-    #         drinks.append(entry["name"])
-    #     if "food" in entry["category"].lower() and not entry["name"] in food:
-    #         food.append(entry["name"])
-    #     if "gifts" in entry["category"].lower() and not entry["name"] in gifts:
-    #         gifts.append(entry["name"])
-    #     if not entry["size"] in sizes:
-    #         sizes.append(entry["size"])
-    #     if not entry["grand_totals_id__payment_method"] in payment:
-    #         payment.append(entry["grand_totals_id__payment_method"])
-    staff.sort()
-    categories.sort()
-    drinks.sort()
-    food.sort()
-    gifts.sort()
-    sizes.sort()
-    payment.sort()
-    # earliest_date = entries.earliest('order_date_li')
-    # latest_date = entries.latest('order_date_li')
-    date_now = datetime.now()
-    date_yesterday = datetime.now() + timedelta(days=-1)
+    db_items = []
+    for item in entries:
+        # print("item = ", item)
+        tx = item.transaction
+        item_data = {
+            "line_item_id": item.id,
+            # 🚀 THE CRITICAL FIX: Grab the direct database integer ID from your new relationship column
+            "product_id": item.product_id if item.product_id else None,
+            "name": item.name,
+            "quantity": item.quantity,
+            "size": item.size,
+            "price_unit": float(item.price_unit) if item.price_unit else 0,
+            "price_line_total": float(item.price_line_total) if item.price_line_total else 0,
+            "discount": item.discount,
+            "category": item.product.category.name if item.product.category else None,
+            "subcategory": item.product.subcategory.name if item.product.subcategory else None,
+            "subsubcategory": item.product.subsubcategory.name if item.product.subsubcategory else None,
+            "transaction_uuid": str(tx.transaction_number) if tx else None,
+            "order_date": tx.order_date.isoformat() if tx and tx.order_date else None,
+            "payment_method": tx.payment_method if tx else None,
+            "payment_reason": tx.payment_reason if tx else None,
+            "transaction_total_due": float(tx.total_due) if tx and tx.total_due else 0,
+            "transaction_discounts": tx.discounts if tx else None,
+            "staff_member": tx.staff_member.name if tx and tx.staff_member else None,
+            "event_name": tx.event.name if tx and tx.event else None,
+        }
+        db_items.append(item_data)
+    
 
     if request.GET:
         print("YES GET")
@@ -1489,34 +1470,8 @@ def reports_v2(request):
         return JsonResponse({"orders": list(entries)}, safe=False)
 
     else:
-        # latest_entry = LineItemV2.objects.latest('transaction__order_date')
-        # latest_date = latest_entry.transaction__order_date
-        # print("latest_date = ", latest_date)
-        # if latest_date.hour < 10:
-        #     from_date = latest_date.replace(hour=10, minute=00, second=00) + timedelta(-1)
-        #     to_date = latest_date.replace(hour=2, minute=00, second=00)
-        #     # print("from_date = ", from_date)
-        #     # print("to_date = ", to_date)
-        # else:
-        #     from_date = latest_date.replace(hour=10, minute=00, second=00)
-        #     to_date = latest_date.replace(hour=2, minute=00, second=00) + timedelta(1)
-        #     # print("from_date = ", from_date)
-        #     # print("to_date = ", to_date)
-        # entries = entries.filter(order_date_li__range=(from_date, to_date))
-
         context = {
-            "data": list(entries),
-            "staff": staff,
-            "categories": categories,
-            "drinks": drinks,
-            "food": food,
-            "gifts": gifts,
-            "sizes": sizes,
-            "payment": payment,
-            # "earliest_date": from_date,
-            # "latest_date": to_date,
-            "date_now": date_now,
-            "date_yesterday": date_yesterday,
+            "data": db_items,
         }
         return render(request, "version_2/reports_v2.html", context)
 
